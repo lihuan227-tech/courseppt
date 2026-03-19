@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; background: #fff; font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 10px; }
+
+  .page-title {
+    font-size: 22px; font-weight: 900; text-align: center; color: #2C2C2C;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .page-subtitle {
+    font-size: 14px; text-align: center; color: #777; margin-bottom: 16px;
+  }
+
+  /* Subject sections */
+  .subject-section { margin-bottom: 28px; }
+  .subject-header {
+    font-size: 19px; font-weight: 700; padding: 9px 18px;
+    border-radius: 6px; margin-bottom: 4px; color: #fff;
+  }
+  .subject-header.chinese { background: #FF8C00; }
+  .subject-header.english { background: #1976d2; }
+  .subject-header.math    { background: #388e3c; }
+  .subject-header.art     { background: #9c27b0; }
+  .subject-header.chess   { background: #795548; }
+  .subject-header.speech  { background: #e91e63; }
+  .subject-header.pingpong { background: #00897b; }
+
+  .table-footnote {
+    font-size: 13px; color: #333; padding: 6px 4px; line-height: 1.5;
+  }
+
+  /* Table */
+  .sched-table { width: 100%; border-collapse: collapse; border: 2px solid #ddd; }
+  .sched-table th {
+    font-size: 13px; font-weight: 700; padding: 8px 10px;
+    color: #fff; text-align: center; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .sched-table th.chinese  { background: #f59d00; }
+  .sched-table th.english  { background: #1e88e5; }
+  .sched-table th.math     { background: #43a047; }
+  .sched-table th.art      { background: #ab47bc; }
+  .sched-table th.chess    { background: #8d6e63; }
+  .sched-table th.speech   { background: #ec407a; }
+  .sched-table th.pingpong { background: #26a69a; }
+
+  .sched-table td {
+    font-size: 14px; padding: 8px 10px;
+    border: 1px solid #e0e0e0; color: #2a2a2a; vertical-align: middle;
+  }
+  .sched-table tr:nth-child(even) td { background: #fafafa; }
+  .sched-table tr:nth-child(odd) td { background: #fff; }
+
+  /* Level group separator */
+  .sched-table tr.level-first td { border-top: 2px solid #ccc; }
+
+  /* Selectable rows */
+  .sched-table tbody tr { cursor: pointer; transition: all 0.15s; }
+  .sched-table tbody tr:hover td { background: #f5f5f5; }
+  .sched-table tbody tr.selected.chinese-row td  { background: #fff3e0 !important; }
+  .sched-table tbody tr.selected.english-row td  { background: #e3f2fd !important; }
+  .sched-table tbody tr.selected.math-row td     { background: #e8f5e9 !important; }
+  .sched-table tbody tr.selected.art-row td      { background: #f3e5f5 !important; }
+  .sched-table tbody tr.selected.chess-row td     { background: #efebe9 !important; }
+  .sched-table tbody tr.selected.speech-row td    { background: #fce4ec !important; }
+  .sched-table tbody tr.selected.pingpong-row td  { background: #e0f2f1 !important; }
+  .sched-table tbody tr.conflict td { background: #ffebee !important; }
+
+  .check-col { width: 28px; text-align: center; font-size: 18px; color: #ccc; }
+  .selected .check-col { color: #43a047; }
+  .selected.chinese-row .check-col  { color: #FF8C00; }
+  .selected.english-row .check-col  { color: #1976d2; }
+  .selected.math-row .check-col     { color: #388e3c; }
+  .selected.art-row .check-col      { color: #9c27b0; }
+  .selected.chess-row .check-col    { color: #795548; }
+  .selected.speech-row .check-col   { color: #e91e63; }
+  .selected.pingpong-row .check-col { color: #00897b; }
+
+  .class-id { font-weight: 700; font-size: 14px; }
+  .class-id.chinese  { color: #e65100; }
+  .class-id.english  { color: #1565c0; }
+  .class-id.math     { color: #2e7d32; }
+  .class-id.art      { color: #7b1fa2; }
+  .class-id.chess    { color: #5d4037; }
+  .class-id.speech   { color: #c2185b; }
+  .class-id.pingpong { color: #00695c; }
+
+  .course-desc { font-weight: 400; font-size: 12px; color: #777; display: block; margin-top: 2px; }
+  .day { font-weight: 600; }
+  .teacher-name { font-size: 13px; color: #555; }
+  .grade-tag {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    padding: 2px 10px; border-radius: 12px; background: #f0f0f0; color: #555;
+    margin: 1px 2px;
+  }
+  .tuition-info { font-size: 12px; color: #666; }
+
+  /* Hint */
+  .select-hint {
+    text-align: center; font-size: 16px; font-weight: 700; color: #2C2C2C; margin-bottom: 16px;
+    padding: 10px; background: #fafafa; border-radius: 6px;
+  }
+
+  .summary-conflict {
+    background: #fff5f5; border: 2px solid #d32f2f; border-radius: 6px;
+    padding: 10px 14px; margin-top: 10px;
+  }
+  .conflict-title { font-size: 14px; font-weight: 700; color: #d32f2f; margin-bottom: 4px; }
+  .conflict-item { font-size: 13px; color: #555; }
+  .conflict-item strong { color: #d32f2f; }
+
+  /* My Schedule section */
+  .my-schedule {
+    margin-top: 10px; display: none; border-top: 2px solid #e0e0e0; padding-top: 20px;
+  }
+  .my-schedule.show { display: block; }
+  .my-schedule-title {
+    font-size: 18px; font-weight: 700; color: #2C2C2C; text-align: center; margin-bottom: 12px;
+  }
+
+  /* Weekly grid */
+  .week-grid {
+    display: grid; grid-template-columns: 80px repeat(5, 1fr);
+    border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px;
+  }
+  .grid-header {
+    font-size: 13px; font-weight: 700; color: #fff; background: #555;
+    padding: 8px 4px; text-align: center;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .grid-header.time-col { background: #777; }
+  .grid-cell { border: 1px solid #eee; padding: 4px; min-height: 54px; }
+  .grid-time {
+    font-size: 12px; font-weight: 600; color: #555; padding: 8px 4px;
+    text-align: center; background: #fafafa; border: 1px solid #eee;
+  }
+  .slot-block {
+    padding: 5px 6px; border-radius: 5px; font-size: 11px; font-weight: 600;
+    color: #fff; margin-bottom: 3px; line-height: 1.3;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slot-block.chinese  { background: #FF8C00; }
+  .slot-block.english  { background: #1976d2; }
+  .slot-block.math     { background: #388e3c; }
+  .slot-block.art      { background: #9c27b0; }
+  .slot-block.chess    { background: #795548; }
+  .slot-block.speech   { background: #e91e63; }
+  .slot-block.pingpong { background: #00897b; }
+  .slot-block .slot-time { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }
+
+  /* Summary */
+  .summary-box {
+    background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;
+    padding: 14px 18px; margin-bottom: 14px;
+  }
+  .summary-item { font-size: 14px; color: #333; padding: 3px 0; display: flex; align-items: center; gap: 8px; }
+  .summary-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .summary-total { font-size: 14px; font-weight: 700; color: #2C2C2C; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; }
+  .summary-noconflict { font-size: 13px; color: #2e7d32; font-weight: 600; margin-top: 6px; }
+  .summary-cta {
+    font-size: 13px; color: #444; margin-top: 10px; padding: 10px 14px;
+    background: #e3f2fd; border-radius: 6px; line-height: 1.6;
+  }
+  .summary-cta a { color: #1976d2; font-weight: 700; text-decoration: none; }
+  .summary-cta a:hover { text-decoration: underline; }
+
+  .semester-note {
+    text-align: center; font-size: 13px; color: #999; margin-top: 20px; padding: 10px;
+  }
+
+  /* Save/Print buttons */
+  .action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .print-btn, .save-img-btn {
+    display: inline-block; padding: 10px 28px;
+    font-size: 15px; font-weight: 700; color: #fff; background: #1976d2;
+    border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+    font-family: inherit;
+  }
+  .print-btn:hover, .save-img-btn:hover { background: #1565c0; }
+  .save-img-btn { background: #388e3c; }
+  .save-img-btn:hover { background: #2e7d32; }
+
+  @media (max-width: 600px) {
+    .sched-table th, .sched-table td { padding: 6px 6px; font-size: 12px; }
+    .class-id { font-size: 12px; }
+    .subject-header { font-size: 16px; }
+    .week-grid { grid-template-columns: 55px repeat(5, 1fr); }
+    .grid-header { font-size: 11px; }
+    .slot-block { font-size: 10px; }
+    .page-title { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="page-title">GR EDU 2026 春季课后班课程表 Spring After School Schedule</div>
+  <div class="page-subtitle">Cupertino · 2026 Spring Semester: 01/05 – 06/07</div>
+
+  <div class="select-hint">点击课程行选课，下方自动生成个人课表 · Click a course row to select, your schedule appears below</div>
+
+  <!-- ======== CHINESE ======== -->
+  <div class="subject-section">
+    <div class="subject-header chinese">中文 Chinese</div>
+    <table class="sched-table" id="table-chinese">
+      <thead>
+        <tr>
+          <th class="chinese" style="width:22px"></th>
+          <th class="chinese" style="width:16%">班级 Class</th>
+          <th class="chinese" style="width:22%">时间 Schedule</th>
+          <th class="chinese" style="width:14%">教师 Teacher</th>
+          <th class="chinese" style="width:26%">级别内容 Level</th>
+          <th class="chinese" style="width:20%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- L1 group -->
+        <tr class="chinese-row level-first" data-subject="chinese" data-id="ch-l1a" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L1-A" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L1-A</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Qiu</td>
+          <td>部编语文一年级上<span class="course-desc">（半年基础）</span></td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l1b" data-slots="Mon:975-1035,Tue:975-1035,Wed:975-1035,Fri:975-1035" data-name="Chinese L1-B" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L1-B</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Qiu</td>
+          <td>部编语文一年级上<span class="course-desc">（半年基础）</span></td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l1c" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L1-C" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L1-C</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Chen</td>
+          <td>部编语文一年级上<span class="course-desc">（半年基础）</span></td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <!-- L2 group -->
+        <tr class="chinese-row level-first" data-subject="chinese" data-id="ch-l2a" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L2-A" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L2-A</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Liang</td>
+          <td>部编语文一年级下</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l2b" data-slots="Mon:975-1035,Tue:975-1035,Wed:975-1035,Fri:975-1035" data-name="Chinese L2-B" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L2-B</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Sun</td>
+          <td>部编语文一年级下</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l2c" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L2-C" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L2-C</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Sun</td>
+          <td>部编语文一年级下</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <!-- L3 group -->
+        <tr class="chinese-row level-first" data-subject="chinese" data-id="ch-l3a" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L3-A" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L3-A</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Yu</td>
+          <td>部编语文二年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l3b" data-slots="Mon:975-1035,Tue:975-1035,Wed:975-1035,Fri:975-1035" data-name="Chinese L3-B" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L3-B</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Yu</td>
+          <td>部编语文二年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l3c" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L3-C" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L3-C</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Zhu</td>
+          <td>部编语文二年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l3da" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L3-DA" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L3-DA</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Laura</td>
+          <td>部编语文二年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l3ea" data-slots="Mon:975-1035,Tue:975-1035,Wed:975-1035,Fri:975-1035" data-name="Chinese L3-EA" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L3-EA</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Laura</td>
+          <td>部编语文二年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l3fa" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L3-FA" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L3-FA</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Zhang</td>
+          <td>部编语文二年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <!-- L4 group -->
+        <tr class="chinese-row level-first" data-subject="chinese" data-id="ch-l4a" data-slots="Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975" data-name="Chinese L4-A" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L4-A</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 3:15–4:15</td>
+          <td class="teacher-name">Ms. Hu</td>
+          <td>部编语文二年级下</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch-l4b" data-slots="Mon:975-1035,Tue:975-1035,Wed:975-1035,Fri:975-1035" data-name="Chinese L4-B" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L4-B</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Hu</td>
+          <td>部编语文二年级下</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+        <!-- L5 -->
+        <tr class="chinese-row level-first" data-subject="chinese" data-id="ch-l5" data-slots="Mon:975-1035,Tue:975-1035,Wed:975-1035,Fri:975-1035" data-name="Chinese L5" data-tuition="$184–$192/week">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chinese">L5</span></td>
+          <td><span class="day">Mon/Tue/Wed/Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Zhang</td>
+          <td>部编语文三年级上</td>
+          <td class="tuition-info">$184–$192/week</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-footnote">* 中文课按实际中文水平分级，同一级别多个班次可根据时间和老师选择。Chinese classes grouped by level — pick any section within your level.</div>
+  </div>
+
+  <!-- ======== ENGLISH ======== -->
+  <div class="subject-section">
+    <div class="subject-header english">英语阅读写作 English Reading &amp; Writing</div>
+    <table class="sched-table" id="table-english">
+      <thead>
+        <tr>
+          <th class="english" style="width:22px"></th>
+          <th class="english" style="width:14%">班级 Class</th>
+          <th class="english" style="width:26%">时间 Schedule</th>
+          <th class="english" style="width:14%">教师 Teacher</th>
+          <th class="english" style="width:16%">参考年级 Grade</th>
+          <th class="english" style="width:24%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="english-row" data-subject="english" data-id="en-lk" data-slots="Mon:975-1035,Thu:1035-1095" data-name="English LK" data-tuition="$1,520/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">LK</span></td>
+          <td><span class="day">Mon</span> 4:15–5:15 / <span class="day">Thu</span> 5:15–6:15</td>
+          <td class="teacher-name">Mr. Garcia</td>
+          <td><span class="grade-tag">K</span></td>
+          <td class="tuition-info">$1,520/semester<span class="course-desc">38 classes</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en-l1" data-slots="Mon:1035-1095,Thu:975-1035" data-name="English L1" data-tuition="$1,520/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">L1</span></td>
+          <td><span class="day">Mon</span> 5:15–6:15 / <span class="day">Thu</span> 4:15–5:15</td>
+          <td class="teacher-name">Mr. Garcia</td>
+          <td><span class="grade-tag">1st</span></td>
+          <td class="tuition-info">$1,520/semester<span class="course-desc">38 classes</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en-l2" data-slots="Tue:1035-1095" data-name="English L2" data-tuition="$800/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">L2</span></td>
+          <td><span class="day">Tue</span> 5:15–6:15</td>
+          <td class="teacher-name">Mr. Garcia</td>
+          <td><span class="grade-tag">2nd</span></td>
+          <td class="tuition-info">$800/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en-l3a" data-slots="Thu:975-1035" data-name="English L3-A" data-tuition="$800/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">L3-A</span></td>
+          <td><span class="day">Thu</span> 4:15–5:15</td>
+          <td class="teacher-name">Mr. Wang</td>
+          <td><span class="grade-tag">3rd</span></td>
+          <td class="tuition-info">$800/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en-l3b" data-slots="Thu:915-975" data-name="English L3-B" data-tuition="$800/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">L3-B</span></td>
+          <td><span class="day">Thu</span> 3:15–4:15</td>
+          <td class="teacher-name">Mr. Wang</td>
+          <td><span class="grade-tag">3rd</span></td>
+          <td class="tuition-info">$800/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en-l4" data-slots="Thu:1035-1125" data-name="English L4" data-tuition="$1,100/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">L4</span></td>
+          <td><span class="day">Thu</span> 5:15–6:45</td>
+          <td class="teacher-name">Mr. Wang</td>
+          <td><span class="grade-tag">4th</span></td>
+          <td class="tuition-info">$1,100/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en-l56" data-slots="Fri:1035-1125" data-name="English L5&6" data-tuition="$1,100/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id english">L5&amp;6</span></td>
+          <td><span class="day">Fri</span> 5:15–6:45</td>
+          <td class="teacher-name">Mr. Garcia</td>
+          <td><span class="grade-tag">5th</span> <span class="grade-tag">6th</span></td>
+          <td class="tuition-info">$1,100/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== MATH ======== -->
+  <div class="subject-section">
+    <div class="subject-header math">数学 Math</div>
+    <table class="sched-table" id="table-math">
+      <thead>
+        <tr>
+          <th class="math" style="width:22px"></th>
+          <th class="math" style="width:14%">班级 Class</th>
+          <th class="math" style="width:26%">时间 Schedule</th>
+          <th class="math" style="width:14%">教师 Teacher</th>
+          <th class="math" style="width:16%">参考年级 Grade</th>
+          <th class="math" style="width:24%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="math-row" data-subject="math" data-id="ma-l1a" data-slots="Tue:975-1035,Thu:1035-1095" data-name="Math L1-A" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L1-A</span></td>
+          <td><span class="day">Tue</span> 4:15–5:15 / <span class="day">Thu</span> 5:15–6:15</td>
+          <td class="teacher-name">Ms. He</td>
+          <td><span class="grade-tag">1st</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l1b" data-slots="Mon:1035-1095,Thu:975-1035" data-name="Math L1-B" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L1-B</span></td>
+          <td><span class="day">Mon</span> 5:15–6:15 / <span class="day">Thu</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Xu</td>
+          <td><span class="grade-tag">1st</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l2a" data-slots="Mon:975-1035,Wed:975-1035" data-name="Math L2-A" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L2-A</span></td>
+          <td><span class="day">Mon / Wed</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. He</td>
+          <td><span class="grade-tag">2nd</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l2b" data-slots="Mon:1035-1095,Wed:1035-1095" data-name="Math L2-B" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L2-B</span></td>
+          <td><span class="day">Mon / Wed</span> 5:15–6:15</td>
+          <td class="teacher-name">Ms. Zhu</td>
+          <td><span class="grade-tag">2nd</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l3a" data-slots="Mon:975-1035,Wed:975-1035" data-name="Math L3-A" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L3-A</span></td>
+          <td><span class="day">Mon / Wed</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. Xu</td>
+          <td><span class="grade-tag">3rd</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l3b" data-slots="Tue:1035-1095,Wed:1035-1095" data-name="Math L3-B" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L3-B</span></td>
+          <td><span class="day">Tue / Wed</span> 5:15–6:15</td>
+          <td class="teacher-name">Ms. Xu</td>
+          <td><span class="grade-tag">3rd</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l4a" data-slots="Tue:975-1035,Thu:1035-1095" data-name="Math L4A" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L4A</span></td>
+          <td><span class="day">Tue</span> 4:15–5:15 / <span class="day">Thu</span> 5:15–6:15</td>
+          <td class="teacher-name">Ms. Xu</td>
+          <td><span class="grade-tag">4th</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-l4b" data-slots="Tue:1035-1095,Thu:975-1035" data-name="Math L4B" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">L4B</span></td>
+          <td><span class="day">Tue</span> 5:15–6:15 / <span class="day">Thu</span> 4:15–5:15</td>
+          <td class="teacher-name">Ms. He</td>
+          <td><span class="grade-tag">4th</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma-pre" data-slots="Mon:1035-1095,Wed:1035-1095" data-name="Math Pre-Algebra" data-tuition="$1,600/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id math">Pre-Algebra</span></td>
+          <td><span class="day">Mon / Wed</span> 5:15–6:15</td>
+          <td class="teacher-name">Ms. He</td>
+          <td><span class="grade-tag">5th</span> <span class="grade-tag">6th</span></td>
+          <td class="tuition-info">$1,600/semester<span class="course-desc">40 classes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== ART ======== -->
+  <div class="subject-section">
+    <div class="subject-header art">美术 Art</div>
+    <table class="sched-table" id="table-art">
+      <thead>
+        <tr>
+          <th class="art" style="width:22px"></th>
+          <th class="art" style="width:18%">班级 Class</th>
+          <th class="art" style="width:22%">时间 Schedule</th>
+          <th class="art" style="width:16%">教师 Teacher</th>
+          <th class="art" style="width:16%">参考年级 Grade</th>
+          <th class="art" style="width:22%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="art-row" data-subject="art" data-id="art-va" data-slots="Tue:840-900" data-name="ArtVenture-A" data-tuition="$756/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id art">ArtVenture-A</span></td>
+          <td><span class="day">Tue</span> 2:00–3:00</td>
+          <td class="teacher-name">Lumine Academy</td>
+          <td><span class="grade-tag">K–3rd</span></td>
+          <td class="tuition-info">$756/semester<span class="course-desc">21 classes</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="art-vb" data-slots="Tue:840-900" data-name="ArtVenture-B" data-tuition="$756/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id art">ArtVenture-B</span></td>
+          <td><span class="day">Tue</span> 2:00–3:00</td>
+          <td class="teacher-name">Lumine Academy</td>
+          <td><span class="grade-tag">K–3rd</span></td>
+          <td class="tuition-info">$756/semester<span class="course-desc">21 classes</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="art-vc" data-slots="Tue:1035-1095" data-name="ArtVenture-C" data-tuition="$756/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id art">ArtVenture-C</span></td>
+          <td><span class="day">Tue</span> 5:15–6:15</td>
+          <td class="teacher-name">Lumine Academy</td>
+          <td><span class="grade-tag">K–3rd</span></td>
+          <td class="tuition-info">$756/semester<span class="course-desc">21 classes</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="art-ve" data-slots="Tue:975-1035" data-name="ArtVenture-E" data-tuition="$756/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id art">ArtVenture-E</span></td>
+          <td><span class="day">Tue</span> 4:15–5:15</td>
+          <td class="teacher-name">Lumine Academy</td>
+          <td><span class="grade-tag">K–3rd</span></td>
+          <td class="tuition-info">$756/semester<span class="course-desc">21 classes</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="art-ib" data-slots="Fri:975-1035" data-name="Artistic Intrigue-B" data-tuition="$792/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id art">Artistic Intrigue-B</span></td>
+          <td><span class="day">Fri</span> 4:15–5:15</td>
+          <td class="teacher-name">Lumine Academy</td>
+          <td><span class="grade-tag">3rd–5th</span></td>
+          <td class="tuition-info">$792/semester<span class="course-desc">22 classes</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="art-ia" data-slots="Fri:1035-1095" data-name="Artistic Intrigue-A" data-tuition="$792/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id art">Artistic Intrigue-A</span></td>
+          <td><span class="day">Fri</span> 5:15–6:15</td>
+          <td class="teacher-name">Lumine Academy</td>
+          <td><span class="grade-tag">3rd–5th</span></td>
+          <td class="tuition-info">$792/semester<span class="course-desc">22 classes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== CHESS ======== -->
+  <div class="subject-section">
+    <div class="subject-header chess">国际象棋 Chess</div>
+    <table class="sched-table" id="table-chess">
+      <thead>
+        <tr>
+          <th class="chess" style="width:22px"></th>
+          <th class="chess" style="width:14%">班级 Class</th>
+          <th class="chess" style="width:22%">时间 Schedule</th>
+          <th class="chess" style="width:16%">教师 Teacher</th>
+          <th class="chess" style="width:20%">参考水平 Level</th>
+          <th class="chess" style="width:22%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="chess-row" data-subject="chess" data-id="chess-l1" data-slots="Tue:975-1035" data-name="Chess L1" data-tuition="$525/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chess">L1</span></td>
+          <td><span class="day">Tue</span> 4:15–5:15</td>
+          <td class="teacher-name">Castle Chess</td>
+          <td><span class="grade-tag">半年经验 half yr exp</span></td>
+          <td class="tuition-info">$525/semester<span class="course-desc">21 classes</span></td>
+        </tr>
+        <tr class="chess-row" data-subject="chess" data-id="chess-l3" data-slots="Tue:1035-1095" data-name="Chess L3" data-tuition="$525/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id chess">L3</span></td>
+          <td><span class="day">Tue</span> 5:15–6:15</td>
+          <td class="teacher-name">Castle Chess</td>
+          <td><span class="grade-tag">一年以上 1yr+ exp</span></td>
+          <td class="tuition-info">$525/semester<span class="course-desc">21 classes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== SPEECH & DEBATE ======== -->
+  <div class="subject-section">
+    <div class="subject-header speech">演讲辩论 Speech &amp; Debate</div>
+    <table class="sched-table" id="table-speech">
+      <thead>
+        <tr>
+          <th class="speech" style="width:22px"></th>
+          <th class="speech" style="width:14%">班级 Class</th>
+          <th class="speech" style="width:22%">时间 Schedule</th>
+          <th class="speech" style="width:16%">教师 Teacher</th>
+          <th class="speech" style="width:20%">参考年级 Grade</th>
+          <th class="speech" style="width:22%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="speech-row" data-subject="speech" data-id="speech-l1" data-slots="Fri:1035-1095" data-name="Speech L1" data-tuition="$750/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id speech">L1</span></td>
+          <td><span class="day">Fri</span> 5:15–6:15</td>
+          <td class="teacher-name">Rose Debate</td>
+          <td><span class="grade-tag">1st–2nd</span></td>
+          <td class="tuition-info">$750/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+        <tr class="speech-row" data-subject="speech" data-id="speech-l3" data-slots="Fri:1035-1095" data-name="Speech L3" data-tuition="$750/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id speech">L3</span></td>
+          <td><span class="day">Fri</span> 5:15–6:15</td>
+          <td class="teacher-name">Rose Debate</td>
+          <td><span class="grade-tag">4th–5th</span></td>
+          <td class="tuition-info">$750/semester<span class="course-desc">20 classes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== PINGPONG ======== -->
+  <div class="subject-section">
+    <div class="subject-header pingpong">乒乓球 Pingpong</div>
+    <table class="sched-table" id="table-pingpong">
+      <thead>
+        <tr>
+          <th class="pingpong" style="width:22px"></th>
+          <th class="pingpong" style="width:14%">班级 Class</th>
+          <th class="pingpong" style="width:22%">时间 Schedule</th>
+          <th class="pingpong" style="width:16%">教师 Teacher</th>
+          <th class="pingpong" style="width:20%">参考水平 Level</th>
+          <th class="pingpong" style="width:22%">学费 Tuition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="pingpong-row" data-subject="pingpong" data-id="pp-l1" data-slots="Wed:975-1035" data-name="Pingpong L1" data-tuition="$770/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id pingpong">L1</span></td>
+          <td><span class="day">Wed</span> 4:15–5:15</td>
+          <td class="teacher-name">Swan Pingpong</td>
+          <td><span class="grade-tag">半年经验 half yr exp</span></td>
+          <td class="tuition-info">$770/semester<span class="course-desc">22 classes</span></td>
+        </tr>
+        <tr class="pingpong-row" data-subject="pingpong" data-id="pp-l2" data-slots="Wed:1035-1095" data-name="Pingpong L2" data-tuition="$770/semester">
+          <td class="check-col">&#9675;</td>
+          <td><span class="class-id pingpong">L2</span></td>
+          <td><span class="day">Wed</span> 5:15–6:15</td>
+          <td class="teacher-name">Swan Pingpong</td>
+          <td><span class="grade-tag">一年以上 1yr+ exp</span></td>
+          <td class="tuition-info">$770/semester<span class="course-desc">22 classes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== MY SCHEDULE ======== -->
+  <div class="my-schedule" id="mySchedule">
+    <div class="my-schedule-title">我的课表 My Schedule</div>
+    <div class="week-grid" id="weekGrid"></div>
+    <div class="summary-box" id="summaryBox"></div>
+    <div class="action-btns">
+      <button class="print-btn" onclick="printSchedule()">打印课表 Print</button>
+      <button class="save-img-btn" onclick="saveAsImage()">保存图片 Save Image</button>
+    </div>
+  </div>
+
+  <div class="semester-note">2026 Spring Semester: 01/05/2026 – 06/07/2026 · GR EDU Cupertino</div>
+
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+/* ===== Constants ===== */
+const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+const DAY_LABELS = { Mon:'周一 Mon', Tue:'周二 Tue', Wed:'周三 Wed', Thu:'周四 Thu', Fri:'周五 Fri' };
+const COLORS = {
+  chinese:'#FF8C00', english:'#1976d2', math:'#388e3c',
+  art:'#9c27b0', chess:'#795548', speech:'#e91e63', pingpong:'#00897b'
+};
+const SUBJECTS = ['chinese','english','math','art','chess','speech','pingpong'];
+
+/* All available time slot rows for the grid (minutes from midnight) */
+const ALL_TIME_SLOTS = [
+  { start: 840, end: 900, label: '2:00–3:00' },
+  { start: 915, end: 975, label: '3:15–4:15' },
+  { start: 975, end: 1035, label: '4:15–5:15' },
+  { start: 1035, end: 1095, label: '5:15–6:15' },
+  { start: 1095, end: 1125, label: '6:15–6:45' }
+];
+
+/* ===== State ===== */
+let selected = {};
+SUBJECTS.forEach(s => selected[s] = null);
+
+/* ===== Parse slots from data attribute ===== */
+function parseSlots(slotsStr) {
+  // Format: "Mon:915-975,Tue:915-975,Wed:915-975,Fri:915-975"
+  return slotsStr.split(',').map(part => {
+    const [day, range] = part.trim().split(':');
+    const [start, end] = range.split('-').map(Number);
+    return { day: day.trim(), start, end };
+  });
+}
+
+/* ===== Get selected courses with parsed data ===== */
+function getSelected() {
+  const result = [];
+  for (const [subject, id] of Object.entries(selected)) {
+    if (!id) continue;
+    const row = document.querySelector('tr[data-id="' + id + '"]');
+    if (row) {
+      const slots = parseSlots(row.dataset.slots);
+      const days = [...new Set(slots.map(s => s.day))];
+      result.push({
+        id, subject,
+        name: row.dataset.name,
+        tuition: row.dataset.tuition,
+        slots,
+        days
+      });
+    }
+  }
+  return result;
+}
+
+/* ===== Conflict detection ===== */
+function findConflicts(courses) {
+  const conflicts = [];
+  for (let i = 0; i < courses.length; i++) {
+    for (let j = i + 1; j < courses.length; j++) {
+      const a = courses[i], b = courses[j];
+      const overlapping = [];
+      for (const sa of a.slots) {
+        for (const sb of b.slots) {
+          if (sa.day === sb.day && sa.start < sb.end && sb.start < sa.end) {
+            overlapping.push({
+              day: sa.day,
+              start: Math.max(sa.start, sb.start),
+              end: Math.min(sa.end, sb.end)
+            });
+          }
+        }
+      }
+      if (overlapping.length > 0) {
+        conflicts.push({ a, b, overlaps: overlapping });
+      }
+    }
+  }
+  return conflicts;
+}
+
+/* ===== Time formatting ===== */
+function minToTime(m) {
+  var h = Math.floor(m / 60);
+  var mm = m % 60;
+  var suffix = h >= 12 ? 'PM' : 'AM';
+  if (h > 12) h -= 12;
+  return h + ':' + (mm < 10 ? '0' + mm : mm);
+}
+function minToRange(s, e) { return minToTime(s) + '–' + minToTime(e); }
+
+/* ===== Determine which time slot rows are needed ===== */
+function getActiveTimeSlots(courses) {
+  if (courses.length === 0) return [];
+  let minStart = Infinity, maxEnd = 0;
+  courses.forEach(c => c.slots.forEach(s => {
+    if (s.start < minStart) minStart = s.start;
+    if (s.end > maxEnd) maxEnd = s.end;
+  }));
+  return ALL_TIME_SLOTS.filter(ts => ts.start < maxEnd && ts.end > minStart);
+}
+
+/* ===== Build weekly grid ===== */
+function buildGrid(courses, conflicts) {
+  const grid = document.getElementById('weekGrid');
+  grid.innerHTML = '';
+
+  const timeSlots = getActiveTimeSlots(courses);
+  if (timeSlots.length === 0) return;
+
+  // Build conflict lookup: "day-slotStart" -> true
+  const conflictCells = new Set();
+  conflicts.forEach(c => {
+    c.overlaps.forEach(o => {
+      timeSlots.forEach(ts => {
+        if (ts.start < o.end && ts.end > o.start) {
+          conflictCells.add(o.day + '-' + ts.start);
+        }
+      });
+    });
+  });
+
+  // Header row
+  var corner = document.createElement('div');
+  corner.className = 'grid-header time-col';
+  corner.textContent = '';
+  grid.appendChild(corner);
+
+  DAYS.forEach(day => {
+    var h = document.createElement('div');
+    h.className = 'grid-header';
+    h.textContent = DAY_LABELS[day];
+    grid.appendChild(h);
+  });
+
+  // Time rows
+  timeSlots.forEach(ts => {
+    var timeCell = document.createElement('div');
+    timeCell.className = 'grid-time';
+    timeCell.textContent = ts.label;
+    grid.appendChild(timeCell);
+
+    DAYS.forEach(day => {
+      var cell = document.createElement('div');
+      cell.className = 'grid-cell';
+
+      courses.forEach(c => {
+        c.slots.forEach(slot => {
+          if (slot.day === day && slot.start < ts.end && slot.end > ts.start) {
+            var block = document.createElement('div');
+            block.className = 'slot-block ' + c.subject;
+            if (conflictCells.has(day + '-' + ts.start)) {
+              block.style.outline = '3px solid #d32f2f';
+              block.style.outlineOffset = '-1px';
+            }
+            block.innerHTML = c.name + '<span class="slot-time">' + minToRange(slot.start, slot.end) + '</span>';
+            cell.appendChild(block);
+          }
+        });
+      });
+
+      grid.appendChild(cell);
+    });
+  });
+}
+
+/* ===== Row click handler ===== */
+document.querySelectorAll('.sched-table tbody tr').forEach(function(row) {
+  row.addEventListener('click', function() {
+    var subject = this.dataset.subject;
+    var id = this.dataset.id;
+    if (selected[subject] === id) {
+      selected[subject] = null;
+    } else {
+      selected[subject] = id;
+    }
+    update();
+  });
+});
+
+/* ===== Main update ===== */
+function update() {
+  var courses = getSelected();
+  var conflicts = findConflicts(courses);
+
+  // Update row styles
+  document.querySelectorAll('.sched-table tbody tr').forEach(function(row) {
+    var isSelected = selected[row.dataset.subject] === row.dataset.id;
+    row.classList.toggle('selected', isSelected);
+    row.classList.remove('conflict');
+    row.querySelector('.check-col').innerHTML = isSelected ? '&#9679;' : '&#9675;';
+  });
+
+  // Mark conflict rows
+  var conflictIds = new Set();
+  conflicts.forEach(function(c) { conflictIds.add(c.a.id); conflictIds.add(c.b.id); });
+  conflictIds.forEach(function(id) {
+    var row = document.querySelector('tr[data-id="' + id + '"]');
+    if (row) row.classList.add('conflict');
+  });
+
+  // My Schedule section
+  var section = document.getElementById('mySchedule');
+  if (courses.length === 0) {
+    section.classList.remove('show');
+    return;
+  }
+  section.classList.add('show');
+
+  buildGrid(courses, conflicts);
+
+  // Summary
+  var items = courses.map(function(c) {
+    var schedDesc = [];
+    // Group slots by time for display
+    var seen = {};
+    c.slots.forEach(function(s) {
+      var key = s.start + '-' + s.end;
+      if (!seen[key]) seen[key] = [];
+      seen[key].push(s.day);
+    });
+    for (var key in seen) {
+      var parts = key.split('-');
+      schedDesc.push(seen[key].join('/') + ' ' + minToRange(+parts[0], +parts[1]));
+    }
+    return '<div class="summary-item"><span class="summary-dot" style="background:' + COLORS[c.subject] + '"></span>'
+      + '<strong>' + c.name + '</strong>&nbsp;&nbsp;' + schedDesc.join(', ')
+      + '&nbsp;&nbsp;<span style="color:#999;font-size:12px;">' + c.tuition + '</span></div>';
+  });
+
+  var html = items.join('');
+
+  // Total weekly hours
+  var totalHours = 0;
+  courses.forEach(function(c) {
+    c.slots.forEach(function(s) { totalHours += (s.end - s.start) / 60; });
+  });
+  html += '<div class="summary-total">每周总课时 Weekly Total: ' + totalHours.toFixed(1).replace(/\.0$/, '') + ' hours/week</div>';
+
+  // Tuition list
+  html += '<div class="summary-total" style="border-top:none; padding-top:4px;">学费 Tuition: ';
+  html += courses.map(function(c) { return c.name + ' ' + c.tuition; }).join(' · ');
+  html += '</div>';
+
+  // Conflicts
+  if (conflicts.length > 0) {
+    html += '<div class="summary-conflict">';
+    html += '<div class="conflict-title">&#9888; 时间冲突 Schedule Conflict</div>';
+    html += conflicts.map(function(c) {
+      return c.overlaps.map(function(o) {
+        return '<div class="conflict-item"><strong>' + c.a.name + '</strong> 与 <strong>' + c.b.name
+          + '</strong> 在 ' + o.day + ' ' + minToRange(o.start, o.end) + ' 时间冲突</div>';
+      }).join('');
+    }).join('');
+    html += '</div>';
+  } else if (courses.length >= 2) {
+    html += '<div class="summary-noconflict">&#10003; 所选课程无时间冲突 No conflicts!</div>';
+  }
+
+  html += '<div class="summary-cta">Registration and enrollment please go to StudioDirector.<br>报名注册请前往 StudioDirector 系统。</div>';
+
+  document.getElementById('summaryBox').innerHTML = html;
+}
+
+/* ===== Print / Save ===== */
+function buildPrintHTML() {
+  var css = "* { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: 'Noto Sans SC', sans-serif; padding: 20px; }"
+    + ".my-schedule-title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 16px; }"
+    + ".week-grid { display: grid; grid-template-columns: 80px repeat(5, 1fr); border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px; }"
+    + ".grid-header { font-size: 13px; font-weight: 700; color: #fff; background: #555; padding: 8px 4px; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".grid-header.time-col { background: #777; }"
+    + ".grid-cell { border: 1px solid #eee; padding: 4px; min-height: 54px; }"
+    + ".grid-time { font-size: 12px; font-weight: 600; color: #555; padding: 8px 4px; text-align: center; background: #fafafa; border: 1px solid #eee; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".slot-block { padding: 5px 6px; border-radius: 5px; font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 3px; line-height: 1.3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".slot-block.chinese { background: #FF8C00; } .slot-block.english { background: #1976d2; } .slot-block.math { background: #388e3c; }"
+    + ".slot-block.art { background: #9c27b0; } .slot-block.chess { background: #795548; } .slot-block.speech { background: #e91e63; } .slot-block.pingpong { background: #00897b; }"
+    + ".slot-time { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }"
+    + ".summary-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; }"
+    + ".summary-item { font-size: 14px; color: #333; padding: 3px 0; display: flex; align-items: center; gap: 8px; }"
+    + ".summary-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".summary-total { font-size: 14px; font-weight: 700; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; }"
+    + ".summary-noconflict { font-size: 13px; color: #2e7d32; font-weight: 600; margin-top: 6px; }"
+    + ".summary-cta { font-size: 13px; color: #444; margin-top: 10px; padding: 10px 14px; background: #e3f2fd; border-radius: 6px; line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".summary-cta a { color: #1976d2; font-weight: 700; text-decoration: none; }"
+    + ".action-btns { display: none; }"
+    + ".summary-conflict { background: #fff5f5; border: 2px solid #d32f2f; border-radius: 6px; padding: 10px 14px; margin-top: 10px; }";
+  var content = document.getElementById('mySchedule').innerHTML;
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>我的课表 My Schedule</title>'
+    + '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">'
+    + '<style>' + css + '</style></head><body>' + content + '</body></html>';
+}
+
+function printSchedule() {
+  var html = buildPrintHTML();
+  try {
+    var win = window.open('', '_blank');
+    if (win) {
+      win.document.write(html);
+      win.document.close();
+      setTimeout(function() { win.print(); }, 600);
+      return;
+    }
+  } catch(e) {}
+  try {
+    var win2 = top.open('', '_blank');
+    if (win2) {
+      win2.document.write(html);
+      win2.document.close();
+      setTimeout(function() { win2.print(); }, 600);
+      return;
+    }
+  } catch(e) {}
+  saveAsImage();
+}
+
+function saveAsImage() {
+  var el = document.getElementById('mySchedule');
+  var btns = el.querySelector('.action-btns');
+  if (btns) btns.style.display = 'none';
+
+  html2canvas(el, {
+    scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false
+  }).then(function(canvas) {
+    if (btns) btns.style.display = '';
+    if (navigator.share && navigator.canShare) {
+      canvas.toBlob(function(blob) {
+        var file = new File([blob], 'spring_schedule.png', { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file], title: '我的课表 My Schedule' }).catch(function() {
+            downloadCanvas(canvas);
+          });
+        } else {
+          downloadCanvas(canvas);
+        }
+      }, 'image/png');
+    } else {
+      downloadCanvas(canvas);
+    }
+  }).catch(function() {
+    if (btns) btns.style.display = '';
+    alert('图片生成失败，请使用截图功能保存课表。\nImage generation failed. Please use screenshot instead.');
+  });
+}
+
+function downloadCanvas(canvas) {
+  var link = document.createElement('a');
+  link.download = 'spring_schedule.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+</script>
+</body>
+</html>

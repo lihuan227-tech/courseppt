@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>选课助手 | Course Selector</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; background: #f5f5f5; font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  h2 { text-align: center; font-size: 24px; color: #2C2C2C; margin-bottom: 4px; }
+  .subtitle { text-align: center; font-size: 14px; color: #666; margin-bottom: 24px; }
+
+  /* Subject selectors */
+  .selector-row {
+    display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .selector-card {
+    flex: 1; min-width: 240px; background: #fff; border-radius: 10px;
+    padding: 16px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-top: 4px solid #ccc;
+  }
+  .selector-card.chinese { border-top-color: #FF8C00; }
+  .selector-card.english { border-top-color: #1976d2; }
+  .selector-card.math    { border-top-color: #388e3c; }
+
+  .selector-label {
+    font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .selector-label.chinese { color: #e65100; }
+  .selector-label.english { color: #1565c0; }
+  .selector-label.math    { color: #2e7d32; }
+
+  .selector-label .dot {
+    width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+  }
+  .dot.chinese { background: #FF8C00; }
+  .dot.english { background: #1976d2; }
+  .dot.math    { background: #388e3c; }
+
+  .course-options { display: flex; flex-direction: column; gap: 6px; }
+
+  .course-option {
+    display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+    border: 2px solid #e8e8e8; border-radius: 8px; cursor: pointer;
+    transition: all 0.2s; background: #fff; user-select: none;
+  }
+  .course-option:hover { background: #fafafa; }
+  .course-option.selected { border-color: currentColor; background: #fafafa; }
+  .course-option.selected.chinese { border-color: #FF8C00; background: #fff8f0; }
+  .course-option.selected.english { border-color: #1976d2; background: #f0f6ff; }
+  .course-option.selected.math    { border-color: #388e3c; background: #f1f8f3; }
+  .course-option.conflict { border-color: #d32f2f !important; background: #fff5f5 !important; }
+
+  .course-option input[type="radio"] { display: none; }
+
+  .radio-dot {
+    width: 18px; height: 18px; border-radius: 50%; border: 2px solid #ccc;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .course-option.selected .radio-dot { border-color: currentColor; }
+  .course-option.selected .radio-dot::after {
+    content: ''; width: 10px; height: 10px; border-radius: 50%;
+  }
+  .course-option.selected.chinese .radio-dot { border-color: #FF8C00; }
+  .course-option.selected.chinese .radio-dot::after { background: #FF8C00; }
+  .course-option.selected.english .radio-dot { border-color: #1976d2; }
+  .course-option.selected.english .radio-dot::after { background: #1976d2; }
+  .course-option.selected.math .radio-dot { border-color: #388e3c; }
+  .course-option.selected.math .radio-dot::after { background: #388e3c; }
+
+  .option-info { flex: 1; }
+  .option-name { font-weight: 700; font-size: 14px; color: #2a2a2a; }
+  .option-schedule { font-size: 12px; color: #777; margin-top: 1px; }
+  .option-desc { font-size: 11px; color: #666; margin-top: 1px; }
+  .option-grade { font-size: 11px; color: #999; }
+
+  .level-note {
+    font-size: 11px; color: #555; padding: 8px 12px; margin-top: 6px;
+    background: #fafafa; border-radius: 6px; line-height: 1.5;
+  }
+  .level-note a { color: #1976d2; text-decoration: none; font-weight: 600; }
+  .level-note a:hover { text-decoration: underline; }
+
+  .deselect-btn {
+    font-size: 12px; color: #999; cursor: pointer; padding: 4px 0;
+    text-align: center; margin-top: 4px;
+    transition: color 0.2s;
+  }
+  .deselect-btn:hover { color: #d32f2f; }
+
+  /* Conflict alert */
+  .conflict-banner {
+    background: #fff5f5; border: 2px solid #d32f2f; border-radius: 10px;
+    padding: 14px 20px; margin-bottom: 20px; display: none;
+  }
+  .conflict-banner.show { display: block; }
+  .conflict-title { font-size: 15px; font-weight: 700; color: #d32f2f; margin-bottom: 6px; }
+  .conflict-item { font-size: 13px; color: #555; padding: 2px 0; }
+  .conflict-item strong { color: #d32f2f; }
+
+  /* No-conflict banner */
+  .ok-banner {
+    background: #f1f8f3; border: 2px solid #388e3c; border-radius: 10px;
+    padding: 14px 20px; margin-bottom: 20px; display: none; text-align: center;
+  }
+  .ok-banner.show { display: block; }
+  .ok-text { font-size: 15px; font-weight: 700; color: #2e7d32; }
+
+  /* Weekly schedule grid */
+  .schedule-section { margin-top: 8px; }
+  .schedule-title { font-size: 18px; font-weight: 700; color: #2C2C2C; text-align: center; margin-bottom: 12px; }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: 70px repeat(5, 1fr);
+    background: #fff; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .grid-header {
+    font-size: 14px; font-weight: 700; color: #fff; background: #555;
+    padding: 10px 6px; text-align: center;
+  }
+  .grid-header.time-col { background: #777; font-size: 12px; }
+
+  .grid-cell {
+    border: 1px solid #f0f0f0; padding: 6px; min-height: 60px;
+    position: relative; font-size: 12px;
+  }
+
+  .grid-time {
+    font-size: 13px; font-weight: 600; color: #555; padding: 10px 6px;
+    text-align: center; background: #fafafa; border: 1px solid #f0f0f0;
+  }
+
+  .slot-block {
+    padding: 6px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    color: #fff; margin-bottom: 4px; line-height: 1.3;
+  }
+  .slot-block.chinese { background: #FF8C00; }
+  .slot-block.english { background: #1976d2; }
+  .slot-block.math    { background: #388e3c; }
+  .slot-block.conflict-slot { outline: 3px solid #d32f2f; outline-offset: -1px; }
+
+  .slot-desc { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }
+
+  /* Summary */
+  .summary-section {
+    margin-top: 20px; background: #fff; border-radius: 10px; padding: 18px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .summary-title { font-size: 16px; font-weight: 700; color: #2C2C2C; margin-bottom: 10px; }
+  .summary-item { font-size: 14px; color: #444; padding: 4px 0; display: flex; gap: 8px; align-items: center; }
+  .summary-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .summary-empty { font-size: 14px; color: #999; }
+
+  .total-hours { margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 14px; color: #2C2C2C; font-weight: 600; }
+
+  .register-cta {
+    margin-top: 14px; padding: 14px 18px; background: #f0f6ff; border: 2px solid #1976d2;
+    border-radius: 10px; text-align: center; display: none;
+  }
+  .register-cta.show { display: block; }
+  .register-cta-title { font-size: 14px; font-weight: 700; color: #1565c0; margin-bottom: 4px; }
+  .register-cta-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .register-cta a { color: #1976d2; font-weight: 700; text-decoration: none; }
+  .register-cta a:hover { text-decoration: underline; }
+
+  @media (max-width: 700px) {
+    .selector-row { flex-direction: column; }
+    .week-grid { grid-template-columns: 50px repeat(5, 1fr); }
+    .grid-header, .grid-time { font-size: 11px; padding: 8px 4px; }
+    .slot-block { font-size: 10px; padding: 4px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <h2>暑期选课助手</h2>
+  <p class="subtitle">Summer Course Selector &middot; 选择课程，自动检测时间冲突</p>
+
+  <!-- Conflict / OK banners -->
+  <div class="conflict-banner" id="conflictBanner">
+    <div class="conflict-title">&#9888; 时间冲突 Schedule Conflict</div>
+    <div id="conflictList"></div>
+  </div>
+  <div class="ok-banner" id="okBanner">
+    <div class="ok-text">&#10003; 所选课程无时间冲突 No conflicts!</div>
+  </div>
+
+  <!-- Selectors -->
+  <div class="selector-row">
+    <!-- Chinese -->
+    <div class="selector-card chinese">
+      <div class="selector-label chinese"><span class="dot chinese"></span>中文 Chinese</div>
+      <div class="course-options" id="chineseOptions"></div>
+      <div class="level-note">* 中文课按实际中文水平分级，非按学校年级分班。建议完成<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-chinese-course" target="_blank">入学测评</a>后选择最适合的级别。</div>
+      <div class="deselect-btn" onclick="deselect('chinese')">&#10005; 不选中文</div>
+    </div>
+    <!-- English -->
+    <div class="selector-card english">
+      <div class="selector-label english"><span class="dot english"></span>英语 English</div>
+      <div class="course-options" id="englishOptions"></div>
+      <div class="deselect-btn" onclick="deselect('english')">&#10005; 不选英语</div>
+    </div>
+    <!-- Math -->
+    <div class="selector-card math">
+      <div class="selector-label math"><span class="dot math"></span>数学 Math</div>
+      <div class="course-options" id="mathOptions"></div>
+      <div class="level-note">* 数学课按实际水平分级，非按学校年级分班。建议查看<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">各级别课程内容</a>后选择最适合的级别。</div>
+      <div class="deselect-btn" onclick="deselect('math')">&#10005; 不选数学</div>
+    </div>
+  </div>
+
+  <!-- Weekly schedule -->
+  <div class="schedule-section">
+    <div class="schedule-title">每周课表 Weekly Schedule</div>
+    <div class="week-grid" id="weekGrid"></div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-section">
+    <div class="summary-title">已选课程 Selected Courses</div>
+    <div id="summaryContent">
+      <div class="summary-empty">请选择课程 Please select courses above</div>
+    </div>
+    <div class="register-cta" id="registerCta">
+      <div class="register-cta-title">下一步 Next Step</div>
+      <div class="register-cta-text">请截图保存已选课程，然后前往 <a href="https://www.mygredu.com/summer-camp/summer-electives" target="_blank">报名页面</a> 填写报名表。<br>Please take a screenshot of your selections, then go to the <a href="https://www.mygredu.com/summer-camp/summer-electives" target="_blank">registration page</a> to complete enrollment.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const COURSES = {
+  chinese: [
+    { id: 'ch1', name: 'Chinese L1（零基础）', desc: '基础识字、写字、分级阅读', days: ['Tue','Thu'], start: 17, end: 18, grade: 'K / 1st' },
+    { id: 'ch2', name: 'Chinese L2', desc: '部编版语文一年级上册', days: ['Mon','Wed'], start: 16, end: 17, grade: '1st / 2nd' },
+    { id: 'ch3', name: 'Chinese L3', desc: '部编版语文一年级下册', days: ['Mon','Wed'], start: 17, end: 18, grade: '2nd / 3rd' },
+    { id: 'ch4', name: 'Chinese L4', desc: '部编版语文二年级上册', days: ['Fri'], start: 16, end: 18, grade: '3rd–5th' },
+    { id: 'ch5', name: 'Chinese L5', desc: '部编版语文二年级下册', days: ['Tue','Thu'], start: 16, end: 17, grade: '4th+' },
+  ],
+  english: [
+    { id: 'en0', name: 'English LK', desc: 'Phonics, Sight Words, Read Aloud', days: ['Mon','Wed'], start: 16, end: 17, grade: 'K' },
+    { id: 'en1', name: 'English L1', desc: 'Creative Writing (WQED KIDS)', days: ['Mon','Wed'], start: 17, end: 18, grade: '1st' },
+    { id: 'en23', name: 'English L2 & 3', desc: 'Creative Writing (Storyworks)', days: ['Tue','Thu'], start: 16, end: 17, grade: '2nd / 3rd' },
+    { id: 'en45', name: 'English L4 & 5', desc: 'Creative Writing (Storyworks)', days: ['Tue','Thu'], start: 17, end: 18, grade: '3rd / 4th–5th' },
+  ],
+  math: [
+    { id: 'ma1', name: 'Math L1', desc: '加减法、应用题、图形', days: ['Tue','Thu'], start: 16, end: 17, grade: '1st' },
+    { id: 'ma2', name: 'Math L2', desc: '奇偶数、乘法、括号运算', days: ['Tue','Thu'], start: 17, end: 18, grade: '2nd / 3rd' },
+    { id: 'ma3', name: 'Math L3', desc: '运算顺序、括号进阶、逻辑推理', days: ['Mon','Wed'], start: 16, end: 17, grade: '3rd' },
+    { id: 'ma4', name: 'Math L4', desc: '质数合数、质因数分解', days: ['Mon','Wed'], start: 17, end: 18, grade: '4th–5th' },
+    { id: 'ma5', name: 'Math L5', desc: '负数、分数小数百分数、指数', days: ['Fri'], start: 16, end: 18, grade: '4th–5th' },
+  ]
+};
+
+const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+const DAY_LABELS = { Mon: '周一 Mon', Tue: '周二 Tue', Wed: '周三 Wed', Thu: '周四 Thu', Fri: '周五 Fri' };
+const TIME_SLOTS = [
+  { start: 16, end: 17, label: '4:00–5:00' },
+  { start: 17, end: 18, label: '5:00–6:00' },
+];
+
+let selected = { chinese: null, english: null, math: null };
+
+function formatTime(h) { return (h > 12 ? h - 12 : h) + ':00'; }
+function formatRange(s, e) { return formatTime(s) + '–' + formatTime(e); }
+
+function init() {
+  for (const [subject, courses] of Object.entries(COURSES)) {
+    const container = document.getElementById(subject + 'Options');
+    courses.forEach(course => {
+      const div = document.createElement('div');
+      div.className = 'course-option ' + subject;
+      div.dataset.id = course.id;
+      div.dataset.subject = subject;
+      div.onclick = () => selectCourse(subject, course.id);
+      div.innerHTML = `
+        <div class="radio-dot"></div>
+        <div class="option-info">
+          <div class="option-name">${course.name}</div>
+          <div class="option-desc">${course.desc}</div>
+          <div class="option-schedule">${course.days.join(' / ')} ${formatRange(course.start, course.end)}</div>
+          <div class="option-grade">参考年级 Suggested Grade: ${course.grade}</div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+  buildGrid();
+  update();
+}
+
+function selectCourse(subject, courseId) {
+  if (selected[subject] === courseId) {
+    selected[subject] = null;
+  } else {
+    selected[subject] = courseId;
+  }
+  update();
+}
+
+function deselect(subject) {
+  selected[subject] = null;
+  update();
+}
+
+function getSelectedCourses() {
+  const result = [];
+  for (const [subject, courseId] of Object.entries(selected)) {
+    if (courseId) {
+      const course = COURSES[subject].find(c => c.id === courseId);
+      if (course) result.push({ ...course, subject });
+    }
+  }
+  return result;
+}
+
+function findConflicts(courses) {
+  const conflicts = [];
+  for (let i = 0; i < courses.length; i++) {
+    for (let j = i + 1; j < courses.length; j++) {
+      const a = courses[i], b = courses[j];
+      const commonDays = a.days.filter(d => b.days.includes(d));
+      if (commonDays.length > 0 && a.start < b.end && b.start < a.end) {
+        conflicts.push({ a, b, days: commonDays });
+      }
+    }
+  }
+  return conflicts;
+}
+
+function buildGrid() {
+  const grid = document.getElementById('weekGrid');
+  grid.innerHTML = '';
+
+  // Header row
+  const corner = document.createElement('div');
+  corner.className = 'grid-header time-col';
+  corner.textContent = 'PM';
+  grid.appendChild(corner);
+
+  DAYS.forEach(day => {
+    const h = document.createElement('div');
+    h.className = 'grid-header';
+    h.textContent = DAY_LABELS[day];
+    grid.appendChild(h);
+  });
+
+  // Time rows
+  TIME_SLOTS.forEach(slot => {
+    const timeCell = document.createElement('div');
+    timeCell.className = 'grid-time';
+    timeCell.textContent = slot.label;
+    grid.appendChild(timeCell);
+
+    DAYS.forEach(day => {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.id = `cell-${day}-${slot.start}`;
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function update() {
+  const courses = getSelectedCourses();
+  const conflicts = findConflicts(courses);
+
+  // Update option styles
+  document.querySelectorAll('.course-option').forEach(el => {
+    const subject = el.dataset.subject;
+    const id = el.dataset.id;
+    el.classList.toggle('selected', selected[subject] === id);
+    el.classList.remove('conflict');
+  });
+
+  // Mark conflict options
+  const conflictIds = new Set();
+  conflicts.forEach(c => { conflictIds.add(c.a.id); conflictIds.add(c.b.id); });
+  conflictIds.forEach(id => {
+    const el = document.querySelector(`.course-option[data-id="${id}"]`);
+    if (el) el.classList.add('conflict');
+  });
+
+  // Conflict banner
+  const banner = document.getElementById('conflictBanner');
+  const okBanner = document.getElementById('okBanner');
+  const list = document.getElementById('conflictList');
+
+  if (conflicts.length > 0) {
+    banner.classList.add('show');
+    okBanner.classList.remove('show');
+    list.innerHTML = conflicts.map(c =>
+      `<div class="conflict-item"><strong>${c.a.name}</strong> 与 <strong>${c.b.name}</strong> 在 ${c.days.join(', ')} ${formatRange(Math.max(c.a.start, c.b.start), Math.min(c.a.end, c.b.end))} 时间冲突</div>`
+    ).join('');
+  } else if (courses.length >= 2) {
+    banner.classList.remove('show');
+    okBanner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+    okBanner.classList.remove('show');
+  }
+
+  // Update grid
+  buildGrid();
+  const conflictCells = new Set();
+  // Find which cells have conflicts
+  conflicts.forEach(c => {
+    c.days.forEach(day => {
+      const overlapStart = Math.max(c.a.start, c.b.start);
+      const overlapEnd = Math.min(c.a.end, c.b.end);
+      TIME_SLOTS.forEach(slot => {
+        if (slot.start >= overlapStart && slot.start < overlapEnd) {
+          conflictCells.add(`${day}-${slot.start}`);
+        }
+      });
+    });
+  });
+
+  courses.forEach(course => {
+    course.days.forEach(day => {
+      TIME_SLOTS.forEach(slot => {
+        if (course.start <= slot.start && course.end > slot.start) {
+          const cell = document.getElementById(`cell-${day}-${slot.start}`);
+          if (cell) {
+            const block = document.createElement('div');
+            const isConflict = conflictCells.has(`${day}-${slot.start}`);
+            block.className = `slot-block ${course.subject}` + (isConflict ? ' conflict-slot' : '');
+            block.innerHTML = `${course.name}<span class="slot-desc">${formatRange(course.start, course.end)}</span>`;
+            cell.appendChild(block);
+          }
+        }
+      });
+    });
+  });
+
+  // Summary
+  const summary = document.getElementById('summaryContent');
+  const registerCta = document.getElementById('registerCta');
+  if (courses.length === 0) {
+    summary.innerHTML = '<div class="summary-empty">请选择课程 Please select courses above</div>';
+    registerCta.classList.remove('show');
+  } else {
+    let totalHours = 0;
+    const colors = { chinese: '#FF8C00', english: '#1976d2', math: '#388e3c' };
+    const subjectNames = { chinese: '中文', english: '英语', math: '数学' };
+    const items = courses.map(c => {
+      const weeklyHours = c.days.length * (c.end - c.start);
+      totalHours += weeklyHours;
+      return `<div class="summary-item"><span class="summary-dot" style="background:${colors[c.subject]}"></span><strong>${c.name}</strong>&nbsp;&nbsp;${c.desc}&nbsp;&nbsp;<span style="color:#777;font-size:12px;">${c.days.join(' / ')} ${formatRange(c.start, c.end)}</span>&nbsp;&nbsp;<span style="color:#999;font-size:12px;">(${weeklyHours}h/week)</span></div>`;
+    });
+    items.push(`<div class="total-hours">每周总课时 Total: ${totalHours} hours/week</div>`);
+    summary.innerHTML = items.join('');
+    registerCta.classList.add('show');
+  }
+}
+
+init();
+</script>
+</body>
+</html>

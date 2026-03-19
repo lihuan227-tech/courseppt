@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; background: #fff; font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 10px; }
+
+  /* Subject sections */
+  .subject-section { margin-bottom: 28px; }
+  .subject-header {
+    font-size: 19px; font-weight: 700; padding: 9px 18px;
+    border-radius: 6px; margin-bottom: 4px; color: #fff;
+  }
+  .subject-header.chinese { background: #FF8C00; }
+  .subject-header.english { background: #1976d2; }
+  .subject-header.math    { background: #388e3c; }
+
+  .table-footnote {
+    font-size: 13px; color: #333; padding: 6px 4px; line-height: 1.5;
+  }
+  .table-footnote a { color: #1976d2; text-decoration: none; font-weight: 600; }
+  .table-footnote a:hover { text-decoration: underline; }
+
+  /* Table */
+  .sched-table { width: 100%; border-collapse: collapse; border: 2px solid #ddd; }
+  .sched-table th {
+    font-size: 14px; font-weight: 700; padding: 9px 12px;
+    color: #fff; text-align: center; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .sched-table th.chinese { background: #f59d00; }
+  .sched-table th.english { background: #1e88e5; }
+  .sched-table th.math    { background: #43a047; }
+
+  .sched-table td {
+    font-size: 15px; padding: 9px 12px;
+    border: 1px solid #e0e0e0; color: #2a2a2a; vertical-align: middle;
+  }
+  .sched-table tr:nth-child(even) td { background: #fafafa; }
+  .sched-table tr:nth-child(odd) td { background: #fff; }
+
+  /* Selectable rows */
+  .sched-table tbody tr { cursor: pointer; transition: all 0.15s; }
+  .sched-table tbody tr:hover { background: #f5f5f5; }
+  .sched-table tbody tr:hover td { background: #f5f5f5; }
+  .sched-table tbody tr.selected td { background: #e8f5e9 !important; }
+  .sched-table tbody tr.selected.chinese-row td { background: #fff3e0 !important; }
+  .sched-table tbody tr.selected.english-row td { background: #e3f2fd !important; }
+  .sched-table tbody tr.selected.math-row td { background: #e8f5e9 !important; }
+  .sched-table tbody tr.conflict td { background: #ffebee !important; }
+
+  .check-col {
+    width: 30px; text-align: center; font-size: 18px; color: #ccc;
+  }
+  .selected .check-col { color: #43a047; }
+  .selected.chinese-row .check-col { color: #FF8C00; }
+  .selected.english-row .check-col { color: #1976d2; }
+  .selected.math-row .check-col { color: #388e3c; }
+
+  .level-name { font-weight: 700; font-size: 15px; }
+  .level-name.chinese { color: #e65100; }
+  .level-name.english { color: #1565c0; }
+  .level-name.math    { color: #2e7d32; }
+
+  .course-desc { font-weight: 400; font-size: 12px; color: #777; display: block; margin-top: 2px; }
+  .course-desc a { color: #1976d2; text-decoration: none; font-weight: 500; }
+  .course-desc a:hover { text-decoration: underline; }
+  .course-desc .highlight { font-weight: 700; }
+
+  .day { font-weight: 600; }
+  .no-test { font-size: 12px; color: #999; margin-left: 6px; }
+
+  .inline-link {
+    font-size: 12px; font-weight: 600; color: #1976d2;
+    text-decoration: none; white-space: nowrap; margin-left: 6px;
+  }
+  .inline-link:hover { text-decoration: underline; }
+
+  .grade-tag {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    padding: 2px 10px; border-radius: 12px; background: #f0f0f0; color: #555;
+    margin: 1px 2px;
+  }
+
+  /* Hint */
+  .select-hint {
+    text-align: center; font-size: 16px; font-weight: 700; color: #2C2C2C; margin-bottom: 16px;
+    padding: 10px; background: #fafafa; border-radius: 6px;
+  }
+
+  .summary-conflict {
+    background: #fff5f5; border: 2px solid #d32f2f; border-radius: 6px;
+    padding: 10px 14px; margin-top: 10px;
+  }
+  .conflict-title { font-size: 14px; font-weight: 700; color: #d32f2f; margin-bottom: 4px; }
+  .conflict-item { font-size: 13px; color: #555; }
+  .conflict-item strong { color: #d32f2f; }
+
+  /* My Schedule section */
+  .my-schedule {
+    margin-top: 10px; display: none; border-top: 2px solid #e0e0e0; padding-top: 20px;
+  }
+  .my-schedule.show { display: block; }
+  .my-schedule-title {
+    font-size: 18px; font-weight: 700; color: #2C2C2C; text-align: center; margin-bottom: 12px;
+  }
+
+  /* Weekly grid */
+  .week-grid {
+    display: grid; grid-template-columns: 80px repeat(5, 1fr);
+    border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px;
+  }
+  .grid-header {
+    font-size: 13px; font-weight: 700; color: #fff; background: #555;
+    padding: 8px 4px; text-align: center;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .grid-header.time-col { background: #777; }
+  .grid-cell {
+    border: 1px solid #eee; padding: 4px; min-height: 54px;
+  }
+  .grid-time {
+    font-size: 12px; font-weight: 600; color: #555; padding: 8px 4px;
+    text-align: center; background: #fafafa; border: 1px solid #eee;
+  }
+  .slot-block {
+    padding: 5px 6px; border-radius: 5px; font-size: 11px; font-weight: 600;
+    color: #fff; margin-bottom: 3px; line-height: 1.3;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slot-block.chinese { background: #FF8C00; }
+  .slot-block.english { background: #1976d2; }
+  .slot-block.math    { background: #388e3c; }
+  .slot-block .slot-time { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }
+
+  /* Summary */
+  .summary-box {
+    background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;
+    padding: 14px 18px; margin-bottom: 14px;
+  }
+  .summary-item { font-size: 14px; color: #333; padding: 3px 0; display: flex; align-items: center; gap: 8px; }
+  .summary-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .summary-total { font-size: 14px; font-weight: 700; color: #2C2C2C; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; }
+  .summary-noconflict { font-size: 13px; color: #2e7d32; font-weight: 600; margin-top: 6px; }
+  .summary-cta {
+    font-size: 13px; color: #444; margin-top: 10px; padding: 10px 14px;
+    background: #e3f2fd; border-radius: 6px; line-height: 1.6;
+  }
+  .summary-cta a { color: #1976d2; font-weight: 700; text-decoration: none; }
+  .summary-cta a:hover { text-decoration: underline; }
+
+  /* Save hint */
+  .save-hint {
+    text-align: center; font-size: 15px; font-weight: 700; color: #1565c0;
+    padding: 12px; background: #e3f2fd; border-radius: 8px; line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  /* Save/Print buttons */
+  .action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .print-btn, .save-img-btn {
+    display: inline-block; padding: 10px 28px;
+    font-size: 15px; font-weight: 700; color: #fff; background: #1976d2;
+    border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+    font-family: inherit;
+  }
+  .print-btn:hover, .save-img-btn:hover { background: #1565c0; }
+  .save-img-btn { background: #388e3c; }
+  .save-img-btn:hover { background: #2e7d32; }
+
+  @media (max-width: 600px) {
+    .sched-table th, .sched-table td { padding: 7px 8px; font-size: 13px; }
+    .level-name { font-size: 13px; }
+    .subject-header { font-size: 16px; }
+    .week-grid { grid-template-columns: 55px repeat(5, 1fr); }
+    .grid-header { font-size: 11px; }
+    .slot-block { font-size: 10px; }
+  }
+
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="select-hint">点击课程行选课，下方自动生成个人课表 · Click a course row to select, your schedule appears below</div>
+
+  <!-- ======== CHINESE ======== -->
+  <div class="subject-section">
+    <div class="subject-header chinese">中文 Chinese</div>
+    <table class="sched-table" id="table-chinese">
+      <thead>
+        <tr>
+          <th class="chinese" style="width:24px"></th>
+          <th class="chinese" style="width:30%">Course</th>
+          <th class="chinese" style="width:28%">Schedule</th>
+          <th class="chinese" style="width:38%">参考年级 Suggested Grade *<br><span style="font-weight:400;font-size:11px;opacity:0.85;">（2026 Fall 入学年级）</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch1" data-days="Tue,Thu" data-start="17" data-end="18" data-name="Chinese L1（零基础）">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name chinese">Chinese L1（零基础）</span><span class="course-desc">基础识字、写字、分级阅读</span></td>
+          <td><span class="day">Tue / Thu</span> 5:00–6:00</td>
+          <td><span class="grade-tag">K</span> <span class="grade-tag">1st</span> <span class="no-test">无需测评</span></td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch2" data-days="Mon,Wed" data-start="16" data-end="17" data-name="Chinese L2">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name chinese">Chinese L2</span><span class="course-desc">部编版<span class="highlight">语文一年级上册</span>重难点内容</span></td>
+          <td><span class="day">Mon / Wed</span> 4:00–5:00</td>
+          <td><span class="grade-tag">1st</span> <span class="grade-tag">2nd</span> <a class="inline-link" href="https://forms.gle/Qjj3iyxUQ17otAhM7" target="_blank" onclick="event.stopPropagation()">测评选级 →</a></td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch3" data-days="Mon,Wed" data-start="17" data-end="18" data-name="Chinese L3">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name chinese">Chinese L3</span><span class="course-desc">部编版<span class="highlight">语文一年级下册</span>重难点内容</span></td>
+          <td><span class="day">Mon / Wed</span> 5:00–6:00</td>
+          <td><span class="grade-tag">2nd</span> <span class="grade-tag">3rd</span> <a class="inline-link" href="https://forms.gle/oRRwgo5SrhREbspb6" target="_blank" onclick="event.stopPropagation()">测评选级 →</a></td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch4" data-days="Fri" data-start="16" data-end="18" data-name="Chinese L4">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name chinese">Chinese L4</span><span class="course-desc">部编版<span class="highlight">语文二年级上册</span>重难点内容</span></td>
+          <td><span class="day">Fri</span> 4:00–6:00</td>
+          <td><span class="grade-tag">3rd–5th</span> <a class="inline-link" href="https://forms.gle/Ycr6VFTKXtEhbjN16" target="_blank" onclick="event.stopPropagation()">测评选级 →</a></td>
+        </tr>
+        <tr class="chinese-row" data-subject="chinese" data-id="ch5" data-days="Tue,Thu" data-start="16" data-end="17" data-name="Chinese L5">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name chinese">Chinese L5</span><span class="course-desc">部编版<span class="highlight">语文二年级下册</span>重难点内容</span></td>
+          <td><span class="day">Tue / Thu</span> 4:00–5:00</td>
+          <td><span class="grade-tag">4th+</span> <a class="inline-link" href="https://forms.gle/MfnJx1qVXwRYFog76" target="_blank" onclick="event.stopPropagation()">测评选级 →</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-footnote">* 中文课按实际中文水平分级，非按学校年级分班。上表年级仅供参考，建议完成<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-chinese-course" target="_blank">入学测评</a>后选择最适合的级别。</div>
+  </div>
+
+  <!-- ======== ENGLISH ======== -->
+  <div class="subject-section">
+    <div class="subject-header english">英语 English</div>
+    <table class="sched-table" id="table-english">
+      <thead>
+        <tr>
+          <th class="english" style="width:24px"></th>
+          <th class="english" style="width:30%">Course</th>
+          <th class="english" style="width:28%">Schedule</th>
+          <th class="english" style="width:38%">参考年级 Suggested Grade<br><span style="font-weight:400;font-size:11px;opacity:0.85;">（2026 Fall 入学年级）</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="english-row" data-subject="english" data-id="en0" data-days="Mon,Wed" data-start="16" data-end="17" data-name="English LK">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English LK</span><span class="course-desc">Phonics拼读、Sight Words高频词、Read Aloud绘本共读</span></td>
+          <td><span class="day">Mon / Wed</span> 4:00–5:00</td>
+          <td><span class="grade-tag">K</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en1" data-days="Mon,Wed" data-start="17" data-end="18" data-name="English L1">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English L1</span><span class="course-desc">Creative Writing 创意写作（WQED KIDS Writers Contest）</span></td>
+          <td><span class="day">Mon / Wed</span> 5:00–6:00</td>
+          <td><span class="grade-tag">1st</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en23" data-days="Tue,Thu" data-start="16" data-end="17" data-name="English L2 & 3">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English L2 & 3</span><span class="course-desc">Creative Writing 创意写作（Storyworks Fiction Contest）</span></td>
+          <td><span class="day">Tue / Thu</span> 4:00–5:00</td>
+          <td><span class="grade-tag">2nd</span> <span class="grade-tag">3rd</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en45" data-days="Tue,Thu" data-start="17" data-end="18" data-name="English L4 & 5">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English L4 & 5</span><span class="course-desc">Creative Writing 创意写作（Storyworks Fiction Contest）</span></td>
+          <td><span class="day">Tue / Thu</span> 5:00–6:00</td>
+          <td><span class="grade-tag">3rd</span> <span class="grade-tag">4th–5th</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== MATH ======== -->
+  <div class="subject-section">
+    <div class="subject-header math">数学 Math</div>
+    <table class="sched-table" id="table-math">
+      <thead>
+        <tr>
+          <th class="math" style="width:24px"></th>
+          <th class="math" style="width:30%">Course</th>
+          <th class="math" style="width:28%">Schedule</th>
+          <th class="math" style="width:38%">参考年级 Suggested Grade *<br><span style="font-weight:400;font-size:11px;opacity:0.85;">（2026 Fall 入学年级）</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="math-row" data-subject="math" data-id="ma1" data-days="Tue,Thu" data-start="16" data-end="17" data-name="Math L1">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name math">Math L1</span><span class="course-desc">重点：加减法、应用题、图形</span></td>
+          <td><span class="day">Tue / Thu</span> 4:00–5:00</td>
+          <td><span class="grade-tag">1st</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma2" data-days="Tue,Thu" data-start="17" data-end="18" data-name="Math L2">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name math">Math L2</span><span class="course-desc">重点：奇偶数、乘法、括号运算</span></td>
+          <td><span class="day">Tue / Thu</span> 5:00–6:00</td>
+          <td><span class="grade-tag">2nd</span> <span class="grade-tag">3rd</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma3" data-days="Mon,Wed" data-start="16" data-end="17" data-name="Math L3">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name math">Math L3</span><span class="course-desc">重点：运算顺序、括号进阶、逻辑推理</span></td>
+          <td><span class="day">Mon / Wed</span> 4:00–5:00</td>
+          <td><span class="grade-tag">3rd</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma4" data-days="Mon,Wed" data-start="17" data-end="18" data-name="Math L4">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name math">Math L4</span><span class="course-desc">重点：质数合数、质因数分解</span></td>
+          <td><span class="day">Mon / Wed</span> 5:00–6:00</td>
+          <td><span class="grade-tag">4th–5th</span></td>
+        </tr>
+        <tr class="math-row" data-subject="math" data-id="ma5" data-days="Fri" data-start="16" data-end="18" data-name="Math L5">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name math">Math L5</span><span class="course-desc">重点：负数、分数小数百分数、指数</span></td>
+          <td><span class="day">Fri</span> 4:00–6:00</td>
+          <td><span class="grade-tag">4th–5th</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-footnote">* 数学课按实际水平分级，非按学校年级分班。上表年级仅供参考，建议查看<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">各级别详细课程内容</a>，根据孩子实际水平选择最适合的级别。</div>
+  </div>
+
+  <!-- ======== MY SCHEDULE ======== -->
+  <div class="my-schedule" id="mySchedule">
+    <div class="my-schedule-title">我的课表 My Schedule</div>
+    <div class="week-grid" id="weekGrid"></div>
+    <div class="summary-box" id="summaryBox"></div>
+    <div class="action-btns">
+      <button class="print-btn" onclick="printSchedule()">打印课表 Print</button>
+      <button class="save-img-btn" onclick="saveAsImage()">保存图片 Save Image</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+function buildPrintHTML() {
+  var css = "* { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: 'Noto Sans SC', sans-serif; padding: 20px; }"
+    + ".my-schedule-title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 16px; }"
+    + ".week-grid { display: grid; grid-template-columns: 80px repeat(5, 1fr); border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px; }"
+    + ".grid-header { font-size: 13px; font-weight: 700; color: #fff; background: #555; padding: 8px 4px; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".grid-header.time-col { background: #777; }"
+    + ".grid-cell { border: 1px solid #eee; padding: 4px; min-height: 54px; }"
+    + ".grid-time { font-size: 12px; font-weight: 600; color: #555; padding: 8px 4px; text-align: center; background: #fafafa; border: 1px solid #eee; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".slot-block { padding: 5px 6px; border-radius: 5px; font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 3px; line-height: 1.3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".slot-block.chinese { background: #FF8C00; } .slot-block.english { background: #1976d2; } .slot-block.math { background: #388e3c; }"
+    + ".slot-time { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }"
+    + ".summary-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; }"
+    + ".summary-item { font-size: 14px; color: #333; padding: 3px 0; display: flex; align-items: center; gap: 8px; }"
+    + ".summary-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; }"
+    + ".summary-total { font-size: 14px; font-weight: 700; margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd; }"
+    + ".summary-noconflict { font-size: 13px; color: #2e7d32; font-weight: 600; margin-top: 6px; }"
+    + ".summary-cta { font-size: 13px; color: #444; margin-top: 10px; padding: 10px 14px; background: #e3f2fd; border-radius: 6px; line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
+    + ".summary-cta a { color: #1976d2; font-weight: 700; text-decoration: none; }"
+    + ".action-btns { display: none; }"
+    + ".summary-conflict { background: #fff5f5; border: 2px solid #d32f2f; border-radius: 6px; padding: 10px 14px; margin-top: 10px; }";
+  var content = document.getElementById('mySchedule').innerHTML;
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>我的课表 My Schedule</title>'
+    + '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">'
+    + '<style>' + css + '</style></head><body>' + content + '</body></html>';
+}
+
+function printSchedule() {
+  var html = buildPrintHTML();
+
+  // Method 1: try window.open
+  try {
+    var win = window.open('', '_blank');
+    if (win) {
+      win.document.write(html);
+      win.document.close();
+      setTimeout(function() { win.print(); }, 600);
+      return;
+    }
+  } catch(e) {}
+
+  // Method 2: try top-level window.open
+  try {
+    var win2 = top.open('', '_blank');
+    if (win2) {
+      win2.document.write(html);
+      win2.document.close();
+      setTimeout(function() { win2.print(); }, 600);
+      return;
+    }
+  } catch(e) {}
+
+  // Method 3: fallback to save as image (mobile-friendly)
+  saveAsImage();
+}
+
+function saveAsImage() {
+  var el = document.getElementById('mySchedule');
+  var btns = el.querySelector('.action-btns');
+  if (btns) btns.style.display = 'none';
+
+  html2canvas(el, {
+    scale: 2,
+    backgroundColor: '#ffffff',
+    useCORS: true,
+    logging: false
+  }).then(function(canvas) {
+    if (btns) btns.style.display = '';
+
+    // Try native share on mobile (iOS/Android)
+    if (navigator.share && navigator.canShare) {
+      canvas.toBlob(function(blob) {
+        var file = new File([blob], 'my_schedule.png', { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) {
+          navigator.share({
+            files: [file],
+            title: '我的课表 My Schedule'
+          }).catch(function() {
+            // If share was cancelled, fall back to download
+            downloadCanvas(canvas);
+          });
+        } else {
+          downloadCanvas(canvas);
+        }
+      }, 'image/png');
+    } else {
+      downloadCanvas(canvas);
+    }
+  }).catch(function() {
+    if (btns) btns.style.display = '';
+    alert('图片生成失败，请使用截图功能保存课表。\nImage generation failed. Please use screenshot instead.');
+  });
+}
+
+function downloadCanvas(canvas) {
+  var link = document.createElement('a');
+  link.download = 'my_schedule.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+const DAY_LABELS = { Mon:'周一 Mon', Tue:'周二 Tue', Wed:'周三 Wed', Thu:'周四 Thu', Fri:'周五 Fri' };
+const TIME_SLOTS = [{ start:16, end:17, label:'4:00–5:00' }, { start:17, end:18, label:'5:00–6:00' }];
+const COLORS = { chinese:'#FF8C00', english:'#1976d2', math:'#388e3c' };
+const TUITION_PER_SESSION = { chinese: 120, english: 160, math: 160 };
+
+let selected = { chinese: null, english: null, math: null };
+
+function formatTime(h) { return (h > 12 ? h-12 : h) + ':00'; }
+function formatRange(s, e) { return formatTime(s) + '–' + formatTime(e); }
+
+// Row click handler
+document.querySelectorAll('.sched-table tbody tr').forEach(row => {
+  row.addEventListener('click', function() {
+    const subject = this.dataset.subject;
+    const id = this.dataset.id;
+    if (selected[subject] === id) {
+      selected[subject] = null;
+    } else {
+      selected[subject] = id;
+    }
+    update();
+  });
+});
+
+function getSelected() {
+  const result = [];
+  for (const [subject, id] of Object.entries(selected)) {
+    if (!id) continue;
+    const row = document.querySelector(`tr[data-id="${id}"]`);
+    if (row) {
+      result.push({
+        id, subject,
+        name: row.dataset.name,
+        days: row.dataset.days.split(','),
+        start: +row.dataset.start,
+        end: +row.dataset.end
+      });
+    }
+  }
+  return result;
+}
+
+function findConflicts(courses) {
+  const conflicts = [];
+  for (let i = 0; i < courses.length; i++) {
+    for (let j = i+1; j < courses.length; j++) {
+      const a = courses[i], b = courses[j];
+      const common = a.days.filter(d => b.days.includes(d));
+      if (common.length > 0 && a.start < b.end && b.start < a.end) {
+        conflicts.push({ a, b, days: common });
+      }
+    }
+  }
+  return conflicts;
+}
+
+function buildGrid(courses, conflicts) {
+  const grid = document.getElementById('weekGrid');
+  grid.innerHTML = '';
+
+  const corner = document.createElement('div');
+  corner.className = 'grid-header time-col';
+  corner.textContent = 'PM';
+  grid.appendChild(corner);
+
+  DAYS.forEach(day => {
+    const h = document.createElement('div');
+    h.className = 'grid-header';
+    h.textContent = DAY_LABELS[day];
+    grid.appendChild(h);
+  });
+
+  const conflictCells = new Set();
+  conflicts.forEach(c => {
+    c.days.forEach(day => {
+      TIME_SLOTS.forEach(slot => {
+        const os = Math.max(c.a.start, c.b.start);
+        if (slot.start >= os && slot.start < Math.min(c.a.end, c.b.end)) {
+          conflictCells.add(day + '-' + slot.start);
+        }
+      });
+    });
+  });
+
+  TIME_SLOTS.forEach(slot => {
+    const timeCell = document.createElement('div');
+    timeCell.className = 'grid-time';
+    timeCell.textContent = slot.label;
+    grid.appendChild(timeCell);
+
+    DAYS.forEach(day => {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      courses.forEach(c => {
+        if (c.days.includes(day) && c.start <= slot.start && c.end > slot.start) {
+          const block = document.createElement('div');
+          block.className = 'slot-block ' + c.subject;
+          if (conflictCells.has(day + '-' + slot.start)) {
+            block.style.outline = '3px solid #d32f2f';
+            block.style.outlineOffset = '-1px';
+          }
+          block.innerHTML = c.name + '<span class="slot-time">' + formatRange(c.start, c.end) + '</span>';
+          cell.appendChild(block);
+        }
+      });
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function update() {
+  const courses = getSelected();
+  const conflicts = findConflicts(courses);
+
+  // Update row styles
+  document.querySelectorAll('.sched-table tbody tr').forEach(row => {
+    const isSelected = selected[row.dataset.subject] === row.dataset.id;
+    row.classList.toggle('selected', isSelected);
+    row.classList.remove('conflict');
+    row.querySelector('.check-col').innerHTML = isSelected ? '&#9679;' : '&#9675;';
+  });
+
+  // Mark conflicts
+  const conflictIds = new Set();
+  conflicts.forEach(c => { conflictIds.add(c.a.id); conflictIds.add(c.b.id); });
+  conflictIds.forEach(id => {
+    const row = document.querySelector(`tr[data-id="${id}"]`);
+    if (row) row.classList.add('conflict');
+  });
+
+
+  // My Schedule section
+  const section = document.getElementById('mySchedule');
+  if (courses.length === 0) {
+    section.classList.remove('show');
+    return;
+  }
+  section.classList.add('show');
+
+  buildGrid(courses, conflicts);
+
+  // Summary
+  let totalHours = 0;
+  let perSessionTuition = 0;
+  const items = courses.map(c => {
+    const hrs = c.days.length * (c.end - c.start);
+    totalHours += hrs;
+    const price = TUITION_PER_SESSION[c.subject];
+    perSessionTuition += price;
+    return '<div class="summary-item"><span class="summary-dot" style="background:' + COLORS[c.subject] + '"></span><strong>' + c.name + '</strong>&nbsp;&nbsp;' + c.days.join(' / ') + ' ' + formatRange(c.start, c.end) + '&nbsp;&nbsp;<span style="color:#999;font-size:12px;">$' + price + '/session</span></div>';
+  });
+
+  let html = items.join('');
+  html += '<div class="summary-total">每周总课时 Total: ' + totalHours + ' hours/week</div>';
+  html += '<div class="summary-total" style="border-top:none; padding-top:4px;">学费 Tuition: <span style="color:#d32f2f;">$' + perSessionTuition + '/session</span>';
+  if (courses.length > 1) {
+    html += '&nbsp;&nbsp;(' + courses.map(c => '$' + TUITION_PER_SESSION[c.subject]).join(' + ') + ')';
+  }
+  html += '<br><span style="font-size:12px; color:#777; font-weight:400;">× 报名 Session 数 · 例: 4 sessions = $' + (perSessionTuition * 4) + '</span></div>';
+
+  if (conflicts.length > 0) {
+    html += '<div class="summary-conflict">';
+    html += '<div class="conflict-title">&#9888; 时间冲突 Schedule Conflict</div>';
+    html += conflicts.map(function(c) {
+      return '<div class="conflict-item"><strong>' + c.a.name + '</strong> 与 <strong>' + c.b.name + '</strong> 在 ' + c.days.join(', ') + ' ' + formatRange(Math.max(c.a.start, c.b.start), Math.min(c.a.end, c.b.end)) + ' 时间冲突</div>';
+    }).join('');
+    html += '</div>';
+  } else if (courses.length >= 2) {
+    html += '<div class="summary-noconflict">&#10003; 所选课程无时间冲突 No conflicts!</div>';
+  }
+
+  html += '<div class="summary-cta">步骤 1 Step 1: 截图或打印保存课表 Screenshot or print your schedule<br>步骤 2 Step 2: 点击 <a href="https://forms.gle/dHwxrziVevWvMUXD9" target="_blank">报名链接 Enroll Here</a> 填写报名表完成注册 Fill out the registration form</div>';
+
+  document.getElementById('summaryBox').innerHTML = html;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探索亚洲 Explore Asia — Global Explorer Camp</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif;
+    color: #333;
+    background: #f5f5f5;
+    line-height: 1.5;
+  }
+
+  /* ===== PRINT SETUP ===== */
+  @page {
+    size: letter;
+    margin: 0.5in;
+  }
+
+  .page {
+    width: 7.5in;
+    min-height: 10in;
+    max-width: 7.5in;
+    margin: 0.3in auto;
+    background: #fff;
+    padding: 0.35in;
+    position: relative;
+    page-break-after: always;
+    overflow: hidden;
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  @media screen {
+    .page {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      margin-bottom: 0.5in;
+      border-radius: 4px;
+    }
+    body { padding: 0.3in 0; }
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page {
+      box-shadow: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      min-height: auto;
+    }
+    .no-print { display: none !important; }
+  }
+
+  /* ===== COLOR THEME ===== */
+  :root {
+    --red: #C62828;
+    --red-light: #E53935;
+    --accent: #FF8F00;
+    --accent-light: #FFB300;
+    --bg-warm: #FFF8E1;
+    --bg-cream: #FFFDE7;
+    --china-red: #DE2910;
+    --china-yellow: #FFDE00;
+    --japan-red: #BC002D;
+    --india-orange: #FF9933;
+    --india-green: #138808;
+    --india-blue: #000080;
+  }
+
+  /* ===== HEADER BAR ===== */
+  .header-bar {
+    background: var(--red);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-bar h2 {
+    font-size: 20px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .header-bar .flag-emoji {
+    font-size: 28px;
+  }
+
+  .sub-header {
+    background: var(--accent);
+    color: #fff;
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  /* ===== WRITING LINES ===== */
+  .write-line {
+    border-bottom: 2px dotted #999;
+    min-height: 28px;
+    margin: 6px 0;
+    padding: 2px 4px;
+    font-size: 14px;
+  }
+  .write-line.tall { min-height: 36px; }
+
+  .write-area {
+    border: 2px dotted #aaa;
+    border-radius: 6px;
+    min-height: 70px;
+    padding: 8px;
+    margin: 6px 0;
+    background: #fefefe;
+  }
+  .write-area.lined {
+    background: repeating-linear-gradient(
+      transparent, transparent 27px, #ddd 27px, #ddd 28px
+    );
+    background-position: 0 8px;
+  }
+
+  /* ===== DRAWING BOX ===== */
+  .draw-box {
+    border: 3px dashed #bbb;
+    border-radius: 10px;
+    min-height: 140px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 14px;
+    background: #fefefe;
+    position: relative;
+  }
+  .draw-box .label {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    font-size: 11px;
+    color: #999;
+  }
+
+  /* ===== TRACING ===== */
+  .trace-char {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    border: 3px dashed #ccc;
+    border-radius: 8px;
+    font-size: 60px;
+    font-weight: 300;
+    color: #ddd;
+    margin: 4px;
+    background: #fefefe;
+    position: relative;
+  }
+  .trace-char.small {
+    width: 60px; height: 60px; font-size: 40px;
+  }
+  .trace-char::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 10%; right: 10%;
+    border-top: 1px dashed #eee;
+  }
+  .trace-char::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 10%; bottom: 10%;
+    border-left: 1px dashed #eee;
+  }
+
+  /* ===== FUN FACT BOX ===== */
+  .fun-fact {
+    background: var(--bg-warm);
+    border-left: 5px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 0 8px 8px 0;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .fun-fact .emoji { font-size: 18px; margin-right: 4px; }
+
+  /* ===== FLAG OUTLINES ===== */
+  .flag-outline {
+    border: 3px solid #333;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  /* ===== QUICK FACTS ===== */
+  .quick-facts {
+    border: 2px solid var(--red-light);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .quick-facts h4 {
+    color: var(--red);
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  .quick-facts .row {
+    display: flex;
+    gap: 4px;
+    margin: 3px 0;
+    align-items: baseline;
+  }
+  .quick-facts .label-text {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .quick-facts .blank {
+    flex: 1;
+    border-bottom: 2px dotted #bbb;
+    min-height: 20px;
+  }
+
+  /* ===== TABLE ===== */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .compare-table th {
+    background: var(--red);
+    color: #fff;
+    padding: 7px 6px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .compare-table td {
+    border: 2px dotted #ccc;
+    padding: 10px 6px;
+    text-align: center;
+    min-height: 32px;
+    vertical-align: middle;
+  }
+  .compare-table tr:nth-child(even) td {
+    background: var(--bg-cream);
+  }
+  .compare-table td:first-child {
+    background: var(--bg-warm);
+    font-weight: 600;
+    font-size: 12px;
+    width: 22%;
+  }
+
+  /* ===== WORD SEARCH ===== */
+  .word-grid {
+    display: inline-grid;
+    grid-template-columns: repeat(8, 36px);
+    gap: 2px;
+    margin: 6px 0;
+  }
+  .word-grid .cell {
+    width: 36px; height: 36px;
+    border: 1.5px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+  }
+
+  /* ===== STAMP ===== */
+  .stamp {
+    width: 220px; height: 220px;
+    border: 6px double var(--red);
+    border-radius: 50%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* ===== FOOTER ===== */
+  .page-footer {
+    position: absolute;
+    bottom: 8px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+  }
+
+  /* ===== UTILITIES ===== */
+  .flex { display: flex; }
+  .flex-wrap { flex-wrap: wrap; }
+  .gap-sm { gap: 6px; }
+  .gap-md { gap: 12px; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .text-center { text-align: center; }
+  .mt-sm { margin-top: 6px; }
+  .mt-md { margin-top: 12px; }
+  .mb-sm { margin-bottom: 6px; }
+  .mb-md { margin-bottom: 12px; }
+  .bold { font-weight: 700; }
+  .small { font-size: 12px; }
+  .tiny { font-size: 10px; }
+  .muted { color: #888; }
+  .inline { display: inline; }
+  .w-full { width: 100%; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .section {
+    margin-bottom: 10px;
+  }
+
+  .prompt {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px 0 2px;
+  }
+  .prompt-en {
+    font-size: 12px;
+    color: #666;
+    font-weight: 400;
+  }
+
+  .fill-blank {
+    display: inline-block;
+    border-bottom: 2px dotted #999;
+    min-width: 80px;
+    text-align: center;
+    margin: 0 2px;
+  }
+
+  .recipe-box {
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: var(--bg-cream);
+    font-size: 12px;
+  }
+
+  .diff-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 4px;
+  }
+  .diff-k1 { background: #43A047; }
+  .diff-23 { background: #1E88E5; }
+  .diff-45 { background: #7B1FA2; }
+
+  /* ===== COVER SPECIFIC ===== */
+  .cover-circle {
+    width: 280px; height: 280px;
+    border: 8px solid var(--red);
+    border-radius: 50%;
+    margin: 15px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-warm);
+    position: relative;
+  }
+  .cover-circle::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 3px dashed var(--accent);
+    border-radius: 50%;
+  }
+
+  .cover-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--red);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .cover-subtitle {
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* ===== MAP PLACEHOLDER ===== */
+  .map-box {
+    border: 3px solid #999;
+    border-radius: 10px;
+    min-height: 160px;
+    background: #f0f8ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 13px;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-box .map-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: #666;
+  }
+
+  /* Decorative continents hint */
+  .map-box::before {
+    content: '🌏';
+    font-size: 60px;
+    opacity: 0.15;
+    position: absolute;
+  }
+
+  /* ===== FLAG STRIPE HELPERS ===== */
+  .stripe {
+    height: 33.33%;
+    width: 100%;
+  }
+
+  /* Haiku box */
+  .haiku-box {
+    border: 2px solid #E91E63;
+    border-radius: 10px;
+    padding: 10px;
+    background: #fce4ec;
+    margin: 8px 0;
+  }
+  .haiku-box .haiku-line {
+    border-bottom: 2px dotted #E91E63;
+    min-height: 30px;
+    margin: 6px 0;
+    padding-left: 4px;
+    font-size: 13px;
+    color: #999;
+  }
+
+  /* Spice circles */
+  .spice-circle {
+    width: 90px; height: 90px;
+    border: 2px dashed #bbb;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #bbb;
+  }
+  .spice-label {
+    border-bottom: 1.5px dotted #bbb;
+    width: 80px;
+    text-align: center;
+    min-height: 16px;
+    margin-top: 4px;
+    font-size: 11px;
+  }
+
+  /* Print button */
+  .print-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 999;
+  }
+  .print-btn:hover { background: var(--red-light); }
+
+  @media print {
+    .print-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 打印 Print</button>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: COVER -->
+<!-- ============================================================ -->
+<div class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background: linear-gradient(135deg, var(--bg-warm) 0%, #fff 50%, var(--bg-warm) 100%);">
+
+  <div style="font-size: 42px; margin-bottom: 4px;">🌏</div>
+  <div class="cover-title">探索亚洲</div>
+  <div class="cover-title" style="font-size: 26px; color: var(--accent);">Explore: Asia</div>
+
+  <div class="cover-circle" style="margin: 20px auto;">
+    <div style="font-size: 50px; margin-bottom: 6px;">✈️</div>
+    <div style="font-size: 18px; font-weight: 900; color: var(--red);">Global Explorer Camp</div>
+    <div style="font-size: 14px; color: var(--accent); font-weight: 600;">全球探险营</div>
+    <div style="font-size: 22px; margin-top: 4px;">🇨🇳 🇯🇵 🇮🇳</div>
+  </div>
+
+  <div style="margin-top: 10px; font-size: 16px; width: 80%;">
+    <div class="prompt" style="font-size: 16px;">小探险家 Explorer: <span class="fill-blank" style="min-width: 200px;">&nbsp;</span></div>
+    <div class="prompt mt-md" style="font-size: 16px;">日期 Date: <span class="fill-blank" style="min-width: 200px;">&nbsp;</span></div>
+  </div>
+
+  <div style="margin-top: 20px; display: flex; gap: 15px; font-size: 28px;">
+    🏯 🗻 🐼 🐉 🎋 🕌 🎎 🧧
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 1</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2: ABOUT ASIA -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <span class="flag-emoji">🌏</span>
+    <h2>认识亚洲 About Asia</h2>
+  </div>
+
+  <!-- Map area -->
+  <div style="text-align:center;">
+    <svg viewBox="0 0 700 480" width="100%" style="max-width:670px; border:1px solid #ccc; border-radius:8px; background:#fff;">
+      <!-- Russia (large northern region) -->
+      <path d="M50,30 L120,20 L200,18 L280,22 L360,15 L440,20 L520,25 L580,35 L630,50 L660,70 L670,100 L665,130 L650,150 L620,155 L580,148 L540,155 L500,150 L460,155 L430,145 L400,150 L370,140 L340,135 L310,140 L280,130 L250,135 L220,125 L190,130 L160,120 L130,125 L100,115 L70,120 L50,110 L40,80 L45,50 Z" fill="white" stroke="black" stroke-width="1.2"/>
+      <text x="350" y="85" font-size="13" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">俄罗斯 Russia</text>
+
+      <!-- China (large central-east region) -->
+      <path d="M310,140 L340,135 L370,140 L400,150 L430,145 L460,155 L490,160 L510,175 L520,195 L530,220 L525,245 L510,265 L490,275 L470,270 L450,280 L430,275 L410,285 L390,280 L370,290 L350,280 L330,275 L310,280 L290,270 L275,255 L265,235 L260,215 L265,195 L275,175 L285,160 L300,148 Z" fill="white" stroke="black" stroke-width="1.5"/>
+      <text x="400" y="215" font-size="16" text-anchor="middle" fill="#C62828" font-weight="bold" font-family="'Noto Sans SC',sans-serif">中国 China</text>
+
+      <!-- Mongolia (between Russia and China) -->
+      <path d="M370,140 L430,145 L460,155 L450,165 L420,168 L390,162 L370,155 Z" fill="white" stroke="black" stroke-width="0.8"/>
+      <text x="415" y="158" font-size="8" text-anchor="middle" fill="#888" font-family="sans-serif">蒙古</text>
+
+      <!-- Korean Peninsula -->
+      <path d="M530,175 L540,168 L548,175 L550,195 L545,215 L535,225 L528,218 L525,200 L528,185 Z" fill="white" stroke="black" stroke-width="1"/>
+      <text x="540" y="198" font-size="10" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">韩国</text>
+      <text x="540" y="210" font-size="8" text-anchor="middle" fill="#777" font-family="sans-serif">Korea</text>
+
+      <!-- Japan (island chain) -->
+      <path d="M580,145 L588,140 L595,148 L592,165 L585,180 L578,190 L572,195 L568,188 L572,175 L576,160 Z" fill="white" stroke="black" stroke-width="1.2"/>
+      <path d="M565,200 L572,198 L578,205 L575,218 L568,228 L562,225 L560,215 L562,205 Z" fill="white" stroke="black" stroke-width="1.2"/>
+      <path d="M558,230 L565,228 L572,235 L570,250 L562,258 L555,252 L555,240 Z" fill="white" stroke="black" stroke-width="1.2"/>
+      <text x="600" y="210" font-size="14" text-anchor="middle" fill="#1565C0" font-weight="bold" font-family="'Noto Sans SC',sans-serif">日本</text>
+      <text x="600" y="225" font-size="11" text-anchor="middle" fill="#1976D2" font-family="sans-serif">Japan</text>
+
+      <!-- Southeast Asia: Vietnam -->
+      <path d="M450,280 L460,275 L465,290 L462,310 L455,330 L448,340 L442,335 L445,315 L448,295 Z" fill="white" stroke="black" stroke-width="0.8"/>
+      <text x="455" y="312" font-size="9" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">越南</text>
+
+      <!-- Thailand -->
+      <path d="M420,290 L435,285 L442,300 L438,320 L432,335 L425,340 L418,330 L415,315 L418,300 Z" fill="white" stroke="black" stroke-width="0.8"/>
+      <text x="428" y="315" font-size="9" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">泰国</text>
+
+      <!-- India (triangle/peninsula) -->
+      <path d="M260,215 L275,210 L295,215 L310,225 L330,240 L340,260 L345,280 L340,305 L330,330 L315,355 L300,370 L285,375 L270,365 L258,345 L250,325 L245,300 L242,280 L245,255 L250,235 Z" fill="white" stroke="black" stroke-width="1.5"/>
+      <text x="290" y="300" font-size="16" text-anchor="middle" fill="#E65100" font-weight="bold" font-family="'Noto Sans SC',sans-serif">印度 India</text>
+
+      <!-- Sri Lanka -->
+      <path d="M298,380 L308,378 L312,390 L305,400 L296,395 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+      <!-- Central Asian countries (simplified) -->
+      <path d="M190,130 L220,125 L250,135 L280,130 L300,148 L285,160 L265,165 L240,160 L215,155 L195,148 L180,140 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+      <!-- Middle East (simplified) -->
+      <path d="M100,160 L140,150 L180,155 L195,170 L200,195 L190,215 L170,225 L150,230 L130,225 L110,210 L95,195 L90,175 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+      <!-- Saudi Arabia / Arabian Peninsula -->
+      <path d="M130,225 L170,225 L200,240 L210,260 L200,280 L180,295 L155,300 L135,290 L120,270 L115,250 L120,235 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+      <!-- Indonesia (island chain, simplified) -->
+      <path d="M410,360 L440,355 L460,360 L470,370 L465,378 L440,380 L415,375 Z" fill="white" stroke="black" stroke-width="0.8"/>
+      <path d="M475,365 L500,360 L515,368 L510,378 L490,380 L478,375 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+      <!-- Philippines (simplified) -->
+      <path d="M510,280 L518,275 L522,290 L518,305 L512,310 L508,300 L508,288 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+      <!-- Labels for additional countries -->
+      <text x="150" y="195" font-size="8" text-anchor="middle" fill="#888" font-family="sans-serif">中东</text>
+
+      <!-- Coloring legend box -->
+      <rect x="15" y="400" width="280" height="70" fill="#FFFDE7" stroke="#E0E0E0" stroke-width="1" rx="8"/>
+      <text x="25" y="418" font-size="13" fill="#333" font-weight="bold" font-family="'Noto Sans SC',sans-serif">🎨 涂色指南 Coloring Guide:</text>
+      <text x="25" y="436" font-size="12" fill="#C62828" font-family="'Noto Sans SC',sans-serif">🔴 中国 China → 红色 RED</text>
+      <text x="25" y="452" font-size="12" fill="#1565C0" font-family="'Noto Sans SC',sans-serif">🔵 日本 Japan → 蓝色 BLUE</text>
+      <text x="25" y="468" font-size="12" fill="#E65100" font-family="'Noto Sans SC',sans-serif">🟠 印度 India → 橙色 ORANGE</text>
+      <text x="195" y="468" font-size="11" fill="#666" font-family="'Noto Sans SC',sans-serif">🌈 其他 → 你喜欢的颜色!</text>
+    </svg>
+  </div>
+
+  <!-- Character tracing -->
+  <div class="section mt-md">
+    <div class="sub-header">描一描 Trace the Characters</div>
+    <div class="flex justify-center gap-md mt-sm" style="flex-wrap: wrap;">
+      <div class="trace-char">亚</div>
+      <div class="trace-char">洲</div>
+      <div class="trace-char">亚</div>
+      <div class="trace-char">洲</div>
+    </div>
+  </div>
+
+  <!-- Fill in the blanks -->
+  <div class="section mt-md">
+    <div class="sub-header">填一填 Fill in the Blanks</div>
+
+    <div class="prompt mt-sm">亚洲有 <span class="fill-blank" style="min-width: 60px;"></span> 个国家。
+      <span class="prompt-en">Asia has ___ countries. (48)</span></div>
+
+    <div class="prompt mt-sm">亚洲是世界上最 <span class="fill-blank" style="min-width: 60px;"></span> 的洲。
+      <span class="prompt-en">Asia is the ___ continent in the world. (大 / biggest)</span></div>
+
+    <div class="prompt mt-sm">世界上最高的山是 <span class="fill-blank" style="min-width: 120px;"></span>。
+      <span class="prompt-en">The tallest mountain in the world is ___. (珠穆朗玛峰 / Mt. Everest)</span></div>
+  </div>
+
+  <!-- Writing space -->
+  <div class="section mt-md">
+    <div class="sub-header">写一写 Write</div>
+    <div class="prompt">关于亚洲，我学到了... <span class="prompt-en">What I learned about Asia:</span></div>
+    <div class="write-area lined" style="min-height: 90px;"></div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 2</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 3: CHINA FLAG & MAP -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--china-red);">
+    <span class="flag-emoji">🇨🇳</span>
+    <h2>中国 China — 国旗与地图 Flag &amp; Map</h2>
+  </div>
+
+  <div class="two-col">
+    <!-- Flag -->
+    <div>
+      <div class="sub-header" style="background: var(--china-red);">涂一涂中国国旗 Colour the Flag</div>
+      <div class="flag-outline" style="width: 100%; aspect-ratio: 3/2; margin-top: 6px; position: relative;">
+        <!-- Star hints -->
+        <div style="position: absolute; top: 12%; left: 6%; width: 26%; height: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <svg viewBox="0 0 60 60" style="width: 50px; height: 50px;">
+            <polygon points="30,5 37,22 55,22 40,33 46,50 30,40 14,50 20,33 5,22 23,22" fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="3,2"/>
+          </svg>
+        </div>
+        <div style="position: absolute; top: 5%; left: 28%; display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
+          <svg viewBox="0 0 24 24" style="width: 18px;"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="2,1"/></svg>
+          <svg viewBox="0 0 24 24" style="width: 18px;"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="2,1"/></svg>
+          <svg viewBox="0 0 24 24" style="width: 18px;"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="2,1"/></svg>
+          <svg viewBox="0 0 24 24" style="width: 18px;"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="2,1"/></svg>
+        </div>
+        <div style="position: absolute; bottom: 6px; right: 8px; font-size: 11px; color: #aaa;">🔴 红色 Red + ⭐ 黄色 Yellow</div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div>
+      <div class="sub-header" style="background: var(--china-red);">中国在哪里？Where is China?</div>
+      <div class="map-box" style="min-height: 140px; margin-top: 6px;">
+        <div style="font-size: 14px; font-weight: 600; color: #777;">中国 China</div>
+        <div style="font-size: 11px; color: #aaa;">在亚洲地图上找到中国，涂上颜色！</div>
+        <div style="font-size: 10px; color: #bbb;">Find and color China on the Asia map!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Facts -->
+  <div class="quick-facts mt-md" style="border-color: var(--china-red);">
+    <h4 style="color: var(--china-red);">📋 快速了解 Quick Facts</h4>
+    <div class="two-col" style="gap: 8px;">
+      <div>
+        <div class="row"><span class="label-text">首都 Capital:</span> <span class="blank"></span></div>
+        <div class="row"><span class="label-text">人口 Population:</span> <span class="blank"></span></div>
+      </div>
+      <div>
+        <div class="row"><span class="label-text">语言 Language:</span> <span class="blank"></span></div>
+        <div class="row"><span class="label-text">货币 Currency:</span> <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-md">
+    <span class="emoji">💡</span>
+    <strong>你知道吗？Did you know?</strong> 中国是世界上人口最多的国家之一，有14亿人！
+    China is one of the most populous countries in the world with 1.4 billion people!
+  </div>
+
+  <!-- Bonus drawing -->
+  <div class="section mt-md">
+    <div class="prompt">画一画中国有名的地方 Draw a famous place in China</div>
+    <div class="draw-box" style="min-height: 160px;">
+      <div class="label">长城？故宫？熊猫？ Great Wall? Forbidden City? Panda?</div>
+    </div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 3</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 4: CHINA CULTURE & FOOD -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--china-red);">
+    <span class="flag-emoji">🇨🇳</span>
+    <h2>中国 China — 文化与美食 Culture &amp; Food</h2>
+  </div>
+
+  <!-- Hello -->
+  <div class="section">
+    <div class="prompt">How do we say "hello" in China? 在中国怎么说"你好"？</div>
+    <div class="flex items-center gap-md mt-sm">
+      <div style="font-size: 16px; font-weight: 700; color: var(--china-red);">你好 (nǐ hǎo)</div>
+      <div class="flex gap-sm">
+        <div class="trace-char small">你</div>
+        <div class="trace-char small">好</div>
+        <div class="trace-char small">你</div>
+        <div class="trace-char small">好</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fill in blank -->
+  <div class="section mt-sm">
+    <div class="prompt">中国人用 <span class="fill-blank" style="min-width: 80px;"></span> 吃饭。
+      <span class="prompt-en">Chinese people eat with ___. (筷子 / chopsticks)</span></div>
+    <div class="flex gap-sm mt-sm">
+      <div class="trace-char small">筷</div>
+      <div class="trace-char small">子</div>
+    </div>
+  </div>
+
+  <!-- Drawing box -->
+  <div class="section mt-sm">
+    <div class="prompt">画一画你最喜欢的中国食物 <span class="prompt-en">Draw your favorite Chinese food</span></div>
+    <div class="draw-box" style="min-height: 120px;">
+      <div class="label">饺子？面条？炒饭？ Dumplings? Noodles? Fried rice?</div>
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <span class="emoji">🧱</span>
+    <strong>你知道吗？Did you know?</strong> 长城有21,196公里长！
+    The Great Wall of China is 21,196 km long! That's like driving across America 5 times!
+  </div>
+
+  <!-- Recipe corner -->
+  <div class="recipe-box mt-sm">
+    <div style="font-size: 14px; font-weight: 700; color: var(--accent);">🥟 饺子小食谱 Simple Dumpling Recipe</div>
+    <div class="two-col mt-sm" style="gap: 8px; font-size: 12px;">
+      <div>
+        <div class="bold">材料 Ingredients:</div>
+        <div>• 饺子皮 dumpling wrappers</div>
+        <div>• 猪肉 pork / 蔬菜 vegetables</div>
+        <div>• 生姜 ginger · 酱油 soy sauce</div>
+      </div>
+      <div>
+        <div class="bold">步骤 Steps:</div>
+        <div>1. 拌馅 Mix the filling</div>
+        <div>2. 包饺子 Wrap the dumpling</div>
+        <div>3. 煮或蒸 Boil or steam</div>
+        <div>4. 蘸醋吃！Dip in vinegar & enjoy!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Write what you'd order -->
+  <div class="section mt-sm">
+    <div class="prompt">如果你去中国餐馆，你会点什么？<span class="prompt-en">What would you order at a Chinese restaurant?</span></div>
+    <div class="write-line tall"></div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 4</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 5: JAPAN FLAG & MAP -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--japan-red);">
+    <span class="flag-emoji">🇯🇵</span>
+    <h2>日本 Japan — 国旗与地图 Flag &amp; Map</h2>
+  </div>
+
+  <div class="two-col">
+    <!-- Flag -->
+    <div>
+      <div class="sub-header" style="background: var(--japan-red);">涂一涂日本国旗 Colour the Flag</div>
+      <div class="flag-outline" style="width: 100%; aspect-ratio: 3/2; margin-top: 6px; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 45%; aspect-ratio: 1; border: 2px dashed #ccc; border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: 6px; right: 8px; font-size: 11px; color: #aaa;">⬜ 白色 White + 🔴 红色 Red circle</div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div>
+      <div class="sub-header" style="background: var(--japan-red);">日本在哪里？Where is Japan?</div>
+      <div class="map-box" style="min-height: 140px; margin-top: 6px;">
+        <div style="font-size: 14px; font-weight: 600; color: #777;">日本 Japan 🏝️</div>
+        <div style="font-size: 11px; color: #aaa;">日本是一个岛国！</div>
+        <div style="font-size: 10px; color: #bbb;">Japan is an island country!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Facts -->
+  <div class="quick-facts mt-md" style="border-color: var(--japan-red);">
+    <h4 style="color: var(--japan-red);">📋 快速了解 Quick Facts</h4>
+    <div class="two-col" style="gap: 8px;">
+      <div>
+        <div class="row"><span class="label-text">首都 Capital:</span> <span class="blank"></span></div>
+        <div class="row"><span class="label-text">人口 Population:</span> <span class="blank"></span></div>
+      </div>
+      <div>
+        <div class="row"><span class="label-text">语言 Language:</span> <span class="blank"></span></div>
+        <div class="row"><span class="label-text">货币 Currency:</span> <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-md">
+    <span class="emoji">🏝️</span>
+    <strong>你知道吗？Did you know?</strong> 日本有6,852个岛！Japan has 6,852 islands!
+    日本也叫"日出之国"。Japan is also called "The Land of the Rising Sun"!
+  </div>
+
+  <!-- Bonus drawing -->
+  <div class="section mt-md">
+    <div class="prompt">画一画日本有名的地方 Draw a famous place in Japan</div>
+    <div class="draw-box" style="min-height: 160px;">
+      <div class="label">富士山？樱花？东京塔？ Mt. Fuji? Cherry blossoms? Tokyo Tower?</div>
+    </div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 5</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 6: JAPAN CULTURE & FOOD -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--japan-red);">
+    <span class="flag-emoji">🇯🇵</span>
+    <h2>日本 Japan — 文化与美食 Culture &amp; Food</h2>
+  </div>
+
+  <!-- Hello -->
+  <div class="section">
+    <div class="prompt">How do we say "hello" in Japan? 在日本怎么说"你好"？</div>
+    <div class="flex items-center gap-md mt-sm">
+      <div style="font-size: 16px; font-weight: 700; color: var(--japan-red);">こんにちは (Konnichiwa)</div>
+    </div>
+    <div class="flex gap-sm mt-sm">
+      <div class="trace-char small">こ</div>
+      <div class="trace-char small">ん</div>
+      <div class="trace-char small">に</div>
+      <div class="trace-char small">ち</div>
+      <div class="trace-char small">は</div>
+    </div>
+  </div>
+
+  <!-- Fill in blank -->
+  <div class="section mt-sm">
+    <div class="prompt">在日本，进屋要 <span class="fill-blank" style="min-width: 80px;"></span>。
+      <span class="prompt-en">In Japan, you must ___ when entering a house. (脱鞋 / take off shoes)</span></div>
+  </div>
+
+  <!-- Drawing box -->
+  <div class="section mt-sm">
+    <div class="prompt">画一画你最喜欢的日本食物 <span class="prompt-en">Draw your favorite Japanese food</span></div>
+    <div class="draw-box" style="min-height: 105px;">
+      <div class="label">寿司？拉面？天妇罗？ Sushi? Ramen? Tempura?</div>
+    </div>
+  </div>
+
+  <!-- Japan Culture Icons -->
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <div style="flex: 1; border: 2px solid #E91E63; border-radius: 8px; padding: 6px; text-align: center;">
+      <div style="font-size: 24px;">🌸</div>
+      <div style="font-size: 11px; font-weight: 700; color: #E91E63;">樱花 Cherry Blossom</div>
+      <div style="font-size: 10px; color: #888;">日本的象征！每年春天盛开</div>
+      <div style="font-size: 10px; color: #888;">Japan's symbol! Blooms every spring</div>
+    </div>
+    <div style="flex: 1; border: 2px solid #E91E63; border-radius: 8px; padding: 6px; text-align: center;">
+      <div style="font-size: 24px;">🗻</div>
+      <div style="font-size: 11px; font-weight: 700; color: #E91E63;">富士山 Mt. Fuji</div>
+      <div style="font-size: 10px; color: #888;">日本最高的山 3,776米</div>
+      <div style="font-size: 10px; color: #888;">Japan's tallest mountain</div>
+    </div>
+    <div style="flex: 1; border: 2px solid #E91E63; border-radius: 8px; padding: 6px; text-align: center;">
+      <div style="font-size: 24px;">🌊</div>
+      <div style="font-size: 11px; font-weight: 700; color: #E91E63;">地震 Earthquakes</div>
+      <div style="font-size: 10px; color: #888;">日本每年有1500+次地震！</div>
+      <div style="font-size: 10px; color: #888;">Japan has 1500+ earthquakes/year!</div>
+    </div>
+  </div>
+
+  <!-- Anime & Pop Culture -->
+  <div style="margin-top: 8px; border: 2px dashed #FF9800; border-radius: 10px; padding: 8px; background: #FFF8E1;">
+    <div style="font-size: 13px; font-weight: 700; color: #E65100;">🎮 日本动漫与流行文化 Japanese Anime & Pop Culture</div>
+    <div style="display: flex; gap: 10px; margin-top: 6px; align-items: center;">
+      <div style="flex: 1; font-size: 11px; line-height: 1.6;">
+        <div>⚡ <strong>Pokemon 宝可梦</strong> — 全世界孩子都爱！</div>
+        <div>🐉 <strong>Dragon Ball 龙珠</strong> — 经典动画</div>
+        <div>🍥 <strong>Naruto 火影忍者</strong> — 忍者的故事</div>
+        <div>🎵 <strong>Nintendo 任天堂</strong> — Mario 马里奥!</div>
+      </div>
+      <div style="flex: 1;">
+        <div class="draw-box" style="min-height: 85px;">
+          <div class="label">画你最喜欢的日本卡通角色！Draw your favorite anime character!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bowing & Fun Fact -->
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <div class="section" style="flex: 1;">
+      <div class="prompt" style="font-size: 11px;">在日本，见面时要 <span class="fill-blank" style="min-width: 50px;"></span>。
+        <span class="prompt-en">People ___ when they meet. (鞠躬 / bow)</span></div>
+    </div>
+    <div class="fun-fact" style="flex: 1; margin: 0;">
+      <span class="emoji">🚄</span>
+      <strong>你知道吗？</strong> 新干线时速320公里！日本有5万多家拉面店！
+    </div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 6</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 7: INDIA FLAG & MAP -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--india-green);">
+    <span class="flag-emoji">🇮🇳</span>
+    <h2>印度 India — 国旗与地图 Flag &amp; Map</h2>
+  </div>
+
+  <div class="two-col">
+    <!-- Flag -->
+    <div>
+      <div class="sub-header" style="background: var(--india-green);">涂一涂印度国旗 Colour the Flag</div>
+      <div class="flag-outline" style="width: 100%; aspect-ratio: 3/2; margin-top: 6px; display: flex; flex-direction: column;">
+        <div class="stripe" style="border-bottom: 1px dashed #ccc; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;">
+          <span style="font-size: 10px; color: #bbb;">🟠 橙色 Saffron</span>
+        </div>
+        <div class="stripe" style="border-bottom: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; position: relative;">
+          <div style="width: 30px; height: 30px; border: 2px dashed #ccc; border-radius: 50;"></div>
+          <svg viewBox="0 0 40 40" style="width: 30px; height: 30px; position: absolute;">
+            <circle cx="20" cy="20" r="14" fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <circle cx="20" cy="20" r="2" fill="none" stroke="#ccc" stroke-width="1"/>
+            <!-- Spokes hint -->
+            <line x1="20" y1="6" x2="20" y2="34" stroke="#ddd" stroke-width="0.5"/>
+            <line x1="6" y1="20" x2="34" y2="20" stroke="#ddd" stroke-width="0.5"/>
+          </svg>
+          <span style="font-size: 10px; color: #bbb; position: absolute; right: 8px;">⬜ + 🔵 蓝色 Chakra</span>
+        </div>
+        <div class="stripe" style="display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;">
+          <span style="font-size: 10px; color: #bbb;">🟢 绿色 Green</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div>
+      <div class="sub-header" style="background: var(--india-green);">印度在哪里？Where is India?</div>
+      <div class="map-box" style="min-height: 140px; margin-top: 6px;">
+        <div style="font-size: 14px; font-weight: 600; color: #777;">印度 India</div>
+        <div style="font-size: 11px; color: #aaa;">印度是一个很大的国家！</div>
+        <div style="font-size: 10px; color: #bbb;">India is a very large country!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Facts -->
+  <div class="quick-facts mt-md" style="border-color: var(--india-green);">
+    <h4 style="color: var(--india-green);">📋 快速了解 Quick Facts</h4>
+    <div class="two-col" style="gap: 8px;">
+      <div>
+        <div class="row"><span class="label-text">首都 Capital:</span> <span class="blank"></span></div>
+        <div class="row"><span class="label-text">人口 Population:</span> <span class="blank"></span></div>
+      </div>
+      <div>
+        <div class="row"><span class="label-text">语言 Language:</span> <span class="blank"></span></div>
+        <div class="row"><span class="label-text">货币 Currency:</span> <span class="blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-md">
+    <span class="emoji">🐅</span>
+    <strong>你知道吗？Did you know?</strong> 印度是世界上老虎最多的国家！
+    India has the most tigers of any country in the world!
+  </div>
+
+  <!-- Bonus drawing -->
+  <div class="section mt-md">
+    <div class="prompt">画一画印度有名的地方 Draw a famous place in India</div>
+    <div class="draw-box" style="min-height: 160px;">
+      <div class="label">泰姬陵？大象？孔雀？ Taj Mahal? Elephant? Peacock?</div>
+    </div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 7</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 8: INDIA CULTURE & FOOD -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--india-green);">
+    <span class="flag-emoji">🇮🇳</span>
+    <h2>印度 India — 文化与美食 Culture &amp; Food</h2>
+  </div>
+
+  <!-- Hello -->
+  <div class="section">
+    <div class="prompt">How do we say "hello" in India? 在印度怎么说"你好"？</div>
+    <div class="flex items-center gap-md mt-sm">
+      <div style="font-size: 16px; font-weight: 700; color: var(--india-green);">Namaste / नमस्ते (那马斯特)</div>
+    </div>
+    <div class="prompt mt-sm small">描一描 Trace &amp; draw the 🙏 合十 gesture (palms together)</div>
+    <div class="draw-box" style="min-height: 80px;">
+      <div class="label">画双手合十的样子 Draw the Namaste gesture 🙏</div>
+    </div>
+  </div>
+
+  <!-- Fill in blank -->
+  <div class="section mt-sm">
+    <div class="prompt">在印度，要用 <span class="fill-blank" style="min-width: 60px;"></span> 手吃饭。
+      <span class="prompt-en">In India, you eat with your ___ hand. (右 / right)</span></div>
+  </div>
+
+  <!-- Drawing box -->
+  <div class="section mt-sm">
+    <div class="prompt">画一画你最喜欢的印度食物 <span class="prompt-en">Draw your favorite Indian food</span></div>
+    <div class="draw-box" style="min-height: 100px;">
+      <div class="label">咖喱？馕饼？奶茶？ Curry? Naan bread? Chai tea?</div>
+    </div>
+  </div>
+
+  <!-- Festivals -->
+  <div style="display: flex; gap: 8px; margin-top: 8px;">
+    <div style="flex: 1; border: 2px solid #FF6F00; border-radius: 8px; padding: 6px; text-align: center;">
+      <div style="font-size: 22px;">🪔</div>
+      <div style="font-size: 12px; font-weight: 700; color: #E65100;">排灯节 Diwali</div>
+      <div style="font-size: 10px; color: #666;">灯光节！家家点灯放烟花</div>
+      <div style="font-size: 10px; color: #666;">Festival of Lights! Like Chinese New Year</div>
+    </div>
+    <div style="flex: 1; border: 2px solid #E91E63; border-radius: 8px; padding: 6px; text-align: center;">
+      <div style="font-size: 22px;">🎨</div>
+      <div style="font-size: 12px; font-weight: 700; color: #C2185B;">洒红节 Holi</div>
+      <div style="font-size: 10px; color: #666;">颜色节！互相泼彩色粉末</div>
+      <div style="font-size: 10px; color: #666;">Festival of Colors! Throw colored powder</div>
+    </div>
+  </div>
+
+  <!-- Food Taboos & River -->
+  <div style="margin-top: 8px; border: 2px dashed #FF6F00; border-radius: 10px; padding: 8px; background: #FFF3E0;">
+    <div style="font-size: 12px; font-weight: 700; color: #E65100;">🍽️ 饮食禁忌 Food Taboos & 🏞️ 恒河 Ganges River</div>
+    <div style="display: flex; gap: 10px; margin-top: 4px;">
+      <div style="flex: 1; font-size: 10px; line-height: 1.6;">
+        <div>🐄 印度教徒<strong>不吃牛肉</strong>——牛是神圣的！</div>
+        <div>🐷 穆斯林<strong>不吃猪肉</strong></div>
+        <div>🥬 很多印度人<strong>吃素</strong>(vegetarian)</div>
+        <div>🤚 用<strong>右手</strong>吃饭（左手不干净）</div>
+      </div>
+      <div style="flex: 1; font-size: 10px; line-height: 1.6;">
+        <div>🏞️ <strong>恒河(Ganges)</strong>是印度最神圣的河</div>
+        <div>🛕 人们在恒河沐浴、祈祷</div>
+        <div>🔢 印度发明了数字<strong>0</strong>！</div>
+        <div>♟️ <strong>象棋</strong>(chess)也是印度发明的</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fill-in -->
+  <div class="section mt-sm">
+    <div class="prompt" style="font-size: 11px;">印度教徒不吃 <span class="fill-blank" style="min-width: 50px;"></span>，因为牛是 <span class="fill-blank" style="min-width: 60px;"></span> 的。
+      <span class="prompt-en">Hindus don't eat ___ because cows are ___. (牛肉/神圣 beef/sacred)</span></div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 8</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 9: COMPARISON TABLE -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <span class="flag-emoji">📊</span>
+    <h2>亚洲文化对比 Compare Asia's Countries</h2>
+  </div>
+
+  <div class="prompt mb-md">用你学到的知识填写下面的表格！<span class="prompt-en">Fill in the table with what you've learned!</span></div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>🇨🇳 中国<br>China</th>
+        <th>🇯🇵 日本<br>Japan</th>
+        <th>🇮🇳 印度<br>India</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>你好<br>Hello</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>首都<br>Capital</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>吃饭用<br>Eat with</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>我最喜欢的食物<br>Fav. Food</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>有趣的事<br>Fun Fact</td>
+        <td style="height: 50px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>国旗颜色<br>Flag Colors</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Venn-like comparison -->
+  <div class="section mt-md">
+    <div class="sub-header">想一想 Think About It</div>
+    <div class="prompt mt-sm">这三个国家有什么相同的地方？<span class="prompt-en">What do these 3 countries have in common?</span></div>
+    <div class="write-area lined" style="min-height: 60px;"></div>
+
+    <div class="prompt mt-sm">这三个国家有什么不同的地方？<span class="prompt-en">What makes them different?</span></div>
+    <div class="write-area lined" style="min-height: 60px;"></div>
+  </div>
+
+  <div class="section mt-sm">
+    <div class="prompt">你觉得哪个国家最有趣？为什么？<span class="prompt-en">Which country do you find most interesting? Why?</span></div>
+    <div class="write-area lined" style="min-height: 60px;"></div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 9</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 10: DREAM DESTINATION -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: var(--accent);">
+    <span class="flag-emoji">✈️</span>
+    <h2>我最想去的国家 My Dream Destination</h2>
+  </div>
+
+  <div class="prompt" style="font-size: 16px;">如果我可以去亚洲旅行，我最想去 <span class="fill-blank" style="min-width: 140px;"></span></div>
+  <div class="prompt mt-sm">因为 Because: </div>
+  <div class="write-line tall"></div>
+
+  <div class="prompt mt-md">画一画你在那里会看到什么 <span class="prompt-en">Draw what you would see there</span></div>
+  <div class="draw-box" style="min-height: 180px;"></div>
+
+  <div class="two-col mt-sm">
+    <div>
+      <div class="prompt">我会吃 I would eat:</div>
+      <div class="write-line"></div>
+    </div>
+    <div>
+      <div class="prompt">我会说 I would say:</div>
+      <div class="write-line"></div>
+    </div>
+  </div>
+
+  <div class="prompt mt-sm">旅行小贴士 My travel tip:</div>
+  <div class="write-line"></div>
+
+  <!-- Differentiated levels -->
+  <div style="margin-top: 14px; background: #f5f5f5; border-radius: 8px; padding: 10px;">
+    <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px;">✍️ 写作挑战 Writing Challenge — 选择你的级别 Choose your level:</div>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 140px; border: 2px solid #43A047; border-radius: 8px; padding: 8px; background: #E8F5E9;">
+        <div><span class="diff-badge diff-k1">K-1</span> <span style="font-size: 12px;">画一画 + 写1-2个词</span></div>
+        <div style="font-size: 10px; color: #666;">Draw + write 1-2 words</div>
+      </div>
+      <div style="flex: 1; min-width: 140px; border: 2px solid #1E88E5; border-radius: 8px; padding: 8px; background: #E3F2FD;">
+        <div><span class="diff-badge diff-23">2-3</span> <span style="font-size: 12px;">画一画 + 写2-3句话</span></div>
+        <div style="font-size: 10px; color: #666;">Draw + write 2-3 sentences</div>
+      </div>
+      <div style="flex: 1; min-width: 140px; border: 2px solid #7B1FA2; border-radius: 8px; padding: 8px; background: #F3E5F5;">
+        <div><span class="diff-badge diff-45">4-5</span> <span style="font-size: 12px;">画一画 + 写一段话</span></div>
+        <div style="font-size: 10px; color: #666;">Draw + write a paragraph</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt mt-sm">我的旅行故事 My travel story:</div>
+  <div class="write-area lined" style="min-height: 80px;"></div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 10</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 11: VOCABULARY / WORD SEARCH -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar" style="background: #6A1B9A;">
+    <span class="flag-emoji">🔍</span>
+    <h2>亚洲词汇表 Asia Vocabulary &amp; Word Search</h2>
+  </div>
+
+  <!-- Word list -->
+  <div class="section">
+    <div class="sub-header" style="background: #6A1B9A;">词汇表 Word List</div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; font-size: 13px;">
+      <div style="background: #FCE4EC; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">饺子</div><div class="tiny">jiǎo zi</div><div class="tiny muted">dumpling</div>
+      </div>
+      <div style="background: #E3F2FD; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">寿司</div><div class="tiny">shòu sī</div><div class="tiny muted">sushi</div>
+      </div>
+      <div style="background: #FFF3E0; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">咖喱</div><div class="tiny">gā lí</div><div class="tiny muted">curry</div>
+      </div>
+      <div style="background: #E8F5E9; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">筷子</div><div class="tiny">kuài zi</div><div class="tiny muted">chopsticks</div>
+      </div>
+      <div style="background: #F3E5F5; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">鞠躬</div><div class="tiny">jū gōng</div><div class="tiny muted">bow</div>
+      </div>
+      <div style="background: #E0F7FA; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">合十</div><div class="tiny">hé shí</div><div class="tiny muted">namaste</div>
+      </div>
+      <div style="background: #FFF8E1; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">长城</div><div class="tiny">cháng chéng</div><div class="tiny muted">Great Wall</div>
+      </div>
+      <div style="background: #FFEBEE; padding: 5px 8px; border-radius: 6px; text-align: center;">
+        <div class="bold">樱花</div><div class="tiny">yīng huā</div><div class="tiny muted">cherry blossom</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Word search grid -->
+  <div class="section mt-md">
+    <div class="sub-header" style="background: #6A1B9A;">🔍 找一找 Word Search</div>
+    <div class="small muted mb-sm">在格子里找到上面的词汇！Find the words from above in the grid! (→ ↓)</div>
+    <div class="text-center">
+      <div class="word-grid">
+        <!-- Row 1 --><div class="cell">饺</div><div class="cell">子</div><div class="cell">山</div><div class="cell">长</div><div class="cell">城</div><div class="cell">水</div><div class="cell">风</div><div class="cell">云</div>
+        <!-- Row 2 --><div class="cell">花</div><div class="cell">寿</div><div class="cell">司</div><div class="cell">天</div><div class="cell">地</div><div class="cell">合</div><div class="cell">十</div><div class="cell">月</div>
+        <!-- Row 3 --><div class="cell">日</div><div class="cell">咖</div><div class="cell">喱</div><div class="cell">河</div><div class="cell">海</div><div class="cell">星</div><div class="cell">光</div><div class="cell">年</div>
+        <!-- Row 4 --><div class="cell">火</div><div class="cell">筷</div><div class="cell">子</div><div class="cell">鸟</div><div class="cell">鱼</div><div class="cell">龙</div><div class="cell">虎</div><div class="cell">象</div>
+        <!-- Row 5 --><div class="cell">春</div><div class="cell">夏</div><div class="cell">秋</div><div class="cell">冬</div><div class="cell">雨</div><div class="cell">雪</div><div class="cell">冰</div><div class="cell">霜</div>
+        <!-- Row 6 --><div class="cell">樱</div><div class="cell">花</div><div class="cell">开</div><div class="cell">鞠</div><div class="cell">躬</div><div class="cell">红</div><div class="cell">黄</div><div class="cell">蓝</div>
+        <!-- Row 7 --><div class="cell">东</div><div class="cell">西</div><div class="cell">南</div><div class="cell">北</div><div class="cell">大</div><div class="cell">小</div><div class="cell">多</div><div class="cell">少</div>
+        <!-- Row 8 --><div class="cell">金</div><div class="cell">木</div><div class="cell">土</div><div class="cell">石</div><div class="cell">玉</div><div class="cell">珠</div><div class="cell">宝</div><div class="cell">贝</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Match activity -->
+  <div class="section mt-md">
+    <div class="sub-header" style="background: #6A1B9A;">连一连 Match the Word to the Country</div>
+    <div class="two-col mt-sm" style="gap: 20px;">
+      <div style="font-size: 14px;">
+        <div style="margin: 8px 0; padding: 4px 0; border-bottom: 1px dotted #ddd;">1. 饺子 dumpling &nbsp;&nbsp; ___</div>
+        <div style="margin: 8px 0; padding: 4px 0; border-bottom: 1px dotted #ddd;">2. 寿司 sushi &nbsp;&nbsp; ___</div>
+        <div style="margin: 8px 0; padding: 4px 0; border-bottom: 1px dotted #ddd;">3. 咖喱 curry &nbsp;&nbsp; ___</div>
+        <div style="margin: 8px 0; padding: 4px 0; border-bottom: 1px dotted #ddd;">4. 筷子 chopsticks &nbsp;&nbsp; ___</div>
+        <div style="margin: 8px 0; padding: 4px 0; border-bottom: 1px dotted #ddd;">5. 鞠躬 bow &nbsp;&nbsp; ___</div>
+        <div style="margin: 8px 0; padding: 4px 0; border-bottom: 1px dotted #ddd;">6. 合十 namaste &nbsp;&nbsp; ___</div>
+      </div>
+      <div style="font-size: 14px; display: flex; flex-direction: column; justify-content: center; gap: 12px;">
+        <div style="background: #FFEBEE; padding: 6px 12px; border-radius: 20px; text-align: center;">A. 🇯🇵 日本 Japan</div>
+        <div style="background: #FFF3E0; padding: 6px 12px; border-radius: 20px; text-align: center;">B. 🇮🇳 印度 India</div>
+        <div style="background: #FFCDD2; padding: 6px 12px; border-radius: 20px; text-align: center;">C. 🇨🇳 中国 China</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 11</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 12: VISA STAMP / COMPLETION -->
+<!-- ============================================================ -->
+<div class="page" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+  <div class="header-bar" style="width: 100%;">
+    <span class="flag-emoji">🎉</span>
+    <h2>我的亚洲签证章 My Asia Visa Stamp</h2>
+  </div>
+
+  <div style="font-size: 16px; font-weight: 700; color: var(--red); margin-top: 8px;">
+    🎊 恭喜你完成了亚洲旅行手册！
+  </div>
+  <div style="font-size: 14px; color: var(--accent); font-weight: 600;">
+    Congratulations on completing your Asia Travel Booklet!
+  </div>
+
+  <!-- Stamp -->
+  <div class="stamp" style="margin: 16px auto;">
+    <div style="font-size: 11px; color: var(--red); font-weight: 700;">GLOBAL EXPLORER CAMP</div>
+    <div style="font-size: 24px; margin: 4px 0;">🌏</div>
+    <div style="font-size: 20px; font-weight: 900; color: var(--red);">亚洲</div>
+    <div style="font-size: 12px; font-weight: 700; color: var(--red);">ASIA</div>
+    <div style="font-size: 10px; color: #999; margin-top: 4px;">✈️ PASSPORT STAMP ✈️</div>
+    <div style="font-size: 10px; color: #aaa;">装饰你的签证章！Decorate your stamp!</div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="width: 100%; text-align: left;">
+    <div class="prompt" style="font-size: 15px;">我在亚洲学到的最重要的事情是：</div>
+    <div class="prompt-en">The most important thing I learned about Asia is:</div>
+    <div class="write-area lined" style="min-height: 70px;"></div>
+
+    <div class="prompt mt-sm">我最喜欢的活动是：<span class="prompt-en">My favorite activity was:</span></div>
+    <div class="write-line tall"></div>
+
+    <div class="prompt mt-sm">下一次我想探索：<span class="prompt-en">Next time I want to explore:</span></div>
+    <div class="write-line tall"></div>
+  </div>
+
+  <!-- Teacher signature -->
+  <div style="margin-top: 16px; width: 100%; display: flex; justify-content: space-around;">
+    <div style="text-align: center;">
+      <div style="width: 180px; border-bottom: 2px solid #333; min-height: 40px;"></div>
+      <div style="font-size: 12px; margin-top: 4px;">老师签名 Teacher Signature</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="width: 120px; height: 40px; border: 3px double var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #ccc;">盖章 Stamp</div>
+      <div style="font-size: 12px; margin-top: 4px;">教师印章 Teacher Stamp</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="width: 120px; border-bottom: 2px solid #333; min-height: 40px;"></div>
+      <div style="font-size: 12px; margin-top: 4px;">日期 Date</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; font-size: 22px;">
+    🇨🇳 🇯🇵 🇮🇳 ✈️ 🌏
+  </div>
+  <div style="font-size: 13px; color: var(--red); font-weight: 700; margin-top: 4px;">
+    你是一个了不起的小探险家！You are an amazing explorer!
+  </div>
+
+  <div class="page-footer">Global Explorer Camp · 谷雨中文 GR EDU · Page 12</div>
+</div>
+
+</body>
+</html>

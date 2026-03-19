@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; background: #fff; font-family: 'Kaiti SC', 'KaiTi', 'STKaiti', 'LXGW WenKai', 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  .sec-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #333;
+    border-left: 4px solid #5e9428;
+    padding-left: 10px;
+    margin: 20px 0 12px 0;
+  }
+
+  /* ── LEVEL LABEL ── */
+  .level-block { margin-bottom: 28px; }
+  .level-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f1f8f3;
+    border-left: 3px solid #5e9428;
+    border-radius: 0 6px 6px 0;
+    padding: 5px 14px 5px 12px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #2e6e4a;
+    margin-bottom: 10px;
+  }
+
+  /* ── SESSION GRID ── */
+  .sessions-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .sess {
+    background: #f9fafb;
+    border: 1px solid #e8e8e8;
+    border-top: 3px solid #5e9428;
+    border-radius: 10px;
+    padding: 14px 12px;
+  }
+  .sess-header {
+    font-size: 17px;
+    font-weight: 700;
+    color: #5e9428;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  /* ── LESSON TABLE ── */
+  .lesson-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .lesson-table th {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    text-align: left;
+    padding: 4px 6px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .lesson-table td {
+    font-size: 15px;
+    color: #333;
+    padding: 7px 6px;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 1.4;
+  }
+  .lesson-table tr:last-child td {
+    border-bottom: none;
+  }
+  .lesson-num {
+    font-weight: 600;
+    color: #5e9428;
+    white-space: nowrap;
+    width: 80px;
+  }
+
+  /* ── FOCUS BOX ── */
+  .focus-box {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f1f8f3;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #2e6e4a;
+    line-height: 1.5;
+  }
+
+  /* ── INFO ROW ── */
+  .info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .info-card {
+    background: #f9fafb;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .info-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #5e9428;
+    margin-bottom: 8px;
+  }
+  .info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .info-card li {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .info-card li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #5e9428;
+    font-weight: 700;
+  }
+  .info-card p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .sessions-row { grid-template-columns: 1fr; gap: 8px; }
+    .info-row { grid-template-columns: 1fr; gap: 8px; }
+    .sess { padding: 10px 10px; }
+    .sess-header { font-size: 15px; }
+    .lesson-table td { font-size: 14px; }
+    .sec-title { font-size: 16px; }
+    .level-label { font-size: 15px; padding: 4px 10px 4px 10px; }
+    .focus-box { font-size: 13px; }
+    .info-card li { font-size: 13px; }
+    .info-card p { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sec-title">课程介绍</div>
+
+<!-- ============================================ -->
+<!-- LEVEL 1 -->
+<!-- ============================================ -->
+<div class="level-block">
+  <div class="level-label">Level 1 Summer Math Curriculum</div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <div class="info-card-title">🎯 适合学生</div>
+      <ul>
+        <li>已掌握基本加减法，准备学习三位数运算和初步逻辑推理的学生</li>
+        <li>希望在暑假巩固计算基础，同时接触图形与数据分析入门的学生</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📖 教学内容</div>
+      <p>三位数加减法、运算律与计算策略、排队问题与年龄谜题、平面与立体图形、条形图与计数表</p>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 1</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 1</td><td>Add and Subtract Three-digit Numbers</td></tr>
+        <tr><td class="lesson-num">Lesson 2</td><td>Commutative Property & Associative Property of Addition</td></tr>
+        <tr><td class="lesson-num">Lesson 3</td><td>Addition Strategies</td></tr>
+        <tr><td class="lesson-num">Lesson 4</td><td>Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：三位数运算：加减三位数、运算律、加法策略与应用题</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 2</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 5</td><td>Subtraction Strategies</td></tr>
+        <tr><td class="lesson-num">Lesson 6</td><td>Addition and Subtraction Strategies</td></tr>
+        <tr><td class="lesson-num">Lesson 7</td><td>Find the Missing Numbers</td></tr>
+        <tr><td class="lesson-num">Lesson 8</td><td>Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：运算策略深化：减法策略、加减混合策略、找缺失数、应用题</div>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 3</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 9</td><td>Lining-up Problems</td></tr>
+        <tr><td class="lesson-num">Lesson 10</td><td>Age Puzzles</td></tr>
+        <tr><td class="lesson-num">Lesson 11</td><td>Two-Dimensional Shapes</td></tr>
+        <tr><td class="lesson-num">Lesson 12</td><td>Three-Dimensional Shapes</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：逻辑推理与图形：排队问题、年龄谜题、平面与立体图形识别</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 4</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 13</td><td>Bar Graphs</td></tr>
+        <tr><td class="lesson-num">Lesson 14</td><td>Tally Charts</td></tr>
+        <tr><td class="lesson-num">Lesson 15</td><td>Directional Words</td></tr>
+        <tr><td class="lesson-num">Lesson 16</td><td>Guess the Number</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：数据与方向：条形图、计数表、方向词、猜数游戏</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- LEVEL 2 -->
+<!-- ============================================ -->
+<div class="level-block">
+  <div class="level-label">Level 2 Summer Math Curriculum</div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <div class="info-card-title">🎯 适合学生</div>
+      <ul>
+        <li>已掌握基本乘法运算，准备深入学习乘除法与运算规律的学生</li>
+        <li>希望在暑假拓展数学思维，接触括号运算、分配律和逻辑推理题型的学生</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📖 教学内容</div>
+      <p>奇偶数规律、竖式乘法、括号运算、分配律、乘除10/100/1000、余数除法、幻方与规律探索</p>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 1</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 1</td><td>Even and Odd Numbers I</td></tr>
+        <tr><td class="lesson-num">Lesson 2</td><td>Even and Odd Numbers II</td></tr>
+        <tr><td class="lesson-num">Lesson 3</td><td>Multiplication (Vertical Method)</td></tr>
+        <tr><td class="lesson-num">Lesson 4</td><td>Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：奇偶与乘法：奇偶数规律、竖式乘法、应用题</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 2</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 5</td><td>Parentheses I</td></tr>
+        <tr><td class="lesson-num">Lesson 6</td><td>Parentheses II</td></tr>
+        <tr><td class="lesson-num">Lesson 7</td><td>Distributive Property</td></tr>
+        <tr><td class="lesson-num">Lesson 8</td><td>Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：括号与分配律：括号运算、分配律及应用题</div>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 3</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 9</td><td>Multiplication and Division with 10, 100, and 1000</td></tr>
+        <tr><td class="lesson-num">Lesson 10</td><td>Division with Remainders</td></tr>
+        <tr><td class="lesson-num">Lesson 11</td><td>Division with Distributive Property</td></tr>
+        <tr><td class="lesson-num">Lesson 12</td><td>Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：除法深化：乘除10/100/1000、余数除法、分配律除法</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 4</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 13</td><td>Magic Square</td></tr>
+        <tr><td class="lesson-num">Lesson 14</td><td>Page Number Word Problems</td></tr>
+        <tr><td class="lesson-num">Lesson 15</td><td>Time Word Problems</td></tr>
+        <tr><td class="lesson-num">Lesson 16</td><td>Project: Find and Draw the Pattern</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：逻辑与规律：幻方、页码问题、时间应用题、寻找规律</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- LEVEL 3 -->
+<!-- ============================================ -->
+<div class="level-block">
+  <div class="level-label">Level 3 Summer Math Curriculum</div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <div class="info-card-title">🎯 适合学生</div>
+      <ul>
+        <li>已掌握四则运算基础，准备系统学习分数运算和运算顺序的学生</li>
+        <li>希望在暑假提升分数计算能力，并接触条形图应用与经典逻辑题型的学生</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📖 教学内容</div>
+      <p>运算顺序、括号运用、GCF/LCM、分数加减乘法、条形图应用题、鸡兔同笼</p>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 1</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 1</td><td>Order of Operations</td></tr>
+        <tr><td class="lesson-num">Lesson 2</td><td>Parentheses I</td></tr>
+        <tr><td class="lesson-num">Lesson 3</td><td>Parentheses II</td></tr>
+        <tr><td class="lesson-num">Lesson 4</td><td>Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：运算顺序与括号：四则运算法则、括号运用、应用题</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 2</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 5</td><td>GCF and LCM</td></tr>
+        <tr><td class="lesson-num">Lesson 6</td><td>Convert Between Mixed Numbers and Improper Fractions</td></tr>
+        <tr><td class="lesson-num">Lesson 7</td><td>Add and Subtract Fractions and Mixed Numbers</td></tr>
+        <tr><td class="lesson-num">Lesson 8</td><td>Add and Subtract Fractions and Mixed Numbers</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：分数基础：GCF/LCM、带分数与假分数互换、分数加减</div>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 3</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 9</td><td>Multiply Fractions</td></tr>
+        <tr><td class="lesson-num">Lesson 10</td><td>Multiply Fractions by Whole Numbers</td></tr>
+        <tr><td class="lesson-num">Lesson 11</td><td>Fractions Word Problems I</td></tr>
+        <tr><td class="lesson-num">Lesson 12</td><td>Fractions Word Problems II</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：分数乘法与应用：分数乘法、分数乘整数、应用题</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 4</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 13</td><td>Bar Graphs Word Problems I</td></tr>
+        <tr><td class="lesson-num">Lesson 14</td><td>Bar Graphs Word Problems II</td></tr>
+        <tr><td class="lesson-num">Lesson 15</td><td>Chicken and Rabbit Problems</td></tr>
+        <tr><td class="lesson-num">Lesson 16</td><td>Project: Find and Draw the Pattern</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：图表与逻辑：条形图应用、鸡兔同笼、寻找规律</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- LEVEL 4 -->
+<!-- ============================================ -->
+<div class="level-block">
+  <div class="level-label">Level 4 Summer Math Curriculum</div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <div class="info-card-title">🎯 适合学生</div>
+      <ul>
+        <li>已掌握分数基本运算，准备学习小数运算、百分比和高级分数技巧的学生</li>
+        <li>希望在暑假系统提升数与运算能力，为初中数学做准备的学生</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📖 教学内容</div>
+      <p>质数与合数、质因数分解、小数四则运算、分数与小数互转、分数计算技巧、百分比、平均数</p>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 1</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 1</td><td>Prime Numbers and Composite Numbers 1</td></tr>
+        <tr><td class="lesson-num">Lesson 2</td><td>Prime Numbers and Composite Numbers 2</td></tr>
+        <tr><td class="lesson-num">Lesson 3</td><td>Prime Factorization 1</td></tr>
+        <tr><td class="lesson-num">Lesson 4</td><td>Prime Factorization 2</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：质数与因数分解：质数合数识别、质因数分解</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 2</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 5</td><td>Add, Subtract, and Multiply Decimals</td></tr>
+        <tr><td class="lesson-num">Lesson 6</td><td>Divide Decimals</td></tr>
+        <tr><td class="lesson-num">Lesson 7</td><td>Convert Fractions to Decimals</td></tr>
+        <tr><td class="lesson-num">Lesson 8</td><td>Compare and Order Fractions and Decimals</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：小数运算：加减乘除小数、分数与小数互转及比较</div>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 3</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 9</td><td>Simplify Fractions</td></tr>
+        <tr><td class="lesson-num">Lesson 10</td><td>Math Calculation Trick - Fraction 1</td></tr>
+        <tr><td class="lesson-num">Lesson 11</td><td>Math Calculation Trick - Fraction 2</td></tr>
+        <tr><td class="lesson-num">Lesson 12</td><td>Fractions Multiplication and Division Word Problems</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：分数深化：化简分数、分数计算技巧、乘除应用题</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 4</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 13</td><td>Convert Fractions, Decimals and Ratios to Percents</td></tr>
+        <tr><td class="lesson-num">Lesson 14</td><td>Percentage Word Problems</td></tr>
+        <tr><td class="lesson-num">Lesson 15</td><td>Average Word Problems 1</td></tr>
+        <tr><td class="lesson-num">Lesson 16</td><td>Average Word Problems 2</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：百分比与平均数：分数/小数/比率转百分比、百分比应用、平均数</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- LEVEL 5 -->
+<!-- ============================================ -->
+<div class="level-block">
+  <div class="level-label">Level 5 Summer Math Curriculum</div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <div class="info-card-title">🎯 适合学生</div>
+      <ul>
+        <li>已掌握小学阶段数学知识，准备系统学习初中代数与几何的学生</li>
+        <li>希望在暑假提前接触负数运算、方程、不等式和几何计算的学生</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📖 教学内容</div>
+      <p>负数与指数运算、实数性质、一元方程与不等式、平行线与三角形、圆与扇形、立体几何体积与表面积</p>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 1</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 1</td><td>Operations of Negative Numbers</td></tr>
+        <tr><td class="lesson-num">Lesson 2</td><td>Operations of Fractions and Decimals</td></tr>
+        <tr><td class="lesson-num">Lesson 3</td><td>Operations of Percents</td></tr>
+        <tr><td class="lesson-num">Lesson 4</td><td>Operations of Exponents</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：数的运算基础：负数、分数小数、百分数、指数的四则运算</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 2</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 5</td><td>Properties of Real Numbers and Simplifying Expressions</td></tr>
+        <tr><td class="lesson-num">Lesson 6</td><td>Linear Equations with One Variable</td></tr>
+        <tr><td class="lesson-num">Lesson 7</td><td>Linear Inequalities</td></tr>
+        <tr><td class="lesson-num">Lesson 8</td><td>Applications of Linear Equations</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：代数核心：实数性质化简、一元线性方程与不等式及应用</div>
+    </div>
+  </div>
+
+  <div class="sessions-row">
+    <div class="sess">
+      <div class="sess-header">Session 3</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 9</td><td>Parallel Lines and Angles</td></tr>
+        <tr><td class="lesson-num">Lesson 10</td><td>Properties of Triangles</td></tr>
+        <tr><td class="lesson-num">Lesson 11</td><td>Area and Circumference of Circles</td></tr>
+        <tr><td class="lesson-num">Lesson 12</td><td>Area and Circumference of Sectors</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：平面几何：平行线与角、三角形性质、圆的周长与面积、扇形</div>
+    </div>
+    <div class="sess">
+      <div class="sess-header">Session 4</div>
+      <table class="lesson-table">
+        <tr><th>课次</th><th>课程内容</th></tr>
+        <tr><td class="lesson-num">Lesson 13</td><td>Volume of Prism and Cylinder</td></tr>
+        <tr><td class="lesson-num">Lesson 14</td><td>Volume of Pyramid and Cone</td></tr>
+        <tr><td class="lesson-num">Lesson 15</td><td>Surface Area of Prism and Cylinder</td></tr>
+        <tr><td class="lesson-num">Lesson 16</td><td>Surface Area of Pyramid and Cone</td></tr>
+      </table>
+      <div class="focus-box">📌 重点：立体几何：棱柱/圆柱/棱锥/圆锥的体积与表面积</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

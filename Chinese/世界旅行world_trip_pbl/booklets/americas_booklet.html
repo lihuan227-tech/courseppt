@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探索美洲 Explore: Americas — 谷雨中文活动手册</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif;
+    color: #333;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.5in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Theme colors */
+  :root {
+    --primary: #2E7D32;
+    --accent: #FF6F00;
+    --bg-light: #E8F5E9;
+    --primary-light: #66BB6A;
+    --accent-light: #FFB74D;
+  }
+
+  /* Common elements */
+  .page-number {
+    position: absolute;
+    bottom: 0.3in;
+    right: 0.5in;
+    font-size: 11px;
+    color: #999;
+  }
+  .page-number::before { content: "— "; }
+  .page-number::after { content: " —"; }
+
+  .footer-brand {
+    position: absolute;
+    bottom: 0.3in;
+    left: 0.5in;
+    font-size: 9px;
+    color: #aaa;
+  }
+
+  h1 { color: var(--primary); }
+  h2 { color: var(--primary); font-size: 20px; margin-bottom: 8px; }
+  h3 { color: var(--accent); font-size: 16px; margin-bottom: 6px; }
+
+  .fill-blank {
+    display: inline-block;
+    border-bottom: 1.5px solid #333;
+    min-width: 60px;
+    text-align: center;
+    margin: 0 2px;
+  }
+
+  .trace-char {
+    display: inline-block;
+    font-size: 64px;
+    font-weight: 300;
+    color: #ccc;
+    border: 2px dashed #bbb;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    margin: 4px;
+    border-radius: 8px;
+  }
+
+  .draw-box {
+    border: 2px dashed #bbb;
+    border-radius: 12px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-size: 13px;
+    background: #fafafa;
+  }
+
+  .fun-fact {
+    background: #FFF8E1;
+    border-left: 4px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+
+  .writing-lines {
+    width: 100%;
+    margin: 6px 0;
+  }
+  .writing-lines .line {
+    border-bottom: 1px solid #ccc;
+    height: 32px;
+    width: 100%;
+  }
+
+  .flag-box {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .map-outline {
+    border: 2px dashed #bbb;
+    border-radius: 12px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 12px;
+  }
+
+  table.compare {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.compare th {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 6px;
+    text-align: center;
+  }
+  table.compare td {
+    border: 1.5px solid #ddd;
+    padding: 10px 6px;
+    text-align: center;
+    height: 44px;
+  }
+  table.compare tr:nth-child(even) td {
+    background: var(--bg-light);
+  }
+
+  .stamp-circle {
+    width: 130px;
+    height: 130px;
+    border: 3px dashed var(--primary);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--primary);
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--primary);
+    color: #fff;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .accent-label {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  /* SVG styles */
+  svg text { font-family: 'Noto Sans SC', sans-serif; }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; }
+  }
+  @media screen {
+    body { background: #eee; }
+    .page {
+      background: #fff;
+      margin: 20px auto;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 40%, #FFF8E1 100%);">
+  <div style="font-size:80px; margin-bottom:10px;">🌎</div>
+  <h1 style="font-size:48px; margin-bottom:4px; letter-spacing:2px;">探索美洲</h1>
+  <p style="font-size:28px; color:#555; font-weight:300; margin-bottom:30px;">Explore: Americas</p>
+
+  <div style="display:flex; gap:20px; margin-bottom:30px;">
+    <div style="text-align:center;">
+      <div style="font-size:50px;">🇺🇸</div>
+      <div style="font-size:14px; color:#555;">美国 USA</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:50px;">🇲🇽</div>
+      <div style="font-size:14px; color:#555;">墨西哥 Mexico</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:50px;">🇧🇷</div>
+      <div style="font-size:14px; color:#555;">巴西 Brazil</div>
+    </div>
+  </div>
+
+  <svg width="500" height="140" viewBox="0 0 500 140">
+    <!-- Simplified Americas silhouette -->
+    <g fill="none" stroke="#2E7D32" stroke-width="2" opacity="0.3">
+      <!-- North America -->
+      <path d="M150,10 C170,8 200,15 220,20 C240,25 250,30 255,40 C260,50 250,55 240,58 C250,62 260,70 258,80 C255,90 240,95 230,92 C220,95 210,100 200,105 C190,100 180,95 175,90 C165,95 155,92 150,85 C140,80 135,70 140,60 C130,55 125,45 130,35 C135,25 142,15 150,10 Z"/>
+      <!-- Central America -->
+      <path d="M195,105 C200,110 205,115 202,120 C200,125 195,128 192,125"/>
+      <!-- South America -->
+      <path d="M210,120 C225,118 240,122 250,130 C260,140 265,155 262,170 C258,185 250,200 240,210 C230,220 225,230 220,240 C215,250 210,255 205,250 C200,245 198,235 200,225 C195,215 190,200 192,185 C188,175 190,160 195,150 C200,140 205,130 210,120 Z"/>
+    </g>
+    <!-- Decorative elements -->
+    <text x="80" y="70" font-size="24" opacity="0.15">🌵</text>
+    <text x="350" y="50" font-size="24" opacity="0.15">🗽</text>
+    <text x="320" y="110" font-size="24" opacity="0.15">☕</text>
+    <text x="100" y="120" font-size="24" opacity="0.15">🎭</text>
+    <text x="400" y="80" font-size="24" opacity="0.15">⚽</text>
+  </svg>
+
+  <div style="margin-top:20px; border:2px dashed #bbb; border-radius:12px; padding:12px 30px; background:rgba(255,255,255,0.7);">
+    <p style="font-size:14px; color:#777;">姓名 Name: ________________________________</p>
+    <p style="font-size:14px; color:#777; margin-top:8px;">日期 Date: ________________________________</p>
+  </div>
+
+  <div style="margin-top:24px; font-size:12px; color:#999;">谷雨中文 GR EDU — 世界之旅 World Trip PBL</div>
+</div>
+
+<!-- ==================== PAGE 2: 认识美洲 ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🌎</span>
+    <h2 style="font-size:24px; margin:0;">认识美洲 <span style="font-weight:300; font-size:16px; color:#777;">Know the Americas</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid var(--primary); margin-bottom:12px;">
+
+  <!-- Map coloring -->
+  <span class="section-label">涂色 Color the Map</span>
+  <p style="font-size:12px; margin-bottom:6px; color:#666;">找到三个国家并涂上指定颜色！Find and color the 3 focus countries!</p>
+  <div style="display:flex; gap:12px; margin-bottom:12px;">
+    <svg viewBox="0 0 340 520" width="260" style="border:1px solid #eee; border-radius:8px; background:#fff;">
+      <!-- Alaska -->
+      <path d="M30,18 L55,12 L75,18 L80,32 L72,42 L55,48 L35,42 L25,30 Z" fill="white" stroke="black" stroke-width="0.8"/>
+      <text x="52" y="32" font-size="7" text-anchor="middle" fill="#888" font-family="sans-serif">AK</text>
+
+      <!-- Canada (large northern region) -->
+      <path d="M60,25 L100,18 L145,15 L190,18 L230,25 L260,38 L275,58 L278,82 L272,105 L258,120 L240,128 L220,125 L200,130 L180,125 L160,128 L140,122 L120,125 L100,118 L82,122 L65,115 L52,100 L45,80 L48,55 Z" fill="white" stroke="black" stroke-width="1"/>
+      <text x="165" y="72" font-size="12" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">加拿大</text>
+      <text x="165" y="86" font-size="9" text-anchor="middle" fill="#888" font-family="sans-serif">Canada</text>
+
+      <!-- USA (between Canada and Mexico) -->
+      <path d="M65,115 L100,118 L120,125 L140,122 L160,128 L180,125 L200,130 L220,125 L240,128 L258,120 L268,135 L272,155 L265,175 L252,188 L235,195 L215,192 L195,198 L175,195 L155,200 L135,195 L115,198 L95,192 L78,185 L65,172 L55,155 L52,135 Z" fill="white" stroke="black" stroke-width="1.3"/>
+      <text x="165" y="158" font-size="14" text-anchor="middle" fill="#1565C0" font-weight="bold" font-family="'Noto Sans SC',sans-serif">美国 USA</text>
+
+      <!-- Mexico (below USA) -->
+      <path d="M65,195 L95,192 L115,198 L135,195 L155,200 L168,210 L175,225 L170,242 L160,255 L148,265 L135,268 L122,262 L110,255 L100,245 L90,235 L80,222 L70,210 Z" fill="white" stroke="black" stroke-width="1.3"/>
+      <text x="128" y="232" font-size="12" text-anchor="middle" fill="#2E7D32" font-weight="bold" font-family="'Noto Sans SC',sans-serif">墨西哥</text>
+      <text x="128" y="248" font-size="9" text-anchor="middle" fill="#2E7D32" font-family="sans-serif">Mexico</text>
+
+      <!-- Central America (simplified) -->
+      <path d="M135,268 L148,265 L155,275 L152,290 L145,300 L138,298 L132,288 L130,278 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+      <!-- Caribbean islands (hint) -->
+      <path d="M185,245 L195,242 L200,250 L195,258 L185,255 Z" fill="white" stroke="black" stroke-width="0.5"/>
+      <path d="M205,250 L215,248 L218,255 L212,262 L205,258 Z" fill="white" stroke="black" stroke-width="0.5"/>
+
+      <!-- Colombia/Venezuela -->
+      <path d="M120,305 L155,298 L185,305 L200,320 L195,340 L180,352 L155,355 L135,348 L120,335 L115,318 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+      <!-- Peru (western SA) -->
+      <path d="M95,348 L120,340 L140,352 L145,375 L138,398 L120,408 L100,402 L88,388 L82,368 Z" fill="white" stroke="black" stroke-width="1"/>
+      <text x="115" y="380" font-size="10" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">秘鲁</text>
+      <text x="115" y="393" font-size="8" text-anchor="middle" fill="#888" font-family="sans-serif">Peru</text>
+
+      <!-- Brazil (large eastern SA) -->
+      <path d="M155,315 L195,305 L225,312 L250,325 L265,348 L270,375 L262,405 L248,430 L230,448 L210,458 L190,462 L170,455 L155,442 L145,420 L140,398 L142,375 L148,352 L150,335 Z" fill="white" stroke="black" stroke-width="1.3"/>
+      <text x="205" y="382" font-size="14" text-anchor="middle" fill="#FFAB00" font-weight="bold" font-family="'Noto Sans SC',sans-serif">巴西</text>
+      <text x="205" y="400" font-size="10" text-anchor="middle" fill="#FFAB00" font-family="sans-serif">Brazil</text>
+      <!-- Amazon River hint -->
+      <path d="M100,352 L140,348 L175,345 L210,350 L240,342" fill="none" stroke="#42A5F5" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="170" y="340" font-size="7" text-anchor="middle" fill="#42A5F5" font-family="sans-serif">亚马逊 Amazon</text>
+
+      <!-- Bolivia/Paraguay -->
+      <path d="M140,398 L155,392 L170,400 L172,420 L165,435 L150,432 L142,418 Z" fill="white" stroke="black" stroke-width="0.6"/>
+
+      <!-- Argentina (southern SA) -->
+      <path d="M120,438 L150,432 L170,442 L178,462 L172,482 L160,498 L145,505 L128,500 L115,488 L108,470 L110,452 Z" fill="white" stroke="black" stroke-width="1"/>
+      <text x="145" y="475" font-size="10" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">阿根廷</text>
+      <text x="145" y="488" font-size="8" text-anchor="middle" fill="#888" font-family="sans-serif">Argentina</text>
+
+      <!-- Chile (long thin western strip) -->
+      <path d="M88,405 L100,402 L108,418 L110,440 L108,462 L105,480 L100,495 L92,502 L85,495 L82,475 L80,455 L82,435 L85,418 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+      <!-- Equator line -->
+      <path d="M60,320 L280,320" fill="none" stroke="#FF6F00" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <text x="285" y="318" font-size="7" fill="#FF6F00" font-family="sans-serif">赤道</text>
+
+      <!-- Coloring legend -->
+      <rect x="5" y="508" width="330" height="10" fill="#FFFDE7" rx="3"/>
+      <text x="10" y="516" font-size="7" fill="#333" font-weight="bold" font-family="'Noto Sans SC',sans-serif">🎨</text>
+      <text x="22" y="516" font-size="7" fill="#1565C0" font-family="'Noto Sans SC',sans-serif">🔵美国 BLUE</text>
+      <text x="90" y="516" font-size="7" fill="#2E7D32" font-family="'Noto Sans SC',sans-serif">🟢墨西哥 GREEN</text>
+      <text x="178" y="516" font-size="7" fill="#FFAB00" font-family="'Noto Sans SC',sans-serif">🟡巴西 YELLOW</text>
+      <text x="262" y="516" font-size="7" fill="#666" font-family="'Noto Sans SC',sans-serif">🌈其他随意!</text>
+    </svg>
+
+    <div style="flex:1;">
+      <!-- Trace characters -->
+      <span class="accent-label">描写 Trace</span>
+      <div style="margin-bottom:10px;">
+        <span class="trace-char">美</span>
+        <span class="trace-char">洲</span>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="trace-char" style="width:60px; height:60px; font-size:48px; line-height:60px;">美</span>
+        <span class="trace-char" style="width:60px; height:60px; font-size:48px; line-height:60px;">洲</span>
+        <span class="trace-char" style="width:60px; height:60px; font-size:48px; line-height:60px;">美</span>
+        <span class="trace-char" style="width:60px; height:60px; font-size:48px; line-height:60px;">洲</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fill in the blanks -->
+  <span class="section-label">填空 Fill in the Blanks</span>
+  <div style="background:var(--bg-light); border-radius:10px; padding:14px; margin-top:6px;">
+    <p style="font-size:14px; line-height:2.2;">
+      1. 美洲分为 <span class="fill-blank" style="min-width:50px;"></span> 和 <span class="fill-blank" style="min-width:50px;"></span>。<span style="font-size:11px; color:#aaa;">（北美/南美）</span><br>
+      2. 亚马逊雨林产生 <span class="fill-blank" style="min-width:50px;"></span> 的氧气。<span style="font-size:11px; color:#aaa;">（20%）</span><br>
+      3. 安第斯山脉是世界上最 <span class="fill-blank" style="min-width:50px;"></span> 的山脉。<span style="font-size:11px; color:#aaa;">（长）</span>
+    </p>
+  </div>
+
+  <div class="fun-fact" style="margin-top:12px;">
+    <b>🌿 你知道吗？</b> 亚马逊雨林面积比整个印度还大，有超过一万种鸟类！<br>
+    <span style="font-size:11px; color:#999;">The Amazon Rainforest is larger than India and home to over 10,000 bird species!</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">2</span>
+</div>
+
+<!-- ==================== PAGE 3: 美国 Flag & Map ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🇺🇸</span>
+    <h2 style="font-size:24px; margin:0;">美国 <span style="font-weight:300; font-size:16px; color:#777;">United States of America</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid #1565C0; margin-bottom:12px;">
+
+  <div style="display:flex; gap:16px; margin-bottom:12px;">
+    <!-- Flag coloring -->
+    <div style="flex:1;">
+      <span class="section-label" style="background:#1565C0;">涂色国旗 Color the Flag</span>
+      <svg width="280" height="160" viewBox="0 0 280 160" class="flag-box" style="display:block; margin-top:6px;">
+        <rect x="1" y="1" width="278" height="158" fill="white" stroke="#ccc" stroke-width="1"/>
+        <!-- 13 stripes -->
+        <rect x="1" y="1" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="1" y="13.15" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="1" y="25.3" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="1" y="37.45" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="1" y="49.6" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="1" y="61.75" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="1" y="73.9" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="1" y="86.05" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="1" y="98.2" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="1" y="110.35" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="1" y="122.5" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="1" y="134.65" width="278" height="12.15" fill="none" stroke="#ddd" stroke-width="0.5"/>
+        <rect x="1" y="146.8" width="278" height="12.2" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <!-- Stripe labels -->
+        <text x="200" y="10" font-size="8" fill="#ddd">红 red</text>
+        <text x="200" y="22" font-size="8" fill="#ddd">白 white</text>
+        <!-- Blue canton -->
+        <rect x="1" y="1" width="112" height="85" fill="none" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="56" y="38" font-size="10" fill="#bbb" text-anchor="middle">蓝色 Blue</text>
+        <text x="56" y="52" font-size="9" fill="#bbb" text-anchor="middle">50 ★ 星星</text>
+        <!-- Some star outlines -->
+        <polygon points="20,15 22,21 28,21 23,25 25,31 20,27 15,31 17,25 12,21 18,21" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="42,15 44,21 50,21 45,25 47,31 42,27 37,31 39,25 34,21 40,21" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="64,15 66,21 72,21 67,25 69,31 64,27 59,31 61,25 56,21 62,21" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="86,15 88,21 94,21 89,25 91,31 86,27 81,31 83,25 78,21 84,21" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="31,30 33,36 39,36 34,40 36,46 31,42 26,46 28,40 23,36 29,36" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="53,30 55,36 61,36 56,40 58,46 53,42 48,46 50,40 45,36 51,36" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="75,30 77,36 83,36 78,40 80,46 75,42 70,46 72,40 67,36 73,36" fill="none" stroke="#ccc" stroke-width="0.8"/>
+        <polygon points="97,30 99,36 105,36 100,40 102,46 97,42 92,46 94,40 89,36 95,36" fill="none" stroke="#ccc" stroke-width="0.8"/>
+      </svg>
+      <p style="font-size:10px; color:#999; margin-top:4px;">红白相间的条纹(13条)，蓝色方块里有50颗星</p>
+    </div>
+
+    <!-- Map -->
+    <div style="flex:1;">
+      <span class="section-label" style="background:#1565C0;">地图 Map</span>
+      <svg width="240" height="160" viewBox="0 0 240 160" style="display:block; margin-top:6px; border:1px solid #eee; border-radius:8px; background:#fafafa;">
+        <!-- Simplified US outline -->
+        <path d="M30,55 C35,50 50,45 70,42 C90,40 110,42 130,45 C150,48 165,50 180,48 C190,46 200,50 205,55 C210,60 208,68 205,75 C200,82 195,88 185,90 C175,92 165,88 158,85 C150,88 140,92 130,90 C120,88 110,90 100,92 C90,94 75,92 65,88 C55,84 45,78 38,72 C32,66 28,60 30,55 Z" fill="none" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <!-- Alaska -->
+        <path d="M20,25 C25,20 35,18 40,22 C45,26 42,32 38,35 C34,38 26,36 22,32 C18,28 18,26 20,25 Z" fill="none" stroke="#aaa" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="30" y="30" font-size="7" fill="#bbb" text-anchor="middle">AK</text>
+        <!-- Hawaii -->
+        <path d="M55,120 C58,118 62,118 65,120 C68,122 66,126 63,128 C60,130 56,128 55,125 C54,123 54,121 55,120 Z" fill="none" stroke="#aaa" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="60" y="125" font-size="7" fill="#bbb" text-anchor="middle">HI</text>
+        <!-- DC marker -->
+        <circle cx="178" cy="68" r="4" fill="none" stroke="#e53935" stroke-width="1.5"/>
+        <text x="178" y="63" font-size="7" fill="#e53935" text-anchor="middle">DC ★</text>
+        <!-- NYC marker (not capital!) -->
+        <circle cx="190" cy="58" r="2" fill="#aaa"/>
+        <text x="196" y="55" font-size="7" fill="#aaa">纽约</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Facts -->
+  <span class="section-label" style="background:#1565C0;">美国小档案 USA Fact File</span>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
+    <div style="background:#E3F2FD; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🏛️ <b>首都:</b> 华盛顿 D.C.</p>
+      <p style="font-size:11px; color:#e53935; margin-top:2px;">⚡ 不是纽约! Not New York!</p>
+    </div>
+    <div style="background:#E3F2FD; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🗺️ <b>面积:</b> 50个州 50 States</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">第三大国家 3rd largest country</p>
+    </div>
+    <div style="background:#E3F2FD; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🗣️ <b>语言:</b> 没有官方语言!</p>
+      <p style="font-size:11px; color:#e53935; margin-top:2px;">⚡ No official language!</p>
+    </div>
+    <div style="background:#E3F2FD; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">💵 <b>货币:</b> 美元 Dollar ($)</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">世界最常用的货币</p>
+    </div>
+  </div>
+
+  <div class="fun-fact" style="margin-top:10px;">
+    <b>🗽 你知道吗？</b> 美国有超过350种语言在使用! 除了英语，西班牙语和中文是使用人数最多的语言。<br>
+    <span style="font-size:11px; color:#999;">Over 350 languages are spoken in the US! Besides English, Spanish and Chinese are the most spoken.</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">3</span>
+</div>
+
+<!-- ==================== PAGE 4: 美国 Culture & Food ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🇺🇸</span>
+    <h2 style="font-size:24px; margin:0;">美国文化与美食 <span style="font-weight:300; font-size:16px; color:#777;">USA Culture & Food</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid #1565C0; margin-bottom:12px;">
+
+  <div style="display:flex; gap:14px; margin-bottom:10px;">
+    <div style="flex:1;">
+      <!-- Greeting -->
+      <span class="section-label" style="background:#1565C0;">打招呼 Greeting</span>
+      <div style="display:flex; gap:8px; margin-top:6px; margin-bottom:10px;">
+        <span class="trace-char" style="font-size:36px; width:90px; height:50px; line-height:50px;">Hello!</span>
+        <span class="trace-char" style="font-size:36px; width:60px; height:50px; line-height:50px;">Hi!</span>
+      </div>
+
+      <!-- Fill-in -->
+      <span class="section-label" style="background:#1565C0;">填空 Fill in</span>
+      <p style="font-size:13px; line-height:2; margin-top:6px;">
+        在美国餐厅要给 <span class="fill-blank" style="min-width:40px;"></span> % 小费。<br>
+        <span style="font-size:11px; color:#aaa;">（15-20%）Tips are expected!</span>
+      </p>
+
+      <!-- Fun facts -->
+      <div class="fun-fact">
+        <b>🗽 趣味小知识</b><br>
+        自由女神像是<b>法国</b>送的礼物！<br>
+        <span style="font-size:11px; color:#999;">The Statue of Liberty was a gift from France!</span>
+      </div>
+      <div class="fun-fact" style="border-left-color:#1565C0;">
+        <b>🌍 移民国家</b><br>
+        美国是移民国家，有<b>全世界的食物</b>！你在美国可以吃到中餐、墨西哥菜、意大利菜、日本菜......<br>
+        <span style="font-size:11px; color:#999;">As an immigrant nation, the US has food from all over the world!</span>
+      </div>
+    </div>
+
+    <div style="flex:1;">
+      <!-- Draw hamburger -->
+      <span class="accent-label">画一画 Draw a Hamburger 汉堡包</span>
+      <div class="draw-box" style="height:190px; margin-top:6px; flex-direction:column;">
+        <span style="font-size:11px; color:#ccc;">画一个美国汉堡包！</span>
+        <span style="font-size:10px; color:#ddd; margin-top:4px;">bun 面包 + meat 肉饼 + lettuce 生菜 + tomato 番茄</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- American food vocabulary -->
+  <span class="accent-label">美国美食词汇 American Food Words</span>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:6px;">
+    <div style="text-align:center; background:#FFF8E1; border-radius:8px; padding:8px;">
+      <div style="font-size:32px;">🍔</div>
+      <p style="font-size:13px; font-weight:500;">汉堡包</p>
+      <p style="font-size:10px; color:#999;">hamburger</p>
+    </div>
+    <div style="text-align:center; background:#FFF8E1; border-radius:8px; padding:8px;">
+      <div style="font-size:32px;">🌭</div>
+      <p style="font-size:13px; font-weight:500;">热狗</p>
+      <p style="font-size:10px; color:#999;">hot dog</p>
+    </div>
+    <div style="text-align:center; background:#FFF8E1; border-radius:8px; padding:8px;">
+      <div style="font-size:32px;">🍕</div>
+      <p style="font-size:13px; font-weight:500;">披萨</p>
+      <p style="font-size:10px; color:#999;">pizza</p>
+    </div>
+    <div style="text-align:center; background:#FFF8E1; border-radius:8px; padding:8px;">
+      <div style="font-size:32px;">🍟</div>
+      <p style="font-size:13px; font-weight:500;">薯条</p>
+      <p style="font-size:10px; color:#999;">French fries</p>
+    </div>
+  </div>
+
+  <!-- Culture notes -->
+  <span class="section-label" style="background:#1565C0; margin-top:10px;">文化小知识 Culture Notes</span>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
+    <div style="background:#E3F2FD; border-radius:8px; padding:8px; font-size:12px;">
+      <b>🤝 见面礼仪:</b> 握手 handshake<br>
+      <span style="color:#777;">美国人一般握手打招呼</span>
+    </div>
+    <div style="background:#E3F2FD; border-radius:8px; padding:8px; font-size:12px;">
+      <b>🏈 国民运动:</b> 橄榄球 football<br>
+      <span style="color:#777;">不是足球soccer哦!</span>
+    </div>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">4</span>
+</div>
+
+<!-- ==================== PAGE 5: 墨西哥 Flag & Map ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🇲🇽</span>
+    <h2 style="font-size:24px; margin:0;">墨西哥 <span style="font-weight:300; font-size:16px; color:#777;">Mexico / México</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid #2E7D32; margin-bottom:12px;">
+
+  <div style="display:flex; gap:16px; margin-bottom:12px;">
+    <!-- Flag -->
+    <div style="flex:1;">
+      <span class="section-label">涂色国旗 Color the Flag</span>
+      <svg width="280" height="165" viewBox="0 0 280 165" style="display:block; margin-top:6px;">
+        <rect x="1" y="1" width="278" height="163" fill="white" stroke="#ccc" stroke-width="1" rx="4"/>
+        <!-- Three vertical stripes -->
+        <rect x="1" y="1" width="93" height="163" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="4,2"/>
+        <text x="47" y="85" font-size="11" fill="#bbb" text-anchor="middle">绿色</text>
+        <text x="47" y="98" font-size="9" fill="#ccc" text-anchor="middle">Green</text>
+
+        <rect x="94" y="1" width="92" height="163" fill="none" stroke="#bbb" stroke-width="0.5"/>
+        <text x="140" y="85" font-size="11" fill="#bbb" text-anchor="middle">白色</text>
+        <text x="140" y="98" font-size="9" fill="#ccc" text-anchor="middle">White</text>
+
+        <rect x="186" y="1" width="93" height="163" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="4,2"/>
+        <text x="233" y="85" font-size="11" fill="#bbb" text-anchor="middle">红色</text>
+        <text x="233" y="98" font-size="9" fill="#ccc" text-anchor="middle">Red</text>
+
+        <!-- Eagle on cactus (center emblem) -->
+        <g transform="translate(140,55)">
+          <!-- Cactus -->
+          <rect x="-3" y="10" width="6" height="30" fill="none" stroke="#aaa" stroke-width="1" rx="2"/>
+          <rect x="-10" y="18" width="8" height="4" fill="none" stroke="#aaa" stroke-width="1" rx="1"/>
+          <rect x="2" y="22" width="8" height="4" fill="none" stroke="#aaa" stroke-width="1" rx="1"/>
+          <!-- Eagle -->
+          <path d="M-12,-5 C-8,-15 -3,-18 0,-15 C3,-18 8,-15 12,-5 C10,0 6,5 0,8 C-6,5 -10,0 -12,-5 Z" fill="none" stroke="#aaa" stroke-width="1.2"/>
+          <text x="0" y="-3" font-size="7" fill="#bbb" text-anchor="middle">🦅</text>
+          <!-- Snake -->
+          <path d="M-5,5 C-2,3 2,3 5,5" fill="none" stroke="#aaa" stroke-width="0.8"/>
+        </g>
+        <text x="140" y="115" font-size="8" fill="#bbb" text-anchor="middle">鹰+蛇+仙人掌</text>
+        <text x="140" y="125" font-size="7" fill="#ccc" text-anchor="middle">Eagle+Snake+Cactus</text>
+      </svg>
+      <p style="font-size:10px; color:#999; margin-top:4px;">绿白红三色 + 中间是叼着蛇的鹰站在仙人掌上</p>
+    </div>
+
+    <!-- Map -->
+    <div style="flex:1;">
+      <span class="section-label">地图 Map</span>
+      <svg width="240" height="165" viewBox="0 0 240 165" style="display:block; margin-top:6px; border:1px solid #eee; border-radius:8px; background:#fafafa;">
+        <!-- Simplified Mexico outline -->
+        <path d="M40,30 C55,25 75,22 95,25 C115,28 130,35 140,45 C150,55 155,65 150,75 C145,85 135,90 125,88 C120,92 115,98 108,105 C100,112 90,118 80,115 C70,112 62,105 58,95 C52,90 48,82 50,72 C45,65 42,55 44,45 C42,38 40,34 40,30 Z" fill="none" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <!-- Baja California -->
+        <path d="M30,35 C28,42 26,52 28,62 C30,70 32,75 30,80" fill="none" stroke="#aaa" stroke-width="1" stroke-dasharray="3,2"/>
+        <!-- Capital marker -->
+        <circle cx="95" cy="72" r="4" fill="none" stroke="#e53935" stroke-width="1.5"/>
+        <text x="100" y="68" font-size="8" fill="#e53935">墨西哥城 ★</text>
+        <text x="100" y="78" font-size="7" fill="#aaa">Ciudad de México</text>
+        <!-- US border label -->
+        <text x="90" y="18" font-size="7" fill="#bbb" text-anchor="middle">← 美国 USA</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Facts -->
+  <span class="section-label">墨西哥小档案 Mexico Fact File</span>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
+    <div style="background:var(--bg-light); border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🏛️ <b>首都:</b> 墨西哥城</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">Ciudad de México</p>
+    </div>
+    <div style="background:var(--bg-light); border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🗣️ <b>语言:</b> 西班牙语</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">Español (Spanish)</p>
+    </div>
+    <div style="background:var(--bg-light); border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">👥 <b>人口:</b> 约1.3亿</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">~130 million people</p>
+    </div>
+    <div style="background:var(--bg-light); border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">💵 <b>货币:</b> 比索 Peso ($)</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">和美元用同一个符号!</p>
+    </div>
+  </div>
+
+  <div class="fun-fact" style="margin-top:10px;">
+    <b>🌵 你知道吗？</b> 墨西哥城建在古代阿兹特克帝国的首都上面！那座城市建在湖中的岛上。<br>
+    <span style="font-size:11px; color:#999;">Mexico City was built on top of the Aztec capital, Tenochtitlan — a city on an island in a lake!</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">5</span>
+</div>
+
+<!-- ==================== PAGE 6: 墨西哥 Culture & Food ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🇲🇽</span>
+    <h2 style="font-size:24px; margin:0;">墨西哥文化与美食 <span style="font-weight:300; font-size:16px; color:#777;">Mexico Culture & Food</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid #2E7D32; margin-bottom:10px;">
+
+  <div style="display:flex; gap:14px; margin-bottom:8px;">
+    <div style="flex:1;">
+      <!-- Greeting -->
+      <span class="section-label">打招呼 Greeting (西班牙语)</span>
+      <div style="display:flex; gap:8px; margin:6px 0 8px;">
+        <span class="trace-char" style="font-size:28px; width:100px; height:50px; line-height:50px; border-color:#2E7D32;">¡Hola!</span>
+      </div>
+      <p style="font-size:11px; color:#777; margin-bottom:8px;">读音: "哦-拉!" 西班牙语的 H 不发音!</p>
+
+      <!-- Fill-in -->
+      <span class="section-label">填空 Fill in</span>
+      <p style="font-size:13px; line-height:2.2; margin-top:4px;">
+        巧克力是 <span class="fill-blank" style="min-width:70px;"></span> 人发明的。<br>
+        <span style="font-size:11px; color:#aaa;">（阿兹特克 Aztec）</span>
+      </p>
+
+      <div class="fun-fact">
+        <b>🌽 趣味小知识</b><br>
+        墨西哥有<b>59种颜色</b>的玉米！红的、蓝的、紫的、黑的都有！<br>
+        <span style="font-size:11px; color:#999;">Mexico has 59 colors of corn — red, blue, purple, black and more!</span>
+      </div>
+    </div>
+
+    <div style="flex:1;">
+      <!-- Draw taco -->
+      <span class="accent-label">画一画 Draw a Taco 墨西哥卷饼</span>
+      <div class="draw-box" style="height:130px; margin-top:6px; flex-direction:column;">
+        <span style="font-size:11px; color:#ccc;">画一个墨西哥卷饼!</span>
+        <span style="font-size:10px; color:#ddd; margin-top:4px;">tortilla 玉米饼 + carne 肉 + salsa 辣酱</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day of the Dead skull -->
+  <span class="accent-label">涂色: 亡灵节骷髅 Color the Day of the Dead Skull</span>
+  <div style="display:flex; gap:14px; margin-top:6px;">
+    <svg width="200" height="210" viewBox="0 0 200 210" style="border:1px solid #eee; border-radius:8px; background:#fafafa;">
+      <!-- Sugar skull outline -->
+      <g fill="none" stroke="#aaa" stroke-width="1.5">
+        <!-- Head shape -->
+        <path d="M100,20 C130,20 155,35 162,60 C168,82 165,105 158,120 C152,132 145,140 140,148 C135,155 125,162 115,168 C108,172 100,174 100,174 C100,174 92,172 85,168 C75,162 65,155 60,148 C55,140 48,132 42,120 C35,105 32,82 38,60 C45,35 70,20 100,20 Z"/>
+        <!-- Left eye -->
+        <ellipse cx="72" cy="78" rx="20" ry="22"/>
+        <circle cx="72" cy="78" r="8" stroke-dasharray="3,2"/>
+        <!-- Right eye -->
+        <ellipse cx="128" cy="78" rx="20" ry="22"/>
+        <circle cx="128" cy="78" r="8" stroke-dasharray="3,2"/>
+        <!-- Nose -->
+        <path d="M95,105 C97,112 103,112 105,105"/>
+        <circle cx="95" cy="108" r="3"/>
+        <circle cx="105" cy="108" r="3"/>
+        <!-- Mouth -->
+        <path d="M75,135 L125,135"/>
+        <line x1="82" y1="130" x2="82" y2="140"/>
+        <line x1="90" y1="130" x2="90" y2="140"/>
+        <line x1="100" y1="130" x2="100" y2="140"/>
+        <line x1="110" y1="130" x2="110" y2="140"/>
+        <line x1="118" y1="130" x2="118" y2="140"/>
+        <!-- Forehead flower -->
+        <circle cx="100" cy="42" r="10" stroke-dasharray="3,2"/>
+        <circle cx="100" cy="42" r="4"/>
+        <!-- Decorative dots -->
+        <circle cx="72" cy="55" r="2"/><circle cx="128" cy="55" r="2"/>
+        <circle cx="60" cy="105" r="2"/><circle cx="140" cy="105" r="2"/>
+        <!-- Petals around eyes -->
+        <path d="M52,70 C50,65 55,60 60,62" stroke-dasharray="2,2"/>
+        <path d="M52,86 C48,90 52,96 58,94" stroke-dasharray="2,2"/>
+        <path d="M148,70 C150,65 145,60 140,62" stroke-dasharray="2,2"/>
+        <path d="M148,86 C152,90 148,96 142,94" stroke-dasharray="2,2"/>
+      </g>
+      <text x="100" y="200" font-size="10" fill="#bbb" text-anchor="middle">用五颜六色涂满!</text>
+    </svg>
+    <div style="flex:1;">
+      <p style="font-size:13px; margin-bottom:8px;"><b>🎭 亡灵节 Day of the Dead</b></p>
+      <p style="font-size:12px; color:#555; line-height:1.8;">
+        每年11月1-2日，墨西哥人会庆祝<b>亡灵节</b>(Día de los Muertos)。<br><br>
+        这不是恐怖的节日！而是用鲜花、音乐和美食来<b>纪念和庆祝</b>已故的亲人。<br><br>
+        人们会画彩色的骷髅妆，做糖骷髅，布置祭坛。
+      </p>
+      <p style="font-size:11px; color:#999; margin-top:6px;">
+        It's not scary — it's a colorful celebration to remember and honor loved ones who have passed away!
+      </p>
+    </div>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">6</span>
+</div>
+
+<!-- ==================== PAGE 7: 巴西 Flag & Map ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🇧🇷</span>
+    <h2 style="font-size:24px; margin:0;">巴西 <span style="font-weight:300; font-size:16px; color:#777;">Brazil / Brasil</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid #FFAB00; margin-bottom:12px;">
+
+  <div style="display:flex; gap:16px; margin-bottom:12px;">
+    <!-- Flag -->
+    <div style="flex:1;">
+      <span class="section-label" style="background:#FFAB00;">涂色国旗 Color the Flag</span>
+      <svg width="280" height="175" viewBox="0 0 280 175" style="display:block; margin-top:6px;">
+        <rect x="1" y="1" width="278" height="173" fill="white" stroke="#ccc" stroke-width="1" rx="4"/>
+        <!-- Green background -->
+        <rect x="5" y="5" width="270" height="165" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="4,2" rx="2"/>
+        <text x="40" y="25" font-size="9" fill="#bbb">绿色 Green</text>
+        <!-- Yellow diamond -->
+        <polygon points="140,18 265,87 140,157 15,87" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="50" y="87" font-size="9" fill="#bbb">黄色 Yellow</text>
+        <!-- Blue circle -->
+        <circle cx="140" cy="87" r="48" fill="none" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="140" y="80" font-size="10" fill="#bbb" text-anchor="middle">蓝色 Blue</text>
+        <!-- White band -->
+        <path d="M95,82 C110,92 140,98 185,82" fill="none" stroke="#aaa" stroke-width="3" stroke-dasharray="3,2"/>
+        <text x="140" y="95" font-size="7" fill="#ccc" text-anchor="middle">ORDEM E PROGRESSO</text>
+        <text x="140" y="106" font-size="7" fill="#ccc" text-anchor="middle">白色横幅 White band</text>
+        <!-- Some star outlines -->
+        <polygon points="120,65 121,68 124,68 122,70 123,73 120,71 117,73 118,70 116,68 119,68" fill="none" stroke="#ccc" stroke-width="0.5"/>
+        <polygon points="150,72 151,75 154,75 152,77 153,80 150,78 147,80 148,77 146,75 149,75" fill="none" stroke="#ccc" stroke-width="0.5"/>
+        <polygon points="135,60 136,63 139,63 137,65 138,68 135,66 132,68 133,65 131,63 134,63" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      </svg>
+      <p style="font-size:10px; color:#999; margin-top:4px;">绿色底+黄色菱形+蓝色地球仪+白色横幅+27颗星</p>
+    </div>
+
+    <!-- Map -->
+    <div style="flex:1;">
+      <span class="section-label" style="background:#FFAB00;">地图 Map</span>
+      <svg width="240" height="175" viewBox="0 0 240 175" style="display:block; margin-top:6px; border:1px solid #eee; border-radius:8px; background:#fafafa;">
+        <!-- Simplified Brazil outline -->
+        <path d="M95,15 C115,12 140,15 158,22 C172,28 182,38 185,50 C188,62 190,75 185,88 C180,100 178,112 172,125 C165,135 155,142 145,148 C135,155 125,158 118,160 C108,162 100,158 92,152 C82,145 74,135 68,122 C62,110 58,95 60,80 C55,68 56,55 62,42 C68,30 78,20 95,15 Z" fill="none" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <!-- Amazon River -->
+        <path d="M60,58 C80,55 100,52 120,56 C140,60 155,55 170,50" fill="none" stroke="#64B5F6" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="110" y="48" font-size="7" fill="#64B5F6" text-anchor="middle">亚马逊河 Amazon</text>
+        <!-- Brasilia marker -->
+        <circle cx="130" cy="95" r="4" fill="none" stroke="#e53935" stroke-width="1.5"/>
+        <text x="136" y="92" font-size="8" fill="#e53935">巴西利亚 ★</text>
+        <text x="136" y="102" font-size="7" fill="#aaa">Brasília</text>
+        <!-- Rio marker -->
+        <circle cx="148" cy="130" r="2" fill="#aaa"/>
+        <text x="138" y="140" font-size="7" fill="#aaa">里约 Rio</text>
+        <!-- Not capital note -->
+        <text x="100" y="155" font-size="7" fill="#e53935">首都不是里约!</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Facts -->
+  <span class="section-label" style="background:#FFAB00;">巴西小档案 Brazil Fact File</span>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
+    <div style="background:#FFF8E1; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🏛️ <b>首都:</b> 巴西利亚</p>
+      <p style="font-size:11px; color:#e53935; margin-top:2px;">⚡ 不是里约! Not Rio!</p>
+    </div>
+    <div style="background:#FFF8E1; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🗣️ <b>语言:</b> 葡萄牙语</p>
+      <p style="font-size:11px; color:#e53935; margin-top:2px;">⚡ 不是西班牙语! Not Spanish!</p>
+    </div>
+    <div style="background:#FFF8E1; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">🗺️ <b>面积:</b> 南美最大</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">世界第五大国家 5th largest</p>
+    </div>
+    <div style="background:#FFF8E1; border-radius:8px; padding:10px;">
+      <p style="font-size:13px;">💵 <b>货币:</b> 雷亚尔 Real (R$)</p>
+      <p style="font-size:11px; color:#999; margin-top:2px;">Pronounced "hey-AHL"</p>
+    </div>
+  </div>
+
+  <div class="fun-fact" style="margin-top:10px;">
+    <b>⚽ 你知道吗？</b> 巴西是唯一参加了每一届世界杯的国家! 而且赢了5次冠军，比任何国家都多!<br>
+    <span style="font-size:11px; color:#999;">Brazil is the only country to have played in every World Cup — and has won it 5 times!</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">7</span>
+</div>
+
+<!-- ==================== PAGE 8: 巴西 Culture & Food ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🇧🇷</span>
+    <h2 style="font-size:24px; margin:0;">巴西文化与美食 <span style="font-weight:300; font-size:16px; color:#777;">Brazil Culture & Food</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid #FFAB00; margin-bottom:10px;">
+
+  <div style="display:flex; gap:14px; margin-bottom:8px;">
+    <div style="flex:1;">
+      <!-- Greeting -->
+      <span class="section-label" style="background:#FFAB00;">打招呼 Greeting (葡萄牙语)</span>
+      <div style="display:flex; gap:8px; margin:6px 0 8px;">
+        <span class="trace-char" style="font-size:32px; width:70px; height:50px; line-height:50px; border-color:#FFAB00;">Oi!</span>
+        <span class="trace-char" style="font-size:28px; width:80px; height:50px; line-height:50px; border-color:#FFAB00;">Olá!</span>
+      </div>
+      <p style="font-size:11px; color:#777; margin-bottom:8px;">读音: "哦依!" / "哦-拉!" 和西班牙语的Hola很像!</p>
+
+      <!-- Fill-in -->
+      <span class="section-label" style="background:#FFAB00;">填空 Fill in</span>
+      <p style="font-size:13px; line-height:2.2; margin-top:4px;">
+        巴西人见面亲 <span class="fill-blank" style="min-width:40px;"></span> 次脸颊。<br>
+        <span style="font-size:11px; color:#aaa;">（两 2 — one on each cheek!）</span>
+      </p>
+
+      <div class="fun-fact">
+        <b>☕ 趣味小知识</b><br>
+        巴西是<b>世界第一咖啡产国</b>！全世界每三杯咖啡就有一杯来自巴西。<br>
+        <span style="font-size:11px; color:#999;">Brazil is the #1 coffee producer — 1 in 3 cups worldwide is Brazilian!</span>
+      </div>
+    </div>
+
+    <div style="flex:1;">
+      <!-- Draw activity -->
+      <span class="accent-label">画一画 Draw Brazilian Food</span>
+      <div class="draw-box" style="height:130px; margin-top:6px; flex-direction:column;">
+        <span style="font-size:11px; color:#ccc;">画一杯巴西咖啡或水果!</span>
+        <span style="font-size:10px; color:#ddd; margin-top:4px;">café 咖啡 / açaí 巴西莓 / coxinha 炸鸡腿包</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carnival mask -->
+  <span class="accent-label">涂色: 狂欢节面具 Color the Carnival Mask</span>
+  <div style="display:flex; gap:14px; margin-top:6px;">
+    <svg width="220" height="160" viewBox="0 0 220 160" style="border:1px solid #eee; border-radius:8px; background:#fafafa;">
+      <g fill="none" stroke="#aaa" stroke-width="1.5" transform="translate(110,80)">
+        <!-- Mask outline -->
+        <path d="M-85,0 C-85,-35 -60,-55 -30,-55 C-10,-55 -5,-45 0,-40 C5,-45 10,-55 30,-55 C60,-55 85,-35 85,0 C85,20 70,35 50,40 C35,43 20,38 10,30 C5,35 0,38 0,38 C0,38 -5,35 -10,30 C-20,38 -35,43 -50,40 C-70,35 -85,20 -85,0 Z"/>
+        <!-- Left eye hole -->
+        <ellipse cx="-42" cy="-8" rx="25" ry="18"/>
+        <!-- Right eye hole -->
+        <ellipse cx="42" cy="-8" rx="25" ry="18"/>
+        <!-- Decorative feathers on top -->
+        <path d="M-20,-55 C-25,-75 -15,-90 -5,-85" stroke-dasharray="3,2"/>
+        <path d="M0,-55 C0,-80 5,-92 10,-88" stroke-dasharray="3,2"/>
+        <path d="M20,-55 C25,-75 15,-90 5,-85" stroke-dasharray="3,2"/>
+        <path d="M-40,-50 C-50,-68 -42,-82 -32,-78" stroke-dasharray="3,2"/>
+        <path d="M40,-50 C50,-68 42,-82 32,-78" stroke-dasharray="3,2"/>
+        <!-- Decorative swirls -->
+        <circle cx="-42" cy="15" r="5" stroke-dasharray="2,2"/>
+        <circle cx="42" cy="15" r="5" stroke-dasharray="2,2"/>
+        <circle cx="0" cy="20" r="4" stroke-dasharray="2,2"/>
+        <!-- Nose bridge decoration -->
+        <path d="M-8,-10 C0,-18 8,-10" stroke-dasharray="2,2"/>
+        <!-- Glitter dots -->
+        <circle cx="-65" cy="-20" r="2"/><circle cx="65" cy="-20" r="2"/>
+        <circle cx="-55" cy="-35" r="2"/><circle cx="55" cy="-35" r="2"/>
+        <circle cx="-20" cy="-40" r="2"/><circle cx="20" cy="-40" r="2"/>
+      </g>
+      <text x="110" y="150" font-size="9" fill="#bbb" text-anchor="middle">用彩色装饰你的面具!</text>
+    </svg>
+    <div style="flex:1;">
+      <p style="font-size:13px; margin-bottom:8px;"><b>🎭 狂欢节 Carnival</b></p>
+      <p style="font-size:12px; color:#555; line-height:1.8;">
+        每年二月，巴西里约会举办世界最大的<b>狂欢节</b>(Carnaval)！<br><br>
+        几百万人穿着华丽的服装，戴着彩色面具，在街上跳桑巴舞(Samba)。<br><br>
+        里约狂欢节每年吸引<b>200万</b>游客！
+      </p>
+      <p style="font-size:11px; color:#999; margin-top:6px;">
+        Rio's Carnival attracts 2 million visitors every year — the biggest party on Earth!
+      </p>
+    </div>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">8</span>
+</div>
+
+<!-- ==================== PAGE 9: 美洲三国对比表 ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">📊</span>
+    <h2 style="font-size:24px; margin:0;">美洲三国对比表 <span style="font-weight:300; font-size:16px; color:#777;">Compare Three Countries</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid var(--primary); margin-bottom:14px;">
+
+  <p style="font-size:13px; color:#666; margin-bottom:10px;">填写下面的表格，比较三个美洲国家！Fill in the table to compare!</p>
+
+  <table class="compare">
+    <thead>
+      <tr>
+        <th style="width:18%; background:var(--accent);">类别 Category</th>
+        <th style="width:27%;">🇺🇸 美国<br><span style="font-weight:300; font-size:11px;">USA</span></th>
+        <th style="width:27%;">🇲🇽 墨西哥<br><span style="font-weight:300; font-size:11px;">Mexico</span></th>
+        <th style="width:27%;">🇧🇷 巴西<br><span style="font-weight:300; font-size:11px;">Brazil</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">🏛️ 首都<br><span style="font-weight:300; font-size:10px; color:#999;">Capital</span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">🗣️ 语言<br><span style="font-weight:300; font-size:10px; color:#999;">Language</span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">💵 货币<br><span style="font-weight:300; font-size:10px; color:#999;">Currency</span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">👋 你好<br><span style="font-weight:300; font-size:10px; color:#999;">Hello</span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">🍽️ 美食<br><span style="font-weight:300; font-size:10px; color:#999;">Famous Food</span></td>
+        <td style="height:55px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">⚽ 运动<br><span style="font-weight:300; font-size:10px; color:#999;">Popular Sport</span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">🎉 节日<br><span style="font-weight:300; font-size:10px; color:#999;">Famous Festival</span></td>
+        <td style="height:55px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="background:var(--bg-light); font-weight:500; font-size:12px;">🌟 趣味事实<br><span style="font-weight:300; font-size:10px; color:#999;">Fun Fact</span></td>
+        <td style="height:55px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="fun-fact" style="margin-top:12px;">
+    <b>🤔 思考题 Think About It:</b> 这三个国家说三种不同的语言（英语、西班牙语、葡萄牙语），它们还有什么相同和不同的地方？<br>
+    <span style="font-size:11px; color:#999;">These three countries speak three different languages! What else do they have in common — and what makes each one unique?</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">9</span>
+</div>
+
+<!-- ==================== PAGE 10: 美洲改变世界的食物 ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🌽</span>
+    <h2 style="font-size:24px; margin:0;">美洲改变世界的食物 <span style="font-weight:300; font-size:14px; color:#777;">Foods That Changed the World</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid var(--accent); margin-bottom:10px;">
+
+  <p style="font-size:13px; color:#555; margin-bottom:6px;">
+    这些食物都<b>原产于美洲</b>！后来传到全世界，变成了各国的美食。画线连一连！<br>
+    <span style="font-size:11px; color:#999;">These foods all came from the Americas! Draw lines to match them with the dishes they became.</span>
+  </p>
+
+  <!-- Matching activity -->
+  <div style="display:flex; margin:16px 0; position:relative;">
+    <!-- Left column: Original foods -->
+    <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+      <p style="font-size:12px; color:var(--primary); font-weight:700; margin-bottom:4px; text-align:center;">美洲原产食物</p>
+      <div style="background:var(--bg-light); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🍅</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">番茄</p>
+          <p style="font-size:10px; color:#999;">Tomato</p>
+        </div>
+      </div>
+      <div style="background:var(--bg-light); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🥔</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">土豆</p>
+          <p style="font-size:10px; color:#999;">Potato</p>
+        </div>
+      </div>
+      <div style="background:var(--bg-light); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🌽</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">玉米</p>
+          <p style="font-size:10px; color:#999;">Corn / Maize</p>
+        </div>
+      </div>
+      <div style="background:var(--bg-light); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🍫</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">巧克力</p>
+          <p style="font-size:10px; color:#999;">Chocolate</p>
+        </div>
+      </div>
+      <div style="background:var(--bg-light); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🌶️</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">辣椒</p>
+          <p style="font-size:10px; color:#999;">Chili Pepper</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle: draw lines area -->
+    <div style="width:100px; display:flex; align-items:center; justify-content:center;">
+      <div style="text-align:center;">
+        <p style="font-size:20px;">✏️</p>
+        <p style="font-size:10px; color:#bbb; line-height:1.3;">画线<br>连一连<br>Draw<br>lines!</p>
+      </div>
+    </div>
+
+    <!-- Right column: Dishes -->
+    <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+      <p style="font-size:12px; color:var(--accent); font-weight:700; margin-bottom:4px; text-align:center;">变成了什么美食?</p>
+      <div style="background:#FFF8E1; border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🍟</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">薯条</p>
+          <p style="font-size:10px; color:#999;">French Fries</p>
+        </div>
+      </div>
+      <div style="background:#FFF8E1; border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🍕</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">披萨</p>
+          <p style="font-size:10px; color:#999;">Pizza (tomato sauce!)</p>
+        </div>
+      </div>
+      <div style="background:#FFF8E1; border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🫕</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">火锅</p>
+          <p style="font-size:10px; color:#999;">Hotpot (chili pepper!)</p>
+        </div>
+      </div>
+      <div style="background:#FFF8E1; border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🍰</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">甜点</p>
+          <p style="font-size:10px; color:#999;">Chocolate Desserts</p>
+        </div>
+      </div>
+      <div style="background:#FFF8E1; border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:28px;">🌮</span>
+        <div>
+          <p style="font-size:14px; font-weight:500;">主食/卷饼</p>
+          <p style="font-size:10px; color:#999;">Staple Food / Tortilla</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <b>🤯 惊人事实!</b> 没有美洲，就没有意大利披萨（番茄）、没有中国火锅（辣椒）、没有比利时巧克力、没有爱尔兰土豆！美洲的食物改变了全世界！<br>
+    <span style="font-size:11px; color:#999;">Without the Americas: no Italian pizza, no Chinese hotpot spice, no Belgian chocolate, no Irish potatoes!</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">10</span>
+</div>
+
+<!-- ==================== PAGE 11: 我最想去的美洲国家 ==================== -->
+<div class="page">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">✈️</span>
+    <h2 style="font-size:24px; margin:0;">我最想去的美洲国家 <span style="font-weight:300; font-size:14px; color:#777;">My Favorite Americas Country</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid var(--primary); margin-bottom:14px;">
+
+  <!-- Country selection -->
+  <span class="section-label">选一选 Choose Your Favorite</span>
+  <div style="display:flex; gap:12px; margin:8px 0 14px;">
+    <div style="flex:1; text-align:center; border:2px solid #66BB6A; border-radius:12px; padding:10px; background:var(--bg-light);">
+      <div style="font-size:36px;">🇺🇸</div>
+      <p style="font-size:14px; font-weight:500;">美国</p>
+      <p style="font-size:11px; color:#999;">USA</p>
+      <div style="width:24px; height:24px; border:2px solid #aaa; border-radius:50%; margin:6px auto 0;"></div>
+    </div>
+    <div style="flex:1; text-align:center; border:2px solid #66BB6A; border-radius:12px; padding:10px; background:var(--bg-light);">
+      <div style="font-size:36px;">🇲🇽</div>
+      <p style="font-size:14px; font-weight:500;">墨西哥</p>
+      <p style="font-size:11px; color:#999;">Mexico</p>
+      <div style="width:24px; height:24px; border:2px solid #aaa; border-radius:50%; margin:6px auto 0;"></div>
+    </div>
+    <div style="flex:1; text-align:center; border:2px solid #66BB6A; border-radius:12px; padding:10px; background:var(--bg-light);">
+      <div style="font-size:36px;">🇧🇷</div>
+      <p style="font-size:14px; font-weight:500;">巴西</p>
+      <p style="font-size:11px; color:#999;">Brazil</p>
+      <div style="width:24px; height:24px; border:2px solid #aaa; border-radius:50%; margin:6px auto 0;"></div>
+    </div>
+  </div>
+
+  <!-- Drawing -->
+  <span class="accent-label">画一画 Draw What You'd See There</span>
+  <div class="draw-box" style="height:200px; margin-top:6px; flex-direction:column;">
+    <span style="font-size:12px; color:#ccc;">画出你在这个国家最想看到的东西！</span>
+    <span style="font-size:10px; color:#ddd; margin-top:4px;">Draw what you'd most want to see in that country!</span>
+  </div>
+
+  <!-- Writing -->
+  <span class="section-label" style="margin-top:14px;">写一写 Write About It</span>
+  <p style="font-size:12px; color:#777; margin:6px 0 4px;">我最想去 <span class="fill-blank" style="min-width:80px;"></span>，因为...</p>
+  <p style="font-size:11px; color:#aaa; margin-bottom:6px;">I most want to visit __________, because...</p>
+  <div class="writing-lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+
+  <div style="display:flex; gap:8px; margin-top:8px;">
+    <div style="width:16px; height:16px; background:#66BB6A; border-radius:50%;"></div>
+    <div style="width:16px; height:16px; background:#42A5F5; border-radius:50%;"></div>
+    <div style="width:16px; height:16px; background:#AB47BC; border-radius:50%;"></div>
+    <span style="font-size:11px; color:#aaa; line-height:16px;">用你喜欢的颜色装饰这一页!</span>
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">11</span>
+</div>
+
+<!-- ==================== PAGE 12: 美洲签证章 ==================== -->
+<div class="page" style="background:linear-gradient(180deg, #fff 0%, var(--bg-light) 100%);">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+    <span style="font-size:28px;">🛂</span>
+    <h2 style="font-size:24px; margin:0;">美洲签证章 <span style="font-weight:300; font-size:16px; color:#777;">Americas Visa Stamps</span></h2>
+  </div>
+  <hr style="border:none; border-top:3px solid var(--primary); margin-bottom:14px;">
+
+  <p style="font-size:13px; color:#555; margin-bottom:14px;">恭喜你完成了美洲之旅! 在每个签证章上写上日期，盖上你的印章！<br>
+  <span style="font-size:11px; color:#999;">Congratulations on completing your Americas trip! Write the date on each stamp!</span></p>
+
+  <!-- Passport stamps -->
+  <div style="display:flex; justify-content:center; gap:24px; margin-bottom:20px;">
+    <div style="text-align:center;">
+      <div class="stamp-circle" style="border-color:#1565C0; color:#1565C0;">
+        <span style="font-size:24px;">🇺🇸</span>
+        <span style="font-weight:700; font-size:13px;">美国 USA</span>
+        <span style="font-size:10px;">ARRIVED</span>
+        <span style="font-size:9px; border-top:1px dashed #1565C0; padding-top:2px; margin-top:2px; width:80px;">日期: ___/___</span>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <div class="stamp-circle" style="border-color:#2E7D32; color:#2E7D32;">
+        <span style="font-size:24px;">🇲🇽</span>
+        <span style="font-weight:700; font-size:13px;">墨西哥</span>
+        <span style="font-size:10px;">MÉXICO</span>
+        <span style="font-size:9px; border-top:1px dashed #2E7D32; padding-top:2px; margin-top:2px; width:80px;">日期: ___/___</span>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <div class="stamp-circle" style="border-color:#FFAB00; color:#FFAB00;">
+        <span style="font-size:24px;">🇧🇷</span>
+        <span style="font-weight:700; font-size:13px;">巴西 Brasil</span>
+        <span style="font-size:10px;">BEM-VINDO</span>
+        <span style="font-size:9px; border-top:1px dashed #FFAB00; padding-top:2px; margin-top:2px; width:80px;">日期: ___/___</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement banner -->
+  <div style="text-align:center; background:linear-gradient(135deg, var(--bg-light), #FFF8E1); border:2px solid var(--primary); border-radius:16px; padding:16px; margin-bottom:16px;">
+    <p style="font-size:28px; margin-bottom:4px;">🎉🌎🎉</p>
+    <p style="font-size:20px; font-weight:700; color:var(--primary);">我集齐了3个签证章!</p>
+    <p style="font-size:13px; color:#777;">I collected all 3 Americas visa stamps!</p>
+  </div>
+
+  <!-- Reflection -->
+  <span class="section-label">旅行感想 Trip Reflection</span>
+  <p style="font-size:12px; color:#777; margin:6px 0 4px;">通过这次美洲之旅，我学到了...</p>
+  <p style="font-size:11px; color:#aaa; margin-bottom:6px;">From this Americas trip, I learned...</p>
+  <div class="writing-lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+
+  <p style="font-size:12px; color:#777; margin:10px 0 4px;">我最惊讶的事情是...</p>
+  <p style="font-size:11px; color:#aaa; margin-bottom:6px;">The most surprising thing was...</p>
+  <div class="writing-lines">
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- Signature -->
+  <div style="display:flex; justify-content:flex-end; margin-top:14px;">
+    <div style="text-align:center; border-top:2px solid #aaa; padding-top:6px; width:200px;">
+      <p style="font-size:12px; color:#999;">小探险家签名 Explorer's Signature</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:8px; font-size:11px; color:#aaa;">
+    下一站: 非洲? 大洋洲? 继续你的世界之旅!<br>
+    Next stop: Africa? Oceania? Continue your world trip!
+  </div>
+
+  <span class="footer-brand">谷雨中文 GR EDU</span>
+  <span class="page-number">12</span>
+</div>
+
+</body>
+</html>

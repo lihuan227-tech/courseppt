@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探索欧洲 Explore Europe — 活动手册 Activity Booklet</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif;
+    color: #333;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Page shell ── */
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.5in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ── Theme colours ── */
+  :root {
+    --primary: #1565C0;
+    --accent: #FFC107;
+    --bg: #E3F2FD;
+    --france: #0055A4;
+    --france-red: #EF4135;
+    --italy-green: #008C45;
+    --italy-red: #CD212A;
+    --uk-blue: #012169;
+    --uk-red: #C8102E;
+  }
+
+  /* ── Shared utilities ── */
+  .page-border {
+    border: 3px solid var(--primary);
+    border-radius: 18px;
+    height: 100%;
+    padding: 0.35in;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-border::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px dashed var(--accent);
+    border-radius: 14px;
+    margin: 4px;
+    pointer-events: none;
+  }
+  .page-num {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    font-size: 11px;
+    color: #999;
+  }
+  h1 { font-size: 28px; color: var(--primary); text-align: center; margin-bottom: 6px; }
+  h2 { font-size: 22px; color: var(--primary); text-align: center; margin-bottom: 8px; }
+  h3 { font-size: 17px; color: var(--primary); margin-bottom: 4px; }
+  .subtitle { font-size: 15px; color: #666; text-align: center; margin-bottom: 10px; }
+
+  .trace-box {
+    border: 2px dashed #bbb;
+    border-radius: 10px;
+    padding: 8px 14px;
+    margin: 4px 0;
+    background: #fafafa;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .trace-char {
+    font-size: 36px;
+    color: #ddd;
+    letter-spacing: 12px;
+    font-weight: 700;
+  }
+  .blank { border-bottom: 2px solid #333; display: inline-block; min-width: 60px; margin: 0 4px; }
+  .draw-box {
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-size: 14px;
+    background: #fafafa;
+  }
+  .fun-fact {
+    background: var(--bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 8px 12px;
+    margin: 6px 0;
+    font-size: 13.5px;
+  }
+  .fill-line {
+    display: flex;
+    align-items: baseline;
+    font-size: 14px;
+    margin: 5px 0;
+    line-height: 1.8;
+  }
+  .row { display: flex; gap: 12px; }
+  .col { flex: 1; }
+  .flag-stripe { height: 60px; border: 2px solid #ccc; border-radius: 4px; display: flex; }
+  .flag-stripe > div { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #999; }
+  table.compare {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  table.compare th {
+    background: var(--primary);
+    color: #fff;
+    padding: 6px 8px;
+    text-align: center;
+  }
+  table.compare td {
+    border: 1.5px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    min-height: 30px;
+  }
+  table.compare tr:nth-child(even) td { background: #f5f9ff; }
+
+  .stamp-circle {
+    width: 160px; height: 160px;
+    border: 4px double var(--primary);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--primary);
+  }
+  .stamp-circle .big { font-size: 22px; font-weight: 700; }
+  .stamp-circle .small { font-size: 11px; margin-top: 2px; }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 8px 0 3px 0;
+  }
+
+  .emoji-big { font-size: 32px; }
+
+  /* Cover decorations */
+  .cover-stars {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.25;
+    color: var(--accent);
+  }
+
+  /* Map placeholder */
+  .map-box {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    min-height: 140px;
+    background: #f9fcff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 13px;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .match-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    margin: 6px 0;
+  }
+  .match-circle {
+    width: 28px; height: 28px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .match-blank {
+    width: 28px; height: 28px;
+    border: 2px dashed #bbb;
+    border-radius: 50%;
+  }
+
+  .writing-lines {
+    background: repeating-linear-gradient(transparent, transparent 28px, #ddd 28px, #ddd 29px);
+    min-height: 90px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 4px 8px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; }
+  }
+  @media screen {
+    body { background: #e0e0e0; }
+    .page { margin: 20px auto; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page">
+  <div class="page-border" style="justify-content:center;align-items:center;background:linear-gradient(135deg,#E3F2FD 0%,#fff 50%,#FFF8E1 100%);">
+    <!-- decorative stars -->
+    <div class="cover-stars" style="top:30px;left:40px;">&#9733; &#9733;</div>
+    <div class="cover-stars" style="top:50px;right:50px;">&#9733;</div>
+    <div class="cover-stars" style="bottom:80px;left:60px;">&#9733;</div>
+    <div class="cover-stars" style="bottom:40px;right:40px;">&#9733; &#9733;</div>
+
+    <div style="text-align:center;">
+      <div style="font-size:64px;margin-bottom:10px;">🌍</div>
+      <h1 style="font-size:42px;margin-bottom:4px;">探索欧洲</h1>
+      <p style="font-size:26px;color:#555;margin-bottom:16px;font-weight:500;">Explore: Europe</p>
+
+      <div style="font-size:56px;letter-spacing:16px;margin:16px 0;">🇫🇷 🇮🇹 🇬🇧</div>
+      <p style="font-size:16px;color:#666;margin:6px 0;">法国 France &middot; 意大利 Italy &middot; 英国 United Kingdom</p>
+
+      <div style="margin:30px auto;width:320px;border-top:3px solid var(--accent);border-bottom:3px solid var(--accent);padding:14px 0;">
+        <p style="font-size:15px;color:var(--primary);">🌟 活动手册 Activity Booklet 🌟</p>
+      </div>
+
+      <div style="margin-top:20px;text-align:left;display:inline-block;">
+        <p style="font-size:15px;color:#666;">姓名 Name: <span class="blank" style="width:160px;"></span></p>
+        <p style="font-size:15px;color:#666;margin-top:10px;">日期 Date: <span class="blank" style="width:160px;"></span></p>
+      </div>
+    </div>
+
+    <div style="position:absolute;bottom:18px;left:0;right:0;text-align:center;">
+      <p style="font-size:11px;color:#aaa;">谷雨中文 GR EDU &middot; 环球旅行 PBL World Trip</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: 认识欧洲 ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🌍 认识欧洲 <span style="font-size:18px;font-weight:400;">Meet Europe</span></h1>
+    <p class="subtitle">欧洲是艺术、历史和美食的故乡！<br>Europe is the home of art, history, and great food!</p>
+
+    <div class="section-label">🗺️ 在地图上找到并涂色这三个国家 Find &amp; color these 3 countries on the map</div>
+    <div style="text-align:center;">
+      <svg viewBox="0 0 650 480" width="100%" style="max-width:650px; border:1px solid #ccc; border-radius:8px; background:#fff;">
+        <!-- Iceland -->
+        <path d="M80,32 L100,28 L115,35 L112,48 L98,52 L82,48 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+        <!-- Norway/Sweden (Scandinavia) -->
+        <path d="M300,15 L315,12 L325,22 L330,45 L335,70 L332,95 L326,115 L318,130 L308,125 L302,105 L298,80 L295,55 L293,35 Z" fill="white" stroke="black" stroke-width="0.8"/>
+        <path d="M325,22 L345,18 L355,30 L358,55 L355,80 L348,100 L340,115 L332,120 L326,115 L332,95 L335,70 L330,45 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+        <!-- Finland -->
+        <path d="M358,20 L380,18 L395,30 L400,55 L395,80 L385,100 L375,110 L362,105 L355,85 L355,55 L355,35 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+        <!-- UK (island northwest) -->
+        <path d="M155,95 L170,80 L190,75 L205,82 L210,100 L205,120 L195,140 L182,150 L168,148 L158,135 L152,118 Z" fill="white" stroke="black" stroke-width="1.3"/>
+        <!-- Scotland top -->
+        <path d="M168,75 L182,68 L195,72 L192,82 L180,85 L170,82 Z" fill="white" stroke="black" stroke-width="1"/>
+        <!-- Ireland -->
+        <path d="M118,100 L138,92 L148,102 L145,120 L135,132 L120,128 L112,115 Z" fill="white" stroke="black" stroke-width="0.8"/>
+        <text x="180" y="118" font-size="14" text-anchor="middle" fill="#C8102E" font-weight="bold" font-family="'Noto Sans SC',sans-serif">英国</text>
+        <text x="180" y="133" font-size="10" text-anchor="middle" fill="#C8102E" font-family="sans-serif">UK</text>
+
+        <!-- France (hexagonal shape) -->
+        <path d="M195,175 L225,162 L260,158 L285,168 L290,195 L282,225 L265,248 L240,258 L215,252 L195,238 L185,215 L188,192 Z" fill="white" stroke="black" stroke-width="1.3"/>
+        <text x="238" y="212" font-size="14" text-anchor="middle" fill="#0055A4" font-weight="bold" font-family="'Noto Sans SC',sans-serif">法国</text>
+        <text x="238" y="228" font-size="10" text-anchor="middle" fill="#0055A4" font-family="sans-serif">France</text>
+
+        <!-- Spain -->
+        <path d="M155,248 L195,238 L215,252 L220,278 L210,302 L185,312 L158,308 L140,292 L138,268 Z" fill="white" stroke="black" stroke-width="1"/>
+        <text x="178" y="278" font-size="11" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">西班牙</text>
+        <text x="178" y="292" font-size="8" text-anchor="middle" fill="#888" font-family="sans-serif">Spain</text>
+
+        <!-- Portugal -->
+        <path d="M130,262 L140,258 L145,275 L142,298 L135,308 L126,302 L122,282 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+        <!-- Germany -->
+        <path d="M285,110 L318,102 L340,112 L345,138 L338,162 L318,170 L295,165 L278,150 L275,130 Z" fill="white" stroke="black" stroke-width="1"/>
+        <text x="310" y="140" font-size="11" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">德国</text>
+        <text x="310" y="154" font-size="8" text-anchor="middle" fill="#888" font-family="sans-serif">Germany</text>
+
+        <!-- Poland -->
+        <path d="M340,105 L375,100 L398,112 L400,138 L388,155 L365,160 L345,152 L340,132 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+        <!-- Italy (boot shape) -->
+        <path d="M310,195 L328,188 L338,200 L335,220 L330,240 L322,258 L315,275 L310,288 L315,298 L325,295 L322,280 L328,262 L335,242 L342,220 L345,200 L340,188 L325,182 Z" fill="white" stroke="black" stroke-width="1.3"/>
+        <!-- Sicily -->
+        <path d="M308,302 L322,298 L328,308 L318,318 L306,312 Z" fill="white" stroke="black" stroke-width="1"/>
+        <!-- Sardinia -->
+        <path d="M282,270 L295,265 L300,280 L292,292 L280,285 Z" fill="white" stroke="black" stroke-width="0.8"/>
+        <text x="330" y="240" font-size="14" text-anchor="middle" fill="#008C45" font-weight="bold" font-family="'Noto Sans SC',sans-serif">意大利</text>
+        <text x="330" y="256" font-size="10" text-anchor="middle" fill="#008C45" font-family="sans-serif">Italy</text>
+
+        <!-- Belgium/Netherlands/Denmark (small) -->
+        <path d="M238,135 L258,128 L275,130 L278,148 L268,158 L248,155 L238,145 Z" fill="white" stroke="black" stroke-width="0.6"/>
+
+        <!-- Switzerland/Austria -->
+        <path d="M268,175 L295,168 L318,175 L315,192 L298,198 L275,195 L265,188 Z" fill="white" stroke="black" stroke-width="0.6"/>
+
+        <!-- Greece -->
+        <path d="M375,240 L398,232 L412,245 L410,268 L400,280 L385,285 L372,275 L368,258 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+        <!-- European Russia (western portion) -->
+        <path d="M400,30 L450,22 L510,25 L560,35 L600,55 L620,85 L625,120 L618,155 L605,180 L585,200 L560,210 L530,205 L500,195 L475,180 L455,160 L440,140 L428,120 L418,100 L410,75 L405,50 Z" fill="white" stroke="black" stroke-width="1"/>
+        <text x="510" y="110" font-size="12" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">俄罗斯</text>
+        <text x="510" y="125" font-size="9" text-anchor="middle" fill="#888" font-family="sans-serif">Russia</text>
+
+        <!-- Ukraine -->
+        <path d="M400,138 L440,135 L465,148 L475,170 L465,188 L440,195 L418,190 L405,175 L400,158 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+        <!-- Turkey (partial) -->
+        <path d="M425,228 L465,220 L505,228 L525,245 L520,265 L495,272 L465,268 L440,258 L425,245 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+        <!-- Mediterranean Sea label -->
+        <text x="320" y="345" font-size="9" text-anchor="middle" fill="#1565C0" font-style="italic" font-family="sans-serif">地中海 Mediterranean Sea</text>
+
+        <!-- Atlantic Ocean label -->
+        <text x="65" y="220" font-size="9" fill="#1565C0" font-style="italic" font-family="sans-serif" transform="rotate(-90,65,220)">大西洋 Atlantic</text>
+
+        <!-- Coloring legend box -->
+        <rect x="15" y="380" width="620" height="42" fill="#FFFDE7" stroke="#E0E0E0" stroke-width="1" rx="8"/>
+        <text x="25" y="400" font-size="13" fill="#333" font-weight="bold" font-family="'Noto Sans SC',sans-serif">🎨 涂色指南 Coloring Guide:</text>
+        <text x="195" y="400" font-size="12" fill="#0055A4" font-family="'Noto Sans SC',sans-serif">🔵 法国 France → 蓝色 BLUE</text>
+        <text x="195" y="416" font-size="12" fill="#008C45" font-family="'Noto Sans SC',sans-serif">🟢 意大利 Italy → 绿色 GREEN</text>
+        <text x="415" y="400" font-size="12" fill="#C8102E" font-family="'Noto Sans SC',sans-serif">🔴 英国 UK → 红色 RED</text>
+        <text x="415" y="416" font-size="11" fill="#666" font-family="'Noto Sans SC',sans-serif">🌈 其他国家 → 你喜欢的颜色! Any color!</text>
+      </svg>
+    </div>
+
+    <div class="section-label" style="margin-top:10px;">✍️ 描一描 Trace the characters</div>
+    <div class="trace-box">
+      <span class="trace-char">欧 洲</span>
+      <span style="font-size:14px;color:#999;margin-left:20px;">(ōu zhōu — Europe)</span>
+    </div>
+
+    <div class="section-label" style="margin-top:10px;">📝 填一填 Fill in the blanks</div>
+    <div style="font-size:14.5px;line-height:2.2;">
+      <p>1. 欧洲有 <span class="blank" style="width:50px;"></span> 个国家。<span style="color:#bbb;font-size:12px;">(44)</span></p>
+      <p>2. 欧洲是第 <span class="blank" style="width:50px;"></span> 小的洲。<span style="color:#bbb;font-size:12px;">(二)</span></p>
+      <p>3. 罗马有 <span class="blank" style="width:50px;"></span> 年历史。<span style="color:#bbb;font-size:12px;">(2700)</span></p>
+      <p>4. 欧洲有 <span class="blank" style="width:50px;"></span> 条主要河流。<span style="color:#bbb;font-size:12px;">(四——多瑙河、莱茵河、伏尔加河、泰晤士河)</span></p>
+    </div>
+
+    <div class="fun-fact" style="margin-top:8px;">
+      💡 <b>趣味小知识 Fun Fact:</b> 欧洲虽然面积小，但有很多不同的语言和文化！你可以从一个国家开车几小时就到另一个国家！<br>
+      <span style="font-size:12px;color:#666;">Europe is small but has many languages &amp; cultures! You can drive from one country to another in just a few hours!</span>
+    </div>
+    <span class="page-num">2</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: 法国 Flag & Map ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🇫🇷 法国 <span style="font-size:18px;font-weight:400;">France</span></h1>
+
+    <div class="section-label">🎨 涂国旗 Color the Flag</div>
+    <p style="font-size:12px;color:#888;margin-bottom:4px;">从左到右: 蓝 bleu → 白 blanc → 红 rouge</p>
+    <div class="flag-stripe" style="height:80px;">
+      <div style="border-right:1px dashed #ccc;">蓝 Blue<br>#0055A4</div>
+      <div style="border-right:1px dashed #ccc;">白 White</div>
+      <div>红 Red<br>#EF4135</div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+      <div class="col">
+        <div class="section-label">🗺️ 法国地图 Map of France</div>
+        <div class="map-box" style="min-height:170px;">
+          <svg viewBox="0 0 200 200" width="100%" style="max-height:165px;">
+            <!-- Simplified hexagonal France outline -->
+            <path d="M70,30 L140,25 L170,70 L165,130 L130,170 L70,175 L40,140 L35,80 Z" fill="none" stroke="#0055A4" stroke-width="2" stroke-dasharray="4,3"/>
+            <circle cx="110" cy="65" r="4" fill="#EF4135"/>
+            <text x="110" y="58" text-anchor="middle" font-size="9" fill="#333">⭐ 巴黎 Paris</text>
+            <text x="100" y="110" text-anchor="middle" font-size="9" fill="#aaa">涂上浅蓝色</text>
+            <text x="100" y="122" text-anchor="middle" font-size="8" fill="#aaa">Color light blue</text>
+            <!-- Eiffel tower tiny icon -->
+            <text x="125" y="75" font-size="14">🗼</text>
+          </svg>
+        </div>
+      </div>
+      <div class="col">
+        <div class="section-label">📋 国家档案 Country Profile</div>
+        <div style="font-size:13.5px;line-height:2;background:var(--bg);border-radius:10px;padding:10px 14px;">
+          <p>🏛️ 首都 Capital: <b>巴黎 Paris</b></p>
+          <p>🗣️ 语言 Language: <b>法语 French</b></p>
+          <p>👥 人口 Population: <b>~6800万</b></p>
+          <p>💰 货币 Currency: <b>欧元 Euro €</b></p>
+          <p>🥐 著名食物: <b>可颂 Croissant</b></p>
+          <p>🗼 著名景点: <b>埃菲尔铁塔</b></p>
+        </div>
+
+        <div class="fun-fact" style="margin-top:8px;">
+          💡 法国的形状像一个六边形！法语里叫 "l'Hexagone"。<br>
+          <span style="font-size:11px;color:#666;">France is shaped like a hexagon! In French it's called "l'Hexagone".</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">✍️ 描一描 Trace</div>
+    <div class="trace-box">
+      <span class="trace-char">法 国</span>
+      <span style="font-size:14px;color:#999;margin-left:16px;">(fǎ guó)</span>
+      <span style="font-size:14px;color:#999;margin-left:24px;"><b>巴 黎</b> (bā lí — Paris)</span>
+    </div>
+
+    <span class="page-num">3</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: 法国 Culture & Food ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🇫🇷 法国文化与美食 <span style="font-size:16px;font-weight:400;">French Culture &amp; Food</span></h1>
+
+    <div class="row">
+      <div class="col">
+        <div class="section-label">👋 学法语打招呼 Say Hello in French!</div>
+        <div class="trace-box" style="justify-content:center;">
+          <span style="font-size:32px;color:#ddd;font-weight:700;letter-spacing:6px;">Bonjour!</span>
+        </div>
+        <p style="font-size:12px;color:#888;text-align:center;">读音: "bong-ZHOOR" = 你好！</p>
+
+        <div class="section-label" style="margin-top:6px;">📝 填一填 Fill in</div>
+        <div style="font-size:14px;line-height:2.2;">
+          <p>法国人见面时会 <span class="blank" style="width:80px;"></span>。<span style="color:#bbb;font-size:11px;">（亲脸颊 kiss on cheeks）</span></p>
+          <p>这叫做 "la bise"，通常亲 <span class="blank" style="width:40px;"></span> 下。<span style="color:#bbb;font-size:11px;">（两 two）</span></p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="section-label">🗼 画埃菲尔铁塔 Draw the Eiffel Tower</div>
+        <div class="draw-box" style="min-height:155px;">
+          <div style="text-align:center;">
+            <span style="font-size:11px;">画在这里 Draw here</span><br>
+            <span style="font-size:40px;opacity:0.15;">🗼</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">🥐 法国美食: 可颂面包 French Croissant</div>
+    <div style="background:#FFF8E1;border-radius:10px;padding:10px 14px;font-size:13.5px;">
+      <div class="row">
+        <div class="col">
+          <p>🥐 <b>可颂 (kě sòng)</b> = Croissant</p>
+          <p style="margin-top:4px;">可颂是法国最有名的面包之一。"Croissant" 在法语里是"新月"的意思，因为它的形状像弯弯的月亮！🌙</p>
+          <p style="margin-top:4px;font-size:12px;color:#666;">A croissant is one of the most famous French breads. "Croissant" means "crescent" in French because of its crescent-moon shape!</p>
+        </div>
+        <div style="width:100px;text-align:center;font-size:48px;display:flex;align-items:center;justify-content:center;">🥐</div>
+      </div>
+    </div>
+
+    <div class="fun-fact" style="margin-top:8px;">
+      🧀 <b>趣味小知识:</b> 法国有 <b>400多种奶酪</b>！法国人说："一年365天，每天都可以吃不同的奶酪！"<br>
+      <span style="font-size:11px;color:#666;">France has over 400 types of cheese! The French say you can eat a different cheese every day of the year!</span>
+    </div>
+
+    <div class="section-label" style="margin-top:6px;">🎨 法国还有什么？More about France</div>
+    <div class="grid-2">
+      <div style="font-size:13px;line-height:1.8;">
+        <p>🎨 <b>卢浮宫</b> Louvre — 世界最大博物馆</p>
+        <p>🖼️ <b>蒙娜丽莎</b> Mona Lisa 在这里</p>
+        <p>🚲 <b>环法自行车赛</b> Tour de France</p>
+      </div>
+      <div>
+        <div class="draw-box" style="min-height:70px;">
+          <span style="font-size:11px;">画你最想吃的法国食物<br>Draw your favorite French food</span>
+        </div>
+      </div>
+    </div>
+    <span class="page-num">4</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 5: 意大利 Flag & Map ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🇮🇹 意大利 <span style="font-size:18px;font-weight:400;">Italy</span></h1>
+
+    <div class="section-label">🎨 涂国旗 Color the Flag</div>
+    <p style="font-size:12px;color:#888;margin-bottom:4px;">从左到右: 绿 verde → 白 bianco → 红 rosso</p>
+    <div class="flag-stripe" style="height:80px;">
+      <div style="border-right:1px dashed #ccc;">绿 Green<br>#008C45</div>
+      <div style="border-right:1px dashed #ccc;">白 White</div>
+      <div>红 Red<br>#CD212A</div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+      <div class="col">
+        <div class="section-label">🗺️ 意大利地图 Map of Italy</div>
+        <div class="map-box" style="min-height:180px;">
+          <svg viewBox="0 0 180 240" width="100%" style="max-height:175px;">
+            <!-- Boot-shaped Italy -->
+            <path d="M60,20 L110,15 L125,30 L120,50 L115,70 L108,90 L100,110 L95,130 L88,150 L82,165 L76,180 L72,190 L80,200 L90,195 L88,185 L95,170 L100,155 L105,140 L110,120 L118,100 L122,80 L125,60 L128,40 L120,25" fill="none" stroke="#008C45" stroke-width="2" stroke-dasharray="4,3"/>
+            <!-- Sicily -->
+            <path d="M70,200 L85,205 L80,215 L65,212 Z" fill="none" stroke="#008C45" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- Sardinia -->
+            <path d="M42,130 L55,125 L58,140 L48,148 Z" fill="none" stroke="#008C45" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <circle cx="95" cy="55" r="3.5" fill="#CD212A"/>
+            <text x="95" y="48" text-anchor="middle" font-size="8" fill="#333">⭐ 罗马 Rome</text>
+            <text x="90" y="100" text-anchor="middle" font-size="8" fill="#aaa">涂上浅绿色</text>
+            <text x="90" y="112" text-anchor="middle" font-size="7" fill="#aaa">Color light green</text>
+            <text x="82" y="175" font-size="10">👢</text>
+            <text x="68" y="222" text-anchor="middle" font-size="7" fill="#aaa">西西里岛 Sicily</text>
+          </svg>
+        </div>
+      </div>
+      <div class="col">
+        <div class="section-label">📋 国家档案 Country Profile</div>
+        <div style="font-size:13.5px;line-height:2;background:var(--bg);border-radius:10px;padding:10px 14px;">
+          <p>🏛️ 首都 Capital: <b>罗马 Rome</b></p>
+          <p>🗣️ 语言 Language: <b>意大利语 Italian</b></p>
+          <p>👥 人口 Population: <b>~5900万</b></p>
+          <p>💰 货币 Currency: <b>欧元 Euro €</b></p>
+          <p>🍕 著名食物: <b>披萨 Pizza</b></p>
+          <p>🏛️ 著名景点: <b>斗兽场 Colosseum</b></p>
+        </div>
+
+        <div class="fun-fact" style="margin-top:8px;">
+          👢 意大利的形状像一只<b>靴子</b>！你看出来了吗？<br>
+          <span style="font-size:11px;color:#666;">Italy is shaped like a boot! Can you see it?</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">✍️ 描一描 Trace</div>
+    <div class="trace-box">
+      <span class="trace-char">意 大 利</span>
+      <span style="font-size:14px;color:#999;margin-left:16px;">(yì dà lì)</span>
+      <span style="font-size:14px;color:#999;margin-left:24px;"><b>罗 马</b> (luó mǎ — Rome)</span>
+    </div>
+
+    <span class="page-num">5</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 6: 意大利 Culture & Food ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🇮🇹 意大利文化与美食 <span style="font-size:16px;font-weight:400;">Italian Culture &amp; Food</span></h1>
+
+    <div class="row">
+      <div class="col">
+        <div class="section-label">👋 学意大利语打招呼!</div>
+        <div class="trace-box" style="justify-content:center;">
+          <span style="font-size:36px;color:#ddd;font-weight:700;letter-spacing:8px;">Ciao!</span>
+        </div>
+        <p style="font-size:12px;color:#888;text-align:center;">读音: "CHOW" = 你好 / 再见！</p>
+
+        <div class="section-label" style="margin-top:6px;">📝 填一填 Fill in</div>
+        <div style="font-size:14px;line-height:2.2;">
+          <p>意大利的形状像 <span class="blank" style="width:70px;"></span>。<span style="color:#bbb;font-size:11px;">（靴子 a boot）</span></p>
+          <p>意大利语里说"谢谢"是 <span class="blank" style="width:70px;"></span>。<span style="color:#bbb;font-size:11px;">（Grazie）</span></p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="section-label">🍕 画一个披萨 Draw a Pizza!</div>
+        <div class="draw-box" style="min-height:155px;">
+          <div style="text-align:center;">
+            <span style="font-size:11px;">画你最爱的配料！<br>Draw your favorite toppings!</span><br>
+            <span style="font-size:40px;opacity:0.15;">🍕</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">🍝 意大利美食: 意面 Pasta!</div>
+    <div style="background:#FFF8E1;border-radius:10px;padding:10px 14px;font-size:13.5px;">
+      <div class="row">
+        <div class="col">
+          <p>🍝 <b>意面 (yì miàn)</b> = Pasta</p>
+          <p style="margin-top:4px;">意大利人发明了世界上最多种类的面条！每种形状都有不同的名字和搭配的酱料。</p>
+          <p style="margin-top:4px;font-size:12px;color:#666;">Italians invented the most types of noodles in the world! Each shape has a different name and sauce pairing.</p>
+        </div>
+        <div style="width:100px;text-align:center;font-size:48px;display:flex;align-items:center;justify-content:center;">🍝</div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:6px;">
+      <div class="col">
+        <div class="fun-fact">
+          🍝 <b>趣味小知识:</b> 意面有 <b>350多种形状</b>！从蝴蝶结到小耳朵，你能想到多少种？<br>
+          <span style="font-size:11px;color:#666;">Pasta comes in over 350 shapes — from bowties to little ears!</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="fun-fact">
+          ☕ <b>趣味小知识:</b> 在意大利，<b>不要在下午的咖啡里加牛奶</b>！意大利人觉得牛奶咖啡只能早上喝。<br>
+          <span style="font-size:11px;color:#666;">In Italy, don't add milk to afternoon coffee — cappuccino is only for mornings!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:6px;">🎨 意大利还有什么？More about Italy</div>
+    <div class="grid-2">
+      <div style="font-size:13px;line-height:1.8;">
+        <p>🏛️ <b>斗兽场</b> Colosseum — 古罗马竞技场</p>
+        <p>🎭 <b>威尼斯</b> Venice — 水上城市</p>
+        <p>⚽ 意大利人超级热爱<b>足球</b>！</p>
+        <p>🎻 <b>小提琴</b>诞生在意大利</p>
+      </div>
+      <div>
+        <div class="draw-box" style="min-height:70px;">
+          <span style="font-size:11px;">画一种意面形状<br>Draw a pasta shape</span>
+        </div>
+      </div>
+    </div>
+    <span class="page-num">6</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 7: 英国 Flag & Map ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🇬🇧 英国 <span style="font-size:18px;font-weight:400;">United Kingdom</span></h1>
+
+    <div class="section-label">🎨 涂国旗 Color the Union Jack</div>
+    <p style="font-size:12px;color:#888;margin-bottom:4px;">米字旗由三面旗组成！按照颜色提示涂色 The Union Jack combines 3 flags!</p>
+    <div style="border:2px solid #ccc;border-radius:6px;height:110px;position:relative;background:#fff;overflow:hidden;">
+      <!-- Union Jack guide lines -->
+      <svg viewBox="0 0 300 180" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+        <!-- Diagonal lines -->
+        <line x1="0" y1="0" x2="300" y2="180" stroke="#ddd" stroke-width="18"/>
+        <line x1="300" y1="0" x2="0" y2="180" stroke="#ddd" stroke-width="18"/>
+        <line x1="0" y1="0" x2="300" y2="180" stroke="#eee" stroke-width="10"/>
+        <line x1="300" y1="0" x2="0" y2="180" stroke="#eee" stroke-width="10"/>
+        <!-- Cross -->
+        <rect x="0" y="72" width="300" height="36" fill="none" stroke="#ddd" stroke-width="1.5"/>
+        <rect x="132" y="0" width="36" height="180" fill="none" stroke="#ddd" stroke-width="1.5"/>
+        <rect x="0" y="78" width="300" height="24" fill="none" stroke="#eee" stroke-width="1"/>
+        <rect x="138" y="0" width="24" height="180" fill="none" stroke="#eee" stroke-width="1"/>
+        <!-- Labels -->
+        <text x="30" y="50" font-size="9" fill="#C8102E" font-weight="bold">红 Red</text>
+        <text x="30" y="62" font-size="7" fill="#999">#C8102E</text>
+        <text x="230" y="50" font-size="9" fill="#012169" font-weight="bold">蓝 Blue</text>
+        <text x="230" y="62" font-size="7" fill="#999">#012169</text>
+        <text x="150" y="95" text-anchor="middle" font-size="9" fill="#999">白 White (留白)</text>
+        <text x="150" y="170" text-anchor="middle" font-size="8" fill="#aaa">提示: 先涂蓝色三角形，再涂红色十字 — Blue triangles first, then red cross</text>
+      </svg>
+    </div>
+
+    <div class="row" style="margin-top:8px;">
+      <div class="col">
+        <div class="section-label">🗺️ 英国地图 Map of UK</div>
+        <div class="map-box" style="min-height:175px;">
+          <svg viewBox="0 0 160 220" width="100%" style="max-height:170px;">
+            <!-- Great Britain simplified -->
+            <path d="M70,30 L85,20 L100,25 L105,40 L100,55 L95,70 L105,85 L100,100 L90,110 L95,125 L90,145 L80,155 L70,160 L65,150 L60,140 L55,130 L60,115 L55,100 L60,85 L55,70 L60,55 L65,40 Z" fill="none" stroke="#012169" stroke-width="2" stroke-dasharray="4,3"/>
+            <!-- Scotland label -->
+            <text x="78" y="50" text-anchor="middle" font-size="7" fill="#ccc">Scotland</text>
+            <!-- Ireland hint -->
+            <path d="M30,75 L45,70 L48,85 L42,100 L30,95 Z" fill="none" stroke="#ddd" stroke-width="1" stroke-dasharray="3,2"/>
+            <circle cx="85" cy="130" r="3.5" fill="#C8102E"/>
+            <text x="85" y="123" text-anchor="middle" font-size="8" fill="#333">⭐ 伦敦 London</text>
+            <text x="75" y="90" text-anchor="middle" font-size="8" fill="#aaa">涂上浅紫色</text>
+            <text x="40" y="88" font-size="9">🏰</text>
+          </svg>
+        </div>
+      </div>
+      <div class="col">
+        <div class="section-label">📋 国家档案 Country Profile</div>
+        <div style="font-size:13.5px;line-height:2;background:var(--bg);border-radius:10px;padding:10px 14px;">
+          <p>🏛️ 首都 Capital: <b>伦敦 London</b></p>
+          <p>🗣️ 语言 Language: <b>英语 English</b></p>
+          <p>👥 人口 Population: <b>~6700万</b></p>
+          <p>💰 货币 Currency: <b>英镑 Pound £</b></p>
+          <p>🐟 著名食物: <b>炸鱼薯条 Fish &amp; Chips</b></p>
+          <p>🏰 著名景点: <b>大本钟 Big Ben</b></p>
+        </div>
+
+        <div class="fun-fact" style="margin-top:8px;">
+          👑 英国有<b>国王</b>！现在的国王是查尔斯三世 King Charles III。<br>
+          <span style="font-size:11px;color:#666;">The UK has a King! The current king is Charles III.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:6px;">✍️ 描一描 Trace</div>
+    <div class="trace-box">
+      <span class="trace-char">英 国</span>
+      <span style="font-size:14px;color:#999;margin-left:16px;">(yīng guó)</span>
+      <span style="font-size:14px;color:#999;margin-left:24px;"><b>伦 敦</b> (lún dūn — London)</span>
+    </div>
+    <span class="page-num">7</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 8: 英国 Culture & Food ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🇬🇧 英国文化与美食 <span style="font-size:16px;font-weight:400;">British Culture &amp; Food</span></h1>
+
+    <div class="row">
+      <div class="col">
+        <div class="section-label">👋 英语你已经会了!</div>
+        <div class="trace-box" style="justify-content:center;">
+          <span style="font-size:36px;color:#ddd;font-weight:700;letter-spacing:8px;">Hello!</span>
+        </div>
+        <p style="font-size:12px;color:#888;text-align:center;">你知道英语也是从英国来的吗？</p>
+
+        <div class="section-label" style="margin-top:6px;">📝 填一填 Fill in</div>
+        <div style="font-size:14px;line-height:2.2;">
+          <p>英国人最爱 <span class="blank" style="width:70px;"></span>。<span style="color:#bbb;font-size:11px;">（排队 queuing）</span></p>
+          <p>英国人每天喝 <span class="blank" style="width:50px;"></span> 杯茶。<span style="color:#bbb;font-size:11px;">（1.65亿）</span></p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="section-label">🐟 画炸鱼薯条 Draw Fish &amp; Chips!</div>
+        <div class="draw-box" style="min-height:155px;">
+          <div style="text-align:center;">
+            <span style="font-size:11px;">画一份英国传统美食！<br>Draw a classic British meal!</span><br>
+            <span style="font-size:40px;opacity:0.15;">🐟🍟</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">🫖 下午茶 vs 中国茶 Afternoon Tea vs Chinese Tea</div>
+    <div style="background:#FFF8E1;border-radius:10px;padding:10px 14px;font-size:13px;">
+      <div class="row">
+        <div class="col" style="text-align:center;">
+          <p style="font-size:24px;">🫖☕</p>
+          <p><b>英国下午茶</b></p>
+          <p>British Afternoon Tea</p>
+          <ul style="text-align:left;font-size:12px;margin-top:4px;padding-left:18px;">
+            <li>加牛奶和糖 Add milk &amp; sugar</li>
+            <li>配三明治和蛋糕 With sandwiches &amp; cakes</li>
+            <li>用茶杯和茶碟 Cup &amp; saucer</li>
+            <li>下午3-5点 3-5 PM</li>
+          </ul>
+        </div>
+        <div style="width:2px;background:#e0e0e0;margin:0 6px;"></div>
+        <div class="col" style="text-align:center;">
+          <p style="font-size:24px;">🍵🫖</p>
+          <p><b>中国茶</b></p>
+          <p>Chinese Tea</p>
+          <ul style="text-align:left;font-size:12px;margin-top:4px;padding-left:18px;">
+            <li>不加牛奶 No milk</li>
+            <li>茶有很多种 Many tea types</li>
+            <li>用小茶杯 Small cups</li>
+            <li>任何时间 Any time of day</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:6px;">
+      <div class="col">
+        <div class="fun-fact">
+          ☕ <b>趣味小知识:</b> 英国人每天喝 <b>1.65亿杯茶</b>！如果把一年的茶杯排起来，可以绕地球好几圈！<br>
+          <span style="font-size:11px;color:#666;">Brits drink 165 million cups of tea EVERY DAY!</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="fun-fact">
+          🏰 <b>趣味小知识:</b> 伦敦塔里住着6只<b>乌鸦</b>！传说乌鸦离开，王国就会倒塌。<br>
+          <span style="font-size:11px;color:#666;">6 ravens live in the Tower of London — legend says if they leave, the kingdom will fall!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:4px;">🎨 英国还有什么？More about the UK</div>
+    <div style="font-size:13px;line-height:1.7;columns:2;column-gap:16px;">
+      <p>⚽ <b>足球</b>发源地 Birthplace of football</p>
+      <p>📚 <b>哈利·波特</b> Harry Potter!</p>
+      <p>🎡 <b>伦敦眼</b> London Eye 摩天轮</p>
+      <p>🚇 世界第一条<b>地铁</b> First subway (1863)</p>
+    </div>
+    <span class="page-num">8</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 9: 三国对比表 ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>📊 欧洲三国对比表 <span style="font-size:16px;font-weight:400;">Compare 3 European Countries</span></h1>
+    <p class="subtitle">填写下面的表格，比较三个国家！Fill in the table to compare!</p>
+
+    <table class="compare" style="margin-top:10px;">
+      <thead>
+        <tr>
+          <th style="width:18%;"></th>
+          <th style="width:27%;">🇫🇷 法国 France</th>
+          <th style="width:27%;">🇮🇹 意大利 Italy</th>
+          <th style="width:28%;">🇬🇧 英国 UK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">🏛️ 首都<br><span style="font-size:11px;color:#888;">Capital</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">🗣️ 语言<br><span style="font-size:11px;color:#888;">Language</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">💰 货币<br><span style="font-size:11px;color:#888;">Currency</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">🍽️ 美食<br><span style="font-size:11px;color:#888;">Famous Food</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">🏰 景点<br><span style="font-size:11px;color:#888;">Landmark</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">👋 你好<br><span style="font-size:11px;color:#888;">Hello</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">🇺🇳 国旗颜色<br><span style="font-size:11px;color:#888;">Flag Colors</span></td>
+          <td style="height:48px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="background:#f0f4ff;font-weight:700;">🌟 趣味事实<br><span style="font-size:11px;color:#888;">Fun Fact</span></td>
+          <td style="height:56px;"></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-label" style="margin-top:12px;">🤔 思考题 Think about it!</div>
+    <div style="font-size:14px;line-height:2.4;">
+      <p>1. 法国和意大利的国旗有什么相同？什么不同？</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:24px;"></div>
+      <p style="margin-top:6px;">2. 哪两个国家用欧元？哪个国家不用？</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:24px;"></div>
+      <p style="margin-top:6px;">3. 你觉得中国和这三个国家有什么相同的地方？</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:24px;"></div>
+    </div>
+
+    <span class="page-num">9</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 10: 我最想去的欧洲国家 ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>✈️ 我最想去的欧洲国家 <span style="font-size:15px;font-weight:400;">My Favorite European Country</span></h1>
+    <p class="subtitle">如果你可以去一个欧洲国家，你最想去哪里？<br>If you could visit one European country, where would you go?</p>
+
+    <div class="row" style="margin-top:8px;">
+      <div class="col">
+        <div style="text-align:center;font-size:15px;margin-bottom:8px;">
+          <span style="background:#c8e6c9;padding:4px 12px;border-radius:20px;">🟢 第一选择 1st Choice</span>
+        </div>
+        <div style="font-size:14.5px;line-height:2.4;">
+          <p>我最想去 <span class="blank" style="width:100px;"></span>。</p>
+          <p>因为 <span class="blank" style="width:180px;"></span></p>
+          <p><span class="blank" style="width:240px;"></span></p>
+        </div>
+      </div>
+      <div class="col">
+        <div style="text-align:center;font-size:15px;margin-bottom:8px;">
+          <span style="background:#bbdefb;padding:4px 12px;border-radius:20px;">🔵 第二选择 2nd Choice</span>
+        </div>
+        <div style="font-size:14.5px;line-height:2.4;">
+          <p>我也想去 <span class="blank" style="width:100px;"></span>。</p>
+          <p>因为 <span class="blank" style="width:180px;"></span></p>
+          <p><span class="blank" style="width:240px;"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:15px;margin:10px 0 6px 0;">
+      <span style="background:#e1bee7;padding:4px 12px;border-radius:20px;">🟣 如果我去欧洲…… If I go to Europe...</span>
+    </div>
+    <div style="font-size:14px;line-height:2.2;">
+      <p>我想吃 <span class="blank" style="width:160px;"></span>。(I want to eat...)</p>
+      <p>我想看 <span class="blank" style="width:160px;"></span>。(I want to see...)</p>
+      <p>我想学会说 <span class="blank" style="width:140px;"></span>。(I want to learn to say...)</p>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">🎨 画一画 Draw your dream trip!</div>
+    <div class="draw-box" style="min-height:200px;">
+      <div style="text-align:center;">
+        <span style="font-size:12px;color:#bbb;">画一张你梦想中的欧洲之旅<br>Draw your dream European trip!</span><br>
+        <span style="font-size:40px;opacity:0.1;">✈️ 🏰 🗼 🍕</span>
+      </div>
+    </div>
+
+    <span class="page-num">10</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 11: 欧洲语言挑战 ==================== -->
+<div class="page">
+  <div class="page-border">
+    <h1>🗣️ 欧洲语言挑战 <span style="font-size:16px;font-weight:400;">European Language Challenge</span></h1>
+    <p class="subtitle">欧洲有这么多语言！让我们来学几个词！<br>Europe has so many languages! Let's learn some words!</p>
+
+    <div class="section-label">✏️ 连一连 Match the greeting to the country</div>
+    <div class="row" style="margin-top:6px;">
+      <div class="col" style="text-align:center;">
+        <p style="font-size:13px;color:#888;margin-bottom:8px;">打招呼 Greeting</p>
+        <div class="match-item" style="justify-content:center;">
+          <div class="match-circle">1</div>
+          <span style="font-size:20px;font-weight:700;">Bonjour!</span>
+        </div>
+        <div class="match-item" style="justify-content:center;">
+          <div class="match-circle">2</div>
+          <span style="font-size:20px;font-weight:700;">Ciao!</span>
+        </div>
+        <div class="match-item" style="justify-content:center;">
+          <div class="match-circle">3</div>
+          <span style="font-size:20px;font-weight:700;">Hello!</span>
+        </div>
+      </div>
+      <div style="width:40px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#ccc;">→</div>
+      <div class="col" style="text-align:center;">
+        <p style="font-size:13px;color:#888;margin-bottom:8px;">国家 Country</p>
+        <div class="match-item" style="justify-content:center;">
+          <div class="match-blank"></div>
+          <span>🇮🇹 意大利 Italy</span>
+        </div>
+        <div class="match-item" style="justify-content:center;">
+          <div class="match-blank"></div>
+          <span>🇬🇧 英国 UK</span>
+        </div>
+        <div class="match-item" style="justify-content:center;">
+          <div class="match-blank"></div>
+          <span>🇫🇷 法国 France</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px;">✍️ 用三种语言写"谢谢" Write "Thank You" in 3 languages!</div>
+    <div class="row" style="margin-top:6px;">
+      <div class="col" style="text-align:center;">
+        <p>🇫🇷 法语 French</p>
+        <div class="trace-box" style="justify-content:center;">
+          <span style="font-size:28px;color:#ddd;font-weight:700;">Merci!</span>
+        </div>
+        <p style="font-size:11px;color:#888;">读音: "mehr-SEE"</p>
+      </div>
+      <div class="col" style="text-align:center;">
+        <p>🇮🇹 意大利语 Italian</p>
+        <div class="trace-box" style="justify-content:center;">
+          <span style="font-size:28px;color:#ddd;font-weight:700;">Grazie!</span>
+        </div>
+        <p style="font-size:11px;color:#888;">读音: "GRAH-tsee-eh"</p>
+      </div>
+      <div class="col" style="text-align:center;">
+        <p>🇬🇧 英语 English</p>
+        <div class="trace-box" style="justify-content:center;">
+          <span style="font-size:28px;color:#ddd;font-weight:700;">Thank you!</span>
+        </div>
+        <p style="font-size:11px;color:#888;">你已经会了！You know this!</p>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px;">🔢 数数字 Count 1–5 in 3 languages!</div>
+    <table class="compare" style="font-size:14px;">
+      <thead>
+        <tr>
+          <th>数字</th>
+          <th>🇨🇳 中文</th>
+          <th>🇫🇷 法语</th>
+          <th>🇮🇹 意大利语</th>
+          <th>🇬🇧 英语</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><b>1</b></td><td>一 yī</td><td>un</td><td>uno</td><td>one</td></tr>
+        <tr><td><b>2</b></td><td>二 èr</td><td>deux</td><td>due</td><td>two</td></tr>
+        <tr><td><b>3</b></td><td>三 sān</td><td>trois</td><td>tre</td><td>three</td></tr>
+        <tr><td><b>4</b></td><td>四 sì</td><td>quatre</td><td>quattro</td><td>four</td></tr>
+        <tr><td><b>5</b></td><td>五 wǔ</td><td>cinq</td><td>cinque</td><td>five</td></tr>
+      </tbody>
+    </table>
+
+    <div class="fun-fact" style="margin-top:10px;">
+      💡 <b>你发现了吗？</b> 法语和意大利语的数字很像！因为它们都来自<b>拉丁语</b>（古罗马的语言）。<br>
+      <span style="font-size:11px;color:#666;">Did you notice? French and Italian numbers are similar — both come from Latin (the language of ancient Rome)!</span>
+    </div>
+
+    <span class="page-num">11</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 12: 欧洲签证章 ==================== -->
+<div class="page">
+  <div class="page-border" style="background:linear-gradient(180deg,#fff 0%,#E3F2FD 100%);">
+    <h1>🛂 欧洲签证章 <span style="font-size:16px;font-weight:400;">Europe Passport Stamp</span></h1>
+    <p class="subtitle">恭喜你完成了欧洲之旅！Congratulations on finishing your Europe trip!</p>
+
+    <div style="text-align:center;margin:10px 0;">
+      <div class="stamp-circle" style="width:180px;height:180px;border-color:#1565C0;">
+        <span style="font-size:14px;">✈️ EUROPE ✈️</span>
+        <span class="big" style="font-size:26px;">欧洲</span>
+        <span class="small">探索完成 EXPLORED</span>
+        <span style="font-size:11px;margin-top:2px;">🇫🇷 🇮🇹 🇬🇧</span>
+        <span style="font-size:10px;color:#888;">日期 ___/___/___</span>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:10px;">📝 旅行感想 My Reflections</div>
+    <div style="font-size:14px;line-height:2.4;">
+      <p>1. 我学到的最有趣的事情是 The most interesting thing I learned is:</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:22px;"></div>
+      <div style="border-bottom:1.5px solid #ddd;min-height:22px;margin-top:4px;"></div>
+
+      <p style="margin-top:8px;">2. 我最喜欢的欧洲国家是 <span class="blank" style="width:100px;"></span>，因为</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:22px;"></div>
+
+      <p style="margin-top:8px;">3. 我想告诉朋友关于欧洲的一件事 One thing I'd tell a friend about Europe:</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:22px;"></div>
+
+      <p style="margin-top:8px;">4. 欧洲和中国不一样的地方 Something different from China:</p>
+      <div style="border-bottom:1.5px solid #ddd;min-height:22px;"></div>
+    </div>
+
+    <div style="margin-top:14px;text-align:center;">
+      <div style="display:inline-block;border:2px solid var(--accent);border-radius:14px;padding:12px 30px;background:#FFFDE7;">
+        <p style="font-size:14px;color:var(--primary);font-weight:700;">🌟 欧洲探险家证书 Europe Explorer Certificate 🌟</p>
+        <p style="font-size:13px;margin-top:6px;">探险家签名 Explorer's Signature:</p>
+        <div style="border-bottom:2px solid #333;width:200px;margin:10px auto 0 auto;"></div>
+      </div>
+    </div>
+
+    <div style="position:absolute;bottom:18px;left:0;right:0;text-align:center;">
+      <p style="font-size:11px;color:#aaa;">谷雨中文 GR EDU &middot; 环球旅行 PBL World Trip &middot; 探索欧洲 Explore Europe</p>
+    </div>
+    <span class="page-num">12</span>
+  </div>
+</div>
+
+</body>
+</html>

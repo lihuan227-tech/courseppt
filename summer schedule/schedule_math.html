@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; background: #fff; font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 10px; }
+
+  .subject-header {
+    font-size: 19px; font-weight: 700; padding: 9px 18px;
+    border-radius: 6px; margin-bottom: 4px; color: #fff;
+    background: #388e3c;
+  }
+
+  .table-footnote {
+    font-size: 13px; color: #333; padding: 6px 4px; line-height: 1.5;
+  }
+  .table-footnote a { color: #1976d2; text-decoration: none; font-weight: 600; }
+  .table-footnote a:hover { text-decoration: underline; }
+
+  .sched-table { width: 100%; border-collapse: collapse; border: 2px solid #ddd; }
+  .sched-table th {
+    font-size: 14px; font-weight: 700; padding: 9px 12px;
+    color: #fff; text-align: center; border: 1px solid rgba(255,255,255,0.2);
+    background: #43a047;
+  }
+
+  .sched-table td {
+    font-size: 15px; padding: 9px 12px;
+    border: 1px solid #e0e0e0; color: #2a2a2a; vertical-align: middle;
+  }
+  .sched-table tr:nth-child(even) td { background: #fafafa; }
+  .sched-table tr:nth-child(odd) td { background: #fff; }
+
+  .level-name { font-weight: 700; font-size: 15px; color: #2e7d32; }
+
+  .course-desc { font-weight: 400; font-size: 12px; color: #777; display: block; margin-top: 2px; }
+
+  .day { font-weight: 600; }
+
+  .inline-link {
+    font-size: 12px; font-weight: 600; color: #1976d2;
+    text-decoration: none; white-space: nowrap; margin-left: 6px;
+  }
+  .inline-link:hover { text-decoration: underline; }
+
+  .grade-tag {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    padding: 2px 10px; border-radius: 12px; background: #f0f0f0; color: #555;
+    margin: 1px 2px;
+  }
+
+  @media (max-width: 600px) {
+    .sched-table th, .sched-table td { padding: 7px 8px; font-size: 13px; }
+    .level-name { font-size: 13px; }
+    .subject-header { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="subject-header">数学 Math</div>
+  <table class="sched-table">
+    <thead>
+      <tr>
+        <th style="width:30%">Course</th>
+        <th style="width:30%">Schedule</th>
+        <th style="width:40%">参考年级 Suggested Grade *<br><span style="font-weight:400;font-size:11px;opacity:0.85;">（2026 Fall 入学年级）</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="level-name">Math L1</span><span class="course-desc">重点：加减法、应用题、图形</span></td>
+        <td><span class="day">Tue / Thu</span> 4:00–5:00</td>
+        <td><span class="grade-tag">1st</span> <a class="inline-link" href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">查看课程内容 →</a></td>
+      </tr>
+      <tr>
+        <td><span class="level-name">Math L2</span><span class="course-desc">重点：奇偶数、乘法、括号运算</span></td>
+        <td><span class="day">Tue / Thu</span> 5:00–6:00</td>
+        <td><span class="grade-tag">2nd</span> <span class="grade-tag">3rd</span> <a class="inline-link" href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">查看课程内容 →</a></td>
+      </tr>
+      <tr>
+        <td><span class="level-name">Math L3</span><span class="course-desc">重点：运算顺序、括号进阶、逻辑推理</span></td>
+        <td><span class="day">Mon / Wed</span> 4:00–5:00</td>
+        <td><span class="grade-tag">3rd</span> <a class="inline-link" href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">查看课程内容 →</a></td>
+      </tr>
+      <tr>
+        <td><span class="level-name">Math L4</span><span class="course-desc">重点：质数合数、质因数分解</span></td>
+        <td><span class="day">Mon / Wed</span> 5:00–6:00</td>
+        <td><span class="grade-tag">4th–5th</span> <a class="inline-link" href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">查看课程内容 →</a></td>
+      </tr>
+      <tr>
+        <td><span class="level-name">Math L5</span><span class="course-desc">重点：负数、分数小数百分数、指数</span></td>
+        <td><span class="day">Fri</span> 4:00–6:00</td>
+        <td><span class="grade-tag">4th–5th</span> <a class="inline-link" href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">查看课程内容 →</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="table-footnote">* 数学课按实际水平分级，非按学校年级分班。上表年级仅供参考，建议查看<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">各级别详细课程内容</a>，根据孩子实际水平选择最适合的级别。</div>
+
+</div>
+</body>
+</html>

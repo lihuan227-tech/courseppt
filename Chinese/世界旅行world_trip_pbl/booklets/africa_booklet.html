@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探索非洲 Explore: Africa — Activity Booklet</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif;
+    color: #3E2723;
+    background: #fff;
+    line-height: 1.6;
+  }
+
+  /* ── Print Setup ── */
+  @page { size: letter; margin: 0.5in; }
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none !important; margin: 0 !important; padding: 0.3in 0.4in !important; }
+    .no-print { display: none !important; }
+  }
+
+  /* ── Page Container ── */
+  .page {
+    width: 8.5in;
+    min-height: 10in;
+    max-height: 10in;
+    margin: 0.3in auto;
+    padding: 0.4in 0.5in;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── Colors ── */
+  :root {
+    --primary: #FF8F00;
+    --accent: #4E342E;
+    --bg: #FFF3E0;
+    --bg-light: #FFF8E1;
+    --brown-light: #795548;
+    --gold: #FFD54F;
+    --cream: #FFF8E1;
+    --egypt-red: #CE1126;
+    --kenya-green: #006600;
+    --kenya-red: #BB0000;
+    --sa-green: #007A4D;
+    --sa-blue: #002395;
+    --sa-red: #DE3831;
+    --sa-gold: #FFB612;
+  }
+
+  /* ── Section Header ── */
+  .section-header {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+  .section-header-full {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .section-header-brown {
+    background: var(--accent);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+
+  /* ── Dotted Trace Characters ── */
+  .trace-char {
+    display: inline-block;
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2px #4E342E;
+    text-stroke: 2px #4E342E;
+    letter-spacing: 0.3em;
+    padding: 5px 10px;
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    margin: 4px;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%
+    );
+  }
+  .trace-char-sm {
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1.5px #4E342E;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    margin: 2px;
+  }
+
+  /* ── Fill-in Blank ── */
+  .blank {
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 2px solid #4E342E;
+    margin: 0 4px;
+    text-align: center;
+  }
+  .blank-long { min-width: 160px; }
+  .blank-short { min-width: 60px; }
+
+  /* ── Drawing Box ── */
+  .draw-box {
+    border: 2.5px dashed #aaa;
+    border-radius: 12px;
+    min-height: 120px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-size: 0.9rem;
+    position: relative;
+  }
+  .draw-box-label {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    font-size: 0.75rem;
+    color: #999;
+    background: #fafafa;
+    padding: 0 4px;
+  }
+
+  /* ── Writing Lines ── */
+  .writing-lines {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0;
+  }
+  .writing-lines .line {
+    height: 32px;
+    border-bottom: 1.5px dotted #bbb;
+  }
+  .writing-lines .line:first-child {
+    border-top: 1.5px dotted #bbb;
+  }
+
+  /* ── Fun Fact Box ── */
+  .fun-fact {
+    background: var(--bg);
+    border-left: 5px solid var(--primary);
+    padding: 8px 14px;
+    border-radius: 0 10px 10px 0;
+    margin: 8px 0;
+    font-size: 0.92rem;
+  }
+  .fun-fact::before {
+    content: "💡 ";
+  }
+
+  /* ── Flag Coloring Area ── */
+  .flag-outline {
+    border: 3px solid #333;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .flag-stripe {
+    height: 40px;
+    border-bottom: 1.5px dashed #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: #aaa;
+  }
+  .flag-stripe:last-child { border-bottom: none; }
+
+  /* ── Table Styles ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .compare-table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 6px 8px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .compare-table td {
+    border: 1.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: top;
+    min-height: 40px;
+  }
+  .compare-table tr:nth-child(even) td {
+    background: var(--bg-light);
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #999;
+  }
+  .page-footer .page-num {
+    background: var(--primary);
+    color: #fff;
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  /* ── Top Bar ── */
+  .top-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  /* ── Two Column ── */
+  .two-col {
+    display: flex;
+    gap: 14px;
+  }
+  .two-col > div { flex: 1; }
+
+  /* ── Inline emoji for headings ── */
+  .country-flag { font-size: 1.6rem; vertical-align: middle; margin-right: 4px; }
+
+  /* ── Grid for animals ── */
+  .animal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .animal-card {
+    border: 2px dashed #bbb;
+    border-radius: 10px;
+    padding: 6px;
+    text-align: center;
+    min-height: 90px;
+    background: #fafafa;
+  }
+  .animal-card .name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+    color: var(--accent);
+  }
+  .animal-card .pinyin {
+    font-size: 0.7rem;
+    color: #999;
+  }
+
+  /* ── Stamp ── */
+  .stamp-outline {
+    width: 200px;
+    height: 200px;
+    border: 4px double var(--primary);
+    border-radius: 50%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    background: var(--bg-light);
+  }
+  .stamp-outline .stamp-title {
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+  .stamp-outline .stamp-sub {
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 4px;
+  }
+
+  /* ── Differentiated writing ── */
+  .diff-label {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+    font-size: 0.65rem;
+    color: #fff;
+    font-weight: 700;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .diff-green { background: #388E3C; }
+  .diff-blue { background: #1565C0; }
+  .diff-purple { background: #7B1FA2; }
+
+  h2 { font-size: 1.15rem; color: var(--accent); margin: 6px 0; }
+  h3 { font-size: 0.95rem; color: var(--brown-light); margin: 4px 0; }
+  p, li { font-size: 0.88rem; }
+  ul { padding-left: 18px; }
+  .mt-sm { margin-top: 6px; }
+  .mt-md { margin-top: 10px; }
+  .mb-sm { margin-bottom: 6px; }
+  .text-center { text-align: center; }
+  .text-sm { font-size: 0.78rem; }
+  .text-xs { font-size: 0.68rem; color: #999; }
+  .bold { font-weight: 700; }
+  .hint { color: #999; font-size: 0.72rem; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================== -->
+<!-- PAGE 1: COVER -->
+<!-- ============================================================== -->
+<div class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background: linear-gradient(180deg, #FFF3E0 0%, #FFF8E1 40%, #fff 100%);">
+  <div style="font-size:4.5rem; margin-bottom:5px;">🌍</div>
+  <div style="font-size:2.8rem; font-weight:900; color:#FF8F00; letter-spacing:0.05em; text-shadow: 2px 2px 0 #FFD54F;">探索非洲</div>
+  <div style="font-size:1.8rem; font-weight:700; color:#4E342E; margin-top:2px;">Explore: Africa</div>
+  <div style="width:80%; height:3px; background:linear-gradient(90deg, #FF8F00, #FFD54F, #FF8F00); border-radius:2px; margin:14px auto;"></div>
+  <div style="display:flex; gap:24px; font-size:2.4rem; margin:8px 0;">
+    <span>🇪🇬</span><span>🇰🇪</span><span>🇿🇦</span>
+  </div>
+  <div style="font-size:1rem; color:#795548; margin:6px 0 18px;">埃及 Egypt &nbsp;·&nbsp; 肯尼亚 Kenya &nbsp;·&nbsp; 南非 South Africa</div>
+
+  <div style="display:flex; gap:28px; margin-top:10px; font-size:2rem;">
+    <span>🏛️</span><span>🦁</span><span>🌈</span>
+  </div>
+
+  <div style="margin-top:36px; text-align:left; width:70%;">
+    <div style="font-size:0.9rem; color:#795548; margin-bottom:8px;">
+      <span style="font-weight:700;">姓名 Name:</span>
+      <span class="blank blank-long"></span>
+    </div>
+    <div style="font-size:0.9rem; color:#795548;">
+      <span style="font-weight:700;">日期 Date:</span>
+      <span class="blank blank-long"></span>
+    </div>
+  </div>
+
+  <div style="position:absolute; bottom:30px; font-size:0.72rem; color:#bbb;">谷雨中文 GR EDU · Global Explorer Camp 环球探索沉浸式夏令营</div>
+  <div class="page-footer"><span class="page-num">1 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 2: 认识非洲 Know Africa -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header">🌍 认识非洲 Get to Know Africa</div>
+
+  <div class="two-col mt-sm">
+    <!-- Left: Map coloring -->
+    <div>
+      <h3>🗺️ 给非洲地图涂色 Color the map of Africa</h3>
+      <div style="margin-top:6px; text-align:center;">
+        <svg viewBox="0 0 420 520" width="100%" style="max-width:335px; border:1px solid #eee; border-radius:8px; background:#fff;">
+          <!-- Morocco (northwest) -->
+          <path d="M120,35 L155,28 L175,35 L180,55 L170,70 L145,75 L125,68 L115,50 Z" fill="white" stroke="black" stroke-width="1"/>
+          <text x="148" y="55" font-size="9" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">摩洛哥</text>
+          <text x="148" y="65" font-size="7" text-anchor="middle" fill="#888" font-family="sans-serif">Morocco</text>
+
+          <!-- Algeria/Libya (north) -->
+          <path d="M175,35 L230,30 L280,35 L290,55 L285,80 L260,90 L230,85 L200,90 L180,80 L180,55 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+          <!-- Egypt (northeast) -->
+          <path d="M280,35 L320,30 L345,40 L355,60 L350,85 L338,100 L320,110 L300,108 L290,95 L290,70 L285,50 Z" fill="white" stroke="black" stroke-width="1.2"/>
+          <text x="318" y="70" font-size="11" text-anchor="middle" fill="#B8860B" font-weight="bold" font-family="'Noto Sans SC',sans-serif">埃及</text>
+          <text x="318" y="84" font-size="9" text-anchor="middle" fill="#B8860B" font-family="sans-serif">Egypt</text>
+          <!-- Nile River hint -->
+          <path d="M325,50 L322,70 L325,90 L320,105" fill="none" stroke="#1565C0" stroke-width="1" stroke-dasharray="2,2"/>
+
+          <!-- West Africa: Nigeria -->
+          <path d="M135,195 L170,185 L195,195 L200,220 L192,240 L170,248 L148,242 L135,225 L130,210 Z" fill="white" stroke="black" stroke-width="1"/>
+          <text x="165" y="220" font-size="9" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">尼日利亚</text>
+          <text x="165" y="232" font-size="7" text-anchor="middle" fill="#888" font-family="sans-serif">Nigeria</text>
+
+          <!-- Sahara region -->
+          <path d="M115,68 L180,75 L230,85 L260,90 L290,95 L300,108 L295,130 L275,145 L250,150 L220,155 L190,150 L160,145 L135,140 L115,130 L105,110 L100,90 L105,75 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+          <!-- Central Africa: Congo -->
+          <path d="M195,250 L230,240 L260,250 L270,275 L265,300 L248,315 L225,320 L205,310 L195,290 L190,270 Z" fill="white" stroke="black" stroke-width="1"/>
+          <text x="230" y="282" font-size="9" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">刚果</text>
+          <text x="230" y="294" font-size="7" text-anchor="middle" fill="#888" font-family="sans-serif">Congo</text>
+
+          <!-- Ethiopia (east) -->
+          <path d="M300,165 L340,155 L365,170 L370,195 L358,215 L335,222 L312,215 L300,195 Z" fill="white" stroke="black" stroke-width="1"/>
+          <text x="335" y="190" font-size="9" text-anchor="middle" fill="#555" font-family="'Noto Sans SC',sans-serif">埃塞俄比亚</text>
+          <text x="335" y="202" font-size="7" text-anchor="middle" fill="#888" font-family="sans-serif">Ethiopia</text>
+
+          <!-- Kenya (east, on equator) -->
+          <path d="M312,222 L345,218 L365,230 L370,255 L360,275 L338,282 L318,275 L305,258 L302,240 Z" fill="white" stroke="black" stroke-width="1.2"/>
+          <text x="335" y="252" font-size="11" text-anchor="middle" fill="#006600" font-weight="bold" font-family="'Noto Sans SC',sans-serif">肯尼亚</text>
+          <text x="335" y="266" font-size="9" text-anchor="middle" fill="#006600" font-family="sans-serif">Kenya</text>
+
+          <!-- Equator line -->
+          <path d="M80,260 L390,260" fill="none" stroke="#FF8F00" stroke-width="0.8" stroke-dasharray="4,3"/>
+          <text x="85" y="256" font-size="7" fill="#FF8F00" font-family="sans-serif">赤道 Equator</text>
+
+          <!-- East Africa (Tanzania etc) -->
+          <path d="M285,280 L318,275 L338,282 L345,305 L335,325 L312,332 L290,322 L280,305 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+          <!-- Southern Africa general -->
+          <path d="M180,330 L225,320 L265,325 L290,340 L300,360 L295,385 L280,400 L260,410 L235,415 L210,410 L190,400 L175,385 L170,360 L172,345 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+          <!-- South Africa (southern tip) -->
+          <path d="M190,400 L220,390 L255,395 L280,400 L295,415 L290,438 L275,455 L255,465 L230,470 L205,465 L185,452 L175,435 L172,418 L178,408 Z" fill="white" stroke="black" stroke-width="1.2"/>
+          <text x="232" y="438" font-size="11" text-anchor="middle" fill="#7B1FA2" font-weight="bold" font-family="'Noto Sans SC',sans-serif">南非</text>
+          <text x="232" y="452" font-size="9" text-anchor="middle" fill="#7B1FA2" font-family="sans-serif">South Africa</text>
+
+          <!-- West coast countries (simplified) -->
+          <path d="M80,130 L115,130 L135,145 L140,170 L135,195 L120,200 L100,195 L85,180 L75,160 L72,140 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+          <!-- Angola/Mozambique regions -->
+          <path d="M165,305 L195,290 L205,310 L210,335 L200,355 L180,360 L165,345 L160,325 Z" fill="white" stroke="black" stroke-width="0.7"/>
+
+          <!-- Madagascar -->
+          <path d="M355,355 L365,348 L372,360 L370,385 L362,400 L352,395 L348,375 Z" fill="white" stroke="black" stroke-width="0.8"/>
+
+          <!-- Continent outer outline (subtle) -->
+          <path d="M120,28 L155,22 L200,25 L250,22 L300,25 L345,32 L365,50 L380,80 L385,115 L380,150 L375,170 L370,195 L375,225 L378,260 L370,295 L355,330 L348,350 L355,375 L350,400 L335,430 L310,455 L280,468 L250,475 L220,472 L190,462 L168,445 L155,420 L150,395 L155,365 L150,335 L142,310 L130,285 L118,260 L108,235 L95,210 L85,185 L75,160 L68,135 L72,110 L78,85 L88,60 L100,42 L112,32 Z" fill="none" stroke="black" stroke-width="1.5"/>
+
+          <!-- Coloring legend -->
+          <rect x="10" y="482" width="400" height="32" fill="#FFFDE7" stroke="#E0E0E0" stroke-width="1" rx="6"/>
+          <text x="20" y="498" font-size="10" fill="#333" font-weight="bold" font-family="'Noto Sans SC',sans-serif">🎨 涂色:</text>
+          <text x="70" y="498" font-size="9" fill="#B8860B" font-family="'Noto Sans SC',sans-serif">🟡 埃及 GOLD</text>
+          <text x="155" y="498" font-size="9" fill="#006600" font-family="'Noto Sans SC',sans-serif">🟢 肯尼亚 GREEN</text>
+          <text x="260" y="498" font-size="9" fill="#7B1FA2" font-family="'Noto Sans SC',sans-serif">🟣 南非 PURPLE</text>
+          <text x="355" y="498" font-size="8" fill="#666" font-family="'Noto Sans SC',sans-serif">🌈 其他随意!</text>
+        </svg>
+      </div>
+    </div>
+    <!-- Right: Trace + facts -->
+    <div>
+      <h3>✍️ 描一描 Trace the characters</h3>
+      <div class="text-center mt-sm">
+        <span class="trace-char">非</span>
+        <span class="trace-char">洲</span>
+      </div>
+      <div class="mt-md">
+        <h3>📝 填一填 Fill in the blanks</h3>
+        <div style="margin-top:8px; line-height:2.4;">
+          <p>1. 非洲有 <span class="blank blank-short"></span> 个国家。</p>
+          <p class="hint" style="margin-left:18px;">(54)</p>
+          <p>2. 世界最长的河是 <span class="blank"></span>。</p>
+          <p class="hint" style="margin-left:18px;">(尼罗河 Nile River)</p>
+          <p>3. 世界最大的沙漠是 <span class="blank"></span>。</p>
+          <p class="hint" style="margin-left:18px;">(撒哈拉 Sahara)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-md">非洲是世界第二大洲，面积约3030万平方公里！Africa is the second largest continent!</div>
+
+  <div class="page-footer"><span class="page-num">2 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 3: 🇪🇬 埃及 Flag & Map -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header" style="background:#CE1126;">🇪🇬 埃及 Egypt — Flag & Map</div>
+
+  <div class="two-col mt-sm">
+    <div>
+      <h3>🎨 给国旗涂色 Color the flag</h3>
+      <div class="flag-outline" style="width:100%; margin-top:6px;">
+        <div class="flag-stripe" style="height:45px;">红色 Red</div>
+        <div class="flag-stripe" style="height:45px;">白色 White + 🦅 金鹰 Golden Eagle</div>
+        <div class="flag-stripe" style="height:45px;">黑色 Black</div>
+      </div>
+      <p class="hint mt-sm">提示 Hint: 从上到下 — 红、白、黑，中间画金色老鹰！</p>
+
+      <h3 class="mt-md">📝 快速知识 Quick Facts</h3>
+      <div style="line-height:2.2; margin-top:4px;">
+        <p>🏛️ 首都 Capital: <span class="blank"></span></p>
+        <p class="hint" style="margin-left:18px;">(开罗 Cairo)</p>
+        <p>🗣️ 语言 Language: <span class="blank"></span></p>
+        <p class="hint" style="margin-left:18px;">(阿拉伯语 Arabic)</p>
+        <p>🌍 洲 Continent: <span class="blank blank-short"></span></p>
+        <p class="hint" style="margin-left:18px;">(非洲 Africa)</p>
+      </div>
+    </div>
+    <div>
+      <h3>🗺️ 在地图上找到埃及 Find Egypt on the map</h3>
+      <div class="draw-box" style="height:250px; margin-top:6px;">
+        <svg viewBox="0 0 200 240" width="180" height="230">
+          <!-- Simplified NE Africa outline -->
+          <path d="M20,30 L80,20 L120,15 L160,25 L180,50 L175,80 L170,100 L160,130 L140,160 L110,180 L80,190 L50,185 L30,160 L20,130 L15,100 L15,70 L18,50 Z"
+            fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <!-- Egypt highlighted area -->
+          <path d="M60,20 L100,18 L120,25 L125,50 L130,80 L115,85 L100,80 L85,78 L70,55 L60,35 Z"
+            fill="none" stroke="#CE1126" stroke-width="2.5" stroke-dasharray="4,3"/>
+          <text x="75" y="55" font-size="10" fill="#CE1126" font-weight="bold" font-family="sans-serif">Egypt</text>
+          <text x="78" y="68" font-size="8" fill="#CE1126" font-family="sans-serif">埃及</text>
+          <!-- Nile River hint -->
+          <path d="M100,30 L98,50 L100,70 L97,85" fill="none" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="2,2"/>
+          <text x="102" y="60" font-size="6" fill="#1565C0" font-family="sans-serif">尼罗河 Nile</text>
+          <!-- Mediterranean -->
+          <text x="50" y="14" font-size="6" fill="#999" font-family="sans-serif">地中海 Mediterranean Sea</text>
+        </svg>
+        <div class="draw-box-label">给埃及涂上颜色！Color Egypt!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-sm">埃及的金字塔是古代世界七大奇迹中唯一仍然存在的！The Pyramids are the only surviving Ancient Wonder!</div>
+
+  <div class="page-footer"><span class="page-num">3 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 4: 🇪🇬 埃及 Culture & Food -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header" style="background:#CE1126;">🇪🇬 埃及 Egypt — Culture & Food</div>
+
+  <div class="two-col mt-sm">
+    <div>
+      <h3>👋 How do you say hello in Arabic?</h3>
+      <p class="mt-sm">阿拉伯语问好 Say hello in Arabic:</p>
+      <div class="text-center mt-sm">
+        <span class="trace-char-sm" style="font-size:1.8rem; -webkit-text-stroke-color:#CE1126;">مرحبا</span>
+      </div>
+      <p class="text-center text-sm" style="color:#CE1126; font-weight:700;">Marhaba! 你好！</p>
+
+      <h3 class="mt-md">🍽️ 饮食文化 Food Culture</h3>
+      <p class="mt-sm">在埃及，人们用 <span class="blank blank-short"></span> 手吃饭。</p>
+      <p class="hint">(右 right hand)</p>
+
+      <div class="mt-sm" style="background:#FFF3E0; padding:8px 12px; border-radius:8px;">
+        <p class="bold" style="color:#CE1126;">🥙 鹰嘴豆泥 Hummus</p>
+        <p class="text-sm">用鹰嘴豆、芝麻酱、柠檬汁做成的酱！</p>
+        <p class="text-sm">Mashed chickpeas with tahini & lemon!</p>
+      </div>
+    </div>
+    <div>
+      <h3>🏛️ 画金字塔 Draw a Pyramid!</h3>
+      <div class="draw-box" style="height:150px;">
+        <!-- Pyramid hint outline -->
+        <svg viewBox="0 0 160 100" width="140" height="90" style="opacity:0.15;">
+          <polygon points="80,10 10,90 150,90" fill="none" stroke="#4E342E" stroke-width="2" stroke-dasharray="5,4"/>
+          <circle cx="130" cy="25" r="12" fill="none" stroke="#FF8F00" stroke-width="1.5" stroke-dasharray="3,3"/>
+        </svg>
+        <div class="draw-box-label">画一座金字塔和太阳 Draw a pyramid & sun</div>
+      </div>
+
+      <div class="fun-fact mt-sm">金字塔有4500年的历史！The pyramids are 4,500 years old!</div>
+
+      <h3 class="mt-sm">🔤 学写 "埃及" Learn to write</h3>
+      <div class="text-center mt-sm">
+        <span class="trace-char" style="font-size:2.5rem;">埃</span>
+        <span class="trace-char" style="font-size:2.5rem;">及</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer"><span class="page-num">4 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 5: 🇰🇪 肯尼亚 Flag & Map -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header" style="background:#006600;">🇰🇪 肯尼亚 Kenya — Flag & Map</div>
+
+  <div class="two-col mt-sm">
+    <div>
+      <h3>🎨 给国旗涂色 Color the flag</h3>
+      <div class="flag-outline" style="width:100%; margin-top:6px;">
+        <div class="flag-stripe" style="height:32px;">黑色 Black</div>
+        <div class="flag-stripe" style="height:8px; background:#eee;">白色细线 White line</div>
+        <div class="flag-stripe" style="height:32px;">红色 Red</div>
+        <div class="flag-stripe" style="height:8px; background:#eee;">白色细线 White line</div>
+        <div class="flag-stripe" style="height:32px;">绿色 Green</div>
+      </div>
+      <p class="hint mt-sm">提示: 中间画一个马赛盾牌和两支长矛！ 🛡️</p>
+      <p class="hint">Draw a Maasai shield & 2 spears in the center!</p>
+
+      <h3 class="mt-md">📝 快速知识 Quick Facts</h3>
+      <div style="line-height:2.2; margin-top:4px;">
+        <p>🏛️ 首都 Capital: <span class="blank"></span></p>
+        <p class="hint" style="margin-left:18px;">(内罗毕 Nairobi)</p>
+        <p>🗣️ 语言 Languages: <span class="blank blank-long"></span></p>
+        <p class="hint" style="margin-left:18px;">(斯瓦希里语 Swahili + 英语 English)</p>
+      </div>
+    </div>
+    <div>
+      <h3>🗺️ 在地图上找到肯尼亚 Find Kenya on the map</h3>
+      <div class="draw-box" style="height:250px; margin-top:6px;">
+        <svg viewBox="0 0 200 240" width="180" height="230">
+          <!-- East Africa region -->
+          <path d="M30,20 L80,15 L130,20 L170,40 L180,80 L175,120 L160,160 L130,190 L90,200 L50,190 L25,160 L15,120 L15,80 L20,50 Z"
+            fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <!-- Kenya highlighted -->
+          <path d="M90,70 L120,60 L145,75 L150,100 L140,120 L120,125 L100,115 L85,100 L85,80 Z"
+            fill="none" stroke="#006600" stroke-width="2.5" stroke-dasharray="4,3"/>
+          <text x="100" y="95" font-size="9" fill="#006600" font-weight="bold" font-family="sans-serif">Kenya</text>
+          <text x="100" y="108" font-size="8" fill="#006600" font-family="sans-serif">肯尼亚</text>
+          <!-- Equator -->
+          <path d="M10,100 L190,100" fill="none" stroke="#FF8F00" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="5" y="97" font-size="6" fill="#FF8F00" font-family="sans-serif">赤道 Equator</text>
+          <!-- Mt Kilimanjaro hint -->
+          <text x="110" y="130" font-size="5" fill="#795548" font-family="sans-serif">🏔️ 乞力马扎罗</text>
+        </svg>
+        <div class="draw-box-label">给肯尼亚涂上颜色！Color Kenya!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-sm">肯尼亚的赤道穿过国家中间！Kenya sits right on the Equator!</div>
+
+  <div class="page-footer"><span class="page-num">5 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 6: 🇰🇪 肯尼亚 Culture & Animals -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header" style="background:#006600;">🇰🇪 肯尼亚 Kenya — Culture & Animals</div>
+
+  <div class="mt-sm">
+    <h3>👋 用斯瓦希里语说你好！Say hello in Swahili!</h3>
+    <div class="text-center mt-sm">
+      <span class="trace-char-sm" style="font-size:2.2rem; -webkit-text-stroke-color:#006600;">J a m b o !</span>
+    </div>
+    <p class="text-center text-sm" style="color:#006600; font-weight:700;">Jambo! = 你好 Hello!</p>
+  </div>
+
+  <div class="mt-md">
+    <h3>🦁 非洲五大动物 The Big Five — 画一画 Draw them!</h3>
+    <p class="text-sm mb-sm">These are the 5 most famous animals to see on African safari!</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+      <div class="draw-box" style="min-height:80px; flex-direction:column; padding-top:24px;">
+        <div class="draw-box-label" style="font-size:0.8rem; color:#4E342E; font-weight:700;">🦁 狮子 Lion</div>
+      </div>
+      <div class="draw-box" style="min-height:80px; flex-direction:column; padding-top:24px;">
+        <div class="draw-box-label" style="font-size:0.8rem; color:#4E342E; font-weight:700;">🐘 大象 Elephant</div>
+      </div>
+      <div class="draw-box" style="min-height:80px; flex-direction:column; padding-top:24px;">
+        <div class="draw-box-label" style="font-size:0.8rem; color:#4E342E; font-weight:700;">🦏 犀牛 Rhino</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px;">
+      <div class="draw-box" style="min-height:80px; flex-direction:column; padding-top:24px;">
+        <div class="draw-box-label" style="font-size:0.8rem; color:#4E342E; font-weight:700;">🐆 豹 Leopard</div>
+      </div>
+      <div class="draw-box" style="min-height:80px; flex-direction:column; padding-top:24px;">
+        <div class="draw-box-label" style="font-size:0.8rem; color:#4E342E; font-weight:700;">🐃 水牛 Buffalo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-md">每年有200万只动物参加非洲动物大迁徙！2 million animals join the Great Migration every year!</div>
+
+  <h3 class="mt-sm">🔤 学写 "肯尼亚" Learn to write</h3>
+  <div class="text-center">
+    <span class="trace-char" style="font-size:2.2rem;">肯</span>
+    <span class="trace-char" style="font-size:2.2rem;">尼</span>
+    <span class="trace-char" style="font-size:2.2rem;">亚</span>
+  </div>
+
+  <div class="page-footer"><span class="page-num">6 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 7: 🇿🇦 南非 Flag & Map -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header" style="background:#007A4D;">🇿🇦 南非 South Africa — Flag & Map</div>
+
+  <div class="two-col mt-sm">
+    <div>
+      <h3>🎨 给国旗涂色 Color the flag</h3>
+      <p class="text-sm mb-sm">南非国旗有6种颜色！世界上最多彩的国旗之一！</p>
+      <p class="text-sm mb-sm">6 colors! One of the most colorful flags!</p>
+      <div class="flag-outline" style="width:100%; margin-top:4px;">
+        <div class="flag-stripe" style="height:24px;">红色 Red</div>
+        <div class="flag-stripe" style="height:8px; background:#eee;">白色 White</div>
+        <div class="flag-stripe" style="height:30px;">
+          <span style="color:#007A4D;">◀ 绿色 Green ▶</span>
+        </div>
+        <div class="flag-stripe" style="height:8px; background:#eee;">白色 White</div>
+        <div class="flag-stripe" style="height:24px;">蓝色 Blue</div>
+      </div>
+      <p class="hint mt-sm">提示: 左边有Y形绿色条纹！黑色三角形在最左边！</p>
+      <p class="hint">The Y-shaped green stripe + black triangle on left + gold borders!</p>
+
+      <h3 class="mt-md">📝 快速知识 Quick Facts</h3>
+      <div style="line-height:2.0; margin-top:4px;">
+        <p>🏛️ 首都 Capitals: <span class="blank blank-long"></span></p>
+        <p class="hint" style="margin-left:18px;">(3个首都！比勒陀利亚、开普敦、布隆方丹)</p>
+        <p class="hint" style="margin-left:18px;">(Pretoria, Cape Town, Bloemfontein)</p>
+        <p>🗣️ 官方语言: <span class="blank blank-short"></span> 种!</p>
+        <p class="hint" style="margin-left:18px;">(11种! 11 official languages!)</p>
+      </div>
+    </div>
+    <div>
+      <h3>🗺️ 在地图上找到南非 Find South Africa</h3>
+      <div class="draw-box" style="height:250px; margin-top:6px;">
+        <svg viewBox="0 0 200 240" width="180" height="230">
+          <!-- Southern Africa region -->
+          <path d="M30,20 L80,15 L130,20 L170,40 L180,80 L175,120 L160,160 L130,190 L90,210 L50,200 L25,170 L15,130 L15,80 L20,50 Z"
+            fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <!-- South Africa highlighted -->
+          <path d="M55,160 L80,150 L120,155 L145,165 L155,185 L140,200 L115,210 L85,215 L60,205 L45,190 L45,175 Z"
+            fill="none" stroke="#007A4D" stroke-width="2.5" stroke-dasharray="4,3"/>
+          <text x="75" y="185" font-size="8" fill="#007A4D" font-weight="bold" font-family="sans-serif">South Africa</text>
+          <text x="85" y="197" font-size="7" fill="#007A4D" font-family="sans-serif">南非</text>
+          <!-- Table Mountain hint -->
+          <text x="55" y="210" font-size="5" fill="#795548" font-family="sans-serif">⛰️ 桌山 Table Mt.</text>
+          <!-- Cape of Good Hope -->
+          <text x="65" y="222" font-size="5" fill="#1565C0" font-family="sans-serif">好望角 Cape of Good Hope</text>
+        </svg>
+        <div class="draw-box-label">给南非涂上颜色！Color South Africa!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-sm">南非有3个首都！行政、立法、司法各一个！South Africa has 3 capitals — one for each branch of government!</div>
+
+  <div class="page-footer"><span class="page-num">7 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 8: 🇿🇦 南非 Culture & Food -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header" style="background:#007A4D;">🇿🇦 南非 South Africa — Culture & Food</div>
+
+  <div class="two-col mt-sm">
+    <div>
+      <h3>👋 用祖鲁语说你好！Say hello in Zulu!</h3>
+      <div class="text-center mt-sm">
+        <span class="trace-char-sm" style="font-size:1.6rem; -webkit-text-stroke-color:#007A4D;">S a w u b o n a !</span>
+      </div>
+      <p class="text-center text-sm" style="color:#007A4D; font-weight:700;">Sawubona! = 你好 Hello!</p>
+      <p class="text-center text-xs">(祖鲁语 Zulu — 南非11种语言之一)</p>
+
+      <h3 class="mt-md">🔥 画烧烤 Draw a Braai Scene!</h3>
+      <p class="text-sm">Braai (烧烤) 是南非人最爱的活动！</p>
+      <p class="text-sm">It's like a BBQ — South Africa's favorite tradition!</p>
+      <div class="draw-box mt-sm" style="height:120px;">
+        <div class="draw-box-label">画烧烤炉和食物 Draw a grill with food!</div>
+      </div>
+
+      <h3 class="mt-sm">🔤 学写 "南非" Learn to write</h3>
+      <div class="text-center">
+        <span class="trace-char" style="font-size:2.5rem;">南</span>
+        <span class="trace-char" style="font-size:2.5rem;">非</span>
+      </div>
+    </div>
+    <div>
+      <div class="fun-fact">南非叫"彩虹之国"因为有很多不同文化！South Africa is called the "Rainbow Nation" because of its diverse cultures! 🌈</div>
+
+      <div style="background:#FFF3E0; padding:10px 14px; border-radius:10px; margin-top:10px;">
+        <h3 style="color:#FF8F00;">🕊️ 纳尔逊·曼德拉 Nelson Mandela</h3>
+        <p class="text-sm mt-sm">曼德拉是南非最伟大的英雄。他为平等和自由奋斗了一生。</p>
+        <p class="text-sm">Mandela fought for equality and freedom for all people.</p>
+        <p class="text-sm mt-sm bold" style="color:#4E342E;">他说过 He said:</p>
+        <p class="text-sm" style="font-style:italic; color:#795548;">"教育是改变世界最强大的武器。"</p>
+        <p class="text-sm" style="font-style:italic; color:#795548;">"Education is the most powerful weapon to change the world."</p>
+      </div>
+
+      <h3 class="mt-md">🤔 你觉得这句话是什么意思？</h3>
+      <p class="text-sm">What do you think this quote means?</p>
+      <table class="writing-lines" style="margin-top:6px;">
+        <tr><td class="line"></td></tr>
+        <tr><td class="line"></td></tr>
+        <tr><td class="line"></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-footer"><span class="page-num">8 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 9: 非洲三国对比表 Comparison Table -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header">📊 非洲三国对比表 Compare the 3 Countries</div>
+  <p class="text-sm mb-sm">填写下面的表格 Fill in the comparison table below:</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="width:18%;"></th>
+        <th style="width:27%;">🇪🇬 埃及 Egypt</th>
+        <th style="width:27%;">🇰🇪 肯尼亚 Kenya</th>
+        <th style="width:27%;">🇿🇦 南非 South Africa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold" style="background:var(--bg);">👋 你好<br>Hello</td>
+        <td style="height:50px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="bold" style="background:var(--bg);">🏛️ 首都<br>Capital</td>
+        <td style="height:50px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="bold" style="background:var(--bg);">🗣️ 语言<br>Language</td>
+        <td style="height:50px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="bold" style="background:var(--bg);">🍽️ 食物<br>Food</td>
+        <td style="height:50px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="bold" style="background:var(--bg);">🐾 动物<br>Animals</td>
+        <td style="height:50px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="bold" style="background:var(--bg);">⭐ 趣事<br>Fun Fact</td>
+        <td style="height:60px;"></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-md">
+    <h3>🤔 三个国家有什么相同和不同？ What's similar and different?</h3>
+    <div class="two-col mt-sm">
+      <div>
+        <p class="text-sm bold" style="color:#388E3C;">相同 Similar:</p>
+        <table class="writing-lines"><tr><td class="line"></td></tr><tr><td class="line"></td></tr><tr><td class="line"></td></tr></table>
+      </div>
+      <div>
+        <p class="text-sm bold" style="color:#CE1126;">不同 Different:</p>
+        <table class="writing-lines"><tr><td class="line"></td></tr><tr><td class="line"></td></tr><tr><td class="line"></td></tr></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer"><span class="page-num">9 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 10: 我最想去的非洲国家 My Favorite -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header">✈️ 我最想去的非洲国家 My Favorite African Country</div>
+
+  <div class="mt-sm">
+    <p>如果你可以去非洲的一个国家，你最想去哪里？</p>
+    <p class="text-sm">If you could visit one African country, which would you choose?</p>
+  </div>
+
+  <div style="margin-top:10px;">
+    <p class="bold">我最想去 I most want to visit: <span class="blank blank-long"></span></p>
+  </div>
+
+  <div class="two-col mt-md">
+    <div>
+      <h3>🎨 画一画 Draw your trip!</h3>
+      <div class="draw-box" style="height:180px;">
+        <div class="draw-box-label">画你在这个国家的旅行 Draw your trip there!</div>
+      </div>
+    </div>
+    <div>
+      <h3>✍️ 写一写 Write about it!</h3>
+      <div style="margin-top:6px;">
+        <p class="text-sm"><span class="diff-label diff-green">1</span> 写1-2个词 Write 1-2 words:</p>
+        <p class="text-sm" style="margin-left:24px;">我想去 <span class="blank"></span> 因为 <span class="blank"></span>。</p>
+
+        <p class="text-sm mt-sm"><span class="diff-label diff-blue">2</span> 写一句话 Write a sentence:</p>
+        <table class="writing-lines" style="margin-left:24px; width:calc(100% - 24px);">
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+        </table>
+
+        <p class="text-sm mt-sm"><span class="diff-label diff-purple">3</span> 写2-3句话 Write 2-3 sentences:</p>
+        <table class="writing-lines" style="margin-left:24px; width:calc(100% - 24px);">
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact mt-md">
+    <strong>写作提示 Writing prompts:</strong> 那里有什么好玩的？你想看什么？你想吃什么？<br>
+    What's fun there? What do you want to see? What do you want to eat?
+  </div>
+
+  <div class="page-footer"><span class="page-num">10 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 11: 非洲动物词汇 Animal Vocabulary -->
+<!-- ============================================================== -->
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="section-header">🐾 非洲动物词汇 African Animal Vocabulary</div>
+  <p class="text-sm mb-sm">把中文名字和动物配对！Match the Chinese name to each animal! Draw lines or write the name.</p>
+
+  <div class="animal-grid mt-sm">
+    <div class="animal-card">
+      <div style="font-size:2.2rem;">🦁</div>
+      <div class="name">狮子</div>
+      <div class="pinyin">shī zi — Lion</div>
+      <div class="draw-box" style="min-height:40px; margin-top:4px; border-width:1.5px;"><span class="text-xs">描一描 trace</span></div>
+    </div>
+    <div class="animal-card">
+      <div style="font-size:2.2rem;">🐘</div>
+      <div class="name">大象</div>
+      <div class="pinyin">dà xiàng — Elephant</div>
+      <div class="draw-box" style="min-height:40px; margin-top:4px; border-width:1.5px;"><span class="text-xs">描一描 trace</span></div>
+    </div>
+    <div class="animal-card">
+      <div style="font-size:2.2rem;">🦒</div>
+      <div class="name">长颈鹿</div>
+      <div class="pinyin">cháng jǐng lù — Giraffe</div>
+      <div class="draw-box" style="min-height:40px; margin-top:4px; border-width:1.5px;"><span class="text-xs">描一描 trace</span></div>
+    </div>
+    <div class="animal-card">
+      <div style="font-size:2.2rem;">🦓</div>
+      <div class="name">斑马</div>
+      <div class="pinyin">bān mǎ — Zebra</div>
+      <div class="draw-box" style="min-height:40px; margin-top:4px; border-width:1.5px;"><span class="text-xs">描一描 trace</span></div>
+    </div>
+    <div class="animal-card">
+      <div style="font-size:2.2rem;">🦏</div>
+      <div class="name">犀牛</div>
+      <div class="pinyin">xī niú — Rhino</div>
+      <div class="draw-box" style="min-height:40px; margin-top:4px; border-width:1.5px;"><span class="text-xs">描一描 trace</span></div>
+    </div>
+    <div class="animal-card">
+      <div style="font-size:2.2rem;">🦛</div>
+      <div class="name">河马</div>
+      <div class="pinyin">hé mǎ — Hippo</div>
+      <div class="draw-box" style="min-height:40px; margin-top:4px; border-width:1.5px;"><span class="text-xs">描一描 trace</span></div>
+    </div>
+  </div>
+
+  <div class="mt-md">
+    <h3>🔗 连线 Draw lines to match!</h3>
+    <div class="two-col mt-sm" style="align-items:center;">
+      <div style="text-align:right; line-height:2.8; font-size:1.1rem; font-weight:700;">
+        <div>Lion</div>
+        <div>Elephant</div>
+        <div>Giraffe</div>
+        <div>Zebra</div>
+        <div>Rhino</div>
+        <div>Hippo</div>
+      </div>
+      <div style="flex:0 0 60px; display:flex; align-items:center; justify-content:center;">
+        <div style="width:2px; height:180px; border-left:2px dotted #ccc;"></div>
+      </div>
+      <div style="text-align:left; line-height:2.8; font-size:1.1rem; font-weight:700; color:var(--primary);">
+        <div>河马</div>
+        <div>长颈鹿</div>
+        <div>狮子</div>
+        <div>犀牛</div>
+        <div>大象</div>
+        <div>斑马</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer"><span class="page-num">11 / 12</span></div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 12: 非洲签证章 Passport Stamp -->
+<!-- ============================================================== -->
+<div class="page" style="display:flex; flex-direction:column; align-items:center;">
+  <div class="top-bar" style="width:100%;"></div>
+  <div class="section-header">🛂 非洲签证章 Africa Passport Stamp</div>
+
+  <p class="text-sm mt-sm">恭喜你完成了非洲探索之旅！Congratulations on completing your Africa exploration!</p>
+
+  <div style="display:flex; gap:20px; margin-top:16px;">
+    <div class="stamp-outline">
+      <div style="font-size:1.8rem;">🇪🇬</div>
+      <div class="stamp-title">埃及 EGYPT</div>
+      <div class="stamp-sub">VISA APPROVED</div>
+      <div style="font-size:0.65rem; color:#CE1126; margin-top:4px;">🏛️ Land of Pyramids</div>
+    </div>
+    <div class="stamp-outline">
+      <div style="font-size:1.8rem;">🇰🇪</div>
+      <div class="stamp-title">肯尼亚 KENYA</div>
+      <div class="stamp-sub">VISA APPROVED</div>
+      <div style="font-size:0.65rem; color:#006600; margin-top:4px;">🦁 Safari Paradise</div>
+    </div>
+    <div class="stamp-outline">
+      <div style="font-size:1.8rem;">🇿🇦</div>
+      <div class="stamp-title">南非 S. AFRICA</div>
+      <div class="stamp-sub">VISA APPROVED</div>
+      <div style="font-size:0.65rem; color:#007A4D; margin-top:4px;">🌈 Rainbow Nation</div>
+    </div>
+  </div>
+
+  <div style="width:85%; margin-top:24px;">
+    <h3>🌟 我在非洲学到的最重要的事是：</h3>
+    <p class="text-sm">The most important thing I learned about Africa is:</p>
+    <table class="writing-lines" style="margin-top:8px;">
+      <tr><td class="line"></td></tr>
+      <tr><td class="line"></td></tr>
+      <tr><td class="line"></td></tr>
+      <tr><td class="line"></td></tr>
+    </table>
+  </div>
+
+  <div style="width:85%; margin-top:20px; display:flex; gap:30px;">
+    <div style="flex:1;">
+      <p class="bold">学生签名 Student Signature:</p>
+      <div style="border-bottom:2px solid #4E342E; height:30px; margin-top:6px;"></div>
+    </div>
+    <div style="flex:1;">
+      <p class="bold">老师签名 Teacher Signature:</p>
+      <div style="border-bottom:2px solid #4E342E; height:30px; margin-top:6px;"></div>
+    </div>
+    <div style="flex:0.6;">
+      <p class="bold">日期 Date:</p>
+      <div style="border-bottom:2px solid #4E342E; height:30px; margin-top:6px;"></div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px; text-align:center;">
+    <div style="font-size:2rem;">🌍 🏛️ 🦁 🌈 🐘 🏔️</div>
+    <p style="font-size:0.85rem; color:var(--primary); font-weight:700; margin-top:6px;">非洲探索之旅 — 完成！Africa Exploration — Complete!</p>
+    <p style="font-size:0.7rem; color:#999; margin-top:4px;">谷雨中文 GR EDU · Global Explorer Camp 环球探索沉浸式夏令营</p>
+  </div>
+
+  <div class="page-footer"><span class="page-num">12 / 12</span></div>
+</div>
+
+</body>
+</html>
