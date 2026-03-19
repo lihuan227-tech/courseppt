@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程介绍 | Summer Math Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+
+        :root {
+            --primary-orange: #FF8C00;
+            --accent-orange: #FFA500;
+            --dark-orange: #E67E00;
+            --green-banner: #9DC64D;
+            --dark-text: #2C2C2C;
+            --light-gray: #F8F8F8;
+            --border-gray: #E0E0E0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Kaiti SC', 'KaiTi', 'STKaiti', 'LXGW WenKai', 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+/* Levels Section */
+        .levels-section {
+            padding: 2rem 2rem 3rem;
+            background: var(--light-gray);
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .level-card {
+            background: white;
+            border: 3px solid var(--primary-orange);
+            border-radius: 8px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .level-card-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .level-card:hover {
+            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.2);
+            border-color: var(--dark-orange);
+        }
+
+        .level-header {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .level-description {
+            background: #FFF8F0;
+            padding: 1.2rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-orange);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .materials-info {
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 6px;
+        }
+
+        .materials-label {
+            font-weight: 600;
+            color: var(--primary-orange);
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .materials-content {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .level-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .level-content li {
+            padding-left: 1.2rem;
+            position: relative;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .level-content li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-orange);
+            font-weight: bold;
+        }
+
+        .coverage-details {
+            margin-top: 1rem;
+        }
+
+        .coverage-item {
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            color: #555;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .coverage-item:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary-orange);
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .level-card {
+                padding: 1.5rem;
+            }
+
+            .level-card-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .levels-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="levels-section">
+        <h2 style="text-align:center; color:var(--dark-text); margin-bottom:0.8rem; font-size:1.4rem;">课程介绍</h2>
+        <div class="levels-grid">
+            <!-- Level 1 -->
+            <div class="level-card">
+                <div class="level-header">Level 1</div>
+                <div class="level-card-body">
+                <div class="level-description">
+                    <div class="materials-label">🎯 适合学生</div>
+                    <ul>
+                        <li>已掌握基本加减法，准备学习三位数运算和初步逻辑推理的学生</li>
+                        <li>希望在暑假巩固计算基础，同时接触图形与数据分析入门的学生</li>
+                    </ul>
+                </div>
+
+                <div class="materials-info">
+                    <div class="materials-label">📖 教学内容</div>
+                    <div class="materials-content">
+                        三位数加减法、运算律与计算策略、排队问题与年龄谜题、平面与立体图形、条形图与计数表
+                    </div>
+                    <div class="coverage-details">
+                        <div class="coverage-item">Session 1–2：三位数运算、运算律、加减法策略</div>
+                        <div class="coverage-item">Session 3–4：逻辑推理、图形识别、数据与方向</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Level 2 -->
+            <div class="level-card">
+                <div class="level-header">Level 2</div>
+                <div class="level-card-body">
+                <div class="level-description">
+                    <div class="materials-label">🎯 适合学生</div>
+                    <ul>
+                        <li>已掌握基本乘法运算，准备深入学习乘除法与运算规律的学生</li>
+                        <li>希望在暑假拓展数学思维，接触括号运算、分配律和逻辑推理题型的学生</li>
+                    </ul>
+                </div>
+
+                <div class="materials-info">
+                    <div class="materials-label">📖 教学内容</div>
+                    <div class="materials-content">
+                        奇偶数规律、竖式乘法、括号运算、分配律、乘除10/100/1000、余数除法、幻方与规律探索
+                    </div>
+                    <div class="coverage-details">
+                        <div class="coverage-item">Session 1–2：奇偶数、竖式乘法、括号与分配律</div>
+                        <div class="coverage-item">Session 3–4：除法深化、幻方、页码与时间应用题</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Level 3 -->
+            <div class="level-card">
+                <div class="level-header">Level 3</div>
+                <div class="level-card-body">
+                <div class="level-description">
+                    <div class="materials-label">🎯 适合学生</div>
+                    <ul>
+                        <li>已掌握四则运算基础，准备系统学习分数运算和运算顺序的学生</li>
+                        <li>希望在暑假提升分数计算能力，并接触条形图应用与经典逻辑题型的学生</li>
+                    </ul>
+                </div>
+
+                <div class="materials-info">
+                    <div class="materials-label">📖 教学内容</div>
+                    <div class="materials-content">
+                        运算顺序、括号运用、GCF/LCM、分数加减乘法、条形图应用题、鸡兔同笼
+                    </div>
+                    <div class="coverage-details">
+                        <div class="coverage-item">Session 1–2：运算顺序与括号、分数基础（GCF/LCM、加减）</div>
+                        <div class="coverage-item">Session 3–4：分数乘法与应用、条形图、鸡兔同笼</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Level 4 -->
+            <div class="level-card">
+                <div class="level-header">Level 4</div>
+                <div class="level-card-body">
+                <div class="level-description">
+                    <div class="materials-label">🎯 适合学生</div>
+                    <ul>
+                        <li>已掌握分数基本运算，准备学习小数运算、百分比和高级分数技巧的学生</li>
+                        <li>希望在暑假系统提升数与运算能力，为初中数学做准备的学生</li>
+                    </ul>
+                </div>
+
+                <div class="materials-info">
+                    <div class="materials-label">📖 教学内容</div>
+                    <div class="materials-content">
+                        质数与合数、质因数分解、小数四则运算、分数与小数互转、分数计算技巧、百分比、平均数
+                    </div>
+                    <div class="coverage-details">
+                        <div class="coverage-item">Session 1–2：质数与因数分解、小数运算与分数互转</div>
+                        <div class="coverage-item">Session 3–4：分数计算技巧、百分比与平均数应用</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Level 5 -->
+            <div class="level-card">
+                <div class="level-header">Level 5</div>
+                <div class="level-card-body">
+                <div class="level-description">
+                    <div class="materials-label">🎯 适合学生</div>
+                    <ul>
+                        <li>已掌握小学阶段数学知识，准备系统学习初中代数与几何的学生</li>
+                        <li>希望在暑假提前接触负数运算、方程、不等式和几何计算的学生</li>
+                    </ul>
+                </div>
+
+                <div class="materials-info">
+                    <div class="materials-label">📖 教学内容</div>
+                    <div class="materials-content">
+                        负数与指数运算、实数性质、一元方程与不等式、平行线与三角形、圆与扇形、立体几何体积与表面积
+                    </div>
+                    <div class="coverage-details">
+                        <div class="coverage-item">Session 1–2：数的运算基础（负数、分数、百分数、指数）、代数核心</div>
+                        <div class="coverage-item">Session 3–4：平面几何（平行线、三角形、圆、扇形）、立体几何</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

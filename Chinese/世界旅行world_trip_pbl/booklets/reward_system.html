@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Explorer Camp 奖励系统 Reward System</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ============ RESET & BASE ============ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans SC', 'Kaiti SC', sans-serif;
+    color: #333;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ============ PRINT SETUP ============ */
+  @page { size: letter; margin: 0.4in; }
+  @media print {
+    body { background: #fff; }
+    .page { page-break-after: always; box-shadow: none !important; margin: 0 !important; padding: 0.3in !important; }
+    .page:last-child { page-break-after: auto; }
+    .no-print { display: none !important; }
+  }
+  @media screen {
+    body { background: #e0e0e0; padding: 20px; }
+    .page {
+      max-width: 8.5in; margin: 20px auto;
+      background: #fff; padding: 0.4in;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border-radius: 4px;
+    }
+  }
+
+  /* ============ CONTINENT COLORS ============ */
+  :root {
+    --asia: #C62828;
+    --africa: #FF8F00;
+    --europe: #1565C0;
+    --americas: #2E7D32;
+    --gold: #FFD700;
+    --gold-dark: #F9A825;
+    --pink: #E91E63;
+    --purple: #7B1FA2;
+  }
+
+  /* ============ SHARED ============ */
+  .page-footer {
+    text-align: center; font-size: 9px; color: #999;
+    padding-top: 8px; border-top: 1px solid #eee; margin-top: 12px;
+  }
+
+  /* ======================================================
+     SECTION 1: CLASSROOM POSTER
+     ====================================================== */
+  .poster {
+    min-height: 9.6in;
+    display: flex; flex-direction: column;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,215,0,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(233,30,99,0.06) 0%, transparent 50%),
+      linear-gradient(135deg, #fffde7 0%, #fff8e1 30%, #fff 60%, #e3f2fd 100%);
+  }
+
+  .poster-title-bar {
+    text-align: center; padding: 12px 10px 8px;
+    background: linear-gradient(135deg, var(--asia), var(--pink), var(--purple), var(--europe));
+    border-radius: 16px; margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative; overflow: hidden;
+  }
+  .poster-title-bar::before {
+    content: '';
+    position: absolute; inset: 3px; border-radius: 13px;
+    border: 2px dashed rgba(255,255,255,0.4);
+    pointer-events: none;
+  }
+  .poster-title-bar h1 {
+    font-size: 26px; font-weight: 900; color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 2px; line-height: 1.3;
+  }
+  .poster-title-bar .subtitle {
+    font-size: 13px; color: rgba(255,255,255,0.9); margin-top: 2px;
+  }
+
+  /* Three columns */
+  .poster-columns {
+    display: flex; gap: 12px; flex: 1;
+  }
+  .poster-col {
+    flex: 1; border-radius: 14px; padding: 14px 12px;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+  .poster-col::before {
+    content: ''; position: absolute; inset: 4px;
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 10px; pointer-events: none;
+  }
+  .col-stamps {
+    background: linear-gradient(160deg, #ffebee, #fce4ec, #fff);
+    border: 3px solid var(--asia);
+  }
+  .col-stars {
+    background: linear-gradient(160deg, #fffde7, #fff9c4, #fff);
+    border: 3px solid var(--gold-dark);
+  }
+  .col-claw {
+    background: linear-gradient(160deg, #e8f5e9, #f1f8e9, #fff);
+    border: 3px solid var(--americas);
+  }
+
+  .col-header {
+    text-align: center; margin-bottom: 10px;
+  }
+  .col-header .col-icon { font-size: 32px; display: block; line-height: 1.2; }
+  .col-header h2 { font-size: 17px; font-weight: 900; line-height: 1.2; margin-top: 2px; }
+  .col-header .col-en { font-size: 11px; color: #666; }
+
+  /* Stamp circles on poster */
+  .stamp-row-poster {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .stamp-circle-poster {
+    width: 68px; height: 68px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 11px; line-height: 1.2;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.15), 0 3px 8px rgba(0,0,0,0.12);
+    color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  }
+  .stamp-circle-poster .stamp-emoji { font-size: 18px; text-shadow: none; }
+  .stamp-circle-poster.s-asia { background: radial-gradient(circle at 40% 35%, #ef5350, var(--asia)); }
+  .stamp-circle-poster.s-africa { background: radial-gradient(circle at 40% 35%, #ffb300, #e65100); }
+  .stamp-circle-poster.s-europe { background: radial-gradient(circle at 40% 35%, #42a5f5, var(--europe)); }
+  .stamp-circle-poster.s-americas { background: radial-gradient(circle at 40% 35%, #66bb6a, var(--americas)); }
+  .stamp-circle-poster.s-global {
+    width: 78px; height: 78px;
+    background: radial-gradient(circle at 40% 35%, #ffe082, #f9a825, #ff8f00);
+    border: 3px solid #fff;
+    box-shadow: 0 0 12px rgba(255,215,0,0.6), inset 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .stamp-tip { font-size: 10px; color: #555; text-align: center; margin-top: 4px; line-height: 1.3; }
+
+  /* Star earning list on poster */
+  .star-earn-list { list-style: none; flex: 1; }
+  .star-earn-list li {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 6px; margin-bottom: 4px;
+    background: rgba(255,255,255,0.7); border-radius: 8px;
+    font-size: 11px; line-height: 1.3;
+    border-left: 3px solid var(--gold-dark);
+  }
+  .star-earn-list .earn-stars {
+    font-size: 13px; font-weight: 900; color: var(--gold-dark); white-space: nowrap;
+  }
+  .star-earn-list .earn-text { flex: 1; }
+  .star-earn-list .earn-text .cn { font-weight: 700; display: block; font-size: 12px; }
+  .star-earn-list .earn-text .en { font-size: 9px; color: #666; }
+
+  /* Claw tiers on poster */
+  .claw-tiers { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .claw-tier {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 8px; border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+    border: 2px solid;
+    position: relative;
+  }
+  .claw-tier .tier-badge {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .claw-tier .tier-info { flex: 1; }
+  .claw-tier .tier-info .cn { font-weight: 700; font-size: 12px; }
+  .claw-tier .tier-info .en { font-size: 9px; color: #666; }
+  .claw-tier .tier-tries { font-size: 22px; font-weight: 900; text-align: center; min-width: 36px; }
+
+  .tier-1 { border-color: #90caf9; }
+  .tier-1 .tier-badge { background: linear-gradient(135deg, #64b5f6, #1e88e5); }
+  .tier-1 .tier-tries { color: #1565C0; }
+  .tier-2 { border-color: #a5d6a7; }
+  .tier-2 .tier-badge { background: linear-gradient(135deg, #81c784, #388e3c); }
+  .tier-2 .tier-tries { color: #2E7D32; }
+  .tier-3 { border-color: #ce93d8; }
+  .tier-3 .tier-badge { background: linear-gradient(135deg, #ba68c8, #7b1fa2); }
+  .tier-3 .tier-tries { color: #7B1FA2; }
+  .tier-4 {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,249,196,0.8)) !important;
+    box-shadow: 0 0 10px rgba(255,215,0,0.3);
+  }
+  .tier-4 .tier-badge {
+    background: linear-gradient(135deg, #ffd54f, #ff8f00);
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+  }
+  .tier-4 .tier-tries { color: #E65100; }
+
+  .claw-visual {
+    text-align: center; font-size: 36px; margin: 6px 0 2px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+
+  /* Bottom banner */
+  .poster-bottom {
+    text-align: center; padding: 10px;
+    background: linear-gradient(90deg, var(--asia), var(--africa), var(--gold-dark), var(--americas), var(--europe), var(--purple));
+    border-radius: 12px; margin-top: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  }
+  .poster-bottom p {
+    color: #fff; font-weight: 700; font-size: 13px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    line-height: 1.4;
+  }
+  .poster-bottom .en { font-size: 10px; font-weight: 500; }
+
+  /* ======================================================
+     SECTION 2: STUDENT TRACKING CARD
+     ====================================================== */
+  .tracking-card {
+    min-height: 9.6in;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, #fffde7 0%, #fff 20%, #fff 80%, #e3f2fd 100%);
+  }
+
+  .card-title-bar {
+    text-align: center; padding: 10px;
+    background: linear-gradient(135deg, #FF8F00, #FFD700, #FF8F00);
+    border-radius: 14px; margin-bottom: 10px;
+    box-shadow: 0 3px 10px rgba(255,215,0,0.4);
+    position: relative;
+  }
+  .card-title-bar::after {
+    content: ''; position: absolute; inset: 3px;
+    border: 2px dashed rgba(255,255,255,0.5);
+    border-radius: 11px; pointer-events: none;
+  }
+  .card-title-bar h1 { font-size: 22px; font-weight: 900; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+  .card-title-bar .subtitle { font-size: 11px; color: rgba(255,255,255,0.9); }
+
+  .student-name {
+    text-align: center; font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #333;
+  }
+  .student-name .blank {
+    display: inline-block; width: 200px; border-bottom: 2px solid #333; margin-left: 8px;
+  }
+
+  /* Passport stamps */
+  .passport-section {
+    margin-bottom: 14px; padding: 12px;
+    border: 2px solid #e0e0e0; border-radius: 14px;
+    background: linear-gradient(135deg, #fafafa, #fff);
+  }
+  .section-label {
+    font-size: 14px; font-weight: 900; text-align: center; margin-bottom: 10px;
+    color: #555;
+  }
+  .passport-stamps {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    flex-wrap: wrap;
+  }
+  .stamp-slot {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .stamp-empty {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 3px dashed; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #999;
+    background: rgba(255,255,255,0.8);
+    transition: none;
+  }
+  .stamp-empty .stamp-emoji-card { font-size: 22px; margin-bottom: 2px; }
+  .stamp-empty.se-asia { border-color: var(--asia); color: var(--asia); }
+  .stamp-empty.se-africa { border-color: var(--africa); color: #bf6c00; }
+  .stamp-empty.se-europe { border-color: var(--europe); color: var(--europe); }
+  .stamp-empty.se-americas { border-color: var(--americas); color: var(--americas); }
+  .stamp-empty.se-global {
+    width: 90px; height: 90px; border-color: var(--gold-dark);
+    color: #bf8f00; border-width: 4px;
+    box-shadow: 0 0 8px rgba(255,215,0,0.2);
+  }
+  .stamp-label { font-size: 9px; color: #777; text-align: center; font-weight: 500; }
+
+  /* Arrows between stamps */
+  .stamp-arrow {
+    font-size: 20px; color: #ccc; margin-top: -14px;
+  }
+
+  /* Star tracking grid */
+  .star-section {
+    margin-bottom: 12px; padding: 10px 12px;
+    border: 2px solid #e0e0e0; border-radius: 14px;
+    background: linear-gradient(135deg, #fffde7, #fff);
+  }
+  .star-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    max-width: 420px; margin: 0 auto;
+  }
+  .star-cell {
+    aspect-ratio: 1;
+    border: 2px dashed #ccc; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #ccc; position: relative;
+    background: rgba(255,255,255,0.6);
+    max-height: 56px;
+  }
+  .star-cell .star-outline {
+    font-size: 28px; opacity: 0.25;
+  }
+  .star-cell .star-num {
+    position: absolute; font-size: 9px; font-weight: 700; bottom: 2px; right: 4px;
+    color: #aaa;
+  }
+  /* Color rows */
+  .star-cell.row-blue { border-color: #90caf9; }
+  .star-cell.row-green { border-color: #a5d6a7; }
+  .star-cell.row-purple { border-color: #ce93d8; }
+  .star-cell.row-gold { border-color: #ffe082; }
+
+  /* Milestone markers */
+  .star-cell.milestone {
+    border-style: solid; border-width: 3px;
+    background: rgba(255,255,255,0.9);
+  }
+  .star-cell.milestone .milestone-label {
+    position: absolute; font-size: 8px; font-weight: 900;
+    top: 1px; left: 50%; transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .star-cell.milestone.m5 { border-color: #1565C0; }
+  .star-cell.milestone.m5 .milestone-label { color: #1565C0; }
+  .star-cell.milestone.m10 { border-color: #2E7D32; }
+  .star-cell.milestone.m10 .milestone-label { color: #2E7D32; }
+  .star-cell.milestone.m15 { border-color: #7B1FA2; }
+  .star-cell.milestone.m15 .milestone-label { color: #7B1FA2; }
+  .star-cell.milestone.m20 { border-color: #E65100; }
+  .star-cell.milestone.m20 .milestone-label { color: #E65100; }
+
+  .star-legend {
+    display: flex; justify-content: center; gap: 14px; margin-top: 8px;
+    font-size: 9px; color: #666; flex-wrap: wrap;
+  }
+  .star-legend span { display: flex; align-items: center; gap: 3px; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 3px; display: inline-block;
+  }
+
+  /* Weekly summary table */
+  .weekly-section {
+    margin-bottom: 6px;
+  }
+  .weekly-table {
+    width: 100%; border-collapse: collapse; font-size: 11px;
+  }
+  .weekly-table th {
+    background: linear-gradient(135deg, #455a64, #546e7a);
+    color: #fff; font-weight: 700; padding: 6px 8px;
+    font-size: 10px;
+  }
+  .weekly-table th:first-child { border-radius: 8px 0 0 0; }
+  .weekly-table th:last-child { border-radius: 0 8px 0 0; }
+  .weekly-table td {
+    padding: 10px 8px; border-bottom: 1px solid #e0e0e0; text-align: center;
+    font-size: 11px;
+  }
+  .weekly-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .weekly-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+  .weekly-table tr:nth-child(even) td { background: #fafafa; }
+  .week-label { font-weight: 700; color: #455a64; text-align: left !important; }
+
+  /* ======================================================
+     SECTION 3: TEACHER QUICK REFERENCE
+     ====================================================== */
+  .teacher-ref {
+    min-height: auto;
+    max-height: 5in;
+    display: flex; flex-direction: column;
+  }
+  .teacher-ref .ref-title {
+    text-align: center; padding: 8px;
+    background: linear-gradient(135deg, #455a64, #37474f);
+    border-radius: 10px; margin-bottom: 10px;
+  }
+  .teacher-ref .ref-title h1 { font-size: 18px; color: #fff; font-weight: 900; }
+  .teacher-ref .ref-title .sub { font-size: 10px; color: #b0bec5; }
+
+  .ref-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1;
+  }
+  .ref-box {
+    border: 2px solid; border-radius: 10px; padding: 8px 10px;
+  }
+  .ref-box h3 { font-size: 12px; font-weight: 900; margin-bottom: 6px; }
+  .ref-box ul { list-style: none; font-size: 10px; line-height: 1.6; }
+  .ref-box ul li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+  .ref-stamps { border-color: var(--asia); background: #fff5f5; }
+  .ref-stamps h3 { color: var(--asia); }
+  .ref-stamps ul li::before { background: var(--asia); }
+
+  .ref-stars { border-color: var(--gold-dark); background: #fffde7; }
+  .ref-stars h3 { color: #bf8f00; }
+  .ref-stars ul li::before { background: var(--gold-dark); }
+
+  .ref-claw { border-color: var(--americas); background: #f1f8e9; }
+  .ref-claw h3 { color: var(--americas); }
+  .ref-claw ul li::before { background: var(--americas); }
+
+  .ref-notes { border-color: #7B1FA2; background: #f3e5f5; }
+  .ref-notes h3 { color: #7B1FA2; }
+  .ref-notes ul li::before { background: #7B1FA2; }
+
+  .ref-bottom {
+    margin-top: 8px; text-align: center; font-size: 9px; color: #999;
+    padding-top: 6px; border-top: 1px dashed #ccc;
+  }
+
+  /* ============ DECORATIVE STARS ============ */
+  .deco-stars {
+    position: absolute; pointer-events: none; z-index: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================== SECTION 1: CLASSROOM POSTER ======================== -->
+<div class="page poster">
+
+  <div class="poster-title-bar">
+    <h1>&#x1F31F; Global Explorer Camp &#x5956;&#x52B1;&#x7CFB;&#x7EDF; Reward System &#x1F31F;</h1>
+    <div class="subtitle">&#x73AF;&#x7403;&#x63A2;&#x7D22;&#x6C89;&#x6D78;&#x5F0F;&#x590F;&#x4EE4;&#x8425; &middot; &#x8D62;&#x53D6;&#x62BD;&#x5A03;&#x5A03;&#x673A;&#x4F1A;&#xFF01;</div>
+  </div>
+
+  <div class="poster-columns">
+
+    <!-- Column 1: Passport Stamps -->
+    <div class="poster-col col-stamps">
+      <div class="col-header">
+        <span class="col-icon">&#x1FAAA;</span>
+        <h2>&#x62A4;&#x7167;&#x5370;&#x7AE0;</h2>
+        <div class="col-en">Passport Stamps</div>
+      </div>
+      <div class="stamp-row-poster">
+        <div class="stamp-circle-poster s-asia">
+          <span class="stamp-emoji">&#x1F30F;</span>
+          &#x4E9A;&#x6D32;<br>Asia
+        </div>
+        <div class="stamp-circle-poster s-africa">
+          <span class="stamp-emoji">&#x1F30D;</span>
+          &#x975E;&#x6D32;<br>Africa
+        </div>
+        <div class="stamp-circle-poster s-europe">
+          <span class="stamp-emoji">&#x1F30D;</span>
+          &#x6B27;&#x6D32;<br>Europe
+        </div>
+        <div class="stamp-circle-poster s-americas">
+          <span class="stamp-emoji">&#x1F30E;</span>
+          &#x7F8E;&#x6D32;<br>Americas
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div class="stamp-circle-poster s-global" style="margin: 0 auto;">
+          <span class="stamp-emoji">&#x1F31F;</span>
+          &#x73AF;&#x7403;<br>&#x63A2;&#x7D22;&#x5BB6;
+        </div>
+      </div>
+      <p class="stamp-tip" style="margin-top:8px;">&#x5B8C;&#x6210;&#x6BCF;&#x5929;&#x7684;&#x65C5;&#x884C;&#x624B;&#x518C; = &#x83B7;&#x5F97;&#x5370;&#x7AE0;&#xFF01;<br>Complete each day's booklet to earn a stamp!</p>
+      <p class="stamp-tip"><strong>&#x7B2C;5&#x5929;&#xFF1A;</strong>&#x96C6;&#x9F50;4&#x679A; + &#x5C55;&#x89C8;&#x9879;&#x76EE; = &#x73AF;&#x7403;&#x63A2;&#x7D22;&#x5BB6;&#xFF01;</p>
+    </div>
+
+    <!-- Column 2: Star Stickers -->
+    <div class="poster-col col-stars">
+      <div class="col-header">
+        <span class="col-icon">&#x2B50;</span>
+        <h2>&#x661F;&#x661F;&#x8D34;&#x7EB8;</h2>
+        <div class="col-en">Star Stickers</div>
+      </div>
+      <ul class="star-earn-list">
+        <li>
+          <span class="earn-stars">&#x2B50;&times;1</span>
+          <div class="earn-text">
+            <span class="cn">&#x79EF;&#x6781;&#x56DE;&#x7B54;&#x95EE;&#x9898;</span>
+            <span class="en">Answer questions actively</span>
+          </div>
+        </li>
+        <li>
+          <span class="earn-stars">&#x2B50;&times;1</span>
+          <div class="earn-text">
+            <span class="cn">&#x5B8C;&#x6210;&#x95EE;&#x9898;&#x6311;&#x6218; (Quiz)</span>
+            <span class="en">Answer quiz card correctly</span>
+          </div>
+        </li>
+        <li>
+          <span class="earn-stars">&#x2B50;&times;1</span>
+          <div class="earn-text">
+            <span class="cn">&#x5E2E;&#x52A9;&#x540C;&#x5B66;</span>
+            <span class="en">Help a classmate</span>
+          </div>
+        </li>
+        <li>
+          <span class="earn-stars">&#x2B50;&times;1</span>
+          <div class="earn-text">
+            <span class="cn">&#x7528;&#x4E2D;&#x6587;&#x8868;&#x8FBE;</span>
+            <span class="en">Speak in Chinese</span>
+          </div>
+        </li>
+        <li>
+          <span class="earn-stars">&#x2B50;&times;2</span>
+          <div class="earn-text">
+            <span class="cn">Role Play &#x8868;&#x73B0;&#x4F18;&#x79C0;</span>
+            <span class="en">Great role play performance</span>
+          </div>
+        </li>
+      </ul>
+      <div style="text-align:center; margin-top:8px; font-size:11px; color:#666; line-height:1.4;">
+        <strong>&#x8D8A;&#x591A;&#x661F;&#x661F; = &#x8D8A;&#x591A;&#x62BD;&#x5A03;&#x5A03;&#x673A;&#x4F1A;&#xFF01;</strong><br>
+        More stars = More claw machine tries!
+      </div>
+    </div>
+
+    <!-- Column 3: Claw Machine -->
+    <div class="poster-col col-claw">
+      <div class="col-header">
+        <span class="col-icon">&#x1F3AE;</span>
+        <h2>&#x62BD;&#x5A03;&#x5A03;&#x673A;</h2>
+        <div class="col-en">Claw Machine Redemption</div>
+      </div>
+      <div class="claw-visual">&#x1F3B0;&#x1F9F8;&#x1FA9D;</div>
+      <div class="claw-tiers">
+        <div class="claw-tier tier-1">
+          <div class="tier-badge">5&#x2B50;</div>
+          <div class="tier-info">
+            <div class="cn">1&#x6B21;&#x62BD;&#x5A03;&#x5A03;&#x673A;&#x4F1A;</div>
+            <div class="en">1 claw machine try</div>
+          </div>
+          <div class="tier-tries">&#x1F3AE;&times;1</div>
+        </div>
+        <div class="claw-tier tier-2">
+          <div class="tier-badge">10&#x2B50;</div>
+          <div class="tier-info">
+            <div class="cn">2&#x6B21; + &#x4F18;&#x5148;&#x9009;&#x62E9;</div>
+            <div class="en">2 tries + priority pick</div>
+          </div>
+          <div class="tier-tries">&#x1F3AE;&times;2</div>
+        </div>
+        <div class="claw-tier tier-3">
+          <div class="tier-badge">15&#x2B50;</div>
+          <div class="tier-info">
+            <div class="cn">3&#x6B21; + &#x8D85;&#x7EA7;&#x6A21;&#x5F0F;</div>
+            <div class="en">3 tries + super mode</div>
+          </div>
+          <div class="tier-tries">&#x1F3AE;&times;3</div>
+        </div>
+        <div class="claw-tier tier-4">
+          <div class="tier-badge">20&#x2B50;</div>
+          <div class="tier-info">
+            <div class="cn">4&#x6B21; + &#x8D85;&#x7EA7;&#x6A21;&#x5F0F; + &#x795E;&#x79D8;&#x5956;&#x54C1;</div>
+            <div class="en">4 tries + mystery prize!</div>
+          </div>
+          <div class="tier-tries">&#x1F3AE;&times;4<br>+&#x1F381;</div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:6px; font-size:10px; color:#555;">
+        &#x6BCF;&#x5468;&#x4E94;&#x7ED3;&#x7B97; &middot; Friday Redemption
+      </div>
+    </div>
+
+  </div>
+
+  <div class="poster-bottom">
+    <p>&#x52AA;&#x529B;&#x5B66;&#x4E60;&#xFF0C;&#x79EF;&#x6781;&#x53C2;&#x4E0E;&#xFF0C;&#x8D62;&#x53D6;&#x62BD;&#x5A03;&#x5A03;&#x673A;&#x4F1A;&#xFF01;</p>
+    <p class="en">Work hard, participate actively, win claw machine tries!</p>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp &middot; &#x8C37;&#x96E8;&#x4E2D;&#x6587; GR EDU</div>
+</div>
+
+
+<!-- ======================== SECTION 2: STUDENT TRACKING CARD ======================== -->
+<div class="page tracking-card">
+
+  <div class="card-title-bar">
+    <h1>&#x1F31F; &#x6211;&#x7684;&#x63A2;&#x9669;&#x5BB6;&#x5956;&#x52B1;&#x5361; My Explorer Reward Card &#x1F31F;</h1>
+    <div class="subtitle">Global Explorer Camp &#x73AF;&#x7403;&#x63A2;&#x7D22;&#x6C89;&#x6D78;&#x5F0F;&#x590F;&#x4EE4;&#x8425;</div>
+  </div>
+
+  <div class="student-name">
+    &#x5C0F;&#x63A2;&#x9669;&#x5BB6; Explorer: <span class="blank"></span>
+  </div>
+
+  <!-- Passport Stamps -->
+  <div class="passport-section">
+    <div class="section-label">&#x1FAAA; &#x62A4;&#x7167;&#x5370;&#x7AE0; Passport Stamps</div>
+    <div class="passport-stamps">
+      <div class="stamp-slot">
+        <div class="stamp-empty se-asia">
+          <span class="stamp-emoji-card">&#x1F30F;</span>
+          &#x4E9A;&#x6D32;
+        </div>
+        <div class="stamp-label">Day 1 &middot; Asia</div>
+      </div>
+      <div class="stamp-arrow">&#x27A1;</div>
+      <div class="stamp-slot">
+        <div class="stamp-empty se-africa">
+          <span class="stamp-emoji-card">&#x1F30D;</span>
+          &#x975E;&#x6D32;
+        </div>
+        <div class="stamp-label">Day 2 &middot; Africa</div>
+      </div>
+      <div class="stamp-arrow">&#x27A1;</div>
+      <div class="stamp-slot">
+        <div class="stamp-empty se-europe">
+          <span class="stamp-emoji-card">&#x1F30D;</span>
+          &#x6B27;&#x6D32;
+        </div>
+        <div class="stamp-label">Day 3 &middot; Europe</div>
+      </div>
+      <div class="stamp-arrow">&#x27A1;</div>
+      <div class="stamp-slot">
+        <div class="stamp-empty se-americas">
+          <span class="stamp-emoji-card">&#x1F30E;</span>
+          &#x7F8E;&#x6D32;
+        </div>
+        <div class="stamp-label">Day 4 &middot; Americas</div>
+      </div>
+      <div class="stamp-arrow">&#x27A1;</div>
+      <div class="stamp-slot">
+        <div class="stamp-empty se-global">
+          <span class="stamp-emoji-card">&#x1F31F;</span>
+          &#x73AF;&#x7403;&#x63A2;&#x7D22;&#x5BB6;
+        </div>
+        <div class="stamp-label">Day 5 &middot; Global Explorer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Star Sticker Grid -->
+  <div class="star-section">
+    <div class="section-label">&#x2B50; &#x661F;&#x661F;&#x8D34;&#x7EB8;&#x8FFD;&#x8E2A; Star Sticker Tracker</div>
+    <div class="star-grid" id="starGrid"></div>
+    <div class="star-legend">
+      <span><span class="legend-dot" style="background:#1565C0;"></span> 1-5&#x2B50; = &#x1F3AE;&times;1</span>
+      <span><span class="legend-dot" style="background:#2E7D32;"></span> 6-10&#x2B50; = &#x1F3AE;&times;2</span>
+      <span><span class="legend-dot" style="background:#7B1FA2;"></span> 11-15&#x2B50; = &#x1F3AE;&times;3</span>
+      <span><span class="legend-dot" style="background:#E65100;"></span> 16-20+&#x2B50; = &#x1F3AE;&times;4+&#x1F381;</span>
+    </div>
+  </div>
+
+  <!-- Weekly Summary -->
+  <div class="weekly-section">
+    <div class="section-label" style="font-size:12px; margin-bottom:6px;">&#x1F4CA; &#x6BCF;&#x5468;&#x7EDF;&#x8BA1; Weekly Summary</div>
+    <table class="weekly-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;">&#x5468; Week</th>
+          <th>&#x661F;&#x661F;&#x603B;&#x6570; Total Stars</th>
+          <th>&#x62BD;&#x5A03;&#x5A03;&#x6B21;&#x6570; Tries</th>
+          <th>&#x8001;&#x5E08;&#x7B7E;&#x540D; Teacher</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="week-label">&#x7B2C;1&#x5468; Week 1</td>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="week-label">&#x7B2C;2&#x5468; Week 2</td>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="week-label">&#x7B2C;3&#x5468; Week 3</td>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="week-label">&#x7B2C;4&#x5468; Week 4</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">Global Explorer Camp &middot; &#x8C37;&#x96E8;&#x4E2D;&#x6587; GR EDU</div>
+</div>
+
+
+<!-- ======================== SECTION 3: TEACHER QUICK REFERENCE ======================== -->
+<div class="page teacher-ref">
+
+  <div class="ref-title">
+    <h1>&#x1F4CB; &#x5956;&#x52B1;&#x7CFB;&#x7EDF;&#x5FEB;&#x901F;&#x53C2;&#x8003; &middot; Teacher Quick Reference</h1>
+    <div class="sub">Global Explorer Camp &#x73AF;&#x7403;&#x63A2;&#x7D22;&#x6C89;&#x6D78;&#x5F0F;&#x590F;&#x4EE4;&#x8425;</div>
+  </div>
+
+  <div class="ref-grid">
+
+    <div class="ref-box ref-stamps">
+      <h3>&#x1FAAA; &#x62A4;&#x7167;&#x5370;&#x7AE0; Passport Stamps</h3>
+      <ul>
+        <li>&#x5B8C;&#x6210;&#x5F53;&#x5929;&#x65C5;&#x884C;&#x624B;&#x518C; &#x2192; &#x83B7;&#x5F97;&#x8BE5;&#x6D32;&#x5370;&#x7AE0;</li>
+        <li>Day 1: &#x4E9A;&#x6D32; Asia &middot; Day 2: &#x975E;&#x6D32; Africa</li>
+        <li>Day 3: &#x6B27;&#x6D32; Europe &middot; Day 4: &#x7F8E;&#x6D32; Americas</li>
+        <li>Day 5: &#x5B8C;&#x6210;&#x5C55;&#x89C8;&#x9875; &#x2192; &#x73AF;&#x7403;&#x63A2;&#x7D22;&#x5BB6;&#x5370;&#x7AE0;</li>
+        <li><strong>&#x5171;5&#x679A;&#x5370;&#x7AE0;&#xFF0C;&#x6BCF;&#x5929;&#x6700;&#x591A;1&#x679A;</strong></li>
+      </ul>
+    </div>
+
+    <div class="ref-box ref-stars">
+      <h3>&#x2B50; &#x661F;&#x661F;&#x53D1;&#x653E;&#x6807;&#x51C6; Star Criteria</h3>
+      <ul>
+        <li>&#x79EF;&#x6781;&#x56DE;&#x7B54;&#x95EE;&#x9898; &#x2192; 1&#x2B50;</li>
+        <li>Quiz &#x7B54;&#x5BF9;&#x6BCF;&#x9898; &#x2192; 1&#x2B50;</li>
+        <li>&#x5E2E;&#x52A9;&#x540C;&#x5B66; &#x2192; 1&#x2B50;</li>
+        <li>&#x7528;&#x4E2D;&#x6587;&#x8868;&#x8FBE; &#x2192; 1&#x2B50;</li>
+        <li>Role Play &#x8868;&#x73B0;&#x4F18;&#x79C0; &#x2192; <strong>2&#x2B50;</strong></li>
+        <li><em>&#x5EFA;&#x8BAE;&#x6BCF;&#x5929;&#x53D1;&#x653E;3-6&#x9897;&#x661F;</em></li>
+      </ul>
+    </div>
+
+    <div class="ref-box ref-claw">
+      <h3>&#x1F3AE; &#x5151;&#x6362;&#x89C4;&#x5219; Redemption Rules</h3>
+      <ul>
+        <li><strong>5&#x2B50;</strong> = 1&#x6B21;&#x62BD;&#x5A03;&#x5A03;</li>
+        <li><strong>10&#x2B50;</strong> = 2&#x6B21; + &#x4F18;&#x5148;&#x9009;&#x62E9;&#x5956;&#x54C1;</li>
+        <li><strong>15&#x2B50;</strong> = 3&#x6B21; + &#x8D85;&#x7EA7;&#x6A21;&#x5F0F;&#xFF08;&#x964D;&#x4F4E;&#x96BE;&#x5EA6;&#xFF09;</li>
+        <li><strong>20&#x2B50;+</strong> = 4&#x6B21; + &#x8D85;&#x7EA7;&#x6A21;&#x5F0F; + &#x795E;&#x79D8;&#x5956;&#x54C1;</li>
+        <li><strong>&#x6BCF;&#x5468;&#x4E94;&#x7ED3;&#x7B97;&#xFF0C;&#x661F;&#x661F;&#x4E0D;&#x7D2F;&#x8BA1;</strong></li>
+      </ul>
+    </div>
+
+    <div class="ref-box ref-notes">
+      <h3>&#x1F4DD; &#x6CE8;&#x610F;&#x4E8B;&#x9879; Notes</h3>
+      <ul>
+        <li>&#x5370;&#x7AE0;&#x76D6;&#x5728;&#x5B66;&#x751F;&#x5956;&#x52B1;&#x5361;&#x7684;&#x5706;&#x5708;&#x5185;</li>
+        <li>&#x661F;&#x661F;&#x7528;&#x8D34;&#x7EB8;&#x6216;&#x5370;&#x7AE0;&#x8D34;&#x5728;&#x7F51;&#x683C;&#x5185;</li>
+        <li>&#x5468;&#x4E94;&#x7ED3;&#x7B97;&#x524D;&#x5E2E;&#x5B66;&#x751F;&#x6570;&#x661F;&#x661F;&#x603B;&#x6570;</li>
+        <li>&#x586B;&#x5199;&#x6BCF;&#x5468;&#x7EDF;&#x8BA1;&#x8868;&#x5E76;&#x7B7E;&#x540D;</li>
+        <li>&#x9F13;&#x52B1;&#x5B66;&#x751F;&#x4E92;&#x76F8;&#x52A0;&#x6CB9;&#xFF01;</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="ref-bottom">
+    &#x2728; &#x8BA9;&#x6BCF;&#x4E2A;&#x5B69;&#x5B50;&#x90FD;&#x6709;&#x673A;&#x4F1A;&#x83B7;&#x5F97;&#x661F;&#x661F;&#xFF0C;&#x4FDD;&#x6301;&#x79EF;&#x6781;&#x6027;&#xFF01; Give every child a chance to earn stars &#x2014; keep the excitement going! &#x2728;
+    <br>Global Explorer Camp &middot; &#x8C37;&#x96E8;&#x4E2D;&#x6587; GR EDU
+  </div>
+</div>
+
+
+<!-- ============ SCRIPT: Generate star grid ============ -->
+<script>
+(function() {
+  var grid = document.getElementById('starGrid');
+  for (var i = 1; i <= 30; i++) {
+    var cell = document.createElement('div');
+    cell.className = 'star-cell';
+
+    // Color rows
+    if (i <= 5) cell.className += ' row-blue';
+    else if (i <= 10) cell.className += ' row-green';
+    else if (i <= 15) cell.className += ' row-purple';
+    else cell.className += ' row-gold';
+
+    // Milestones
+    if (i === 5) { cell.className += ' milestone m5'; cell.innerHTML = '<span class="milestone-label">\uD83C\uDFAE\u00D71</span>'; }
+    else if (i === 10) { cell.className += ' milestone m10'; cell.innerHTML = '<span class="milestone-label">\uD83C\uDFAE\u00D72</span>'; }
+    else if (i === 15) { cell.className += ' milestone m15'; cell.innerHTML = '<span class="milestone-label">\uD83C\uDFAE\u00D73</span>'; }
+    else if (i === 20) { cell.className += ' milestone m20'; cell.innerHTML = '<span class="milestone-label">\uD83C\uDFAE\u00D74+\uD83C\uDF81</span>'; }
+
+    cell.innerHTML += '<span class="star-outline">\u2606</span>';
+    cell.innerHTML += '<span class="star-num">' + i + '</span>';
+    grid.appendChild(cell);
+  }
+})();
+</script>
+
+</body>
+</html>

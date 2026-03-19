@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程特色 | Summer Math Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Kaiti SC', 'KaiTi', 'STKaiti', 'LXGW WenKai', 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+            line-height: 1.6;
+            color: #2C2C2C;
+            background: white;
+        }
+
+        .features-section {
+            padding: 20px 0 12px;
+            background: white;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 16px 14px;
+            background: white;
+            border: 3px solid #5e9428;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(94, 148, 40, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .feature-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #2C2C2C;
+            margin-bottom: 6px;
+        }
+
+        .feature-description {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .features-section {
+                padding: 20px 14px 12px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .feature-title { font-size: 17px; }
+            .feature-description { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="features-section">
+        <h2 style="text-align:center; color:#2C2C2C; margin-bottom:10px; font-size:22px;">课程特色</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧮</div>
+                <h3 class="feature-title">系统化课程设计</h3>
+                <p class="feature-description">5个级别，由浅入深，涵盖计算、图形、应用题与逻辑推理，帮助孩子构建完整的数学知识体系。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3 class="feature-title">思维训练为核心</h3>
+                <p class="feature-description">注重数学思维与解题策略的培养，不只是做题，更是理解"为什么"，锻炼逻辑分析能力。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">暑期衔接与提升</h3>
+                <p class="feature-description">巩固已学知识，预习新学期内容，利用暑假查漏补缺、拓展提高，让孩子开学更自信。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

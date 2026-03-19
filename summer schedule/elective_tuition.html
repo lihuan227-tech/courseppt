@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; background: #fff; font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif; -webkit-font-smoothing: antialiased; }
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 10px 10px; }
+
+  .info-row {
+    display: flex; justify-content: center; gap: 22px; flex-wrap: wrap;
+    margin-bottom: 12px; font-size: 15px; color: #444;
+  }
+  .info-item strong { color: #2C2C2C; }
+
+  .tuition-table { width: 100%; border-collapse: collapse; border: 2px solid #ddd; margin-bottom: 8px; }
+  .tuition-table th {
+    font-size: 15px; font-weight: 700; padding: 10px 12px;
+    color: #fff; text-align: center; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .tuition-table th.header-session { background: #66bb6a; }
+  .tuition-table th.header-subject { background: #66bb6a; }
+
+  .tuition-table td {
+    font-size: 15px; padding: 9px 12px; text-align: center;
+    border: 1px solid #e0e0e0; color: #2a2a2a;
+  }
+  .tuition-table tr:nth-child(even) td { background: #f1f8e9; }
+  .tuition-table tr:nth-child(odd) td { background: #fff; }
+
+  .subject-label { font-weight: 700; font-size: 15px; }
+  .subject-label.chinese { color: #e65100; }
+  .subject-label.english { color: #1565c0; }
+  .subject-label.math { color: #2e7d32; }
+
+  .price { font-weight: 700; font-size: 17px; color: #2C2C2C; }
+  .per-week { font-size: 13px; color: #888; }
+  .session-dates { font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 400; display: block; margin-top: 3px; line-height: 1.4; }
+
+  .note {
+    font-size: 14px; color: #555; line-height: 1.6; padding: 8px 4px;
+  }
+
+  @media (max-width: 600px) {
+    .tuition-table th, .tuition-table td { padding: 7px 8px; font-size: 13px; }
+    .price { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="info-row">
+    <div class="info-item">Onsite Classes</div>
+    <div class="info-item">小班授课 <strong>6–12人</strong></div>
+    <div class="info-item">每周 <strong>两节课 / 2 hours</strong></div>
+    <div class="info-item">每 Session <strong>4 节课（2 周）</strong></div>
+  </div>
+
+  <table class="tuition-table">
+    <thead>
+      <tr>
+        <th class="header-subject">Subject</th>
+        <th class="header-session">Session 1<span class="session-dates">Week 1: 6/8–6/12<br>Week 2: 6/15–6/19</span></th>
+        <th class="header-session">Session 2<span class="session-dates">Week 3: 6/22–6/26<br>Week 4: 7/6–7/10</span></th>
+        <th class="header-session">Session 3<span class="session-dates">Week 5: 7/13–7/17<br>Week 6: 7/20–7/24</span></th>
+        <th class="header-session">Session 4<span class="session-dates">Week 7: 7/27–7/31<br>Week 8: 8/3–8/7</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="subject-label chinese">中文 Chinese</span></td>
+        <td><span class="price">$120</span></td>
+        <td><span class="price">$120</span></td>
+        <td><span class="price">$120</span></td>
+        <td><span class="price">$120</span></td>
+      </tr>
+      <tr>
+        <td><span class="subject-label english">英语 English</span></td>
+        <td><span class="price">$160</span></td>
+        <td><span class="price">$160</span></td>
+        <td><span class="price">$160</span></td>
+        <td><span class="price">$160</span></td>
+      </tr>
+      <tr>
+        <td><span class="subject-label math">数学 Math</span></td>
+        <td><span class="price">$160</span></td>
+        <td><span class="price">$160</span></td>
+        <td><span class="price">$160</span></td>
+        <td><span class="price">$160</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    * 每个 Session 共 4 节课（每周 2 次 × 2 周）。可按 Session 单独报名。
+  </div>
+
+</div>
+</body>
+</html>

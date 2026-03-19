@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抽签答题卡 Quiz Cards — 世界之旅 World Trip PBL</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans SC', 'Kaiti SC', 'KaiTi', sans-serif; }
+
+  @page { size: letter; margin: 0.3in; }
+  @media print {
+    .page-break { page-break-after: always; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* Instruction page */
+  .instruction-page {
+    width: 7.9in; max-width: 7.9in; margin: 0 auto;
+    height: 10.2in;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 0.5in;
+  }
+  .instruction-page h1 { font-size: 36px; font-weight: 900; margin-bottom: 8px; }
+  .instruction-page h2 { font-size: 20px; font-weight: 700; color: #555; margin-bottom: 30px; }
+  .rules-box {
+    background: #FFF8E1; border: 3px solid #FFB300; border-radius: 16px;
+    padding: 28px 36px; text-align: left; width: 100%; margin-bottom: 24px;
+  }
+  .rules-box h3 { font-size: 20px; font-weight: 900; margin-bottom: 16px; color: #E65100; text-align: center; }
+  .rule-item { font-size: 17px; margin-bottom: 10px; line-height: 1.6; }
+  .rule-item .num { display: inline-block; width: 28px; height: 28px; background: #FF6F00; color: #fff; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 900; font-size: 14px; margin-right: 8px; vertical-align: middle; }
+  .teacher-box {
+    background: #E3F2FD; border: 2px solid #1565C0; border-radius: 12px;
+    padding: 20px 28px; text-align: left; width: 100%; margin-bottom: 24px;
+  }
+  .teacher-box h3 { font-size: 16px; font-weight: 700; color: #1565C0; margin-bottom: 10px; }
+  .teacher-box p { font-size: 14px; line-height: 1.6; color: #333; }
+  .reward-box {
+    background: #FFF3E0; border: 2px solid #FF8F00; border-radius: 12px;
+    padding: 18px 28px; width: 100%; text-align: center;
+  }
+  .reward-box h3 { font-size: 16px; font-weight: 700; color: #E65100; margin-bottom: 8px; }
+  .reward-box p { font-size: 18px; font-weight: 700; color: #333; }
+  .color-legend { margin-top: 20px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .color-legend span { font-size: 13px; font-weight: 700; color: #fff; padding: 4px 14px; border-radius: 6px; }
+
+  /* Card grid */
+  .card-page {
+    width: 7.9in; max-width: 7.9in; margin: 0 auto;
+    height: 10.2in;
+  }
+  .card-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    width: 100%; height: 100%;
+  }
+  .quiz-card {
+    border: 2px dashed #999;
+    padding: 12px 14px;
+    height: 2.55in;
+    position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow: hidden;
+  }
+  .card-top { display: flex; flex-direction: column; gap: 6px; }
+  .card-header {
+    color: white; padding: 3px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 700;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .card-number { font-size: 9px; opacity: 0.85; }
+  .card-question { font-size: 13px; font-weight: 700; line-height: 1.4; }
+  .card-bottom { display: flex; flex-direction: column; gap: 3px; }
+  .card-answer {
+    transform: rotate(180deg); font-size: 10px; color: #999;
+    border-top: 1px dotted #ccc; padding-top: 4px;
+    text-align: right;
+  }
+  .card-reward { font-size: 9px; color: #888; text-align: right; }
+  .scissors-tl, .scissors-tr, .scissors-bl, .scissors-br {
+    position: absolute; font-size: 10px; color: #bbb; line-height: 1;
+  }
+  .scissors-tl { top: 1px; left: 2px; }
+  .scissors-tr { top: 1px; right: 2px; transform: scaleX(-1); }
+  .scissors-bl { bottom: 1px; left: 2px; transform: scaleY(-1); }
+  .scissors-br { bottom: 1px; right: 2px; transform: scale(-1,-1); }
+
+  /* Reward tracking page */
+  .reward-page {
+    width: 7.9in; max-width: 7.9in; margin: 0 auto;
+    height: 10.2in;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0.6in 0.5in;
+  }
+  .reward-page h1 { font-size: 30px; font-weight: 900; margin-bottom: 6px; }
+  .reward-page h2 { font-size: 18px; color: #666; margin-bottom: 30px; }
+  .name-line { font-size: 18px; font-weight: 700; margin-bottom: 30px; width: 100%; }
+  .name-line span { border-bottom: 2px solid #333; display: inline-block; width: 260px; margin-left: 8px; }
+  .stars-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
+    width: 100%; max-width: 5in; margin-bottom: 40px;
+  }
+  .star-slot {
+    width: 72px; height: 72px; border: 3px dashed #FFB300; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; color: #FFE082;
+  }
+  .completion-line { font-size: 20px; font-weight: 700; margin-top: 20px; }
+  .completion-line span { border-bottom: 2px solid #333; display: inline-block; width: 60px; margin: 0 4px; }
+</style>
+</head>
+<body>
+
+<!-- ==================== INSTRUCTION PAGE ==================== -->
+<div class="instruction-page">
+  <h1>&#x1F3B2; 抽签答题挑战</h1>
+  <h2>Quiz Card Challenge!</h2>
+
+  <div class="rules-box">
+    <h3>游戏规则 Game Rules</h3>
+    <div class="rule-item"><span class="num">1</span> 抽一张卡片 Draw a card</div>
+    <div class="rule-item"><span class="num">2</span> 大声读出问题 Read the question aloud</div>
+    <div class="rule-item"><span class="num">3</span> 回答问题 Answer the question</div>
+    <div class="rule-item"><span class="num">4</span> 翻转看答案 Flip to check the answer (upside-down at bottom)</div>
+    <div class="rule-item"><span class="num">5</span> 答对了？获得一颗星！Correct? Earn a star!</div>
+  </div>
+
+  <div class="teacher-box">
+    <h3>老师提示 Teacher Notes</h3>
+    <p>老师可以按颜色分组使用（每个颜色代表一个大洲），或混合使用所有卡片。</p>
+    <p>Cards are color-coded by continent. Use one color group at a time, or mix all cards together.</p>
+  </div>
+
+  <div class="reward-box">
+    <h3>奖励制度 Reward System</h3>
+    <p>答对1题 = 1 &#11088; &nbsp;|&nbsp; 集满5 &#11088; = 一个特别stamp &nbsp;|&nbsp; 集满10 &#11088; = 小奖品</p>
+  </div>
+
+  <div class="color-legend">
+    <span style="background:#C62828;">亚洲 Asia</span>
+    <span style="background:#FF8F00;">非洲 Africa</span>
+    <span style="background:#1565C0;">欧洲 Europe</span>
+    <span style="background:#2E7D32;">美洲 Americas</span>
+  </div>
+</div>
+<div class="page-break"></div>
+
+<!-- ==================== QUIZ CARDS ==================== -->
+<div id="card-pages"></div>
+<script>
+const cards = [
+  // ASIA - China (1-10)
+  {n:1, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"中国的首都是哪里？\nWhat is the capital of China?", a:"北京 Beijing"},
+  {n:2, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"中国人用什么吃饭？\nWhat do Chinese people eat with?", a:"筷子 Chopsticks"},
+  {n:3, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"中国有几大发明？\nHow many great inventions?", a:"四大发明 Four"},
+  {n:4, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"吃饭时筷子不能怎么放？\nHow should you NOT place chopsticks?", a:"不能插在饭里 Don't stick them in rice"},
+  {n:5, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"中国有多少人口？\nWhat is China's population?", a:"约14亿 ~1.4 billion"},
+  {n:6, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"中国的四大发明是什么？\nName the 4 inventions", a:"造纸、印刷、火药、指南针"},
+  {n:7, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"中国人过年吃什么？\nWhat do Chinese eat for New Year?", a:"饺子 Dumplings"},
+  {n:8, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"北京烤鸭有多少年历史？\nHow old is Peking Duck?", a:"约600年 ~600 years"},
+  {n:9, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"南方人和北方人饮食有什么不同？\nNorth vs South eating?", a:"南方米饭，北方面食"},
+  {n:10, continent:"亚洲 Asia", country:"中国 China", color:"#C62828", q:"收到礼物时，中国人一般怎么做？\nWhat do Chinese do with gifts?", a:"不当面打开 Don't open in front of giver"},
+  // ASIA - Japan (11-20)
+  {n:11, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"日本由多少个岛屿组成？\nHow many islands?", a:"6,852个"},
+  {n:12, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"在日本见面应该怎么做？\nHow to greet in Japan?", a:"鞠躬 Bow"},
+  {n:13, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"进别人家要做什么？\nWhat to do entering a house?", a:"脱鞋 Take off shoes"},
+  {n:14, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"在日本吃拉面时可以发出声音吗？\nCan you slurp noodles?", a:"可以！It's polite!"},
+  {n:15, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"富士山有多高？\nHow tall is Mt. Fuji?", a:"3,776米"},
+  {n:16, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"日本每年有多少次地震？\nEarthquakes per year?", a:"1,500+"},
+  {n:17, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"Pokemon(宝可梦)来自哪个国家？\nWhere is Pokemon from?", a:"日本 Japan"},
+  {n:18, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"在日本可以给服务员小费吗？\nCan you tip in Japan?", a:"不可以 No, it's rude"},
+  {n:19, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"日本的樱花在什么季节开放？\nWhen do cherry blossoms bloom?", a:"春天 Spring"},
+  {n:20, continent:"亚洲 Asia", country:"日本 Japan", color:"#C62828", q:"吃面发出声音是礼貌还是不礼貌？\nIs slurping polite?", a:"礼貌！Polite!"},
+  // ASIA - India (21-30)
+  {n:21, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"印度有多少种官方语言？\nHow many official languages?", a:"22种"},
+  {n:22, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"印度人见面怎么打招呼？\nHow to greet in India?", a:"双手合十说Namaste"},
+  {n:23, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"为什么很多印度人不吃牛肉？\nWhy no beef?", a:"牛是神圣的 Cows are sacred"},
+  {n:24, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"印度人发明了什么数字？\nWhat number did India invent?", a:"0 Zero"},
+  {n:25, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"印度最神圣的河流叫什么？\nIndia's holiest river?", a:"恒河 Ganges"},
+  {n:26, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"洒红节(Holi)是什么节日？\nWhat is Holi?", a:"颜色节 Festival of Colors"},
+  {n:27, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"为什么很多印度人吃素？\nWhy are many Indians vegetarian?", a:"宗教信仰 Religious beliefs"},
+  {n:28, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"印度发明了什么棋类游戏？\nWhat board game from India?", a:"象棋 Chess"},
+  {n:29, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"排灯节(Diwali)像中国的什么节日？\nDiwali is like?", a:"春节 Chinese New Year"},
+  {n:30, continent:"亚洲 Asia", country:"印度 India", color:"#C62828", q:"在印度能用左手递东西吗？\nCan you use left hand?", a:"不能 No, it's considered unclean"},
+  // AFRICA - Egypt (31-40)
+  {n:31, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"金字塔有多少年历史？\nHow old are pyramids?", a:"约4,500年"},
+  {n:32, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"在埃及用哪只手吃饭？\nWhich hand to eat with?", a:"右手 Right hand"},
+  {n:33, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"古埃及人用什么文字？\nAncient Egyptian writing?", a:"象形文字 Hieroglyphics"},
+  {n:34, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"埃及的首都是哪里？\nCapital of Egypt?", a:"开罗 Cairo"},
+  {n:35, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"尼罗河有多长？\nHow long is the Nile?", a:"6,650公里"},
+  {n:36, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"古埃及人发明了什么纸？\nWhat paper did Egypt invent?", a:"纸莎草纸 Papyrus"},
+  {n:37, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"在埃及斋月白天能公开吃东西吗？\nEat publicly during Ramadan?", a:"不能 No"},
+  {n:38, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"埃及人见面除了握手还做什么？\nBesides handshake?", a:"亲脸颊 Kiss cheeks"},
+  {n:39, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"纸莎草纸是谁发明的？\nWho invented papyrus?", a:"古埃及人 Ancient Egyptians"},
+  {n:40, continent:"非洲 Africa", country:"埃及 Egypt", color:"#FF8F00", q:"鹰嘴豆泥用什么蘸着吃？\nWhat to dip hummus with?", a:"大饼 Pita"},
+  // AFRICA - Kenya (41-50)
+  {n:41, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"肯尼亚说什么语言？\nLanguage of Kenya?", a:"斯瓦希里语+英语"},
+  {n:42, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"非洲五大动物是哪五种？\nName the Big Five?", a:"狮子、大象、犀牛、豹、水牛"},
+  {n:43, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"Jambo是什么意思？\nWhat does Jambo mean?", a:"你好 Hello"},
+  {n:44, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"肯尼亚的首都是哪里？\nCapital of Kenya?", a:"内罗毕 Nairobi"},
+  {n:45, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"Jambo是什么语言？\nWhat language is Jambo?", a:"斯瓦希里语 Swahili"},
+  {n:46, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"赤道穿过肯尼亚吗？\nDoes the equator cross Kenya?", a:"是的 Yes!"},
+  {n:47, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"马赛族以什么舞蹈出名？\nFamous Maasai dance?", a:"跳跃舞 Jumping dance"},
+  {n:48, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"用手指指人在肯尼亚礼貌吗？\nIs pointing polite?", a:"不礼貌 No, use whole hand"},
+  {n:49, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"乌伽黎(ugali)是用什么做的？\nWhat is ugali made of?", a:"玉米 Corn"},
+  {n:50, continent:"非洲 Africa", country:"肯尼亚 Kenya", color:"#FF8F00", q:"动物大迁徙有多少只动物？\nHow many in Great Migration?", a:"约200万 ~2 million"},
+  // AFRICA - South Africa (51-60)
+  {n:51, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"南非有几种官方语言？\nHow many official languages?", a:"11种"},
+  {n:52, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"南非有几个首都？\nHow many capitals?", a:"3个"},
+  {n:53, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"Sawubona是什么意思？\nWhat does Sawubona mean?", a:"我看见你了 I see you"},
+  {n:54, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"南非的国旗有几种颜色？\nColors in SA flag?", a:"6种"},
+  {n:55, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"Nelson Mandela为什么出名？\nWhy is Mandela famous?", a:"反对种族歧视 Fought against racism"},
+  {n:56, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"Sawubona的字面意思是什么？\nLiteral meaning of Sawubona?", a:"我看见你了 I see you"},
+  {n:57, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"南非braai和什么活动很像？\nBraai is similar to?", a:"BBQ烧烤聚会"},
+  {n:58, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"南非为什么叫彩虹之国？\nWhy Rainbow Nation?", a:"有很多不同文化的人"},
+  {n:59, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"路易波士茶来自哪里？\nWhere is rooibos from?", a:"南非 South Africa"},
+  {n:60, continent:"非洲 Africa", country:"南非 South Africa", color:"#FF8F00", q:"南非的三步握手是什么意思？\n3-step handshake?", a:"表示友谊和尊重 Friendship & respect"},
+  // EUROPE - France (61-70)
+  {n:61, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"法国人见面怎么打招呼？\nHow do French greet?", a:"亲脸颊 Kiss cheeks (la bise)"},
+  {n:62, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"法国的首都是哪里？\nCapital?", a:"巴黎 Paris"},
+  {n:63, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"埃菲尔铁塔有多高？\nHow tall is Eiffel Tower?", a:"324米"},
+  {n:64, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"在法国需要催服务员吗？\nShould you rush waiters?", a:"不要！Don't!"},
+  {n:65, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"法国有多少种奶酪？\nHow many cheeses?", a:"400多种 400+"},
+  {n:66, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"法国人午餐一般吃多久？\nHow long for lunch?", a:"1-2小时"},
+  {n:67, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"蒙娜丽莎在哪个博物馆？\nWhere is Mona Lisa?", a:"卢浮宫 Louvre"},
+  {n:68, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"在法国需要给小费吗？\nMust you tip?", a:"不是必须的 Not required"},
+  {n:69, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"法国每天卖多少根法棍？\nBaguettes sold daily?", a:"3000万根 30 million"},
+  {n:70, continent:"欧洲 Europe", country:"法国 France", color:"#1565C0", q:"面包应该放在哪里？\nWhere to put bread?", a:"桌上 On the table, not plate"},
+  // EUROPE - Italy (71-80)
+  {n:71, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"意大利的形状像什么？\nItaly shaped like?", a:"靴子 A boot"},
+  {n:72, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"意面有多少种形状？\nHow many pasta shapes?", a:"350多种 350+"},
+  {n:73, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"什么时候不能在咖啡里加牛奶？\nNo milk in coffee when?", a:"早上以后 After morning"},
+  {n:74, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"在意大利怎么说"你好"？\nHello in Italian?", a:"Ciao!"},
+  {n:75, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"罗马斗兽场能容纳多少人？\nColosseum capacity?", a:"5万人 50,000"},
+  {n:76, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"比萨斜塔倾斜了多少度？\nLeaning Tower angle?", a:"约4度 ~4 degrees"},
+  {n:77, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"文艺复兴从哪个国家开始？\nWhere did Renaissance start?", a:"意大利 Italy"},
+  {n:78, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"能在披萨上加菠萝吗？\nPineapple on pizza?", a:"意大利人会生气！Italians say NO!"},
+  {n:79, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"罗马有多少年历史？\nHow old is Rome?", a:"2,700年"},
+  {n:80, continent:"欧洲 Europe", country:"意大利 Italy", color:"#1565C0", q:"意大利人说话时喜欢用什么？\nItalians talk with?", a:"手势 Hand gestures"},
+  // EUROPE - UK (81-90)
+  {n:81, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"英国人最爱做什么？\nBritish love to?", a:"排队 Queue!"},
+  {n:82, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"英国人每天喝多少杯茶？\nCups of tea per day?", a:"1.65亿 165 million"},
+  {n:83, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"哈利波特的作者是哪国人？\nHP author's nationality?", a:"英国人 British"},
+  {n:84, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"在英国开车靠哪边？\nDrive on which side?", a:"左边 Left"},
+  {n:85, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"在英国最安全的聊天话题是什么？\nSafest chat topic?", a:"天气 Weather"},
+  {n:86, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"英国有国王还是总统？\nKing or President?", a:"国王 King"},
+  {n:87, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"在英国什么行为最重要？\nMost important behavior?", a:"排队！说Please/Thank you"},
+  {n:88, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"大本钟在哪个城市？\nWhere is Big Ben?", a:"伦敦 London"},
+  {n:89, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"英式早餐里有什么？\nFull English breakfast?", a:"蛋、培根、香肠、豆子、吐司..."},
+  {n:90, continent:"欧洲 Europe", country:"英国 UK", color:"#1565C0", q:"下午茶通常几点？\nAfternoon tea time?", a:"下午3-5点"},
+  // AMERICAS - USA (91-100)
+  {n:91, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"美国的首都是哪里？\nCapital of USA?", a:"华盛顿DC (不是纽约!)"},
+  {n:92, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"在餐厅要给多少小费？\nHow much to tip?", a:"15-20%"},
+  {n:93, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"自由女神是谁送的？\nWho gifted Statue of Liberty?", a:"法国 France"},
+  {n:94, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"美国有官方语言吗？\nOfficial language?", a:"没有！None!"},
+  {n:95, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"美国有多少个州？\nHow many states?", a:"50个"},
+  {n:96, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"唐人街说明了什么？\nWhat does Chinatown show?", a:"美国是移民国家"},
+  {n:97, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"在美国可以穿鞋进别人家吗？\nShoes indoors?", a:"一般可以 Usually yes"},
+  {n:98, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"美国发明了什么饮料？\nFamous US beverage?", a:"可口可乐 Coca-Cola"},
+  {n:99, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"感恩节吃什么？\nThanksgiving food?", a:"烤火鸡 Roast turkey"},
+  {n:100, continent:"美洲 Americas", country:"美国 USA", color:"#2E7D32", q:"美国人见面怎么打招呼？\nHow Americans greet?", a:"握手+微笑 Handshake + smile"},
+  // AMERICAS - Mexico (101-110)
+  {n:101, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"巧克力是谁发明的？\nWho invented chocolate?", a:"阿兹特克人 Aztecs"},
+  {n:102, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"墨西哥有几种颜色的玉米？\nColors of corn?", a:"59种"},
+  {n:103, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"亡灵节是恐怖的节日吗？\nIs Day of Dead scary?", a:"不是！纪念亲人 No, it celebrates family"},
+  {n:104, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"墨西哥人午餐是几点？\nMexican lunch time?", a:"下午2-4点"},
+  {n:105, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"墨西哥城建在什么上面？\nMexico City built on?", a:"古代湖泊 Ancient lake"},
+  {n:106, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"约了9点，墨西哥朋友几点到？\nIf meeting at 9?", a:"可能9:30 Maybe 9:30"},
+  {n:107, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"在墨西哥怎么说你好？\nHello in Mexico?", a:"&iexcl;Hola!"},
+  {n:108, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"墨西哥的国旗上有什么动物？\nAnimal on flag?", a:"鹰 Eagle (叼着蛇站在仙人掌上)"},
+  {n:109, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"Taco是什么？\nWhat is a taco?", a:"玉米饼卷肉和蔬菜 Corn tortilla with fillings"},
+  {n:110, continent:"美洲 Americas", country:"墨西哥 Mexico", color:"#2E7D32", q:"墨西哥的两大古文明是？\nTwo ancient civilizations?", a:"玛雅和阿兹特克 Maya & Aztec"},
+  // AMERICAS - Brazil (111-120)
+  {n:111, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"巴西说什么语言？\nLanguage of Brazil?", a:"葡萄牙语 Portuguese (NOT Spanish!)"},
+  {n:112, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"巴西首都是哪里？\nCapital?", a:"巴西利亚 Brasilia (NOT Rio!)"},
+  {n:113, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"亚马逊雨林产生多少氧气？\nAmazon oxygen?", a:"20%"},
+  {n:114, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"巴西人见面亲几次脸颊？\nHow many cheek kisses?", a:"两次 Two"},
+  {n:115, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"在巴西竖大拇指是什么意思？\nThumbs up means?", a:"OK/好的"},
+  {n:116, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"在巴西千万不能说什么不好？\nNever criticize?", a:"足球 Football/Soccer!"},
+  {n:117, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"巴西嘉年华是什么？\nWhat is Carnival?", a:"世界最大的派对 World's biggest party"},
+  {n:118, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"巴西是世界第几大咖啡产国？\nCoffee ranking?", a:"第一！#1"},
+  {n:119, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"巴西烤肉怎么吃？\nHow is churrasco served?", a:"服务员拿大串肉走来走去"},
+  {n:120, continent:"美洲 Americas", country:"巴西 Brazil", color:"#2E7D32", q:"亚马逊雨林被称为什么？\nAmazon is called?", a:"地球之肺 Lungs of the Earth"},
+];
+
+// Build card pages (8 cards per page)
+const container = document.getElementById('card-pages');
+
+const CARDS_PER_PAGE = 8;
+const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE);
+
+for (let p = 0; p < totalPages; p++) {
+  const page = document.createElement('div');
+  page.className = 'card-page page-break';
+  const grid = document.createElement('div');
+  grid.className = 'card-grid';
+
+  for (let i = 0; i < CARDS_PER_PAGE; i++) {
+    const idx = p * CARDS_PER_PAGE + i;
+    if (idx >= cards.length) {
+      // empty placeholder
+      const empty = document.createElement('div');
+      empty.className = 'quiz-card';
+      empty.style.borderColor = '#eee';
+      grid.appendChild(empty);
+      continue;
+    }
+    const c = cards[idx];
+    const qLines = c.q.split('\n');
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `
+      <span class="scissors-tl">&#9986;</span>
+      <span class="scissors-tr">&#9986;</span>
+      <span class="scissors-bl">&#9986;</span>
+      <span class="scissors-br">&#9986;</span>
+      <div class="card-top">
+        <div class="card-header" style="background:${c.color}">
+          <span>${c.continent} &middot; ${c.country}</span>
+          <span class="card-number">#${c.n}</span>
+        </div>
+        <div class="card-question">${qLines.map(l => l).join('<br>')}</div>
+      </div>
+      <div class="card-bottom">
+        <div class="card-reward">&#11088; 答对了！Correct! 获得贴纸/stamp &#9744;</div>
+        <div class="card-answer">&#128273; ${c.a}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+  page.appendChild(grid);
+  container.appendChild(page);
+
+}
+
+// We need a final page break before reward page
+// Cards are inserted into #card-pages div
+</script>
+
+<!-- ==================== REWARD TRACKING PAGE ==================== -->
+<div class="reward-page">
+  <h1>&#127942; 答题成绩单</h1>
+  <h2>Quiz Reward Tracker</h2>
+
+  <div class="name-line">
+    学生姓名 Student Name: <span>&nbsp;</span>
+  </div>
+  <div class="name-line" style="margin-bottom:40px;">
+    日期 Date: <span>&nbsp;</span>
+  </div>
+
+  <div class="stars-grid">
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+    <div class="star-slot">&#9734;</div>
+  </div>
+
+  <div style="background:#FFF8E1; border:2px solid #FFB300; border-radius:12px; padding:20px 30px; width:100%; max-width:5.5in; text-align:center; margin-bottom:20px;">
+    <p style="font-size:16px; font-weight:700; margin-bottom:8px;">奖励 Rewards</p>
+    <p style="font-size:14px; line-height:2;">
+      &#11088;&#11088;&#11088;&#11088;&#11088; = 一个特别stamp Special stamp<br>
+      &#11088; &times; 10 = 小奖品 Small prize<br>
+      &#11088; &times; 15 = 大奖品 Big prize<br>
+      &#11088; &times; 20 = 超级冠军！Super Champion!
+    </p>
+  </div>
+
+  <div class="completion-line">
+    &#127881; 恭喜你！你答对了 <span>&nbsp;</span> 题！
+  </div>
+  <div class="completion-line" style="font-size:16px; color:#666; margin-top:8px;">
+    Congratulations! You got <span>&nbsp;</span> correct!
+  </div>
+</div>
+
+</body>
+</html>
