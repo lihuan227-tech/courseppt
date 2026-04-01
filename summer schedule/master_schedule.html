@@ -111,7 +111,7 @@
 
   /* Weekly grid */
   .week-grid {
-    display: grid; grid-template-columns: 80px repeat(5, 1fr);
+    display: grid; grid-template-columns: 80px repeat(6, 1fr);
     border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px;
   }
   .grid-header {
@@ -176,7 +176,7 @@
     .sched-table th, .sched-table td { padding: 7px 8px; font-size: 13px; }
     .level-name { font-size: 13px; }
     .subject-header { font-size: 16px; }
-    .week-grid { grid-template-columns: 55px repeat(5, 1fr); }
+    .week-grid { grid-template-columns: 55px repeat(6, 1fr); }
     .grid-header { font-size: 11px; }
     .slot-block { font-size: 10px; }
   }
@@ -273,6 +273,24 @@
           <td><span class="day">Tue / Thu</span> 5:00–6:00</td>
           <td><span class="grade-tag">3rd</span> <span class="grade-tag">4th–5th</span></td>
         </tr>
+        <tr class="english-row" data-subject="english" data-id="en67" data-days="Sun" data-start="18" data-end="19.5" data-name="English L6 & 7 (Online)">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English L6 & 7 (Online)</span><span class="course-desc">Reading & Writing enrichment, reading comprehension, intro SAT/ACT strategies</span></td>
+          <td><span class="day">Sun</span> 6:00–7:30 PM</td>
+          <td><span class="grade-tag">6th</span> <span class="grade-tag">7th</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en78" data-days="Fri" data-start="19" data-end="20.5" data-name="English L7 & 8 (Online)">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English L7 & 8 (Online)</span><span class="course-desc">Creative & analytical writing, reading comprehension, foundational SAT/ACT prep</span></td>
+          <td><span class="day">Fri</span> 7:00–8:30 PM</td>
+          <td><span class="grade-tag">7th</span> <span class="grade-tag">8th</span></td>
+        </tr>
+        <tr class="english-row" data-subject="english" data-id="en910" data-days="Sun" data-start="16.5" data-end="18" data-name="English L9 & 10 (Online)">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name english">English L9 & 10 (Online)</span><span class="course-desc">SAT/ACT intensive prep, analytical reading & writing, college application essays</span></td>
+          <td><span class="day">Sun</span> 4:30–6:00 PM</td>
+          <td><span class="grade-tag">9th</span> <span class="grade-tag">10th</span></td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -343,7 +361,7 @@
 function buildPrintHTML() {
   var css = "* { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: 'Noto Sans SC', sans-serif; padding: 20px; }"
     + ".my-schedule-title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 16px; }"
-    + ".week-grid { display: grid; grid-template-columns: 80px repeat(5, 1fr); border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px; }"
+    + ".week-grid { display: grid; grid-template-columns: 80px repeat(6, 1fr); border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 14px; }"
     + ".grid-header { font-size: 13px; font-weight: 700; color: #fff; background: #555; padding: 8px 4px; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
     + ".grid-header.time-col { background: #777; }"
     + ".grid-cell { border: 1px solid #eee; padding: 4px; min-height: 54px; }"
@@ -440,15 +458,18 @@ function downloadCanvas(canvas) {
   link.click();
 }
 
-const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
-const DAY_LABELS = { Mon:'周一 Mon', Tue:'周二 Tue', Wed:'周三 Wed', Thu:'周四 Thu', Fri:'周五 Fri' };
-const TIME_SLOTS = [{ start:16, end:17, label:'4:00–5:00' }, { start:17, end:18, label:'5:00–6:00' }];
+const BASE_DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+const DAY_LABELS = { Mon:'周一 Mon', Tue:'周二 Tue', Wed:'周三 Wed', Thu:'周四 Thu', Fri:'周五 Fri', Sat:'周六 Sat', Sun:'周日 Sun' };
 const COLORS = { chinese:'#FF8C00', english:'#1976d2', math:'#388e3c' };
 const TUITION_PER_SESSION = { chinese: 120, english: 160, math: 160 };
 
 let selected = { chinese: null, english: null, math: null };
 
-function formatTime(h) { return (h > 12 ? h-12 : h) + ':00'; }
+function formatTime(h) {
+  var hour = Math.floor(h > 12 ? h - 12 : h);
+  var min = Math.round((h % 1) * 60);
+  return hour + ':' + (min < 10 ? '0' : '') + min;
+}
 function formatRange(s, e) { return formatTime(s) + '–' + formatTime(e); }
 
 // Row click handler
@@ -501,44 +522,53 @@ function buildGrid(courses, conflicts) {
   const grid = document.getElementById('weekGrid');
   grid.innerHTML = '';
 
+  // Dynamic days: always show Mon-Fri, add Sat/Sun only if courses exist on those days
+  const showDays = [...BASE_DAYS];
+  if (courses.some(c => c.days.includes('Sat'))) showDays.push('Sat');
+  if (courses.some(c => c.days.includes('Sun'))) showDays.push('Sun');
+
+  // Dynamic time slots: one row per unique (start, end) from selected courses
+  const slotMap = new Map();
+  courses.forEach(c => {
+    const key = c.start + '-' + c.end;
+    if (!slotMap.has(key)) {
+      slotMap.set(key, { start: c.start, end: c.end, label: formatRange(c.start, c.end) });
+    }
+  });
+  const timeSlots = [...slotMap.values()].sort((a, b) => a.start - b.start);
+
+  grid.style.gridTemplateColumns = '80px repeat(' + showDays.length + ', 1fr)';
+
   const corner = document.createElement('div');
   corner.className = 'grid-header time-col';
   corner.textContent = 'PM';
   grid.appendChild(corner);
 
-  DAYS.forEach(day => {
+  showDays.forEach(day => {
     const h = document.createElement('div');
     h.className = 'grid-header';
     h.textContent = DAY_LABELS[day];
     grid.appendChild(h);
   });
 
-  const conflictCells = new Set();
-  conflicts.forEach(c => {
-    c.days.forEach(day => {
-      TIME_SLOTS.forEach(slot => {
-        const os = Math.max(c.a.start, c.b.start);
-        if (slot.start >= os && slot.start < Math.min(c.a.end, c.b.end)) {
-          conflictCells.add(day + '-' + slot.start);
-        }
-      });
-    });
-  });
+  // Build conflict set
+  const conflictIds = new Set();
+  conflicts.forEach(c => { conflictIds.add(c.a.id); conflictIds.add(c.b.id); });
 
-  TIME_SLOTS.forEach(slot => {
+  timeSlots.forEach(slot => {
     const timeCell = document.createElement('div');
     timeCell.className = 'grid-time';
     timeCell.textContent = slot.label;
     grid.appendChild(timeCell);
 
-    DAYS.forEach(day => {
+    showDays.forEach(day => {
       const cell = document.createElement('div');
       cell.className = 'grid-cell';
       courses.forEach(c => {
-        if (c.days.includes(day) && c.start <= slot.start && c.end > slot.start) {
+        if (c.days.includes(day) && c.start === slot.start && c.end === slot.end) {
           const block = document.createElement('div');
           block.className = 'slot-block ' + c.subject;
-          if (conflictCells.has(day + '-' + slot.start)) {
+          if (conflictIds.has(c.id)) {
             block.style.outline = '3px solid #d32f2f';
             block.style.outlineOffset = '-1px';
           }
@@ -590,16 +620,11 @@ function update() {
     totalHours += hrs;
     const price = TUITION_PER_SESSION[c.subject];
     perSessionTuition += price;
-    return '<div class="summary-item"><span class="summary-dot" style="background:' + COLORS[c.subject] + '"></span><strong>' + c.name + '</strong>&nbsp;&nbsp;' + c.days.join(' / ') + ' ' + formatRange(c.start, c.end) + '&nbsp;&nbsp;<span style="color:#999;font-size:12px;">$' + price + '/session</span></div>';
+    return '<div class="summary-item"><span class="summary-dot" style="background:' + COLORS[c.subject] + '"></span><strong>' + c.name + '</strong>&nbsp;&nbsp;' + c.days.join(' / ') + ' ' + formatRange(c.start, c.end) + '</div>';
   });
 
   let html = items.join('');
   html += '<div class="summary-total">每周总课时 Total: ' + totalHours + ' hours/week</div>';
-  html += '<div class="summary-total" style="border-top:none; padding-top:4px;">学费 Tuition: <span style="color:#d32f2f;">$' + perSessionTuition + '/session</span>';
-  if (courses.length > 1) {
-    html += '&nbsp;&nbsp;(' + courses.map(c => '$' + TUITION_PER_SESSION[c.subject]).join(' + ') + ')';
-  }
-  html += '<br><span style="font-size:12px; color:#777; font-weight:400;">× 报名 Session 数 · 例: 4 sessions = $' + (perSessionTuition * 4) + '</span></div>';
 
   if (conflicts.length > 0) {
     html += '<div class="summary-conflict">';
