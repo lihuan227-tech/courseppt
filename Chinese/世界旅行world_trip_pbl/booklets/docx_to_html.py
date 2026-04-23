@@ -240,10 +240,10 @@ final_out.append('''<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>探索亚洲 Explore Asia — Global Explorer Camp</title>
 <style>
-  @page { size: letter; margin: 0.5in; }
+  @page { size: 8.5in 11in; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: "KaiTi", "Noto Sans SC", "Kaiti SC", sans-serif; color: #333; line-height: 1.6; background: #f0f0f0; overflow: hidden; height: 100vh; }
-  .page { display: none; width: 8.5in; height: 11in; margin: 0 auto; padding: 0.5in; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); overflow-y: auto; position: relative; }
+  body { font-family: "KaiTi", "Noto Sans SC", "Kaiti SC", sans-serif; color: #333; line-height: 1.5; background: #f0f0f0; overflow: hidden; height: 100vh; }
+  .page { display: none; width: 7.5in; min-height: 10in; max-height: calc(100vh - 70px); margin: 0 auto; padding: 0.4in 0.5in; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); overflow-y: auto; position: relative; }
   .page.active { display: block; }
   .shaded { background: #DE2910; color: white; padding: 6px 12px; font-weight: bold; font-size: 14px; margin: 12px 0 6px; border-radius: 4px; }
   .shaded.japan { background: #BC002D; }
@@ -263,12 +263,16 @@ final_out.append('''<!DOCTYPE html>
   .nav button:hover { background: #E67E00; }
   .nav button:disabled { background: #999; cursor: not-allowed; }
   .nav .page-info { font-size: 16px; min-width: 100px; text-align: center; }
+  .flag-draw { border: 3px solid #333; border-radius: 4px; width: 100%; aspect-ratio: 3/2; margin: 8px 0; background: #fff; }
+  .trace-box { display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; border: 2px dashed #ccc; border-radius: 6px; font-size: 50px; color: #ddd; margin: 4px; background: #fefefe; }
+  .draw-box { border: 3px dashed #bbb; border-radius: 10px; min-height: 120px; margin: 8px 0; padding: 10px; background: #fefefe; color: #ccc; font-size: 13px; }
+  .map-placeholder { border: 2px solid #999; border-radius: 8px; min-height: 120px; background: #f0f8ff; margin: 8px 0; padding: 10px; text-align: center; color: #999; }
   @media screen {
     .page { margin-top: 10px; margin-bottom: 70px; }
   }
   @media print {
     .nav { display: none; }
-    .page { display: block !important; page-break-after: always; box-shadow: none; margin: 0; border-radius: 0; overflow: visible; width: 100%; height: auto; min-height: 10in; }
+    .page { display: block !important; page-break-after: always; box-shadow: none; margin: 0; padding: 0.5in; border-radius: 0; overflow: visible; width: 7.5in; height: auto; min-height: 10in; }
     body { background: #fff; overflow: visible; height: auto; }
   }
 </style>
