@@ -73,6 +73,50 @@ def dot(s,x,y,r,color):
     d=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x),Inches(y),Inches(r),Inches(r))
     d.fill.solid();d.fill.fore_color.rgb=color;d.line.fill.background()
 
+def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color):
+    """Museum-card style: colored header + big image + caption card."""
+    s=ns();bg(s,CREAM)
+    hb(s,f"{cat_emoji} {cat_cn}  ·  《{work_cn}》",color)
+    ib(s,0.5,0.95,9,3.5,img_lb)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
+    tb(s,0.7,4.6,4.5,0.4,work_en,sz=15,b=True,c=color)
+    tb(s,0.7,4.95,4.5,0.3,artist,sz=11,c=GRAY)
+    tb(s,5.3,4.62,4.2,0.75,fact,sz=12,c=DARK)
+    return s
+
+def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color):
+    """Like example_slide but without 《》 brackets — for instruments, dance types, etc."""
+    s=ns();bg(s,CREAM)
+    hb(s,f"{cat_emoji} {cat_cn}  ·  {name_cn}",color)
+    ib(s,0.5,0.95,9,3.5,img_lb)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
+    tb(s,0.7,4.6,4.5,0.4,name_en,sz=15,b=True,c=color)
+    tb(s,0.7,4.95,4.5,0.3,sub_label,sz=11,c=GRAY)
+    tb(s,5.3,4.62,4.2,0.75,fact,sz=12,c=DARK)
+    return s
+
+def type_overview_slide(emoji, name_cn, name_en, color, hint, subtypes):
+    """Category overview — grid of sub-types to introduce before examples."""
+    s=ns();bg(s,CREAM);hb(s,f"{emoji} {name_cn}  {name_en}",color)
+    tb(s,0.4,0.85,9,0.35,hint,sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+    cols = 3 if len(subtypes)<=6 else 4
+    rows = (len(subtypes)+cols-1)//cols
+    card_w = (9.4 - 0.15*(cols-1))/cols
+    card_h = 1.7 if rows<=2 else 1.45
+    y_start = 1.3 if rows<=2 else 1.25
+    y_step = card_h + 0.25 if rows<=2 else card_h + 0.2
+    for i,(sem,scn,sen) in enumerate(subtypes):
+        col=i%cols;row=i//cols
+        x=0.3+col*(card_w+0.15);y=y_start+row*y_step
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(card_w),Inches(card_h))
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2.5)
+        tb(s,x+0.1,y+0.1,card_w-0.2,0.55,sem,sz=30,c=color,a=PP_ALIGN.CENTER)
+        tb(s,x+0.1,y+0.75,card_w-0.2,0.4,scn,sz=17,b=True,c=DARK,a=PP_ALIGN.CENTER)
+        tb(s,x+0.1,y+1.15,card_w-0.2,0.3,sen,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+    return s
+
 def word_card_read(w,py,en,sent,img,color=MAGENTA):
     s=ns();bg(s,CREAM);hb(s,"👀 我会认  I Can Read",color)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(4.5),Inches(2.5))
@@ -212,67 +256,148 @@ for i,(em,cn,en,cl) in enumerate(forms):
 pn(s,n)
 
 # ============================================================
-# 7 PAINTING — art form detail
+# PAINTING 绘画 — overview + 5 example slides
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🎨 绘画  Painting",MAGENTA)
-tb(s,0.4,0.9,4.5,0.5,"用颜色和线条画画",sz=18,b=True,c=MAGENTA)
-tf=tb(s,0.4,1.5,4.5,3.2,"✏️ 铅笔画  Pencil",sz=14,c=DARK)
-ap(tf,"🖍️ 蜡笔画  Crayon",sz=14,c=DARK)
-ap(tf,"🖌️ 水彩画  Watercolor",sz=14,c=DARK)
-ap(tf,"🎨 油画  Oil Painting",sz=14,c=DARK)
-ap(tf,"",sz=8)
-ap(tf,"💡 不同工具画出不同感觉",sz=13,b=True,c=MAGENTA)
-ap(tf,"Different tools = different feelings!",sz=12,c=GRAY)
-ib(s,5.2,0.9,4.5,4.2,"📷 名画示例 (蒙娜丽莎/向日葵)")
-pn(s,n)
+s=type_overview_slide("🎨","绘画","Painting",MAGENTA,
+    "绘画有很多种！看看你认识哪些？",
+    [("🖼️","油画","Oil Painting"),("🖌️","水墨画","Chinese Ink"),
+     ("🎨","水彩画","Watercolor"),("🖍️","蜡笔画","Crayon"),
+     ("✏️","素描","Pencil Sketch"),("👶","儿童画","Kids' Art")]);n+=1;pn(s,n)
+
+s=example_slide("🎨","油画","蒙娜丽莎","Mona Lisa",
+    "达·芬奇 Leonardo da Vinci · 约 1503 年 · 法国卢浮宫",
+    "她的微笑是世界上最有名的微笑！\nThe most famous smile in the world!",
+    "📷 蒙娜丽莎 Mona Lisa",MAGENTA);n+=1;pn(s,n)
+
+s=example_slide("🎨","油画","向日葵","Sunflowers",
+    "梵高 Vincent van Gogh · 1888 年 · 荷兰",
+    "亮黄色 + 粗笔触 = 像阳光一样温暖！\nBright yellow strokes = warm like sunshine!",
+    "📷 梵高向日葵 Van Gogh Sunflowers",MAGENTA);n+=1;pn(s,n)
+
+s=example_slide("🖌️","水墨画","虾","Shrimp",
+    "齐白石 Qi Baishi · 中国 · 近代",
+    "只用黑色墨水，虾就像活的一样游！\nJust black ink — shrimp look alive!",
+    "📷 齐白石 虾 Qi Baishi Shrimp",MAGENTA);n+=1;pn(s,n)
+
+s=example_slide_generic("🎨","水彩画","花园一角","A Corner of the Garden",
+    "水彩画示例 Watercolor example",
+    "水彩颜色透明，感觉很温柔。\nWatercolor is transparent & gentle.",
+    "📷 水彩画 Watercolor",MAGENTA);n+=1;pn(s,n)
+
+s=example_slide_generic("🖍️","蜡笔画 / 儿童画","我的家","My Family",
+    "小朋友画的 A kid's drawing",
+    "简单的线条和颜色，也是很棒的艺术！\nSimple lines + colors = great art too!",
+    "📷 儿童蜡笔画 Kids' crayon art",MAGENTA);n+=1;pn(s,n)
 
 # ============================================================
-# 8 MUSIC
+# MUSIC 音乐 — overview + 4 example slides
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🎵 音乐  Music",SKY)
-tb(s,0.4,0.9,4.5,0.5,"用声音来表达",sz=18,b=True,c=SKY)
-tf=tb(s,0.4,1.5,4.5,3.2,"🎹 钢琴  Piano",sz=14,c=DARK)
-ap(tf,"🎸 吉他  Guitar",sz=14,c=DARK)
-ap(tf,"🥁 鼓  Drums",sz=14,c=DARK)
-ap(tf,"🎤 唱歌  Singing",sz=14,c=DARK)
-ap(tf,"",sz=8)
-ap(tf,"💡 快音乐 = 开心",sz=13,b=True,c=SKY)
-ap(tf,"💡 慢音乐 = 难过",sz=13,b=True,c=SKY)
-ib(s,5.2,0.9,4.5,4.2,"📷 乐器 / 演出现场")
-pn(s,n)
+s=type_overview_slide("🎵","音乐","Music",SKY,
+    "音乐可以用不同的乐器 + 声音！",
+    [("🎹","钢琴","Piano"),("🎻","小提琴","Violin"),
+     ("🪕","古筝","Guzheng"),("🥁","鼓","Drums"),
+     ("🎤","唱歌","Singing"),("🎺","小号","Trumpet")]);n+=1;pn(s,n)
+
+s=example_slide_generic("🎹","钢琴 Piano","《小星星》","Twinkle Twinkle Little Star",
+    "莫扎特改编 Mozart variations",
+    "钢琴有 88 个键。白键 + 黑键 = 任何歌都能弹！\n88 keys = play any song!",
+    "📷 钢琴 Piano",SKY);n+=1;pn(s,n)
+
+s=example_slide_generic("🎻","小提琴 Violin","《梁祝》","Butterfly Lovers",
+    "中国著名小提琴协奏曲",
+    "小提琴只有 4 根弦，却能唱出故事！\n4 strings tell a whole love story!",
+    "📷 小提琴 Violin",SKY);n+=1;pn(s,n)
+
+s=example_slide_generic("🪕","古筝 Guzheng","中国古典音乐","Chinese Classical",
+    "中国传统乐器 Traditional Chinese",
+    "古筝有 21 根弦，声音像流水一样美。\n21 strings — sounds like flowing water.",
+    "📷 古筝 Guzheng",SKY);n+=1;pn(s,n)
+
+s=example_slide_generic("🥁","鼓 Drums","咚咚咚！","Boom Boom Boom!",
+    "打击乐 Percussion",
+    "鼓声又响又有力，像心跳一样！\nDrums = loud & strong, like a heartbeat!",
+    "📷 鼓 Drums",SKY);n+=1;pn(s,n)
 
 # ============================================================
-# 9 DANCE
+# DANCE 舞蹈 — overview + 3 example slides
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"💃 舞蹈  Dance",CORAL)
-tb(s,0.4,0.9,4.5,0.5,"用身体来表达",sz=18,b=True,c=CORAL)
-tf=tb(s,0.4,1.5,4.5,3.2,"🩰 芭蕾  Ballet",sz=14,c=DARK)
-ap(tf,"🪭 中国舞  Chinese Dance",sz=14,c=DARK)
-ap(tf,"🕺 街舞  Hip-hop",sz=14,c=DARK)
-ap(tf,"💫 现代舞  Modern Dance",sz=14,c=DARK)
-ap(tf,"",sz=8)
-ap(tf,"💡 动作告诉大家心情",sz=13,b=True,c=CORAL)
-ap(tf,"Movement = emotion!",sz=12,c=GRAY)
-ib(s,5.2,0.9,4.5,4.2,"📷 舞蹈表演")
-pn(s,n)
+s=type_overview_slide("💃","舞蹈","Dance",CORAL,
+    "舞蹈用身体讲故事！",
+    [("🩰","芭蕾","Ballet"),("🪭","中国舞","Chinese Dance"),
+     ("🕺","街舞","Hip-hop"),("💫","现代舞","Modern"),
+     ("🎎","民族舞","Folk"),("🎭","踢踏舞","Tap")]);n+=1;pn(s,n)
+
+s=example_slide("🩰","芭蕾","天鹅湖","Swan Lake",
+    "柴可夫斯基 Tchaikovsky · 1877 年",
+    "跳舞的人像天鹅一样优雅！\nDancers move like graceful swans!",
+    "📷 天鹅湖 Swan Lake ballet",CORAL);n+=1;pn(s,n)
+
+s=example_slide_generic("🪭","中国古典舞","扇子舞","Fan Dance",
+    "中国民族舞 Chinese folk",
+    "扇子一开一合，像花一样漂亮！\nFans open & close like blooming flowers!",
+    "📷 扇子舞 Fan Dance",CORAL);n+=1;pn(s,n)
+
+s=example_slide_generic("🕺","街舞","Hip-hop","Street Dance",
+    "现代都市舞蹈 Modern urban",
+    "快节奏 + 酷动作 = 自由表达！\nFast beats + cool moves = freedom!",
+    "📷 街舞 Hip-hop",CORAL);n+=1;pn(s,n)
 
 # ============================================================
-# 10 OTHER FORMS
+# SCULPTURE 雕塑 — overview + 2 example slides
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🎭 其他艺术形式  More Art Forms",PURPLE)
-others=[
-    ("🗿","雕塑 Sculpture","用石头、木头、黏土做成的立体作品",GREEN_L),
-    ("🎭","戏剧 Drama","用表演讲故事",PURPLE),
-    ("🎬","电影 Film","用镜头和演员讲故事",YELLOW),
-]
-for i,(em,nm,d,cl) in enumerate(others):
-    y=0.9+i*1.4
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(y),Inches(9.4),Inches(1.25))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,0.45,y+0.2,1.0,0.9,em,sz=38,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,1.6,y+0.15,4.5,0.5,nm,sz=20,b=True,c=cl)
-    tb(s,1.6,y+0.65,7.8,0.6,d,sz=14,c=DARK)
-pn(s,n)
+s=type_overview_slide("🗿","雕塑","Sculpture",GREEN_L,
+    "雕塑是立体的艺术，用石头/木头/黏土做！",
+    [("🗿","石雕","Stone"),("🪵","木雕","Wood"),
+     ("🏺","陶塑","Clay"),("🧊","冰雕","Ice"),
+     ("🎨","泥塑","Ceramic"),("🔩","金属","Metal")]);n+=1;pn(s,n)
+
+s=example_slide("🗿","雕塑","大卫","David",
+    "米开朗基罗 Michelangelo · 1504 年 · 意大利",
+    "用大理石做的，5米多高！\nMarble, over 17 feet tall!",
+    "📷 大卫雕像 Statue of David",GREEN_L);n+=1;pn(s,n)
+
+s=example_slide_generic("🏺","雕塑","兵马俑","Terracotta Warriors",
+    "中国秦朝 · 2000 多年前",
+    "8000 多个泥塑士兵，每一个脸都不一样！\n8,000+ soldiers, each face is different!",
+    "📷 兵马俑 Terracotta Warriors",GREEN_L);n+=1;pn(s,n)
+
+# ============================================================
+# DRAMA 戏剧 — overview + 2 example slides
+# ============================================================
+s=type_overview_slide("🎭","戏剧","Drama",PURPLE,
+    "戏剧 = 演员 + 故事 + 舞台！",
+    [("🎭","京剧","Peking Opera"),("🎼","音乐剧","Musical"),
+     ("🎪","话剧","Spoken Drama"),("🎠","木偶戏","Puppet"),
+     ("🎬","歌剧","Opera"),("🎠","皮影","Shadow Play")]);n+=1;pn(s,n)
+
+s=example_slide_generic("🎭","京剧","《霸王别姬》","Farewell My Concubine",
+    "中国传统戏曲 · 200 多年历史",
+    "演员画脸谱，不同颜色 = 不同人物！\nPainted faces — each color = a character!",
+    "📷 京剧脸谱 Peking Opera",PURPLE);n+=1;pn(s,n)
+
+s=example_slide("🎼","音乐剧","狮子王","The Lion King",
+    "百老汇音乐剧 · 1997 年首演",
+    "唱歌 + 跳舞 + 演戏 = 音乐剧！\nSing + dance + act = musical!",
+    "📷 狮子王音乐剧 Lion King",PURPLE);n+=1;pn(s,n)
+
+# ============================================================
+# FILM 电影 — overview + 2 example slides
+# ============================================================
+s=type_overview_slide("🎬","电影","Film",YELLOW,
+    "电影用镜头讲故事！",
+    [("🎞️","动画","Animation"),("🎬","真人","Live Action"),
+     ("🦸","超级英雄","Superhero"),("🎠","儿童","Kids"),
+     ("🎪","纪录片","Documentary"),("🎭","短片","Short Film")]);n+=1;pn(s,n)
+
+s=example_slide("🎞️","动画电影","哪吒之魔童降世","Ne Zha",
+    "中国动画 · 2019 年",
+    '"我命由我不由天！" 中国动画很精彩！\nAmazing Chinese animation!',
+    "📷 哪吒 Ne Zha",YELLOW);n+=1;pn(s,n)
+
+s=example_slide("🎞️","动画电影","功夫熊猫","Kung Fu Panda",
+    "梦工厂 DreamWorks · 2008 年",
+    "熊猫也可以当功夫大师！\nEven a panda can be a kung fu master!",
+    "📷 功夫熊猫 Kung Fu Panda",YELLOW);n+=1;pn(s,n)
 
 # ============================================================
 # 11 ART IN DAILY LIFE — Is this art?
