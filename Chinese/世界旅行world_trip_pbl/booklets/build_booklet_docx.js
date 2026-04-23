@@ -150,25 +150,8 @@ function traceRow(chars, colorHex) {
   });
 }
 
-// Flag placeholder box — a table cell with a solid border and a fixed height
-function flagBox(innerChildren = []) {
-  const solid = { style: BorderStyle.SINGLE, size: 18, color: '333333' };
-  return new Table({
-    alignment: AlignmentType.CENTER,
-    width: { size: 3600, type: WidthType.DXA }, // 2.5" wide
-    columnWidths: [3600],
-    borders: allBorders('none'),
-    rows: [new TableRow({
-      height: { value: 2400, rule: 'exact' }, // 1.67" tall (3:2 aspect)
-      children: [new TableCell({
-        width: { size: 3600, type: WidthType.DXA },
-        borders: { top: solid, bottom: solid, left: solid, right: solid },
-        verticalAlign: 'center',
-        children: innerChildren.length ? innerChildren : [new Paragraph({ children: [new TextRun('')] })],
-      })],
-    })],
-  });
-}
+// Empty paragraph — used to separate consecutive tables so Word doesn't merge them
+function emptyP() { return new Paragraph({ children: [new TextRun('')] }); }
 
 // Draw & Write box — large bordered empty area for student drawing
 function drawWriteBox(placeholder) {
@@ -296,8 +279,9 @@ const matchTable = new Table({
 });
 children.push(matchTable);
 
-children.push(p(''));
+children.push(emptyP());
 children.push(shadedBar('⭕ 描一描 Trace', COLOR_ACCENT));
+children.push(emptyP());
 // 2 trace images side by side in a 2-column table
 const traceAsia = new Table({
   alignment: AlignmentType.CENTER,
@@ -318,7 +302,7 @@ const traceAsia = new Table({
   })],
 });
 children.push(traceAsia);
-children.push(p(''));
+children.push(emptyP());
 children.push(shadedBar('⭕ 圈一圈 Circle the Correct Answer', COLOR_ACCENT));
 children.push(pBold('1. 亚洲有多少个国家？ How many countries are there in Asia?'));
 children.push(p('   A. 20     B. 48     C. 100'));
@@ -326,7 +310,7 @@ children.push(pBold('2. 亚洲是世界上最______的洲。 Asia is the ______ 
 children.push(p('   A. 小 smallest     B. 冷 coldest     C. 大 largest'));
 children.push(pBold('3. 世界上最高的山是？ What is the tallest mountain in the world?'));
 children.push(p('   A. 富士山 Mt. Fuji     B. 珠穆朗玛峰 Mt. Everest     C. 黄山 Mt. Huang'));
-children.push(p(''));
+children.push(emptyP());
 children.push(shadedBar('🌍 涂色 Color the Continents', COLOR_ACCENT));
 children.push(pBold('在下面的世界地图上，给七大洲涂上不同的颜色'));
 children.push(p('🔴 亚洲 Asia = 红色 Red     🟡 非洲 Africa = 黄色 Yellow     🔵 欧洲 Europe = 蓝色 Blue'));
@@ -336,10 +320,13 @@ children.push(pageBreak());
 // ------------------ PAGE 3 · CHINA (1) ------------------
 children.push(countryHeading('🇨🇳', '中国', 'China', COLOR_CHINA));
 children.push(shadedBar('涂一涂: 中国国旗 Color the Flag', COLOR_CHINA));
+children.push(emptyP());
 children.push(p('🔴 红色 Red + ⭐ 黄色 Yellow（五颗星）'));
 children.push(imgPara(path.join(ASSETS, 'img_6.jpeg'), 220));
+children.push(emptyP());
 
 children.push(shadedBar('描一描 Trace', COLOR_CHINA));
+children.push(emptyP());
 const traceChina = new Table({
   alignment: AlignmentType.CENTER,
   width: { size: CONTENT_WIDTH, type: WidthType.DXA },
@@ -353,6 +340,7 @@ const traceChina = new Table({
   })],
 });
 children.push(traceChina);
+children.push(emptyP());
 
 children.push(shadedBar('⭕ 圈一圈 Circle the Correct Answer', COLOR_CHINA));
 children.push(pBold('1. 中国的首都是？ What is the capital of China?'));
@@ -369,17 +357,22 @@ children.push(shadedBar('在地图中找出中国，并涂色标注。 Find Chin
 children.push(imgPara(path.join(ASSETS, 'img_9.png'), 420));
 children.push(shadedBar('画一画,写一写。Draw & Write.', COLOR_CHINA));
 children.push(pBold('我最喜欢的中国食物 My Favorite Chinese Food'));
+children.push(emptyP());
 children.push(drawWriteBox('比如：饺子、面条、包子。 For example: dumplings, noodles, buns.'));
 children.push(pageBreak());
 
 // ------------------ PAGE 5 · JAPAN (1) ------------------
 children.push(countryHeading('🇯🇵', '日本', 'Japan', COLOR_JAPAN));
 children.push(shadedBar('涂一涂: 日本国旗 Color the Flag', COLOR_JAPAN));
+children.push(emptyP());
 children.push(p('⬜ 白色 White + 🔴 红色 Red（中间圆形）'));
-children.push(flagBox());
+children.push(imgPara(path.join(ASSETS, 'flag_japan_outline.png'), 230));
+children.push(emptyP());
 
 children.push(shadedBar('描一描 Trace: 日本', COLOR_JAPAN));
+children.push(emptyP());
 children.push(traceRow(['日', '本', '日', '本'], COLOR_JAPAN));
+children.push(emptyP());
 
 children.push(shadedBar('⭕ 圈一圈 Circle the Correct Answer', COLOR_JAPAN));
 children.push(pBold('1. 在日本见面应该怎么做？ How do you greet in Japan?'));
@@ -400,17 +393,22 @@ children.push(new Paragraph({
 }));
 children.push(shadedBar('画一画,写一写。Draw & Write.', COLOR_JAPAN));
 children.push(pBold('我最喜欢的日本食物 My Favorite Japanese Food'));
+children.push(emptyP());
 children.push(drawWriteBox('比如：寿司、拉面、天妇罗。 For example: sushi, ramen, tempura.'));
 children.push(pageBreak());
 
 // ------------------ PAGE 7 · INDIA (1) ------------------
 children.push(countryHeading('🇮🇳', '印度', 'India', COLOR_INDIA));
 children.push(shadedBar('涂一涂: 印度国旗 Color the Flag', COLOR_INDIA));
+children.push(emptyP());
 children.push(p('🟧 橙色 Saffron (上) + ⬜ 白色 White (中，阿育王轮 Ashoka Chakra) + 🟩 绿色 Green (下)'));
-children.push(flagBox());
+children.push(imgPara(path.join(ASSETS, 'flag_india_outline.png'), 230));
+children.push(emptyP());
 
 children.push(shadedBar('描一描 Trace: 印度', COLOR_INDIA));
+children.push(emptyP());
 children.push(traceRow(['印', '度', '印', '度'], COLOR_INDIA));
+children.push(emptyP());
 
 children.push(shadedBar('⭕ 圈一圈 Circle the Correct Answer', COLOR_INDIA));
 children.push(pBold('1. 印度的首都是？ What is the capital of India?'));
@@ -431,6 +429,7 @@ children.push(new Paragraph({
 }));
 children.push(shadedBar('画一画,写一写。Draw & Write.', COLOR_INDIA));
 children.push(pBold('我最喜欢的印度食物 My Favorite Indian Food'));
+children.push(emptyP());
 children.push(drawWriteBox('比如：咖喱、馕、印度飞饼、比尔亚尼饭。 For example: curry, naan, roti, biryani.'));
 
 // ======================================================================
