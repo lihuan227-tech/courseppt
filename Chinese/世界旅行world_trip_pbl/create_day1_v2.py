@@ -436,22 +436,6 @@ page_num(s, n)
 # ═══════════════════════════════════════════
 section_divider("Session 2  下午", "复习总结 + 语言目标\n我会认：亚洲 中国 日本 印度 首都\n我会写：中国 日本 亚洲 首都", RGBColor(0x19,0x76,0xD2), "📖"); n+=1
 
-# SLIDE: 快速复习
-s = new_slide(); n+=1
-bg(s, BG_CREAM)
-header_bar(s, "📖 快速复习  Quick Review", RGBColor(0x19,0x76,0xD2))
-for i, (flag, name, q) in enumerate([
-    ("🇨🇳", "中国", '怎么说"你好"？___'),
-    ("🇯🇵", "日本", '怎么说"你好"？___'),
-    ("🇮🇳", "印度", '怎么说"你好"？___'),
-]):
-    x = 0.4 + i * 3.2
-    tb(s, x, 1.0, 2.8, 0.5, f"{flag} {name}", size=24, bold=True, color=DARK, align=PP_ALIGN.CENTER)
-    tb(s, x, 1.6, 2.8, 0.5, q, size=16, color=GRAY, align=PP_ALIGN.CENTER)
-    img_box(s, x+0.2, 2.3, 2.4, 2.0, "📷")
-tb(s, 0.4, 4.6, 9, 0.4, "谁能第一个说出来？ Who can answer first?", size=16, bold=True, color=DARK, align=PP_ALIGN.CENTER)
-page_num(s, n)
-
 # SLIDE: 文化对比表 — 空白版（让学生回答）
 s = new_slide(); n+=1
 bg(s, BG_CREAM)
