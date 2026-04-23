@@ -240,9 +240,10 @@ final_out.append('''<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>探索亚洲 Explore Asia — Global Explorer Camp</title>
 <style>
+  @page { size: letter; margin: 0.5in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: "KaiTi", "Noto Sans SC", "Kaiti SC", sans-serif; color: #333; line-height: 1.6; background: #f0f0f0; overflow: hidden; height: 100vh; }
-  .page { display: none; width: 800px; max-height: calc(100vh - 70px); margin: 10px auto; padding: 30px 40px; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); overflow-y: auto; }
+  .page { display: none; width: 8.5in; height: 11in; margin: 0 auto; padding: 0.5in; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); overflow-y: auto; position: relative; }
   .page.active { display: block; }
   .shaded { background: #DE2910; color: white; padding: 6px 12px; font-weight: bold; font-size: 14px; margin: 12px 0 6px; border-radius: 4px; }
   .shaded.japan { background: #BC002D; }
@@ -262,9 +263,12 @@ final_out.append('''<!DOCTYPE html>
   .nav button:hover { background: #E67E00; }
   .nav button:disabled { background: #999; cursor: not-allowed; }
   .nav .page-info { font-size: 16px; min-width: 100px; text-align: center; }
+  @media screen {
+    .page { margin-top: 10px; margin-bottom: 70px; }
+  }
   @media print {
     .nav { display: none; }
-    .page { display: block !important; page-break-after: always; box-shadow: none; max-height: none; margin: 0; border-radius: 0; }
+    .page { display: block !important; page-break-after: always; box-shadow: none; margin: 0; border-radius: 0; overflow: visible; width: 100%; height: auto; min-height: 10in; }
     body { background: #fff; overflow: visible; height: auto; }
   }
 </style>
