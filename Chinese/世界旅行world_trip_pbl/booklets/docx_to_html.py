@@ -215,9 +215,120 @@ for element in body_elements:
                 out.append('</table>')
                 break
 
-out.append('</body></html>')
+# Now wrap content into pages by splitting on page-break divs
+html_content = '\n'.join(out)
+
+# Split into pages
+import re
+# Find all content, split by page-break markers
+parts = html_content.split('<div class="page-break"></div>')
+
+final = []
+# Everything before first page break is already output with headers
+# We need to re-wrap: take the header (everything up to <body> + nav), then wrap each part in <div class="page">
+
+# Find the end of <body> + nav section
+body_start = html_content.find('<body>')
+header_html = html_content[:html_content.find('\n', body_start) + 1]
+
+# Actually, let's just rebuild from parts
+final_out = []
+final_out.append('''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探索亚洲 Explore Asia — Global Explorer Camp</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "KaiTi", "Noto Sans SC", "Kaiti SC", sans-serif; color: #333; line-height: 1.6; background: #f0f0f0; overflow: hidden; height: 100vh; }
+  .page { display: none; width: 800px; max-height: calc(100vh - 70px); margin: 10px auto; padding: 30px 40px; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); overflow-y: auto; }
+  .page.active { display: block; }
+  .shaded { background: #DE2910; color: white; padding: 6px 12px; font-weight: bold; font-size: 14px; margin: 12px 0 6px; border-radius: 4px; }
+  .shaded.japan { background: #BC002D; }
+  .shaded.india { background: #138808; }
+  .shaded.accent { background: #FF8F00; }
+  .heading { font-size: 28px; font-weight: bold; margin: 20px 0 10px; }
+  .heading.china { color: #DE2910; }
+  .heading.japan { color: #BC002D; }
+  .heading.india { color: #138808; }
+  .heading.asia { color: #C62828; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px; text-align: center; vertical-align: middle; }
+  th { background: #FF8F00; color: white; }
+  img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; gap: 30px; padding: 12px; z-index: 999; }
+  .nav button { background: #FF8F00; color: #fff; border: none; padding: 10px 24px; border-radius: 6px; font-size: 18px; cursor: pointer; font-family: inherit; }
+  .nav button:hover { background: #E67E00; }
+  .nav button:disabled { background: #999; cursor: not-allowed; }
+  .nav .page-info { font-size: 16px; min-width: 100px; text-align: center; }
+  @media print {
+    .nav { display: none; }
+    .page { display: block !important; page-break-after: always; box-shadow: none; max-height: none; margin: 0; border-radius: 0; }
+    body { background: #fff; overflow: visible; height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button id="prevBtn" onclick="navigate(-1)">&larr; 上一页</button>
+  <span class="page-info" id="pageInfo">1 / ?</span>
+  <button id="nextBtn" onclick="navigate(1)">下一页 &rarr;</button>
+</div>
+''')
+
+# Extract just the content lines (skip header/footer we already wrote)
+# Find content between <body> and </body> in original
+body_match_start = html_content.find('\n<br>')  # first content line
+body_match_end = html_content.rfind('</body>')
+content_html = html_content[body_match_start:body_match_end].strip()
+
+# Split by page-break divs
+page_contents = content_html.split('<div class="page-break"></div>')
+
+for i, page_html in enumerate(page_contents):
+    page_html = page_html.strip()
+    if not page_html:
+        continue
+    active = ' active' if i == 0 else ''
+    final_out.append(f'<div class="page{active}">')
+    final_out.append(page_html)
+    final_out.append('</div>')
+
+# Add navigation JS
+final_out.append('''
+<script>
+let current = 0;
+const pages = document.querySelectorAll('.page');
+const total = pages.length;
+
+function navigate(dir) {
+  pages[current].classList.remove('active');
+  current = Math.max(0, Math.min(total - 1, current + dir));
+  pages[current].classList.add('active');
+  pages[current].scrollTop = 0;
+  update();
+}
+
+function update() {
+  document.getElementById('pageInfo').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { navigate(1); e.preventDefault(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { navigate(-1); e.preventDefault(); }
+});
+
+update();
+</script>
+''')
+
+final_out.append('</body></html>')
 
 with open(OUT, 'w', encoding='utf-8') as f:
-    f.write('\n'.join(out))
+    f.write('\n'.join(final_out))
 
-print(f"Created HTML with {len(img_map)} embedded images → {OUT}")
+print(f"Created paginated HTML with {len(img_map)} images, {len(page_contents)} pages → {OUT}")
