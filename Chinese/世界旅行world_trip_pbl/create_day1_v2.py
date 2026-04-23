@@ -344,29 +344,24 @@ tb(s, 0.4, 0.85, 9, 0.35, "日本文化影响了全世界！These are all from J
 
 # 2x3 grid of pop culture items with image placeholders
 pop_items = [
-    ("⚡ Pokemon 宝可梦", "全世界最赚钱的IP！\nPikachu你认识吗？", "📷 Pokemon图片"),
-    ("🍥 Naruto 火影忍者", "忍者的故事\n全球超人气动漫", "📷 Naruto图片"),
-    ("🎵 Nintendo 任天堂", "Mario 马里奥\nSwitch 游戏机", "📷 Mario图片"),
-    ("🐉 Dragon Ball 龙珠", "孙悟空！经典动漫\n影响了全世界", "📷 龙珠图片"),
-    ("🎬 Studio Ghibli 吉卜力", "龙猫 Totoro\n千与千寻 Spirited Away", "📷 龙猫图片"),
+    ("⚡ Pokemon 宝可梦", "全世界最赚钱的IP！\nPikachu你认识吗？"),
+    ("🎵 Nintendo 任天堂", "Mario 马里奥\nSwitch 游戏机"),
+    ("🐉 Dragon Ball 龙珠", "孙悟空！经典动漫\n影响了全世界"),
 ]
-for i, (title, desc, img_label) in enumerate(pop_items):
-    col = i % 3
-    row = i // 3
-    x = 0.3 + col * 3.15
-    y = 1.2 + row * 2.15
-    bar = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(2.95), Inches(2.0))
+for i, (title, desc) in enumerate(pop_items):
+    x = 0.3 + i * 3.15
+    y = 1.2
+    bar = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(2.95), Inches(1.0))
     bar.fill.solid()
-    bar.fill.fore_color.rgb = [BG_WARM, RGBColor(0xE3,0xF2,0xFD), RGBColor(0xE8,0xF5,0xE9),
-                                RGBColor(0xFC,0xE4,0xEC), RGBColor(0xF3,0xE5,0xF5), RGBColor(0xFE,0xF9,0xE7)][i]
+    bar.fill.fore_color.rgb = [BG_WARM, RGBColor(0xE3,0xF2,0xFD), RGBColor(0xFC,0xE4,0xEC)][i]
     bar.line.fill.background()
-    tb(s, x+0.1, y+0.05, 2.75, 0.35, title, size=13, bold=True, color=DARK, align=PP_ALIGN.CENTER)
+    tb(s, x+0.1, y+0.05, 2.75, 0.4, title, size=16, bold=True, color=DARK, align=PP_ALIGN.CENTER)
     lines = desc.split('\n')
-    tf_d = tb(s, x+0.1, y+0.4, 1.3, 0.7, lines[0], size=10, color=DARK)
+    tf_d = tb(s, x+0.1, y+0.45, 2.75, 0.5, lines[0], size=12, color=DARK, align=PP_ALIGN.CENTER)
     for line in lines[1:]:
-        add_p(tf_d, line, size=10, color=DARK)
-    img_box(s, x+1.5, y+0.4, 1.35, 1.0, "📷")
-    tb(s, x+0.1, y+1.55, 2.75, 0.3, "你玩过/看过吗？", size=9, color=GRAY, align=PP_ALIGN.CENTER)
+        add_p(tf_d, line, size=12, color=DARK, align=PP_ALIGN.CENTER)
+# Large image/video area below
+img_box(s, 0.3, 2.5, 9.4, 2.7, "📷 插入图片或视频 Insert images or video here")
 
 deco_corners(s, "🌸🎮")
 page_num(s, n)
