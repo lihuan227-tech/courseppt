@@ -1,0 +1,21 @@
+Question,Answer 1,Answer 2,Answer 3,Answer 4,Time limit (sec),Correct answer(s)
+这个词怎么读？→ 亚洲,yà zhōu,rì běn,zhōng guó,shǒu dū,20,1
+这个词怎么读？→ 中国,rì běn,yìn dù,zhōng guó,yà zhōu,20,3
+这个词怎么读？→ 日本,shǒu dū,rì běn,zhōng guó,yìn dù,20,2
+这个词怎么读？→ 印度,yà zhōu,zhōng guó,rì běn,yìn dù,20,4
+这个词怎么读？→ 首都,rì běn,shǒu dū,yìn dù,zhōng guó,20,2
+亚洲是世界上最___的洲。,小 small,冷 cold,大 big,热 hot,20,3
+亚洲有多少个国家？,20,48,100,7,20,2
+世界上最高的山是哪座？,富士山 Mt. Fuji,黄山 Mt. Huang,珠穆朗玛峰 Mt. Everest,泰山 Mt. Tai,20,3
+中国的首都是哪里？,上海 Shanghai,北京 Beijing,东京 Tokyo,新德里 New Delhi,20,2
+中国人用什么吃饭？,叉子 Fork,手 Hand,筷子 Chopsticks,勺子 Spoon,20,3
+中国的国宝是什么？,老虎 Tiger,熊猫 Panda,龙 Dragon,鹤 Crane,20,2
+在中国怎么说"你好"？,Namaste,Konnichiwa,你好 nǐ hǎo,Hello,20,3
+日本的首都是哪里？,大阪 Osaka,北京 Beijing,京都 Kyoto,东京 Tokyo,20,4
+在日本见面应该怎么做？,拥抱 Hug,握手 Shake hands,鞠躬 Bow,合十 Namaste,20,3
+在日本吃拉面发出声音是？,不礼貌 Rude,礼貌 Polite,奇怪 Weird,不允许 Not allowed,20,2
+在日本怎么说"你好"？,你好,Namaste,Konnichiwa,Bonjour,20,3
+印度的首都是哪里？,孟买 Mumbai,北京 Beijing,新德里 New Delhi,东京 Tokyo,20,3
+印度人见面怎么打招呼？,握手 Shake hands,鞠躬 Bow,拥抱 Hug,双手合十 Namaste,20,4
+印度人用哪只手吃饭？,左手 Left,右手 Right,两只手 Both,用筷子 Chopsticks,20,2
+印度发明了什么数字？,1,0,10,100,20,2
