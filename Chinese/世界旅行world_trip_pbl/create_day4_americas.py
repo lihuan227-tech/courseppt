@@ -24,6 +24,7 @@ LGRAY = RGBColor(0xBB,0xBB,0xBB)
 USA = RGBColor(0x3C,0x3B,0x6E)
 CANADA = RGBColor(0xD5,0x21,0x1E)
 MEXICO = RGBColor(0x00,0x6D,0x47)
+BRAZIL = RGBColor(0x00,0x9C,0x3B)
 CREAM = RGBColor(0xFF,0xFA,0xF0)
 WARM = RGBColor(0xFF,0xF3,0xE0)
 IMGBG = RGBColor(0xE8,0xE8,0xE8)
@@ -58,7 +59,7 @@ def cis(fe,cn,en,color,title,items,il="📷"):
         sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(y),Inches(4.8),Inches(0.4));sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
         tb(s,0.4,y+0.02,4.6,0.35,it,sz=15,b=True,c=WHITE);tb(s,0.4,y+0.45,4.7,0.5,d,sz=16,c=DARK);y+=1.1
     ib(s,5.5,1.0,4.2,y-1.1,il)
-    dc={"美国":"🗽","加拿大":"🍁","墨西哥":"🌮"}.get(cn,"🌎");tb(s,8.8,4.8,1.0,0.6,dc,sz=28,c=LGRAY,a=PP_ALIGN.RIGHT)
+    dc={"美国":"🗽","加拿大":"🍁","墨西哥":"🌮","巴西":"⚽"}.get(cn,"🌎");tb(s,8.8,4.8,1.0,0.6,dc,sz=28,c=LGRAY,a=PP_ALIGN.RIGHT)
     return s
 def vs(title,bgc):
     s=ns();bg(s,bgc);tb(s,1,0.8,8,0.8,"🎬 看视频  Watch Video",sz=36,b=True,c=WHITE,a=PP_ALIGN.CENTER)
@@ -89,14 +90,14 @@ pn(s,n)
 # 3 Objectives
 s=ns();n+=1;bg(s,CREAM);hb(s,"🎯 教学目标  Learning Objectives")
 tb(s,0.5,0.9,9,0.5,"📚 内容目标:",sz=20,b=True,c=TEAL)
-tf=tb(s,0.7,1.4,8.5,1.2,"1. 了解美洲的地理位置和特点",sz=16,c=DARK);ap(tf,"2. 了解三个国家：美国、加拿大、墨西哥（国旗、首都、景点、文化）",sz=16,c=DARK)
+tf=tb(s,0.7,1.4,8.5,1.2,"1. 了解美洲的地理位置和特点",sz=16,c=DARK);ap(tf,"2. 了解四个国家：美国、加拿大、墨西哥、巴西（国旗、首都、景点、文化）",sz=16,c=DARK)
 tb(s,0.5,2.8,9,0.5,"🗣️ 语言目标:",sz=20,b=True,c=BLUE)
-tb(s,0.7,3.3,4.2,0.9,"👀 我会认：美洲 美国 加拿大\n　　　　　墨西哥",sz=16,b=True,c=DARK)
-tb(s,5.2,3.3,4.2,0.9,"✍️ 我会写：美洲 美国",sz=16,b=True,c=DARK)
+tb(s,0.7,3.3,4.2,0.9,"👀 我会认：美洲 美国 加拿大\n　　　　　墨西哥 巴西",sz=16,b=True,c=DARK)
+tb(s,5.2,3.3,4.2,0.9,"✍️ 我会写：美洲 美国 巴西",sz=16,b=True,c=DARK)
 tb(s,0.5,4.3,9,0.5,"🎨 实践目标: 完成美洲Booklet + 手工项目",sz=16,c=GREEN);pn(s,n)
 
 # 4 S1 divider
-div("Session 1  上午","了解美洲的地理位置和特点\n了解三个主要国家：美国、加拿大、墨西哥",TEAL,"🌎");n+=1
+div("Session 1  上午","了解美洲的地理位置和特点\n了解四个主要国家：美国、加拿大、墨西哥、巴西",TEAL,"🌎");n+=1
 
 # 5 Video Americas
 s=vs("认识美洲 About Americas",RGBColor(0x00,0x3D,0x35));n+=1;pn(s,n)
@@ -141,47 +142,55 @@ s=cis("🇲🇽","墨西哥","Mexico",MEXICO,"主要景点 Landmarks",[("🏛️
 s=cis("🇲🇽","墨西哥","Mexico",MEXICO,"礼节 Etiquette",[("👋 说你好","「Hola」(oh-la)"),("🤝 打招呼","拥抱+贴面 Hug + cheek kiss"),("🍽️ 吃饭礼节","玉米饼配一切/辣椒很重要")],"📷 墨西哥问候");n+=1;pn(s,n)
 s=cis("🇲🇽","墨西哥","Mexico",MEXICO,"美食 Food",[("🌮 墨西哥卷饼 Taco","墨西哥最经典的美食！"),("🥑 牛油果酱 Guacamole","配玉米片的完美搭档"),("🌶️ 辣椒 Chili","墨西哥菜的灵魂！")],"📷 墨西哥美食");n+=1;pn(s,n)
 
+# BRAZIL 巴西
+s=vs("🇧🇷 认识巴西 About Brazil",RGBColor(0x00,0x4D,0x25));n+=1;pn(s,n)
+s=cis("🇧🇷","巴西","Brazil",BRAZIL,"国旗 + 首都",[("🏴 国旗","绿色+黄色菱形+蓝色地球 Green/Yellow/Blue Globe"),("🏛️ 首都","巴西利亚 Brasília")],"📷 巴西国旗+巴西利亚");n+=1;pn(s,n)
+s=cis("🇧🇷","巴西","Brazil",BRAZIL,"人口 + 语言",[("👥 人口","约2.1亿 ~210 million"),("🗣️ 语言","葡萄牙语 Portuguese")],"📷 巴西图片");n+=1;pn(s,n)
+s=cis("🇧🇷","巴西","Brazil",BRAZIL,"主要景点 Landmarks",[("🗿 基督像 Christ the Redeemer","里约热内卢的标志！世界七大奇迹"),("🌴 亚马逊雨林 Amazon Rainforest","世界上最大的热带雨林！"),("🎭 狂欢节 Carnival","世界上最大的派对！")],"📷 基督像/亚马逊/狂欢节");n+=1;pn(s,n)
+s=cis("🇧🇷","巴西","Brazil",BRAZIL,"礼节 Etiquette",[("👋 说你好","「Olá」(oh-la) 葡萄牙语"),("🤝 打招呼","拥抱+贴面 Hug + cheek kiss（很热情！）"),("🍽️ 吃饭礼节","烤肉(Churrasco)是国民美食/用刀叉吃")],"📷 巴西问候/烤肉");n+=1;pn(s,n)
+s=cis("🇧🇷","巴西","Brazil",BRAZIL,"美食 Food",[("🥩 Churrasco 巴西烤肉","世界闻名的烤肉文化！"),("🫘 Feijoada 黑豆炖肉","巴西的国菜！"),("🧃 Açaí 巴西莓","超级健康的水果碗！")],"📷 巴西美食");n+=1;pn(s,n)
+
 # Greeting Practice
 s=ns();n+=1;bg(s,CREAM);hb(s,"🎭 打招呼练习  Greeting Practice")
-for i,(nm,gr,cl) in enumerate([("🇺🇸 美国","握手或拥抱+「Hello/Hi」",USA),("🇨🇦 加拿大","握手+「Hello/Bonjour」",CANADA),("🇲🇽 墨西哥","拥抱+贴面+「Hola」\n(oh-la)",MEXICO)]):
-    x=0.4+i*3.2;sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.0),Inches(2.9),Inches(3.5));sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
-    tb(s,x+0.1,1.1,2.7,0.5,nm,sz=22,b=True,c=cl,a=PP_ALIGN.CENTER);ls=gr.split('\n');tf=tb(s,x+0.1,1.7,2.7,0.3,ls[0],sz=14,c=DARK,a=PP_ALIGN.CENTER)
-    for l in ls[1:]:ap(tf,l,sz=14,c=DARK,a=PP_ALIGN.CENTER)
-    ib(s,x+0.3,2.4,2.3,1.8,"📷 动作示范")
+for i,(nm,gr,cl) in enumerate([("🇺🇸 美国","握手/拥抱+「Hello」",USA),("🇨🇦 加拿大","握手+「Hello」",CANADA),("🇲🇽 墨西哥","拥抱+「Hola」\n(oh-la)",MEXICO),("🇧🇷 巴西","拥抱+贴面+「Olá」\n(oh-la)",BRAZIL)]):
+    x=0.3+i*2.4;sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.0),Inches(2.2),Inches(3.5));sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
+    tb(s,x+0.1,1.1,2.0,0.5,nm,sz=18,b=True,c=cl,a=PP_ALIGN.CENTER);ls=gr.split('\n');tf=tb(s,x+0.1,1.7,2.0,0.3,ls[0],sz=12,c=DARK,a=PP_ALIGN.CENTER)
+    for l in ls[1:]:ap(tf,l,sz=12,c=DARK,a=PP_ALIGN.CENTER)
+    ib(s,x+0.2,2.4,1.8,1.8,"📷 动作示范")
 tb(s,0.4,4.7,9,0.4,"站起来和旁边的同学练习！Stand up and practice!",sz=14,c=GRAY,a=PP_ALIGN.CENTER);pn(s,n)
 
 # SESSION 2
-div("Session 2  下午","复习总结 + 语言目标\n我会认：美洲 美国 加拿大 墨西哥\n我会写：美洲 美国",BLUE,"📖");n+=1
+div("Session 2  下午","复习总结 + 语言目标\n我会认：美洲 美国 加拿大 墨西哥 巴西\n我会写：美洲 美国 巴西",BLUE,"📖");n+=1
 
 # Comparison blank
-s=ns();n+=1;bg(s,CREAM);hb(s,"🌎 美洲三国文化对比  你知道吗？",BLUE)
+s=ns();n+=1;bg(s,CREAM);hb(s,"🌎 美洲四国文化对比  你知道吗？",BLUE)
 tb(s,0.4,0.85,9,0.35,"你能填出来吗？",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
-ts=s.shapes.add_table(7,4,Inches(0.3),Inches(1.25),Inches(9.4),Inches(3.9));t=ts.table
-t.columns[0].width=Inches(1.8);t.columns[1].width=Inches(2.5);t.columns[2].width=Inches(2.5);t.columns[3].width=Inches(2.6)
-for r,rd in enumerate([["","🇺🇸 美国","🇨🇦 加拿大","🇲🇽 墨西哥"],["👋 说你好","？","？","？"],["🤝 打招呼","？","？","？"],["🍽️ 美食","？","？","？"],["🏛️ 首都","？","？","？"],["🏔️ 景点","？","？","？"],["🎁 代表物","？","？","？"]]):
+ts=s.shapes.add_table(7,5,Inches(0.3),Inches(1.25),Inches(9.4),Inches(3.9));t=ts.table
+t.columns[0].width=Inches(1.5);t.columns[1].width=Inches(2.0);t.columns[2].width=Inches(2.0);t.columns[3].width=Inches(2.0);t.columns[4].width=Inches(1.9)
+for r,rd in enumerate([["","🇺🇸 美国","🇨🇦 加拿大","🇲🇽 墨西哥","🇧🇷 巴西"],["👋 说你好","？","？","？","？"],["🤝 打招呼","？","？","？","？"],["🍽️ 美食","？","？","？","？"],["🏛️ 首都","？","？","？","？"],["🏔️ 景点","？","？","？","？"],["🎁 代表物","？","？","？","？"]]):
     for c,ct in enumerate(rd):
         cl=t.cell(r,c);cl.text="";tf=cl.text_frame;tf.word_wrap=True;p=tf.paragraphs[0];p.alignment=PP_ALIGN.CENTER;rn=p.add_run();rn.text=ct;rn.font.name='KaiTi'
-        rn.font.size=Pt(13 if r==0 else 11);rn.font.bold=(r==0 or c==0)
+        rn.font.size=Pt(12 if r==0 else 10);rn.font.bold=(r==0 or c==0)
         if r==0:rn.font.color.rgb=WHITE;cl.fill.solid();cl.fill.fore_color.rgb=BLUE
         elif c==0:rn.font.color.rgb=DARK;cl.fill.solid();cl.fill.fore_color.rgb=WARM
-        else:rn.font.color.rgb=LGRAY;rn.font.size=Pt(20)
+        else:rn.font.color.rgb=LGRAY;rn.font.size=Pt(18)
 pn(s,n)
 
 # Comparison answers
-s=ns();n+=1;bg(s,CREAM);hb(s,"🌎 美洲三国文化对比  Comparison",BLUE)
-tb(s,0.4,0.85,9,0.35,"三个国家各有特色，你最想去哪个？",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
-ts=s.shapes.add_table(7,4,Inches(0.3),Inches(1.25),Inches(9.4),Inches(3.9));t=ts.table
-t.columns[0].width=Inches(1.8);t.columns[1].width=Inches(2.5);t.columns[2].width=Inches(2.5);t.columns[3].width=Inches(2.6)
-for r,rd in enumerate([["","🇺🇸 美国","🇨🇦 加拿大","🇲🇽 墨西哥"],
-    ["👋 说你好","Hello/Hi","Hello/Bonjour","Hola\n(oh-la)"],
-    ["🤝 打招呼","握手或拥抱","握手(友好)","拥抱+贴面"],
-    ["🍽️ 美食","汉堡Hamburger\n热狗Hot Dog","Poutine薯条\n枫糖浆","Taco卷饼\nGuacamole"],
-    ["🏛️ 首都","华盛顿 D.C.","渥太华 Ottawa","墨西哥城 Mexico City"],
-    ["🏔️ 景点","自由女神像\nGrand Canyon","尼亚加拉瀑布\nBanff","奇琴伊察\nCancun"],
-    ["🎁 代表物","🗽 自由女神","🍁 枫叶","🌮 玉米饼"]]):
+s=ns();n+=1;bg(s,CREAM);hb(s,"🌎 美洲四国文化对比  Comparison",BLUE)
+tb(s,0.4,0.85,9,0.35,"四个国家各有特色，你最想去哪个？",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
+ts=s.shapes.add_table(7,5,Inches(0.3),Inches(1.25),Inches(9.4),Inches(3.9));t=ts.table
+t.columns[0].width=Inches(1.5);t.columns[1].width=Inches(2.0);t.columns[2].width=Inches(2.0);t.columns[3].width=Inches(2.0);t.columns[4].width=Inches(1.9)
+for r,rd in enumerate([["","🇺🇸 美国","🇨🇦 加拿大","🇲🇽 墨西哥","🇧🇷 巴西"],
+    ["👋 说你好","Hello/Hi","Hello/Bonjour","Hola\n(oh-la)","Olá\n(oh-la)"],
+    ["🤝 打招呼","握手或拥抱","握手(友好)","拥抱+贴面","拥抱+贴面"],
+    ["🍽️ 美食","汉堡\nHamburger","Poutine\n枫糖浆","Taco\n卷饼","Churrasco\n烤肉"],
+    ["🏛️ 首都","华盛顿\nD.C.","渥太华\nOttawa","墨西哥城\nMexico City","巴西利亚\nBrasília"],
+    ["🏔️ 景点","自由女神像\nStatue of Liberty","尼亚加拉\nNiagara Falls","奇琴伊察\nChichen Itza","基督像\nChrist Redeemer"],
+    ["🎁 代表物","🗽 自由女神","🍁 枫叶","🌮 玉米饼","⚽ 足球"]]):
     for c,ct in enumerate(rd):
         cl=t.cell(r,c);cl.text="";tf=cl.text_frame;tf.word_wrap=True;p=tf.paragraphs[0];p.alignment=PP_ALIGN.CENTER;rn=p.add_run();rn.text=ct;rn.font.name='KaiTi'
-        rn.font.size=Pt(13 if r==0 else 11);rn.font.bold=(r==0 or c==0)
+        rn.font.size=Pt(12 if r==0 else 10);rn.font.bold=(r==0 or c==0)
         rn.font.color.rgb=WHITE if r==0 else(DARK if c>0 else RGBColor(0x44,0x44,0x44))
         if r==0:cl.fill.solid();cl.fill.fore_color.rgb=BLUE
         elif c==0:cl.fill.solid();cl.fill.fore_color.rgb=WARM
@@ -189,7 +198,7 @@ for r,rd in enumerate([["","🇺🇸 美国","🇨🇦 加拿大","🇲🇽 墨�
 pn(s,n)
 
 # Word cards 我会认
-for w,py,en,sent,il in [("美洲","měi zhōu","Americas","美洲分为北美洲和南美洲。","📷 美洲地图"),("美国","měi guó","USA","美国的首都是华盛顿。","📷 自由女神像"),("加拿大","jiā ná dà","Canada","加拿大有美丽的枫叶。","📷 枫叶/班夫"),("墨西哥","mò xī gē","Mexico","墨西哥人喜欢吃玉米饼。","📷 墨西哥风景")]:
+for w,py,en,sent,il in [("美洲","měi zhōu","Americas","美洲分为北美洲和南美洲。","📷 美洲地图"),("美国","měi guó","USA","美国的首都是华盛顿。","📷 自由女神像"),("加拿大","jiā ná dà","Canada","加拿大有美丽的枫叶。","📷 枫叶/班夫"),("墨西哥","mò xī gē","Mexico","墨西哥人喜欢吃玉米饼。","📷 墨西哥风景"),("巴西","bā xī","Brazil","巴西有世界上最大的雨林。","📷 基督像/亚马逊")]:
     s=ns();n+=1;bg(s,CREAM);hb(s,"👀 我会认  I Can Read",BLUE)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(4.5),Inches(2.5));sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.fill.background()
     tb(s,0.5,1.1,4.3,1.4,w,sz=72,b=True,c=TEAL,a=PP_ALIGN.CENTER);tb(s,0.5,2.4,4.3,0.4,f"{py}  {en}",sz=20,c=GRAY,a=PP_ALIGN.CENTER)
@@ -208,7 +217,7 @@ for i,(nm,name,desc,bgc) in enumerate([("1️⃣","拍苍蝇 Fly Swatter","把�
 pn(s,n)
 
 # Write cards 我会写
-for w,py,en,il in [("美洲","měi zhōu","Americas","📷 美洲地图"),("美国","měi guó","USA","📷 美国国旗")]:
+for w,py,en,il in [("美洲","měi zhōu","Americas","📷 美洲地图"),("美国","měi guó","USA","📷 美国国旗"),("巴西","bā xī","Brazil","📷 巴西国旗")]:
     s=ns();n+=1;bg(s,CREAM);hb(s,"✍️ 我会写  I Can Write",BLUE)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(4.5),Inches(2.0));sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=BLUE;sh.line.width=Pt(3)
     tb(s,0.5,1.05,4.3,1.2,w,sz=72,b=True,c=BLUE,a=PP_ALIGN.CENTER);tb(s,0.5,2.2,4.3,0.4,f"{py}  {en}",sz=20,c=GRAY,a=PP_ALIGN.CENTER)
@@ -240,7 +249,7 @@ for pr,nm,md,bc,cl in [("PROJECT 1","🧩 美洲拼图  Americas Puzzle Map","gr
 # Visa stamp
 s=ns();n+=1;bg(s,CREAM);tb(s,1,0.5,8,0.8,"🪪 美洲签证章  Americas Visa Stamp",sz=30,b=True,c=TEAL,a=PP_ALIGN.CENTER)
 sh=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(3.5),Inches(1.5),Inches(3),Inches(3));sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=TEAL;sh.line.width=Pt(5)
-tf=tb(s,3.6,1.8,2.8,2.5,"AMERICAS\n美洲",sz=28,b=True,c=TEAL,a=PP_ALIGN.CENTER);ap(tf,"✓ VISITED",sz=16,b=True,c=GREEN,a=PP_ALIGN.CENTER);ap(tf,"6/11/2025",sz=12,c=GRAY,a=PP_ALIGN.CENTER);ap(tf,"美国 · 加拿大 · 墨西哥",sz=12,c=DARK,a=PP_ALIGN.CENTER)
+tf=tb(s,3.6,1.8,2.8,2.5,"AMERICAS\n美洲",sz=28,b=True,c=TEAL,a=PP_ALIGN.CENTER);ap(tf,"✓ VISITED",sz=16,b=True,c=GREEN,a=PP_ALIGN.CENTER);ap(tf,"6/11/2025",sz=12,c=GRAY,a=PP_ALIGN.CENTER);ap(tf,"美国 · 加拿大 · 墨西哥 · 巴西",sz=12,c=DARK,a=PP_ALIGN.CENTER)
 tb(s,1,4.7,8,0.4,"恭喜你完成美洲之旅！Congratulations! 🎉",sz=16,b=True,c=TEAL,a=PP_ALIGN.CENTER);pn(s,n)
 
 # Tomorrow
