@@ -66,35 +66,39 @@ def vs(title,bgc):
     ib(s,1.5,2.5,7,2.5,"📷 插入视频截图或粘贴视频链接");tb(s,1,5.1,8,0.3,"🔗 视频链接: ____________________",sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
     return s
 
-def env_slide(emoji,cn,en,color,look,features,dangers,rules):
-    """One environment: colored header + 4-box grid (look / features / dangers / rules)."""
+def aspect_slide(emoji,cn,en,env_color,aspect_label,aspect_color,questions,frame):
+    """One slide for ONE aspect of ONE environment, inquiry-based (questions, no answers)."""
     s=ns();bg(s,CREAM)
-    # Big colored header bar
+    # Header bar (env color) — environment identity on left, aspect label on right
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.15),Inches(9.4),Inches(0.7))
-    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
+    sh.fill.solid();sh.fill.fore_color.rgb=env_color;sh.line.fill.background()
     tb(s,0.5,0.22,1.0,0.55,emoji,sz=28,c=WHITE)
-    tb(s,1.6,0.23,4.0,0.55,cn,sz=28,b=True,c=WHITE)
-    tb(s,5.7,0.38,3.9,0.4,en,sz=16,c=WARM)
-    # 4-box 2x2 grid
-    boxes=[
-        ("👀 长什么样  Looks Like",look,color,False),
-        ("✨ 特点  Features",features,SUN,False),
-        ("⚠️ 小心危险  Dangers",dangers,ALERT,True),
-        ("✅ 安全规则  Safety Rules",rules,GREEN_OK,True),
-    ]
-    for i,(title,items,cl,is_rule) in enumerate(boxes):
-        col=i%2;row=i//2
-        x=0.3+col*4.75;y=1.05+row*2.1
-        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.6),Inches(1.95))
-        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-        # title bar
-        sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.6),Inches(0.42))
-        sh2.fill.solid();sh2.fill.fore_color.rgb=cl;sh2.line.fill.background()
-        tb(s,x+0.15,y+0.05,4.3,0.35,title,sz=14,b=True,c=WHITE)
-        # items
-        tf=tb(s,x+0.2,y+0.5,4.3,1.4,items[0],sz=13,c=DARK)
-        for it in items[1:]:
-            ap(tf,it,sz=13,c=DARK)
+    tb(s,1.5,0.23,3.0,0.55,cn,sz=26,b=True,c=WHITE)
+    tb(s,1.5,0.62,3.0,0.25,en,sz=11,c=WARM)
+    # Aspect pill on the right of header
+    pill=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.8),Inches(0.27),Inches(4.8),Inches(0.45))
+    pill.fill.solid();pill.fill.fore_color.rgb=aspect_color;pill.line.color.rgb=WHITE;pill.line.width=Pt(1.5)
+    tb(s,4.9,0.32,4.6,0.4,aspect_label,sz=15,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    # Image placeholder (left)
+    ib(s,0.3,1.05,4.3,3.3,f"📷 {cn} 图片 / 视频")
+    # Inquiry panel (right) — questions, no answers
+    panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.05),Inches(4.85),Inches(3.3))
+    panel.fill.solid();panel.fill.fore_color.rgb=WHITE
+    panel.line.color.rgb=aspect_color;panel.line.width=Pt(2.5)
+    # Mini header inside the panel
+    head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.05),Inches(4.85),Inches(0.5))
+    head.fill.solid();head.fill.fore_color.rgb=aspect_color;head.line.fill.background()
+    tb(s,5.0,1.13,4.6,0.4,"🤔 一起想一想  Let's Think Together",sz=14,b=True,c=WHITE)
+    # Questions stacked with breathing room
+    tf=tb(s,5.05,1.7,4.55,0.5,f"❓ {questions[0]}",sz=14,c=DARK)
+    for q in questions[1:]:
+        ap(tf,"",sz=8)
+        ap(tf,f"❓ {q}",sz=14,c=DARK)
+    # Sentence frame at the bottom (still inquiry — student fills the blanks)
+    sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.5),Inches(9.4),Inches(0.65))
+    sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=SUN;sf.line.width=Pt(2)
+    tb(s,0.5,4.6,1.7,0.4,"💬 我来说",sz=14,b=True,c=SUN)
+    tb(s,2.0,4.6,7.6,0.4,frame,sz=14,c=DARK)
     return s
 
 def word_card_read(w,py,en,sent,img):
@@ -211,43 +215,112 @@ for i,(em,cn,en,cl) in enumerate(envs):
 pn(s,n)
 
 # ============================================================
-# 6-11  Six environment slides
+# 6-29  Inquiry slides — 6 environments × 4 aspects = 24 slides
+#       Each aspect gets its own slide. Students discover answers
+#       through questions (inquiry-based), not through statements.
 # ============================================================
-environments_data=[
-    ("🌲","森林","Forest",FOREST,
-        ["• 树木茂密，阳光不多","• 地上有落叶和小草","• 能听见鸟叫虫鸣"],
-        ["• 空气很新鲜","• 有很多动物：鸟、松鼠、鹿","• 有蘑菇和浆果"],
-        ["• 容易迷路 🗺️","• 遇到野生动物 🐺","• 毒蘑菇、毒蛇"],
-        ["• 跟紧老师，不乱跑","• 大声说话，不安静靠近动物","• 不吃不认识的蘑菇/果子"]),
-    ("🏔️","山地","Mountain",MOUNTAIN,
-        ["• 又高又陡","• 有大石头和山路","• 山顶空气稀薄"],
-        ["• 风景美丽","• 可以爬山看远方","• 气温比山下低"],
-        ["• 容易滑倒摔伤","• 高处掉石头 🪨","• 天气变化快、下雨冷"],
-        ["• 穿结实的鞋","• 不乱扔石头","• 带外套，注意天气预报"]),
-    ("🌾","草地","Grassland",GRASS,
-        ["• 一大片绿绿的草","• 地势平坦","• 有野花和小虫"],
-        ["• 阳光很充足","• 适合跑步、野餐","• 有蝴蝶和小动物"],
-        ["• 烈日晒伤 ☀️","• 虫子叮咬 🦟","• 突然有蜜蜂"],
-        ["• 戴帽子 + 防晒霜","• 喷防虫液","• 看到蜜蜂不要挥手"]),
-    ("🏞️","河边","Riverside",RIVER,
-        ["• 有流动的水","• 岸边有石头和泥","• 可能有小鱼小虾"],
-        ["• 水很凉很清","• 可以摸小石头","• 常有柳树和芦苇"],
-        ["• 溺水 ⚠️（最危险！）","• 滑倒摔进水里","• 水底看不清，有尖石"],
-        ["• 永远和大人在一起","• 不独自下水","• 穿防滑鞋"]),
-    ("🏜️","沙漠","Desert",DESERT,
-        ["• 到处是沙子","• 很少看到树","• 白天非常热晚上冷"],
-        ["• 有仙人掌和耐旱植物","• 沙丘很漂亮","• 有骆驼、蜥蜴"],
-        ["• 中暑 🥵 脱水","• 迷路（到处一样）","• 沙尘暴"],
-        ["• 多喝水 (1 天 2-3 升)","• 戴帽子、穿长袖","• 不能独自离开队伍"]),
-    ("❄️","雪地","Snow",SNOW,
-        ["• 到处白茫茫","• 地上都是雪","• 树枝也有雪"],
-        ["• 可以打雪仗、堆雪人","• 空气非常冷","• 走路会发出吱吱声"],
-        ["• 冻伤手脚 🥶","• 雪盲（太亮看不见）","• 踩到薄冰掉进水里"],
-        ["• 穿厚厚的衣服、手套","• 戴墨镜或雪镜","• 不在湖面/河面上走"]),
+ASPECTS=[
+    ("👀 长什么样  Looks Like", FOREST,   "我看到 ____ 和 ____。这里 ____。"),
+    ("✨ 特点  Features",       SUN,      "____ 里有 ____。这里的 ____ 让我 ____。"),
+    ("⚠️ 小心危险  Dangers",    ALERT,    "在这里要小心 ____ 和 ____。"),
+    ("✅ 安全规则  Safety Rules",GREEN_OK, "我应该 ____。我不能 ____。"),
 ]
-for em,cn,en,color,look,feat,dng,rul in environments_data:
-    s=env_slide(em,cn,en,color,look,feat,dng,rul)
-    n+=1;pn(s,n)
+
+inquiry_data=[
+    ("🌲","森林","Forest",FOREST,[
+        # Looks Like
+        ["你看到了什么？树多还是少？",
+         "阳光照到地上多吗？为什么？",
+         "地上有什么？你能听到什么声音？"],
+        # Features
+        ["森林里可能住着哪些动物？",
+         "这里的空气闻起来怎么样？",
+         "你能在森林里找到吃的吗？什么样的？"],
+        # Dangers
+        ["一个人在森林里，可能会发生什么？",
+         "看到不认识的蘑菇，能不能吃？",
+         "听到树丛「沙沙」响，可能是什么？"],
+        # Safety Rules
+        ["怎么做才不会迷路？",
+         "靠近野生动物，要安静还是要发出声音？",
+         "不认识的果子和蘑菇，能尝一口吗？"],
+    ]),
+    ("🏔️","山地","Mountain",MOUNTAIN,[
+        ["山是什么样子的？高还是矮？",
+         "山路平不平？容易走吗？",
+         "山顶上能看到什么？"],
+        ["站在山顶，你能看到多远？",
+         "山上和山下，哪里更冷？为什么？",
+         "山上的风大吗？你怎么知道？"],
+        ["在山上最容易怎样受伤？",
+         "天气突然变冷下雨，会怎样？",
+         "上面的石头掉下来会怎样？"],
+        ["爬山要穿什么样的鞋？为什么？",
+         "出发前要看什么？(提示：天上)",
+         "下山时手要扶着什么？"],
+    ]),
+    ("🌾","草地","Grassland",GRASS,[
+        ["草地是什么颜色的？",
+         "草地是平的还是有起伏？",
+         "除了草，还能看到什么？"],
+        ["太阳能晒到草地吗？亮不亮？",
+         "你想在草地上玩什么？",
+         "草丛里可能有哪些小动物？"],
+        ["一直晒太阳，皮肤会怎样？",
+         "草丛里可能藏着什么让你痒？",
+         "看到一只蜜蜂飞过来，能挥手赶它吗？"],
+        ["头上要戴什么？",
+         "皮肤上要涂什么？",
+         "看到蜜蜂应该怎么办？"],
+    ]),
+    ("🏞️","河边","Riverside",RIVER,[
+        ["河里的水在动还是不动？",
+         "水深还是浅？你怎么判断？",
+         "岸边是泥、沙还是石头？"],
+        ["用手摸一摸，河水冷还是热？",
+         "你觉得水里可能有哪些小动物？",
+         "河边为什么常常长柳树和芦苇？"],
+        ["河边最危险的是什么？",
+         "水看起来很浅，真的就浅吗？",
+         "脚下湿湿的石头，走上去会怎样？"],
+        ["谁必须一直在你身边？",
+         "没有大人允许，可以下水吗？",
+         "穿什么样的鞋才不会滑？"],
+    ]),
+    ("🏜️","沙漠","Desert",DESERT,[
+        ["沙漠里到处是什么？",
+         "树多吗？为什么？",
+         "白天和晚上温度一样吗？"],
+        ["什么样的植物能在沙漠里活下来？",
+         "你能想到哪些住在沙漠里的动物？",
+         "沙丘是怎么形成的？"],
+        ["在沙漠里最怕发生什么？",
+         "为什么沙漠里很容易迷路？",
+         "沙尘暴来了会怎样？"],
+        ["一天大约要喝多少水？",
+         "穿什么样的衣服比较好？长袖还是短袖？",
+         "能不能一个人离开队伍？"],
+    ]),
+    ("❄️","雪地","Snow",SNOW,[
+        ["雪地是什么颜色？",
+         "树枝上有什么？",
+         "走在雪上会发出什么声音？"],
+        ["在雪地里可以玩什么游戏？",
+         "这里的空气暖和还是寒冷？",
+         "摸一摸雪，是软的还是硬的？"],
+        ["太冷了，手和脚会有什么感觉？",
+         "雪反光太亮，眼睛会怎样？",
+         "看起来是雪，下面会不会是水？"],
+        ["应该穿什么样的衣服和鞋？",
+         "眼睛要戴什么来挡光？",
+         "湖面、河面上能走吗？为什么？"],
+    ]),
+]
+
+for em,cn,en_name,env_color,aspect_questions in inquiry_data:
+    for (aspect_label,aspect_color,frame),questions in zip(ASPECTS,aspect_questions):
+        s=aspect_slide(em,cn,en_name,env_color,aspect_label,aspect_color,questions,frame)
+        n+=1;pn(s,n)
 
 # ============================================================
 # 12 COMPARISON TABLE
