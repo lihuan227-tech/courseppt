@@ -192,6 +192,59 @@ div("Session 1  上午","认识 6 种自然环境 + 安全规则\n🌲 森林  �
 n+=1
 
 # ============================================================
+# 4a PICTURE BOOK INTRO — Story Time hook
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"📖 先来听个故事  Story Time",SUN)
+# Left: book illustration placeholder
+ib(s,0.3,1.0,4.4,3.6,"📷 绘本封面 / Book Cover")
+# Right: how to watch + link
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.0),Inches(4.8),Inches(3.6))
+sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=PINE;sh.line.width=Pt(2.5)
+head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.0),Inches(4.8),Inches(0.5))
+head.fill.solid();head.fill.fore_color.rgb=PINE;head.line.fill.background()
+tb(s,5.05,1.08,4.6,0.4,"🎬 一起看绘本  Watch Together",sz=15,b=True,c=WHITE)
+tf=tb(s,5.1,1.7,4.55,0.4,"👂 听一听：故事里的人去了哪里？",sz=14,c=DARK)
+ap(tf,"",sz=6)
+ap(tf,"👀 看一看：他们看到了什么？",sz=14,c=DARK)
+ap(tf,"",sz=6)
+ap(tf,"🤔 想一想：哪里最危险？",sz=14,c=DARK)
+ap(tf,"",sz=10)
+ap(tf,"🔗 绘本链接 Link:",sz=12,b=True,c=SUN)
+ap(tf,"limaogushi.com/play?id=783",sz=12,c=SKY)
+# Bottom: bridge to discussion
+sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.75),Inches(9.4),Inches(0.5))
+sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=SUN;sf.line.width=Pt(2)
+tb(s,0.5,4.83,9.0,0.4,"📌 看完后，我们一起聊一聊故事里的地方！",sz=14,b=True,c=SUN,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
+# 4b DISCUSSION — Questions after the book
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"❓ 故事过后  Let's Discuss",SUN)
+tb(s,0.4,0.9,9,0.35,"看完绘本，一起来回答这些问题！After the story — let's talk about it!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+discussion_qs=[
+    ("1️⃣","他们去了哪些地方？","Where did they go?",PINE),
+    ("2️⃣","哪个地方最危险？","Which place was most dangerous?",ALERT),
+    ("3️⃣","哪里可以停下来？哪里不可以？","Where can we stop? Where can't we?",GREEN_OK),
+]
+for i,(num,q_cn,q_en,cl) in enumerate(discussion_qs):
+    y=1.4+i*1.15
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(y),Inches(9),Inches(1.0))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
+    # Number badge
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.7),Inches(y+0.18),Inches(0.65),Inches(0.65))
+    nb.fill.solid();nb.fill.fore_color.rgb=cl;nb.line.fill.background()
+    tb(s,0.7,y+0.22,0.65,0.55,num,sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    # Question text
+    tb(s,1.6,y+0.15,8.0,0.5,q_cn,sz=20,b=True,c=DARK)
+    tb(s,1.6,y+0.6,8.0,0.35,q_en,sz=12,c=GRAY)
+# Bridge to next section
+sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.95),Inches(9.4),Inches(0.4))
+sf.fill.solid();sf.fill.fore_color.rgb=PINE;sf.line.fill.background()
+tb(s,0.5,5.0,9.0,0.35,"👉 接下来，我们一个一个认识这些地方！",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
 # 5 OVERVIEW — 6 environments preview
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌍 大自然里有什么？  What's in Nature?")
