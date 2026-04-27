@@ -218,30 +218,78 @@ tb(s,0.5,4.83,9.0,0.4,"📌 看完后，我们一起聊一聊故事里的地方�
 pn(s,n)
 
 # ============================================================
-# 4b DISCUSSION — Questions after the book
+# 4b DISCUSSION — Questions after the book + sentence frames
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"❓ 故事过后  Let's Discuss",SUN)
-tb(s,0.4,0.9,9,0.35,"看完绘本，一起来回答这些问题！After the story — let's talk about it!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+# Two main question cards
 discussion_qs=[
     ("1️⃣","他们去了哪些地方？","Where did they go?",PINE),
-    ("2️⃣","哪个地方最危险？","Which place was most dangerous?",ALERT),
-    ("3️⃣","哪里可以停下来？哪里不可以？","Where can we stop? Where can't we?",GREEN_OK),
+    ("2️⃣","这些地方有什么特点？可能有什么危险？","Features and dangers of these places?",ALERT),
 ]
 for i,(num,q_cn,q_en,cl) in enumerate(discussion_qs):
-    y=1.4+i*1.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(y),Inches(9),Inches(1.0))
+    y=1.0+i*1.15
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(1.0))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    # Number badge
-    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.7),Inches(y+0.18),Inches(0.65),Inches(0.65))
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.6),Inches(y+0.18),Inches(0.65),Inches(0.65))
     nb.fill.solid();nb.fill.fore_color.rgb=cl;nb.line.fill.background()
-    tb(s,0.7,y+0.22,0.65,0.55,num,sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    # Question text
-    tb(s,1.6,y+0.15,8.0,0.5,q_cn,sz=20,b=True,c=DARK)
-    tb(s,1.6,y+0.6,8.0,0.35,q_en,sz=12,c=GRAY)
-# Bridge to next section
-sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.95),Inches(9.4),Inches(0.4))
-sf.fill.solid();sf.fill.fore_color.rgb=PINE;sf.line.fill.background()
-tb(s,0.5,5.0,9.0,0.35,"👉 接下来，我们一个一个认识这些地方！",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,0.6,y+0.22,0.65,0.55,num,sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.5,y+0.13,8.0,0.5,q_cn,sz=19,b=True,c=DARK)
+    tb(s,1.5,y+0.6,8.0,0.35,q_en,sz=12,c=GRAY)
+# Sentence frame panel — students answer using these patterns, can extend beyond the book
+sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.4),Inches(9.2),Inches(1.85))
+sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=SUN;sf.line.width=Pt(2.5)
+head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.4),Inches(9.2),Inches(0.45))
+head.fill.solid();head.fill.fore_color.rgb=SUN;head.line.fill.background()
+tb(s,0.6,3.45,9.0,0.4,"💬 我会说  Sentence Frames (绘本以外的地方也欢迎说！)",sz=14,b=True,c=WHITE)
+# 4 frames in 2x2 grid
+frames=[
+    "我去了 __________。",
+    "这里很 __________。",
+    "这里可能有 __________ 危险。",
+    "我们要 __________。",
+]
+for i,fr in enumerate(frames):
+    col=i%2;row=i//2
+    x=0.6+col*4.55;y=3.95+row*0.55
+    tb(s,x,y,4.4,0.4,f"·  {fr}",sz=14,c=DARK)
+pn(s,n)
+
+# ============================================================
+# 4c TEACHER NOTE — Discussion guide table
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"📋 Teacher Note  课堂提问参考",BROWN)
+tb(s,0.4,0.9,9.2,0.35,"引导孩子说出每个地方的「特点」和「可能的危险」。鼓励孩子拓展绘本以外自己知道的内容。",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Table: 7 rows (header + 6), 3 columns
+ts=s.shapes.add_table(7,3,Inches(0.3),Inches(1.3),Inches(9.4),Inches(3.5));t=ts.table
+t.columns[0].width=Inches(1.5)
+t.columns[1].width=Inches(3.4)
+t.columns[2].width=Inches(4.5)
+table_rows=[
+    ["地方  Place","特点  Features","可能的危险  Possible Dangers"],
+    ["🌾 草地","草很高，看不清脚下","可能摔倒、被虫咬、踩到石头或坑"],
+    ["🏞️ 河边 / 河流","有水，地面湿滑","可能滑倒、掉进水里、水流太急"],
+    ["🟫 泥地","又湿又软，走路困难","可能滑倒、鞋子陷进去"],
+    ["🌲 森林","树很多，光线暗","容易迷路，可能有不认识的植物或动物"],
+    ["❄️ 雪地","很冷，地面滑","可能滑倒、着凉、看不清路"],
+    ["🕳️ 山洞","黑黑的，看不清里面","可能有野生动物，不安全，不能随便进去"],
+]
+for r,rd in enumerate(table_rows):
+    for c,ct in enumerate(rd):
+        cl=t.cell(r,c);cl.text="";tf=cl.text_frame;tf.word_wrap=True
+        p=tf.paragraphs[0];p.alignment=PP_ALIGN.LEFT if r>0 else PP_ALIGN.CENTER
+        rn=p.add_run();rn.text=ct;rn.font.name='KaiTi'
+        if r==0:
+            rn.font.size=Pt(13);rn.font.bold=True;rn.font.color.rgb=WHITE
+            cl.fill.solid();cl.fill.fore_color.rgb=BROWN
+        else:
+            rn.font.size=Pt(12);rn.font.color.rgb=DARK
+            if c==0:rn.font.bold=True
+            if r%2==0:cl.fill.solid();cl.fill.fore_color.rgb=RGBColor(0xF5,0xF0,0xE8)
+            else:cl.fill.solid();cl.fill.fore_color.rgb=WHITE
+# Tip at bottom
+tip=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.9),Inches(9.4),Inches(0.5))
+tip.fill.solid();tip.fill.fore_color.rgb=WARM;tip.line.color.rgb=SUN;tip.line.width=Pt(2)
+tb(s,0.5,4.97,9.0,0.4,"💡 让孩子拓展：除了绘本里的地方，你还知道哪里有危险？(操场？停车场？)",sz=12,b=True,c=SUN,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
