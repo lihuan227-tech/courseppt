@@ -351,10 +351,10 @@ s=type_overview_slide("🗿","雕塑","Sculpture",GREEN_L,
      ("🏺","陶塑","Clay"),("🧊","冰雕","Ice"),
      ("🎨","泥塑","Ceramic"),("🔩","金属","Metal")]);n+=1;pn(s,n)
 
-s=example_slide("🗿","雕塑","大卫","David",
-    "米开朗基罗 Michelangelo · 1504 年 · 意大利",
-    "用大理石做的，5米多高！\nMarble, over 17 feet tall!",
-    "📷 大卫雕像 Statue of David",GREEN_L);n+=1;pn(s,n)
+s=example_slide("🗿","雕塑","摩西像","Moses",
+    "米开朗基罗 Michelangelo · 1515 年 · 意大利",
+    "大理石雕得像「真人」— 胡子像活的！\nMarble carved so real — even the beard looks alive!",
+    "📷 米开朗基罗 摩西像",GREEN_L);n+=1;pn(s,n)
 
 s=example_slide_generic("🏺","雕塑","兵马俑","Terracotta Warriors",
     "中国秦朝 · 2000 多年前",
