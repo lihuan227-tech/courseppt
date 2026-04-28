@@ -253,23 +253,28 @@ s=master_intro_slide("毕加索","Pablo Picasso","西班牙","Spain","1881-1973"
     "He changed the way we see faces.",
     PICASSO,"📷 毕加索头像 Picasso portrait");n+=1;pn(s,n)
 
-# 8 Picasso style
+# 8 Picasso style — image example on left, concept cards on right
 s=ns();n+=1;bg(s,CREAM);hb(s,"🎭 毕加索的风格 — 变形的人脸",PICASSO)
-tb(s,0.4,0.9,9,0.4,"Cubism  立体派 — 把不同角度放在一起！",sz=15,b=True,c=PICASSO,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.3,9,0.35,"Different angles all in one picture.",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
-icons=[("👁️","正面的眼睛","Front eye"),("👃","侧面的鼻子","Side nose"),("👄","上下的嘴","Up-down mouth"),("🟦","几何形状","Geometric shapes")]
-for i,(em,cn,en) in enumerate(icons):
-    x=0.3+i*2.4
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(2.2),Inches(1.7))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=PICASSO;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,1.95,2.0,0.6,em,sz=36,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.6,2.0,0.4,cn,sz=14,b=True,c=PICASSO,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.0,2.0,0.3,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.85),Inches(9.2),Inches(1.3))
+tb(s,0.4,0.9,9.2,0.35,"Cubism  立体派 — 把不同角度放在一起！",sz=15,b=True,c=PICASSO,a=PP_ALIGN.CENTER)
+# LEFT: big example painting + caption strip
+ib(s,0.3,1.35,4.4,2.6,"📷 《多拉·玛尔的肖像》Portrait of Dora Maar")
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(4.4),Inches(0.42))
 sh.fill.solid();sh.fill.fore_color.rgb=PICASSO;sh.line.fill.background()
-tb(s,0.6,3.95,8.8,0.5,"🤔 猜一猜：哪幅画是毕加索？",sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,0.6,4.45,8.8,0.4,"Guess: which painting is by Picasso?  老师拿出 3 张图片！",sz=14,c=YELLOW,a=PP_ALIGN.CENTER)
-tb(s,0.6,4.85,8.8,0.3,"线索：找到不一样的脸 — 像不像面具？",sz=12,c=WARM,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.04,4.2,0.35,"《多拉·玛尔的肖像》· 1937",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# RIGHT: 4 concept cards 2x2 — anchor each to the painting
+icons=[("👁️","正面的眼睛","Front eye"),("👃","侧面的鼻子","Side nose"),("👄","变形的嘴","Twisted mouth"),("🟦","几何形状","Geometric shapes")]
+for i,(em,cn,en) in enumerate(icons):
+    col=i%2;row=i//2
+    x=4.85+col*2.45;y=1.35+row*1.55
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.35),Inches(1.4))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=PICASSO;sh.line.width=Pt(2.5)
+    tb(s,x+0.1,y+0.08,2.15,0.5,em,sz=28,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,y+0.62,2.15,0.4,cn,sz=14,b=True,c=PICASSO,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,y+1.02,2.15,0.3,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# Bottom slim inquiry strip
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.6),Inches(9.4),Inches(0.55))
+sh.fill.solid();sh.fill.fore_color.rgb=PICASSO;sh.line.fill.background()
+tb(s,0.4,4.65,9.2,0.5,"🤔 看这幅画 — 你能找出几个「不一样的角度」？  Find the angles!",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # 9 Picasso work 1
@@ -305,35 +310,41 @@ s=master_intro_slide("马蒂斯","Henri Matisse","法国","France","1869-1954",
     "He painted with scissors.",
     MATISSE,"📷 马蒂斯头像 Matisse portrait");n+=1;pn(s,n)
 
-# 13 Matisse style
+# 13 Matisse style — image example on left, story + shapes on right
 s=ns();n+=1;bg(s,CREAM);hb(s,"✂️ 马蒂斯的风格 — 彩色剪纸",MATISSE)
-tb(s,0.4,0.9,9,0.4,"Cut-Outs 剪纸艺术 — 用剪刀代替画笔！",sz=15,b=True,c=MATISSE,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.3,9,0.35,"He got old, couldn't stand to paint → picked up scissors.",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.8),Inches(4.4),Inches(2.2))
+tb(s,0.4,0.9,9.2,0.35,"Cut-Outs 剪纸艺术 — 用剪刀代替画笔！",sz=15,b=True,c=MATISSE,a=PP_ALIGN.CENTER)
+# LEFT: big example painting
+ib(s,0.3,1.35,4.4,2.6,"📷 《波利尼西亚，海》Polynesia, The Sea (海洋生物剪纸)")
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(4.4),Inches(0.42))
+sh.fill.solid();sh.fill.fore_color.rgb=MATISSE;sh.line.fill.background()
+tb(s,0.4,4.04,4.2,0.35,"《波利尼西亚，海》· 1946",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# RIGHT TOP: story panel
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.35),Inches(4.85),Inches(1.4))
 sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=MATISSE;sh.line.width=Pt(2)
-tb(s,0.6,1.9,4.0,0.5,"🌟 他的故事 His Story",sz=16,b=True,c=MATISSE)
-tf=tb(s,0.6,2.4,4.0,1.5,"老了，不能站着画画。",sz=14,c=DARK)
-ap(tf,"→ 拿起剪刀剪形状！",sz=14,b=True,c=MATISSE)
-ap(tf,"Old + sick → scissors + paper",sz=11,c=GRAY)
-ap(tf,"还是大师！Still a master!",sz=12,b=True,c=GREEN_OK)
+tb(s,5.0,1.42,4.6,0.4,"🌟 他的故事 His Story",sz=14,b=True,c=MATISSE)
+tf=tb(s,5.0,1.82,4.6,0.4,"老了，不能站着画画 →",sz=13,c=DARK)
+ap(tf,"拿起剪刀剪形状！",sz=13,b=True,c=MATISSE)
+ap(tf,"Old + sick → scissors + paper",sz=10,c=GRAY)
+# RIGHT BOTTOM: 4 shape cards 2x2
 shapes=[("🟦","蓝色方块",SKY),("⭐","黄色星星",YELLOW),("🌿","绿色叶子",GREEN_L),("💗","粉色心",MAGENTA)]
 for i,(em,cn,cl) in enumerate(shapes):
-    x=5.1+(i%2)*2.3;y=1.85+(i//2)*1.1
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.1),Inches(1.0))
+    col=i%2;row=i//2
+    x=4.85+col*2.45;y=2.85+row*0.7
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.35),Inches(0.6))
     sh.fill.solid();sh.fill.fore_color.rgb=cl;sh.line.fill.background()
-    tb(s,x+0.05,y+0.05,2.0,0.5,em,sz=22,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,y+0.55,2.0,0.4,cn,sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.15),Inches(9.2),Inches(1.0))
+    tb(s,x+0.1,y+0.1,0.55,0.4,em,sz=18,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.7,y+0.13,1.6,0.4,cn,sz=13,b=True,c=WHITE)
+# Bottom slim inquiry strip
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(4.3),Inches(4.85),Inches(0.55))
 sh.fill.solid();sh.fill.fore_color.rgb=MATISSE;sh.line.fill.background()
-tb(s,0.6,4.25,8.8,0.5,"🤔 你能剪出哪些形状？",sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,0.6,4.7,8.8,0.4,"What shapes can YOU cut out?",sz=12,c=YELLOW,a=PP_ALIGN.CENTER)
+tb(s,5.0,4.35,4.65,0.5,"🤔 你能剪出哪些形状？  What shapes?",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # 14 Matisse work 1
-s=example_slide("✂️","马蒂斯","蓝色裸体","Blue Nude",
-    "Henri Matisse · 1952 年 · 剪纸作品",
-    "只用蓝色纸 — 形状就够了！\nOnly blue paper — shape is enough!",
-    "📷 蓝色裸体 Blue Nude",MATISSE);n+=1;pn(s,n)
+s=example_slide("✂️","马蒂斯","蜗牛","The Snail",
+    "Henri Matisse · 1953 年 · 剪纸作品",
+    "彩色方块拼成一只蜗牛！\nA snail made of colored squares!",
+    "📷 蜗牛 The Snail (彩色方块螺旋)",MATISSE);n+=1;pn(s,n)
 
 # 15 Matisse work 2
 s=example_slide("✂️","马蒂斯","伊卡洛斯","Icarus",
@@ -362,23 +373,28 @@ s=master_intro_slide("梵高","Vincent van Gogh","荷兰","Netherlands","1853-18
     "His colors dance.",
     VANGOGH,"📷 梵高头像 Van Gogh portrait");n+=1;pn(s,n)
 
-# 18 Van Gogh style
+# 18 Van Gogh style — image example on left, concept cards on right
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌻 梵高的风格 — 有情绪的颜色和线条",VANGOGH)
-tb(s,0.4,0.9,9,0.4,"短粗笔触 + 旋转线条 = 情绪",sz=15,b=True,c=VANGOGH,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.3,9,0.35,"Short, bold, swirly strokes carry feelings.",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,0.9,9.2,0.35,"短粗笔触 + 旋转线条 = 情绪",sz=15,b=True,c=VANGOGH,a=PP_ALIGN.CENTER)
+# LEFT: big example painting
+ib(s,0.3,1.35,4.4,2.6,"📷 《罗讷河上的星夜》Starry Night Over the Rhône (旋转笔触)")
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(4.4),Inches(0.42))
+sh.fill.solid();sh.fill.fore_color.rgb=VANGOGH;sh.line.fill.background()
+tb(s,0.4,4.04,4.2,0.35,"《罗讷河上的星夜》· 1888",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+# RIGHT: 4 concept cards 2x2 — anchor each to the painting
 icons=[("〰️","旋转线条","Swirly lines"),("🖌️","短粗笔触","Short strokes"),("🌈","明亮颜色","Bright colors"),("❤️","表达心情","Show feelings")]
 for i,(em,cn,en) in enumerate(icons):
-    x=0.3+i*2.4
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(2.2),Inches(1.7))
+    col=i%2;row=i//2
+    x=4.85+col*2.45;y=1.35+row*1.55
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.35),Inches(1.4))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=VANGOGH;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,1.95,2.0,0.6,em,sz=36,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.6,2.0,0.4,cn,sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.0,2.0,0.3,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.85),Inches(9.2),Inches(1.3))
+    tb(s,x+0.1,y+0.08,2.15,0.5,em,sz=28,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,y+0.62,2.15,0.4,cn,sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,y+1.02,2.15,0.3,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# Bottom slim inquiry strip
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.6),Inches(9.4),Inches(0.55))
 sh.fill.solid();sh.fill.fore_color.rgb=VANGOGH;sh.line.fill.background()
-tb(s,0.6,3.95,8.8,0.5,"🤔 看线条 — 你觉得他开心还是难过？",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.6,4.45,8.8,0.4,"Look at the lines — is he happy or sad?",sz=14,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.6,4.85,8.8,0.3,"线条快 = 心情？  线条慢 = 心情？",sz=12,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.65,9.2,0.5,"🤔 看线条 — 你觉得他开心还是难过？  Happy or sad?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # 19 Van Gogh work 1
@@ -419,7 +435,7 @@ t.columns[3].width=Inches(2.6)
 rows=[["大师 Master","🎭 毕加索 Picasso","✂️ 马蒂斯 Matisse","🌻 梵高 Van Gogh"],
       ["🌍 国家 Country","西班牙 Spain","法国 France","荷兰 Netherlands"],
       ["🎨 风格 Style","立体派 / 变形人脸","彩色剪纸 / 形状","旋转线条 / 情绪色彩"],
-      ["🖼️ 代表作 Famous","《亚维农的少女》\n《哭泣的女人》","《蓝色裸体》\n《伊卡洛斯》","《向日葵》\n《星夜》"]]
+      ["🖼️ 代表作 Famous","《亚维农的少女》\n《哭泣的女人》","《蜗牛》\n《伊卡洛斯》","《向日葵》\n《星夜》"]]
 header_colors=[MAGENTA,PICASSO,MATISSE,VANGOGH]
 for r,rd in enumerate(rows):
     for c,ct in enumerate(rd):
