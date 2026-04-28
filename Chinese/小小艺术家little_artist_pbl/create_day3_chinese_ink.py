@@ -51,9 +51,21 @@ def ap(tf,txt,sz=18,b=False,c=DARK,a=None):
 def bg(s,c):
     sh=s.shapes.add_shape(MSO_SHAPE.RECTANGLE,0,0,W,H);sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     sp=sh._element;sp.getparent().remove(sp);s.shapes._spTree.insert(2,sp)
-def ib(s,l,t,w,h,lb="📷"):
+import os as _os
+_IMG_DIR=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),"images")
+def ib(s,l,t,w,h,lb="📷",url=None,key=None):
+    if key:
+        for ext in ("jpg","jpeg","png","webp"):
+            p=_os.path.join(_IMG_DIR,f"{key}.{ext}")
+            if _os.path.exists(p):
+                s.shapes.add_picture(p,Inches(l),Inches(t),Inches(w),Inches(h))
+                return
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(l),Inches(t),Inches(w),Inches(h));sh.fill.solid();sh.fill.fore_color.rgb=IMGBG;sh.line.fill.background()
-    tb(s,l+0.1,t+h/2-0.2,w-0.2,0.4,lb,sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
+    if url:
+        tb(s,l+0.1,t+h/2-0.4,w-0.2,0.35,lb,sz=13,c=LGRAY,a=PP_ALIGN.CENTER)
+        tb(s,l+0.1,t+h/2+0.0,w-0.2,0.3,f"🔗 {url}",sz=10,c=LGRAY,a=PP_ALIGN.CENTER)
+    else:
+        tb(s,l+0.1,t+h/2-0.2,w-0.2,0.4,lb,sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
 def hb(s,txt,c=VERMILLION,t=0.15):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(t),Inches(9.4),Inches(0.55));sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     tb(s,0.4,t+0.03,9.2,0.5,txt,sz=20,b=True,c=WHITE)
@@ -80,10 +92,10 @@ def dot(s,x,y,r,color):
     d=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x),Inches(y),Inches(r),Inches(r))
     d.fill.solid();d.fill.fore_color.rgb=color;d.line.fill.background()
 
-def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color):
+def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,SCROLL)
     hb(s,f"{cat_emoji} {cat_cn}  ·  《{work_cn}》",color)
-    ib(s,0.5,0.95,9,3.5,img_lb)
+    ib(s,0.5,0.95,9,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
     tb(s,0.7,4.6,4.5,0.4,work_en,sz=15,b=True,c=color)
@@ -91,10 +103,10 @@ def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, col
     tb(s,5.3,4.62,4.2,0.75,fact,sz=12,c=DARK)
     return s
 
-def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color):
+def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,SCROLL)
     hb(s,f"{cat_emoji} {cat_cn}  ·  {name_cn}",color)
-    ib(s,0.5,0.95,9,3.5,img_lb)
+    ib(s,0.5,0.95,9,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
     tb(s,0.7,4.6,4.5,0.4,name_en,sz=15,b=True,c=color)
@@ -239,10 +251,10 @@ pn(s,n)
 # 5a-5d  ONE PAINTING PER SLIDE (big image, no features revealed)
 # ============================================================
 gallery=[
-    ("📷 《竹子》郑板桥  Bamboo by Zheng Banqiao","《竹子》郑板桥","🎋",1),
-    ("📷 《虾》齐白石  Shrimp by Qi Baishi","《虾》齐白石","🦐",2),
-    ("📷 《熊猫》吴作人  Panda by Wu Zuoren (1908-1997)","《熊猫》吴作人","🐼",3),
-    ("📷 《溪山行旅图》范宽  Landscape by Fan Kuan","《溪山行旅图》范宽","🏔️",4),
+    ("📷 《竹子》郑板桥  Bamboo by Zheng Banqiao","《竹子》郑板桥","🎋",1,"搜「郑板桥 竹子」","zheng_banqiao"),
+    ("📷 《虾》齐白石  Shrimp by Qi Baishi","《虾》齐白石","🦐",2,"搜「齐白石 虾」","qi_baishi"),
+    ("📷 《熊猫》吴作人  Panda by Wu Zuoren","《熊猫》吴作人","🐼",3,"搜「吴作人 熊猫」","wu_zuoren"),
+    ("📷 《溪山行旅图》范宽  Landscape by Fan Kuan","《溪山行旅图》范宽","🏔️",4,"zh.wikipedia.org/wiki/溪山行旅圖","xishan_xinglu"),
 ]
 GALLERY_NOTES_D3={
     1:"老师备课:\n• 郑板桥 (1693-1765), 清代画家、书法家\n• 「扬州八怪」之一, 一生只画三样: 竹、兰、石\n• 他的竹子瘦、硬、有节 — 像他自己的脾气: 正直\n• 著名诗句: 「咬定青山不放松, 立根原在破岩中」\n• 追问: 「竹子为什么一节一节？」「像不像在长大？」",
@@ -250,9 +262,9 @@ GALLERY_NOTES_D3={
     3:"老师备课:\n• 吴作人 (1908-1997), 中国现代美术大师, 中央美术学院前院长\n• 早年学西洋油画, 后回归中国水墨\n• 他把西画的体积感 + 中国水墨的笔墨结合\n• 最有名的就是画熊猫和金鱼, 1973-1980 年代创作了一系列熊猫作品\n• 用浓墨画耳朵 / 眼圈 / 四肢, 留白画身体 — 黑白对比天然\n• 趣闻: 熊猫的黑白本来就像水墨画! 简直是为水墨画而生的动物\n• 图片参考: 搜索「吴作人 熊猫」可以找到他的代表作\n• 收藏地: 中央美院美术馆, 中国美术馆\n• 追问: 「熊猫为什么是黑白的？」「画家用了多少颜色？」「水墨画里的熊猫和照片里的熊猫有什么不一样？」",
     4:"老师备课:\n• 范宽 (约 950-1032), 北宋画家\n• 《溪山行旅图》是中国十大名画之一, 现存台北故宫博物院\n• 画面气势磅礴: 山很大很高, 旅人和驴子很小很小\n• 这表现了「人在自然中很渺小」的哲学\n• 提示学生: 找一找小小的旅人! (在画中下方, 很难找)\n• 追问: 「你能找到人吗？」「为什么山画得那么大？」「人画得那么小？」",
 }
-for img_lb,title,em,idx in gallery:
+for img_lb,title,em,idx,url,key in gallery:
     s=ns();n+=1;bg(s,SCROLL);hb(s,f"🖼️ 看 — 第 {idx} 幅 / {len(gallery)}  Look · {idx}/{len(gallery)}",VERMILLION)
-    ib(s,0.5,1.0,9.0,3.5,img_lb)
+    ib(s,0.5,1.0,9.0,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.6),Inches(9.0),Inches(0.45))
     sh.fill.solid();sh.fill.fore_color.rgb=INK;sh.line.fill.background()
     tb(s,0.6,4.65,1.0,0.35,em,sz=22,c=WHITE,a=PP_ALIGN.CENTER)
@@ -443,7 +455,8 @@ notes(s,"老师备课:\n• 选 1-2 段 2-3 分钟的水墨画过程视频, 让�
 s=example_slide("🐟","鱼 Fish","鳜鱼图","Mandarin Fish",
     "八大山人 Bada Shanren · 朱耷 · 1626-1705 · 明末清初",
     "一条鱼 + 一片空白 = 一个世界。\nOne fish + lots of empty space = a whole world!",
-    "📷 八大山人《鱼》(搜「八大山人 鱼」)",JADE);n+=1;pn(s,n)
+    "📷 八大山人《鱼》(搜「八大山人 鱼」)",JADE,
+    url="搜「八大山人 鱼」/zh.wikipedia.org/wiki/八大山人",key="bada_shanren");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 八大山人 (本名朱耷, 1626-1705) 明朝皇室后裔, 明亡后出家当和尚\n• 他的画很特别: 鱼的眼睛是「白眼向天」— 表达对当时世界的不满\n• 画一条孤独的鱼, 周围全是空白 — 这就是「极致留白」\n• 他常常只画一个东西: 一条鱼、一只鸟、一朵荷花\n• 简到不能再简, 但每一笔都很有力量\n• 图片参考: 网搜「八大山人 鱼」/「朱耷 鱼」\n• 收藏: 北京故宫博物院 / 上海博物馆\n• 追问: 「为什么只画一条鱼？」「鱼的眼睛在哪里？为什么这么画？」「这条鱼开心还是难过？」")
 
 # ============================================================
@@ -452,7 +465,8 @@ notes(s,"老师备课:\n• 八大山人 (本名朱耷, 1626-1705) 明朝皇室�
 s=example_slide("🪷","花 Flower (荷花)","泼墨荷花","Splashed Ink Lotus",
     "张大千 Zhang Daqian · 1899-1983 · 中国现代水墨大师",
     "「泼墨」— 把墨泼上去！花就出来了！\nSplash the ink — and a flower appears!",
-    "📷 张大千《荷花》(搜「张大千 荷花 泼墨」)",JADE);n+=1;pn(s,n)
+    "📷 张大千《荷花》(搜「张大千 荷花 泼墨」)",JADE,
+    url="搜「张大千 荷花」/zh.wikipedia.org/wiki/张大千",key="zhang_daqian");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 张大千 (1899-1983) 是 20 世纪最有名的中国画家之一\n• 他什么都画 — 山水、花鸟、人物, 还会临摹古画 (传说曾骗过专家)\n• 后来发明了「泼墨泼彩」技法 — 把墨和颜料直接泼到纸上\n• 这种画法很大胆, 一旦泼下去就改不了\n• 荷花是中国的传统题材 (出淤泥而不染), 但张大千的荷花是「现代的」\n• 图片参考: 网搜「张大千 荷花」/「张大千 泼墨」\n• 收藏: 台北故宫博物院 / 苏富比拍卖纪录\n• 趣闻: 他的画是当今拍卖纪录最高的中国画家之一, 一幅荷花拍过几亿\n• 追问: 「「泼」墨是什么意思？」「荷花和别的花有什么不一样？」「为什么古人爱画荷花？」")
 
 # ============================================================
@@ -461,7 +475,8 @@ notes(s,"老师备课:\n• 张大千 (1899-1983) 是 20 世纪最有名的中�
 s=example_slide_generic("🐼","熊猫 Panda","卡通熊猫","Folk-Style Panda",
     "韩美林 Han Meilin · 1936-至今 · 现代艺术家",
     "他的熊猫圆滚滚 — 像不像奥运福娃？\nHis pandas are round and cute — like Olympic mascots!",
-    "📷 韩美林《熊猫》(搜「韩美林 熊猫」)",JADE);n+=1;pn(s,n)
+    "📷 韩美林《熊猫》(搜「韩美林 熊猫」)",JADE,
+    url="搜「韩美林 熊猫」",key="han_meilin");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 韩美林 (1936-至今) 中国现代艺术家、设计师\n• 他设计了 2008 北京奥运会吉祥物「福娃」, 也是熊猫主题设计大师\n• 他的熊猫不是「写实」的, 是「卡通化」的水墨 — 圆圆的, 萌萌的\n• 用最简单的几笔, 就抓住熊猫的特征\n• 这种风格融合了中国民间艺术 + 现代设计\n• 图片参考: 网搜「韩美林 熊猫」\n• 趣闻: 他设计的福娃熊猫 (晶晶) 全世界 30 亿人都认识\n• 收藏: 韩美林艺术馆 (北京 / 杭州 / 银川)\n• 对比: 吴作人画熊猫像写真, 韩美林画熊猫像卡通\n• 追问: 「这只熊猫和上一幅 (吴作人) 不一样在哪里？」「你更喜欢哪一种？为什么？」")
 
 # ============================================================

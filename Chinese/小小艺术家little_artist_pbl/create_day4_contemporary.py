@@ -48,9 +48,21 @@ def ap(tf,txt,sz=18,b=False,c=DARK,a=None):
 def bg(s,c):
     sh=s.shapes.add_shape(MSO_SHAPE.RECTANGLE,0,0,W,H);sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     sp=sh._element;sp.getparent().remove(sp);s.shapes._spTree.insert(2,sp)
-def ib(s,l,t,w,h,lb="📷"):
+import os as _os
+_IMG_DIR=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),"images")
+def ib(s,l,t,w,h,lb="📷",url=None,key=None):
+    if key:
+        for ext in ("jpg","jpeg","png","webp"):
+            p=_os.path.join(_IMG_DIR,f"{key}.{ext}")
+            if _os.path.exists(p):
+                s.shapes.add_picture(p,Inches(l),Inches(t),Inches(w),Inches(h))
+                return
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(l),Inches(t),Inches(w),Inches(h));sh.fill.solid();sh.fill.fore_color.rgb=IMGBG;sh.line.fill.background()
-    tb(s,l+0.1,t+h/2-0.2,w-0.2,0.4,lb,sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
+    if url:
+        tb(s,l+0.1,t+h/2-0.4,w-0.2,0.35,lb,sz=13,c=LGRAY,a=PP_ALIGN.CENTER)
+        tb(s,l+0.1,t+h/2+0.0,w-0.2,0.3,f"🔗 {url}",sz=10,c=LGRAY,a=PP_ALIGN.CENTER)
+    else:
+        tb(s,l+0.1,t+h/2-0.2,w-0.2,0.4,lb,sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
 def hb(s,txt,c=HOT_PINK,t=0.15):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(t),Inches(9.4),Inches(0.55));sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     tb(s,0.4,t+0.03,9.2,0.5,txt,sz=20,b=True,c=WHITE)
@@ -85,10 +97,10 @@ def dot(s,x,y,r,color):
     d=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x),Inches(y),Inches(r),Inches(r))
     d.fill.solid();d.fill.fore_color.rgb=color;d.line.fill.background()
 
-def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color):
+def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,CREAM)
     hb(s,f"{cat_emoji} {cat_cn}  ·  《{work_cn}》",color)
-    ib(s,0.5,0.95,9,3.5,img_lb)
+    ib(s,0.5,0.95,9,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
     tb(s,0.7,4.6,4.5,0.4,work_en,sz=15,b=True,c=color)
@@ -96,10 +108,10 @@ def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, col
     tb(s,5.3,4.62,4.2,0.75,fact,sz=12,c=DARK)
     return s
 
-def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color):
+def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,CREAM)
     hb(s,f"{cat_emoji} {cat_cn}  ·  {name_cn}",color)
-    ib(s,0.5,0.95,9,3.5,img_lb)
+    ib(s,0.5,0.95,9,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
     tb(s,0.7,4.6,4.5,0.4,name_en,sz=15,b=True,c=color)
@@ -248,16 +260,16 @@ pn(s,n)
 # 5a-5f  ONE ARTWORK PER SLIDE (big image, no features revealed)
 # ============================================================
 gallery=[
-    ("📷 达利《永恒的记忆》(融化的钟)  Dalí: The Persistence of Memory","《永恒的记忆》(融化的钟) · Salvador Dalí","🕰️",1),
-    ("📷 马格利特《这不是烟斗》  Magritte: The Treachery of Images","《这不是烟斗》· René Magritte","🚭",2),
-    ("📷 草间弥生 圆点南瓜  Yayoi Kusama: Pumpkin (黄底黑点)","圆点南瓜 · 草间弥生 Yayoi Kusama","🎃",3),
-    ("📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines","视错觉条纹 · Bridget Riley","👁️",4),
-    ("📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)","现成品 — 自行车轮 · Marcel Duchamp","🚲",5),
-    ("📷 黑白对称图案  Symmetric paper-cut pattern","黑白对称图案 · Symmetry","🦋",6),
+    ("📷 达利《永恒的记忆》(融化的钟)  Dalí: The Persistence of Memory","《永恒的记忆》(融化的钟) · Salvador Dalí","🕰️",1,"en.wikipedia.org/wiki/The_Persistence_of_Memory","dali_clocks"),
+    ("📷 马格利特《这不是烟斗》  Magritte: The Treachery of Images","《这不是烟斗》· René Magritte","🚭",2,"en.wikipedia.org/wiki/The_Treachery_of_Images","magritte_pipe"),
+    ("📷 草间弥生 圆点南瓜  Yayoi Kusama: Pumpkin (黄底黑点)","圆点南瓜 · 草间弥生 Yayoi Kusama","🎃",3,"搜「Kusama Pumpkin」/en.wikipedia.org/wiki/Yayoi_Kusama","kusama"),
+    ("📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines","视错觉条纹 · Bridget Riley","👁️",4,"搜「Bridget Riley Op art」","riley"),
+    ("📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)","现成品 — 自行车轮 · Marcel Duchamp","🚲",5,"en.wikipedia.org/wiki/Bicycle_Wheel","bicycle_wheel"),
+    ("📷 黑白对称图案  Symmetric paper-cut pattern","黑白对称图案 · Symmetry","🦋",6,"搜「symmetric pattern」",None),
 ]
-for img_lb,title,em,idx in gallery:
+for img_lb,title,em,idx,url,key in gallery:
     s=ns();n+=1;bg(s,CREAM);hb(s,f"🖼️ 看 — 第 {idx} 幅 / {len(gallery)}  Look · {idx}/{len(gallery)}",HOT_PINK)
-    ib(s,0.5,1.0,9.0,3.5,img_lb)
+    ib(s,0.5,1.0,9.0,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.6),Inches(9.0),Inches(0.45))
     sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
     tb(s,0.6,4.65,1.0,0.35,em,sz=22,c=WHITE,a=PP_ALIGN.CENTER)
@@ -417,7 +429,8 @@ pn(s,n)
 s=example_slide("🐟","超现实","这不是烟斗","The Treachery of Images",
     "马格利特 René Magritte · 比利时 · 1929",
     "明明是烟斗，他说不是 — 你觉得呢？\nIt looks like a pipe… but is it?",
-    "📷 马格利特 这不是烟斗",PURPLE);n+=1;pn(s,n)
+    "📷 马格利特 这不是烟斗",PURPLE,
+    url="en.wikipedia.org/wiki/The_Treachery_of_Images",key="magritte_pipe");n+=1;pn(s,n)
 notes(s,GALLERY_NOTES[2]+"\n\n额外: 真正标题是「图像的背叛」(La trahison des images)\n• 这幅画解除了「图像 = 真实物体」的幻觉\n• 提问: 「你能从画里把烟斗拿出来吗？」「写「苹果」两个字 ≠ 真的苹果」\n• 这是「概念艺术」的开端 — 用画问问题, 不只是给答案")
 
 # ============================================================
@@ -426,7 +439,8 @@ notes(s,GALLERY_NOTES[2]+"\n\n额外: 真正标题是「图像的背叛」(La tr
 s=example_slide("🐟","超现实","永恒的记忆","The Persistence of Memory",
     "达利 Salvador Dalí · 西班牙 · 1931",
     "钟会化掉？时间在融化。\nClocks melting — time is melting too!",
-    "📷 达利 融化的钟",PURPLE);n+=1;pn(s,n)
+    "📷 达利 融化的钟",PURPLE,
+    url="en.wikipedia.org/wiki/The_Persistence_of_Memory",key="dali_clocks");n+=1;pn(s,n)
 notes(s,GALLERY_NOTES[1]+"\n\n额外细节:\n• 画里那个软软的「脸」其实是达利自己变形\n• 旁边有一只蚂蚁 + 一只苍蝇 — 象征腐烂、时间流逝\n• 远处的山是达利家乡西班牙加泰罗尼亚\n• 提问: 「你最长的「一分钟」是什么时候？最短的呢？」(等公交 vs 玩游戏)")
 
 # ============================================================
@@ -498,7 +512,8 @@ notes(s,"老师备课:\n• 草间弥生 Yayoi Kusama, 日本松本市出生 (19
 s=example_slide("🎃","草间弥生","南瓜","Pumpkin",
     "草间弥生 Yayoi Kusama · 1994 · 日本直岛",
     "黄底黑点的南瓜 · 她从小就看到圆点 · 圆点让她安心。\nYellow + black dots — dots make her feel safe.",
-    "📷 草间弥生 南瓜雕塑 (黄+黑点)",DOT_RED);n+=1;pn(s,n)
+    "📷 草间弥生 南瓜雕塑 (黄+黑点)",DOT_RED,
+    url="搜「Kusama Pumpkin Naoshima」",key="kusama");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1994 年作品, 在日本直岛 (Naoshima 艺术岛) 海边\n• 黄南瓜 + 黑色圆点, 高 2 米, 现在是直岛地标\n• 草间弥生说: 「南瓜让我想到童年, 它的形状很谦虚, 圆圆滚滚的」\n• 这种重复的圆点叫「无限网 Infinity Net」\n• 数一数 — 圆点有大有小, 不规则但有节奏\n• 追问: 「为什么是黄色？为什么是黑点？换颜色行不行？」")
 
 # ============================================================

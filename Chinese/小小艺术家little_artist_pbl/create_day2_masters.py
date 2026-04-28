@@ -45,9 +45,23 @@ def ap(tf,txt,sz=18,b=False,c=DARK,a=None):
 def bg(s,c):
     sh=s.shapes.add_shape(MSO_SHAPE.RECTANGLE,0,0,W,H);sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     sp=sh._element;sp.getparent().remove(sp);s.shapes._spTree.insert(2,sp)
-def ib(s,l,t,w,h,lb="📷"):
+import os as _os
+_IMG_DIR=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),"images")
+def ib(s,l,t,w,h,lb="📷",url=None,key=None):
+    """Image placeholder. If `key` matches a file in images/, embed it directly.
+    Otherwise draw the gray box + label + optional URL line."""
+    if key:
+        for ext in ("jpg","jpeg","png","webp"):
+            p=_os.path.join(_IMG_DIR,f"{key}.{ext}")
+            if _os.path.exists(p):
+                s.shapes.add_picture(p,Inches(l),Inches(t),Inches(w),Inches(h))
+                return
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(l),Inches(t),Inches(w),Inches(h));sh.fill.solid();sh.fill.fore_color.rgb=IMGBG;sh.line.fill.background()
-    tb(s,l+0.1,t+h/2-0.2,w-0.2,0.4,lb,sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
+    if url:
+        tb(s,l+0.1,t+h/2-0.4,w-0.2,0.35,lb,sz=13,c=LGRAY,a=PP_ALIGN.CENTER)
+        tb(s,l+0.1,t+h/2+0.0,w-0.2,0.3,f"🔗 {url}",sz=10,c=LGRAY,a=PP_ALIGN.CENTER)
+    else:
+        tb(s,l+0.1,t+h/2-0.2,w-0.2,0.4,lb,sz=14,c=LGRAY,a=PP_ALIGN.CENTER)
 def hb(s,txt,c=MAGENTA,t=0.15):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(t),Inches(9.4),Inches(0.55));sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     tb(s,0.4,t+0.03,9.2,0.5,txt,sz=20,b=True,c=WHITE)
@@ -74,10 +88,10 @@ def dot(s,x,y,r,color):
     d=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x),Inches(y),Inches(r),Inches(r))
     d.fill.solid();d.fill.fore_color.rgb=color;d.line.fill.background()
 
-def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color):
+def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,CREAM)
     hb(s,f"{cat_emoji} {cat_cn}  ·  《{work_cn}》",color)
-    ib(s,0.5,0.95,9,3.5,img_lb)
+    ib(s,0.5,0.95,9,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
     tb(s,0.7,4.6,4.5,0.4,work_en,sz=15,b=True,c=color)
@@ -85,10 +99,10 @@ def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, col
     tb(s,5.3,4.62,4.2,0.75,fact,sz=12,c=DARK)
     return s
 
-def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color):
+def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,CREAM)
     hb(s,f"{cat_emoji} {cat_cn}  ·  {name_cn}",color)
-    ib(s,0.5,0.95,9,3.5,img_lb)
+    ib(s,0.5,0.95,9,3.5,img_lb,url=url,key=key)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.55),Inches(9),Inches(0.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
     tb(s,0.7,4.6,4.5,0.4,name_en,sz=15,b=True,c=color)
@@ -222,17 +236,17 @@ tb(s,1.0,0.98,8.0,0.45,"大师 = 有自己的风格的艺术家",sz=22,b=True,c=
 tb(s,1.0,1.4,8.0,0.3,"A Master = an artist with their own STYLE",sz=12,c=YELLOW,a=PP_ALIGN.CENTER)
 # 3 example cards: famous painting + signature feature label
 examples=[
-    ("📷 《哭泣的女人》Weeping Woman","《哭泣的女人》","变形的脸","Twisted face","= 毕加索",PICASSO),
-    ("📷 《伊卡洛斯》Icarus (黑色剪影 + 红心)","《伊卡洛斯》","彩色剪纸","Cut-out shapes","= 马蒂斯",MATISSE),
-    ("📷 《星夜》The Starry Night (旋转的天空)","《星夜》","旋转线条","Swirly lines","= 梵高",VANGOGH),
+    ("📷 《哭泣的女人》Weeping Woman","《哭泣的女人》","变形的脸","Twisted face","= 毕加索",PICASSO,"en.wikipedia.org/wiki/The_Weeping_Woman","weeping_woman"),
+    ("📷 《伊卡洛斯》Icarus (黑色剪影 + 红心)","《伊卡洛斯》","彩色剪纸","Cut-out shapes","= 马蒂斯",MATISSE,"搜「Matisse Icarus Jazz」","icarus"),
+    ("📷 《星夜》The Starry Night (旋转的天空)","《星夜》","旋转线条","Swirly lines","= 梵高",VANGOGH,"en.wikipedia.org/wiki/The_Starry_Night","starry_night"),
 ]
-for i,(img_lb,title,feat_cn,feat_en,who,cl) in enumerate(examples):
+for i,(img_lb,title,feat_cn,feat_en,who,cl,url,key) in enumerate(examples):
     x=0.3+i*3.2
     # card background
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(3.0),Inches(3.35))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
     # image placeholder (top)
-    ib(s,x+0.15,1.95,2.7,1.95,img_lb)
+    ib(s,x+0.15,1.95,2.7,1.95,img_lb,url=url,key=key)
     # painting title strip
     sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.15),Inches(3.95),Inches(2.7),Inches(0.35))
     sh2.fill.solid();sh2.fill.fore_color.rgb=cl;sh2.line.fill.background()
@@ -272,7 +286,7 @@ s=master_intro_slide("毕加索","Pablo Picasso","西班牙","Spain","1881-1973"
 s=ns();n+=1;bg(s,CREAM);hb(s,"🎭 毕加索的风格 — 变形的人脸",PICASSO)
 tb(s,0.4,0.9,9.2,0.35,"Cubism  立体派 — 把不同角度放在一起！",sz=15,b=True,c=PICASSO,a=PP_ALIGN.CENTER)
 # LEFT: big example painting + caption strip
-ib(s,0.3,1.35,4.4,2.6,"📷 《多拉·玛尔的肖像》Portrait of Dora Maar")
+ib(s,0.3,1.35,4.4,2.6,"📷 《多拉·玛尔的肖像》Portrait of Dora Maar",url="en.wikipedia.org/wiki/Portrait_of_Dora_Maar",key="dora_maar")
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(4.4),Inches(0.42))
 sh.fill.solid();sh.fill.fore_color.rgb=PICASSO;sh.line.fill.background()
 tb(s,0.4,4.04,4.2,0.35,"《多拉·玛尔的肖像》· 1937",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
@@ -297,14 +311,16 @@ notes(s,"老师备课:\n• 立体派 (Cubism) 的核心: 同一张脸里有「�
 s=example_slide("🎭","毕加索","亚维农的少女","Les Demoiselles d'Avignon",
     "Pablo Picasso · 1907 年 · 立体派开始的作品",
     "看 — 脸像不像面具？\nLook — do the faces look like masks?",
-    "📷 亚维农的少女 Les Demoiselles d'Avignon",PICASSO);n+=1;pn(s,n)
+    "📷 亚维农的少女 Les Demoiselles d'Avignon",PICASSO,
+    url="en.wikipedia.org/wiki/Les_Demoiselles_d'Avignon",key="demoiselles");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1907 年, 立体派诞生的标志作品\n• 5 个女人 — 最右边 2 张脸像非洲面具 (毕加索那时迷上非洲艺术)\n• 这幅画把传统的「美」打碎了, 巴黎艺术圈被震惊\n• 不强调「裸体」, 用「人」「女人」即可\n• 追问: 「像不像戴面具？」「为什么画家不画得像照片？」")
 
 # 10 Picasso work 2
 s=example_slide("🎭","毕加索","哭泣的女人","Weeping Woman",
     "Pablo Picasso · 1937 年 · 蓝色和绿色",
     "你觉得她伤心吗？为什么？\nDo you think she is sad? Why?",
-    "📷 哭泣的女人 Weeping Woman",PICASSO);n+=1;pn(s,n)
+    "📷 哭泣的女人 Weeping Woman",PICASSO,
+    url="en.wikipedia.org/wiki/The_Weeping_Woman",key="weeping_woman");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1937 年, 画家女友 Dora Maar 的肖像\n• 同一年毕加索画了著名的《格尔尼卡》— 反战, 因为纳粹刚轰炸西班牙小镇 Guernica, 死了 1000 多平民\n• 锯齿形眼泪 + 蓝绿色调 = 痛苦 + 哭泣\n• 嘴巴是锯齿状, 眼睛形状像眼泪\n• 追问: 「眼泪在哪里？锯齿让你想到什么？」\n• 链接 D1: 蓝/绿 = 难过的颜色")
 
 # 11 Picasso try-it — concrete 5-step recipe
@@ -345,7 +361,7 @@ notes(s,"老师备课:\n• 法国画家, 与毕加索齐名的 20 世纪大师\
 s=ns();n+=1;bg(s,CREAM);hb(s,"✂️ 马蒂斯的风格 — 彩色剪纸",MATISSE)
 tb(s,0.4,0.9,9.2,0.35,"Cut-Outs 剪纸艺术 — 用剪刀代替画笔！",sz=15,b=True,c=MATISSE,a=PP_ALIGN.CENTER)
 # LEFT: big example painting
-ib(s,0.3,1.35,4.4,2.6,"📷 《波利尼西亚，海》Polynesia, The Sea (海洋生物剪纸)")
+ib(s,0.3,1.35,4.4,2.6,"📷 《波利尼西亚，海》Polynesia, The Sea (海洋生物剪纸)",url="搜「Matisse Polynesia the Sea」",key="polynesia_sea")
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(4.4),Inches(0.42))
 sh.fill.solid();sh.fill.fore_color.rgb=MATISSE;sh.line.fill.background()
 tb(s,0.4,4.04,4.2,0.35,"《波利尼西亚，海》· 1946",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
@@ -376,14 +392,16 @@ notes(s,"老师备课:\n• 马蒂斯把画面简化到像儿童画 — 没有�
 s=example_slide("✂️","马蒂斯","蜗牛","The Snail",
     "Henri Matisse · 1953 年 · 剪纸作品",
     "彩色方块拼成一只蜗牛！\nA snail made of colored squares!",
-    "📷 蜗牛 The Snail (彩色方块螺旋)",MATISSE);n+=1;pn(s,n)
+    "📷 蜗牛 The Snail (彩色方块螺旋)",MATISSE,
+    url="en.wikipedia.org/wiki/The_Snail",key="snail");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1953 年作品, 马蒂斯生命最后阶段, 已经躺在床上做艺术 (84 岁)\n• 形状像蜗牛壳的螺旋: 红 → 橙 → 黄 → 绿 → 蓝 → 紫\n• 即使是简单彩色方块也是艺术 — 重点在颜色 + 形状的关系\n• 没有线条, 没有透视 — 但很有动感\n• 追问: 「你能看出蜗牛吗？」「为什么不画一只真的蜗牛？」")
 
 # 15 Matisse work 2
 s=example_slide("✂️","马蒂斯","伊卡洛斯","Icarus",
     "Henri Matisse · 1944 年 · 剪纸 + 油彩",
     "身体只是一个剪影 — 心是红色的星！\nBody = silhouette · heart = red star!",
-    "📷 伊卡洛斯 Icarus",MATISSE);n+=1;pn(s,n)
+    "📷 伊卡洛斯 Icarus",MATISSE,
+    url="搜「Matisse Icarus Jazz」",key="icarus");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1944 年作品, 来自他的「Jazz」剪纸书\n• 故事: 希腊神话 — 伊卡洛斯用蜡做的翅膀飞, 太靠近太阳, 蜡融化, 他坠落\n• 黑色 = 身体剪影 / 红色 = 心 / 黄色点 = 星星 / 蓝色 = 天空\n• 不强调坠落悲剧, 重点是「剪影 + 一个亮点」的画法\n• 追问: 「红色代表什么？为什么心是亮的？」(链接 D1 心情色)")
 
 # 16 Matisse try-it — concrete 5-step recipe
@@ -423,7 +441,7 @@ notes(s,"老师备课:\n• 荷兰画家, 一生只活了 37 岁\n• 27 岁才�
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌻 梵高的风格 — 有情绪的颜色和线条",VANGOGH)
 tb(s,0.4,0.9,9.2,0.35,"短粗笔触 + 旋转线条 = 情绪",sz=15,b=True,c=VANGOGH,a=PP_ALIGN.CENTER)
 # LEFT: big example painting
-ib(s,0.3,1.35,4.4,2.6,"📷 《罗讷河上的星夜》Starry Night Over the Rhône (旋转笔触)")
+ib(s,0.3,1.35,4.4,2.6,"📷 《罗讷河上的星夜》Starry Night Over the Rhône (旋转笔触)",url="en.wikipedia.org/wiki/Starry_Night_Over_the_Rhône",key="starry_rhone")
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(4.4),Inches(0.42))
 sh.fill.solid();sh.fill.fore_color.rgb=VANGOGH;sh.line.fill.background()
 tb(s,0.4,4.04,4.2,0.35,"《罗讷河上的星夜》· 1888",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
@@ -448,14 +466,16 @@ notes(s,"老师备课:\n• 1888 年画的, 梵高在阿尔勒 (Arles) 河边写
 s=example_slide("🌻","梵高","向日葵","Sunflowers",
     "Vincent van Gogh · 1888 年 · 油画",
     "黄色 + 黄色 — 像太阳！\nYellow + yellow — like the sun!",
-    "📷 向日葵 Sunflowers",VANGOGH);n+=1;pn(s,n)
+    "📷 向日葵 Sunflowers",VANGOGH,
+    url="en.wikipedia.org/wiki/Sunflowers_(Van_Gogh_series)",key="sunflowers");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1888 年画的, 准备给好朋友 Gauguin (高更) 看 — 高更要来阿尔勒和梵高同住\n• 梵高一系列向日葵共 11 幅, 这是最有名的几幅之一\n• 黄色 = 友谊 + 希望 (梵高的色彩象征)\n• 你看到的花有的开了, 有的谢了 — 像生命过程\n• 追问: 「你看到几朵？它们都一样吗？」「你最喜欢哪一朵？」")
 
 # 20 Van Gogh work 2
 s=example_slide("🌻","梵高","星夜","The Starry Night",
     "Vincent van Gogh · 1889 年 · 油画",
     "天上的星星在转 — 风在动！\nStars are spinning · wind is moving!",
-    "📷 星夜 The Starry Night",VANGOGH);n+=1;pn(s,n)
+    "📷 星夜 The Starry Night",VANGOGH,
+    url="en.wikipedia.org/wiki/The_Starry_Night",key="starry_night");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1889 年在精神病院 (Saint-Rémy) 画的, 梵高从窗户看出去\n• 这不是真实的景, 是想象 + 记忆 — 中间的尖塔是村里的教堂 (荷兰记忆), 但景是法国南部的山\n• 画里有 11 颗星 + 1 个月亮, 螺旋的天空像漩涡\n• 趣闻: 现代天文学家发现, 螺旋的形状非常像真实的星系！梵高在 1889 年就「画对了」\n• 这是世界上最有名的画之一, 可以问「你在哪里看过？」(海报、马克杯、T 恤……)\n• 追问: 「天上的星星会动吗？为什么画家画成这样？」「你做梦时, 看到的世界和真实一样吗？」")
 
 # 21 Van Gogh try-it — concrete 5-step recipe
