@@ -350,18 +350,18 @@ pn(s,n)
 notes(s,"老师备课:\n• 立体派 (Cubism) 的核心: 同一张脸里有「正面」+「侧面」混在一起\n• 传统画法只能选一个角度, 毕加索打破了这个规则\n• 找角度提示: 眼睛(正面) / 鼻子(侧面) / 嘴(扭曲) / 脸(几何块)\n• 追问: 「平常我们只能看到正面 OR 侧面, 毕加索同时画两个 — 你试过吗？」\n• 趣闻: 毕加索全名超长 — Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz Picasso!")
 
 # 9 Picasso work 1
-s=example_slide("🎭","毕加索","亚维农的少女","Les Demoiselles d'Avignon",
-    "Pablo Picasso · 1907 年 · 立体派开始的作品",
-    "看 — 脸像不像面具？\nLook — do the faces look like masks?",
-    "📷 亚维农的少女 Les Demoiselles d'Avignon",PICASSO,
-    url="en.wikipedia.org/wiki/Les_Demoiselles_d'Avignon",key="demoiselles");n+=1;pn(s,n)
-notes(s,"老师备课:\n• 1907 年, 立体派诞生的标志作品\n• 5 个女人 — 最右边 2 张脸像非洲面具 (毕加索那时迷上非洲艺术)\n• 这幅画把传统的「美」打碎了, 巴黎艺术圈被震惊\n• 不强调「裸体」, 用「人」「女人」即可\n• 追问: 「像不像戴面具？」「为什么画家不画得像照片？」")
+s=example_slide("🎭","毕加索","三个音乐家","Three Musicians",
+    "Pablo Picasso · 1921 年 · 综合立体派",
+    "三个音乐家 — 你能找到几个乐器？\n3 musicians — can you find their instruments?",
+    "📷 三个音乐家 Three Musicians",PICASSO,
+    url="en.wikipedia.org/wiki/Three_Musicians",key="three_musicians");n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1921 年作品, 立体派的彩色、欢乐版本 (「综合立体派」)\n• 三个角色: 左边 Pierrot (戴白帽小丑) + 中间 Harlequin (花格小丑) + 右边修道士\n• 像剪贴画 — 几何形状拼起来\n• 找一找: 三个乐器 (单簧管 / 吉他 / 乐谱), 桌下的小狗也是几何形\n• 趣闻: 这幅画有两个版本 — 一个在 MoMA, 一个在费城\n• 追问: 「他们在演奏什么？」「形状像什么？」「能不能用纸剪出这样的人？」")
 
-# 9b Demoiselles spotlight — life connection
-s=spotlight_slide("🎭","亚维农的少女",PICASSO,
-    "1907 年这幅画震惊了巴黎 — 立体派从此诞生! 现代艺术从这一刻开始。",
-    [("🎭","非洲面具"),("🏛️","纽约 MoMA"),("📚","艺术教科书"),("🎬","纪录片")],
-    "如果你是 1907 年的观众, 看到这幅画会怎么想？")
+# 9b Three Musicians spotlight — life connection
+s=spotlight_slide("🎭","三个音乐家",PICASSO,
+    "毕加索把人变成「几何形状」拼起来 — 像剪贴画! 三个音乐家 + 一只小狗都藏在几何形里。",
+    [("🎵","音乐会海报"),("🎸","乐队 T 恤"),("🏛️","纽约 MoMA"),("🎨","艺术教科书"),("🧩","拼图"),("🎬","纪录片")],
+    "你能找到桌子下面那只小狗吗？三个乐器分别是什么？")
 n+=1;pn(s,n)
 
 # 10 Picasso work 2
@@ -599,7 +599,7 @@ t.columns[3].width=Inches(2.6)
 rows=[["大师 Master","🎭 毕加索 Picasso","✂️ 马蒂斯 Matisse","🌻 梵高 Van Gogh"],
       ["🌍 国家 Country","西班牙 Spain","法国 France","荷兰 Netherlands"],
       ["🎨 风格 Style","立体派 / 变形人脸","彩色剪纸 / 形状","旋转线条 / 情绪色彩"],
-      ["🖼️ 代表作 Famous","《亚维农的少女》\n《哭泣的女人》","《蜗牛》\n《伊卡洛斯》","《向日葵》\n《星夜》"]]
+      ["🖼️ 代表作 Famous","《三个音乐家》\n《哭泣的女人》","《蜗牛》\n《伊卡洛斯》","《向日葵》\n《星夜》"]]
 header_colors=[MAGENTA,PICASSO,MATISSE,VANGOGH]
 for r,rd in enumerate(rows):
     for c,ct in enumerate(rd):
