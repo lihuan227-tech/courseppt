@@ -97,6 +97,27 @@ def dot(s,x,y,r,color):
     d=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x),Inches(y),Inches(r),Inches(r))
     d.fill.solid();d.fill.fore_color.rgb=color;d.line.fill.background()
 
+def spotlight_slide(emoji, work_cn, color, trivia, locations, inquiry):
+    s=ns();bg(s,CREAM)
+    hb(s,f"{emoji} 看点 Spotlight · 《{work_cn}》",color)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(0.95),Inches(9.2),Inches(0.85))
+    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
+    tb(s,0.6,1.0,8.8,0.32,"💡 趣闻  Did You Know?",sz=13,b=True,c=YELLOW)
+    tb(s,0.6,1.32,8.8,0.5,trivia,sz=14,b=True,c=WHITE)
+    tb(s,0.4,1.95,9.2,0.4,"👀 你在哪里看过？  Where Have You Seen It?",sz=15,b=True,c=color,a=PP_ALIGN.CENTER)
+    cols=min(len(locations),6)
+    card_w=(9.2-0.15*(cols-1))/cols
+    for i,(em,lb) in enumerate(locations):
+        x=0.4+i*(card_w+0.15)
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.45),Inches(card_w),Inches(2.0))
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2.5)
+        tb(s,x+0.05,2.6,card_w-0.1,0.9,em,sz=42,a=PP_ALIGN.CENTER)
+        tb(s,x+0.05,3.55,card_w-0.1,0.4,lb,sz=12,b=True,c=color,a=PP_ALIGN.CENTER)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.65),Inches(9.2),Inches(0.6))
+    sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=color;sh.line.width=Pt(2)
+    tb(s,0.6,4.7,8.8,0.5,f"🤔 {inquiry}",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    return s
+
 def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color, url=None, key=None):
     s=ns();bg(s,CREAM)
     hb(s,f"{cat_emoji} {cat_cn}  ·  《{work_cn}》",color)
@@ -433,6 +454,13 @@ s=example_slide("🐟","超现实","这不是烟斗","The Treachery of Images",
     url="en.wikipedia.org/wiki/The_Treachery_of_Images",key="magritte_pipe");n+=1;pn(s,n)
 notes(s,GALLERY_NOTES[2]+"\n\n额外: 真正标题是「图像的背叛」(La trahison des images)\n• 这幅画解除了「图像 = 真实物体」的幻觉\n• 提问: 「你能从画里把烟斗拿出来吗？」「写「苹果」两个字 ≠ 真的苹果」\n• 这是「概念艺术」的开端 — 用画问问题, 不只是给答案")
 
+# 10b Magritte spotlight — life connection
+s=spotlight_slide("🚭","这不是烟斗",PURPLE,
+    "「图像 ≠ 真实物体」— 就像方便面包装上的「图片仅供参考, 以实物为准」!",
+    [("🍜","方便面包装"),("📸","广告图片"),("🛒","商品照片"),("📺","电视广告")],
+    "你看过「图片仅供参考」吗？画里的烟斗 — 能拿出来吗？")
+n+=1;pn(s,n)
+
 # ============================================================
 # 11 超现实 example — Dalí 永恒的记忆
 # ============================================================
@@ -442,6 +470,13 @@ s=example_slide("🐟","超现实","永恒的记忆","The Persistence of Memory"
     "📷 达利 融化的钟",PURPLE,
     url="en.wikipedia.org/wiki/The_Persistence_of_Memory",key="dali_clocks");n+=1;pn(s,n)
 notes(s,GALLERY_NOTES[1]+"\n\n额外细节:\n• 画里那个软软的「脸」其实是达利自己变形\n• 旁边有一只蚂蚁 + 一只苍蝇 — 象征腐烂、时间流逝\n• 远处的山是达利家乡西班牙加泰罗尼亚\n• 提问: 「你最长的「一分钟」是什么时候？最短的呢？」(等公交 vs 玩游戏)")
+
+# 11b Dalí spotlight — eccentric life + merch
+s=spotlight_slide("🕰️","永恒的记忆",PURPLE,
+    "达利怪人故事: 留两撇上翘小胡子, 牵着食蚁兽坐巴黎地铁, 拿超长法棍说要做巨大三明治!",
+    [("🖼️","海报"),("☕","马克杯"),("👕","T 恤"),("📚","时间主题书"),("🎬","动画 / 电影"),("🧩","拼图")],
+    "你最长的「一分钟」是什么时候？(等公交? 玩游戏? 做梦?)")
+n+=1;pn(s,n)
 
 # ============================================================
 # 12 生活物品 inquiry — Duchamp
@@ -515,6 +550,13 @@ s=example_slide("🎃","草间弥生","南瓜","Pumpkin",
     "📷 草间弥生 南瓜雕塑 (黄+黑点)",DOT_RED,
     url="搜「Kusama Pumpkin Naoshima」",key="kusama");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1994 年作品, 在日本直岛 (Naoshima 艺术岛) 海边\n• 黄南瓜 + 黑色圆点, 高 2 米, 现在是直岛地标\n• 草间弥生说: 「南瓜让我想到童年, 它的形状很谦虚, 圆圆滚滚的」\n• 这种重复的圆点叫「无限网 Infinity Net」\n• 数一数 — 圆点有大有小, 不规则但有节奏\n• 追问: 「为什么是黄色？为什么是黑点？换颜色行不行？」")
+
+# 15b Kusama Pumpkin spotlight — fashion + life connection
+s=spotlight_slide("🎃","圆点南瓜",DOT_RED,
+    "草间弥生从小害怕圆点 → 把圆点画下来 → 全世界爱上她的圆点! Louis Vuitton 还和她合作做包包!",
+    [("👜","LV 圆点包"),("👗","圆点衣服"),("☕","圆点马克杯"),("🏝️","日本直岛"),("📸","网红拍照点"),("🎨","美术馆")],
+    "你害怕什么？怎么把它「画下来」?")
+n+=1;pn(s,n)
 
 # ============================================================
 # 16 草间弥生 — Infinity Room
