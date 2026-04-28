@@ -209,22 +209,31 @@ div("Session 1  上午","认识三位大师\n🎨 毕加索  ·  ✂️ 马蒂�
 
 # 5 What is a Master
 s=ns();n+=1;bg(s,CREAM);hb(s,"💡 什么是大师？  What is a Master?",MAGENTA)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.2),Inches(1.1),Inches(7.6),Inches(1.4))
+# Slim definition callout
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.8),Inches(0.95),Inches(8.4),Inches(0.75))
 sh.fill.solid();sh.fill.fore_color.rgb=MAGENTA;sh.line.fill.background()
-tb(s,1.4,1.2,7.2,0.7,"大师 = 有自己的风格的艺术家",sz=30,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1.4,1.85,7.2,0.5,"A Master = an artist with their own style",sz=16,c=YELLOW,a=PP_ALIGN.CENTER)
-bubbles=[
-    ("🎨","有自己的风格","Has own STYLE",PICASSO),
-    ("🌟","影响很多人","INFLUENCES many",MATISSE),
-    ("📖","作品被记住","Works are REMEMBERED",VANGOGH),
+tb(s,1.0,0.98,8.0,0.45,"大师 = 有自己的风格的艺术家",sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.0,1.4,8.0,0.3,"A Master = an artist with their own STYLE",sz=12,c=YELLOW,a=PP_ALIGN.CENTER)
+# 3 example cards: famous painting + signature feature label
+examples=[
+    ("📷 《哭泣的女人》Weeping Woman","《哭泣的女人》","变形的脸","Twisted face","= 毕加索",PICASSO),
+    ("📷 《伊卡洛斯》Icarus (黑色剪影 + 红心)","《伊卡洛斯》","彩色剪纸","Cut-out shapes","= 马蒂斯",MATISSE),
+    ("📷 《星夜》The Starry Night (旋转的天空)","《星夜》","旋转线条","Swirly lines","= 梵高",VANGOGH),
 ]
-for i,(em,cn,en,cl) in enumerate(bubbles):
-    x=0.5+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.85),Inches(3.0),Inches(2.25))
+for i,(img_lb,title,feat_cn,feat_en,who,cl) in enumerate(examples):
+    x=0.3+i*3.2
+    # card background
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(3.0),Inches(3.35))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
-    tb(s,x+0.1,2.95,2.8,0.7,em,sz=44,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.75,2.8,0.45,cn,sz=18,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,4.25,2.8,0.35,en,sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+    # image placeholder (top)
+    ib(s,x+0.15,1.95,2.7,1.95,img_lb)
+    # painting title strip
+    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.15),Inches(3.95),Inches(2.7),Inches(0.35))
+    sh2.fill.solid();sh2.fill.fore_color.rgb=cl;sh2.line.fill.background()
+    tb(s,x+0.2,3.97,2.6,0.32,title,sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    # feature → master
+    tb(s,x+0.15,4.4,2.7,0.4,f"看! {feat_cn}",sz=16,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,4.78,2.7,0.3,who,sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # 6 3-master overview
@@ -289,19 +298,31 @@ s=example_slide("🎭","毕加索","哭泣的女人","Weeping Woman",
     "你觉得她伤心吗？为什么？\nDo you think she is sad? Why?",
     "📷 哭泣的女人 Weeping Woman",PICASSO);n+=1;pn(s,n)
 
-# 11 Picasso try-it
+# 11 Picasso try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"✏️ 毕加索 试一试  Try Picasso!",PICASSO)
-tb(s,0.4,0.9,9,0.5,"如果你画妈妈……",sz=22,b=True,c=PICASSO,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.4,9,0.4,"If you paint mom in Picasso's style…",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-prompts=[("👁️","正面的眼睛","Front-view eye",PICASSO),("👃","侧面的鼻子","Side-view nose",MATISSE),("🎨","会怎么画？","How would you paint?",VANGOGH)]
-for i,(em,cn,en,cl) in enumerate(prompts):
-    x=0.5+i*3.05
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.0),Inches(2.9),Inches(1.7))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,2.1,2.7,0.6,em,sz=40,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.85,2.7,0.4,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.25,2.7,0.3,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-ib(s,0.5,3.95,9,1.25,"📷 学生草图位置  Student sketch placeholder")
+# Title strip
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(9.4),Inches(0.5))
+sh.fill.solid();sh.fill.fore_color.rgb=PICASSO;sh.line.fill.background()
+tb(s,0.4,1.0,7.0,0.4,"⏱️ 5 分钟画一张毕加索人脸！",sz=17,b=True,c=WHITE)
+tb(s,7.0,1.05,2.6,0.35,"5-min Picasso face",sz=11,c=YELLOW,a=PP_ALIGN.RIGHT)
+# LEFT: 5-step recipe
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.6),Inches(5.3),Inches(3.55))
+sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=PICASSO;sh.line.width=Pt(2.5)
+tb(s,0.5,1.7,5.0,0.4,"👉 跟着做  5 Steps",sz=15,b=True,c=PICASSO)
+steps=[
+    ("1️⃣","画一个圆 (头)","Draw a circle (head)"),
+    ("2️⃣","中间画一条线，分两半","Line down the middle"),
+    ("3️⃣","左边: 画正面的圆眼睛 + 嘴","Left half: front eye + mouth"),
+    ("4️⃣","右边: 三角形鼻子 + 半张嘴","Right half: triangle nose + half mouth"),
+    ("5️⃣","填 2-3 种颜色","Fill with 2-3 colors"),
+]
+for i,(num,cn,en) in enumerate(steps):
+    y=2.15+i*0.58
+    tb(s,0.55,y,0.5,0.4,num,sz=18,b=True,c=PICASSO)
+    tb(s,1.1,y+0.02,4.4,0.32,cn,sz=13,b=True,c=DARK)
+    tb(s,1.1,y+0.32,4.4,0.25,en,sz=10,c=GRAY)
+# RIGHT: demo image
+ib(s,5.8,1.6,3.9,3.55,"📷 老师示范图 / Demo:\n圆 + 中线 + 一边正面 + 一边侧面")
 pn(s,n)
 
 # 12 Matisse intro
@@ -352,19 +373,30 @@ s=example_slide("✂️","马蒂斯","伊卡洛斯","Icarus",
     "身体只是一个剪影 — 心是红色的星！\nBody = silhouette · heart = red star!",
     "📷 伊卡洛斯 Icarus",MATISSE);n+=1;pn(s,n)
 
-# 16 Matisse try-it
+# 16 Matisse try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"✂️ 马蒂斯 试一试  Try Matisse!",MATISSE)
-tb(s,0.4,0.9,9,0.5,"如果你只能用 3 种颜色的纸……",sz=22,b=True,c=MATISSE,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.4,9,0.4,"If you only have 3 colors of paper, what would you cut?",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-prompts=[("🟥","红色 RED",MATISSE),("🟦","蓝色 BLUE",PICASSO),("🟨","黄色 YELLOW",VANGOGH)]
-for i,(em,cn,cl) in enumerate(prompts):
-    x=0.5+i*3.05
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.0),Inches(2.9),Inches(1.7))
-    sh.fill.solid();sh.fill.fore_color.rgb=cl;sh.line.fill.background()
-    tb(s,x+0.1,2.1,2.7,0.7,em,sz=40,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.95,2.7,0.4,cn,sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.4,2.7,0.3,"剪什么？",sz=12,c=WARM,a=PP_ALIGN.CENTER)
-ib(s,0.5,3.95,9,1.25,"📷 学生剪纸草图位置  Student cut-out placeholder")
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(9.4),Inches(0.5))
+sh.fill.solid();sh.fill.fore_color.rgb=MATISSE;sh.line.fill.background()
+tb(s,0.4,1.0,7.0,0.4,"⏱️ 5 分钟做一幅马蒂斯小剪纸！",sz=17,b=True,c=WHITE)
+tb(s,7.0,1.05,2.6,0.35,"5-min Matisse cut-out",sz=11,c=YELLOW,a=PP_ALIGN.RIGHT)
+# LEFT: 5-step recipe
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.6),Inches(5.3),Inches(3.55))
+sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=MATISSE;sh.line.width=Pt(2.5)
+tb(s,0.5,1.7,5.0,0.4,"👉 跟着做  5 Steps",sz=15,b=True,c=MATISSE)
+steps=[
+    ("1️⃣","选 3 种颜色的彩纸","Pick 3 paper colors"),
+    ("2️⃣","不画线，直接拿剪刀剪","No drawing — just cut"),
+    ("3️⃣","剪 3 个形状: 圆 / 星 / 心","Cut 3 shapes: circle/star/heart"),
+    ("4️⃣","在白纸上摆好位置","Arrange on white paper"),
+    ("5️⃣","喜欢就用胶水贴上！","Glue down what you like!"),
+]
+for i,(num,cn,en) in enumerate(steps):
+    y=2.15+i*0.58
+    tb(s,0.55,y,0.5,0.4,num,sz=18,b=True,c=MATISSE)
+    tb(s,1.1,y+0.02,4.4,0.32,cn,sz=13,b=True,c=DARK)
+    tb(s,1.1,y+0.32,4.4,0.25,en,sz=10,c=GRAY)
+# RIGHT: demo image
+ib(s,5.8,1.6,3.9,3.55,"📷 老师示范图 / Demo:\n彩纸 + 剪刀 + 简单形状拼贴")
 pn(s,n)
 
 # 17 Van Gogh intro
@@ -409,19 +441,30 @@ s=example_slide("🌻","梵高","星夜","The Starry Night",
     "天上的星星在转 — 风在动！\nStars are spinning · wind is moving!",
     "📷 星夜 The Starry Night",VANGOGH);n+=1;pn(s,n)
 
-# 21 Van Gogh try-it
+# 21 Van Gogh try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌻 梵高 试一试  Try Van Gogh!",VANGOGH)
-tb(s,0.4,0.9,9,0.5,"颜色 = 心情！",sz=22,b=True,c=VANGOGH,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.4,9,0.4,"Colors = feelings. What would you pick?",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-prompts=[("😄","「开心」用什么颜色？","HAPPY = ?",YELLOW,DARK),("😡","「生气」用什么颜色？","ANGRY = ?",MATISSE,WHITE),("😢","「难过」用什么颜色？","SAD = ?",PICASSO,WHITE)]
-for i,(em,cn,en,cl,tc) in enumerate(prompts):
-    x=0.5+i*3.05
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.0),Inches(2.9),Inches(1.9))
-    sh.fill.solid();sh.fill.fore_color.rgb=cl;sh.line.fill.background()
-    tb(s,x+0.1,2.1,2.7,0.7,em,sz=40,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.9,2.7,0.4,cn,sz=14,b=True,c=tc,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.35,2.7,0.4,en,sz=12,c=tc,a=PP_ALIGN.CENTER)
-ib(s,0.5,4.1,9,1.1,"📷 颜色练习区  Color experiment placeholder")
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(9.4),Inches(0.5))
+sh.fill.solid();sh.fill.fore_color.rgb=VANGOGH;sh.line.fill.background()
+tb(s,0.4,1.0,7.0,0.4,"⏱️ 5 分钟画一张「心情线」！",sz=17,b=True,c=DARK)
+tb(s,7.0,1.05,2.6,0.35,"5-min mood lines",sz=11,c=DARK,a=PP_ALIGN.RIGHT)
+# LEFT: 5-step recipe
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.6),Inches(5.3),Inches(3.55))
+sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=VANGOGH;sh.line.width=Pt(2.5)
+tb(s,0.5,1.7,5.0,0.4,"👉 跟着做  5 Steps",sz=15,b=True,c=DARK)
+steps=[
+    ("1️⃣","选 1 个心情: 开心 / 生气 / 难过","Pick a mood"),
+    ("2️⃣","选 2-3 种颜色 (黄=开心 红=生气 蓝=难过)","Pick 2-3 colors for that mood"),
+    ("3️⃣","不画具体东西，只画线条!","No objects — just lines!"),
+    ("4️⃣","短而粗的笔触，像雨点","Short bold strokes, like raindrops"),
+    ("5️⃣","让线条旋转 / 跳舞 — 心情就来了!","Swirl them — feeling appears!"),
+]
+for i,(num,cn,en) in enumerate(steps):
+    y=2.15+i*0.58
+    tb(s,0.55,y,0.5,0.4,num,sz=18,b=True,c=VANGOGH)
+    tb(s,1.1,y+0.02,4.4,0.32,cn,sz=12,b=True,c=DARK)
+    tb(s,1.1,y+0.32,4.4,0.25,en,sz=10,c=GRAY)
+# RIGHT: demo image
+ib(s,5.8,1.6,3.9,3.55,"📷 老师示范图 / Demo:\n短粗笔触 + 旋转线条 = 心情")
 pn(s,n)
 
 # 22 Comparison table
