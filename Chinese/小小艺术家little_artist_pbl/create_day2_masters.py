@@ -52,6 +52,12 @@ def hb(s,txt,c=MAGENTA,t=0.15):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(t),Inches(9.4),Inches(0.55));sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     tb(s,0.4,t+0.03,9.2,0.5,txt,sz=20,b=True,c=WHITE)
 def pn(s,n): tb(s,9.0,5.25,0.8,0.3,str(n),sz=10,c=GRAY,a=PP_ALIGN.RIGHT)
+def notes(s,text):
+    nf=s.notes_slide.notes_text_frame
+    lines=text.split("\n")
+    nf.text=lines[0]
+    for line in lines[1:]:
+        p=nf.add_paragraph();p.text=line
 def div(title,sub,color,emoji=""):
     s=ns();bg(s,color)
     tb(s,1,1.5,8,1.2,f"{emoji} {title}",sz=42,b=True,c=WHITE,a=PP_ALIGN.CENTER)
@@ -285,18 +291,21 @@ sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.6),Inches
 sh.fill.solid();sh.fill.fore_color.rgb=PICASSO;sh.line.fill.background()
 tb(s,0.4,4.65,9.2,0.5,"🤔 看这幅画 — 你能找出几个「不一样的角度」？  Find the angles!",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
+notes(s,"老师备课:\n• 立体派 (Cubism) 的核心: 同一张脸里有「正面」+「侧面」混在一起\n• 传统画法只能选一个角度, 毕加索打破了这个规则\n• 找角度提示: 眼睛(正面) / 鼻子(侧面) / 嘴(扭曲) / 脸(几何块)\n• 追问: 「平常我们只能看到正面 OR 侧面, 毕加索同时画两个 — 你试过吗？」\n• 趣闻: 毕加索全名超长 — Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz Picasso!")
 
 # 9 Picasso work 1
 s=example_slide("🎭","毕加索","亚维农的少女","Les Demoiselles d'Avignon",
     "Pablo Picasso · 1907 年 · 立体派开始的作品",
     "看 — 脸像不像面具？\nLook — do the faces look like masks?",
     "📷 亚维农的少女 Les Demoiselles d'Avignon",PICASSO);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1907 年, 立体派诞生的标志作品\n• 5 个女人 — 最右边 2 张脸像非洲面具 (毕加索那时迷上非洲艺术)\n• 这幅画把传统的「美」打碎了, 巴黎艺术圈被震惊\n• 不强调「裸体」, 用「人」「女人」即可\n• 追问: 「像不像戴面具？」「为什么画家不画得像照片？」")
 
 # 10 Picasso work 2
 s=example_slide("🎭","毕加索","哭泣的女人","Weeping Woman",
     "Pablo Picasso · 1937 年 · 蓝色和绿色",
     "你觉得她伤心吗？为什么？\nDo you think she is sad? Why?",
     "📷 哭泣的女人 Weeping Woman",PICASSO);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1937 年, 画家女友 Dora Maar 的肖像\n• 同一年毕加索画了著名的《格尔尼卡》— 反战, 因为纳粹刚轰炸西班牙小镇 Guernica, 死了 1000 多平民\n• 锯齿形眼泪 + 蓝绿色调 = 痛苦 + 哭泣\n• 嘴巴是锯齿状, 眼睛形状像眼泪\n• 追问: 「眼泪在哪里？锯齿让你想到什么？」\n• 链接 D1: 蓝/绿 = 难过的颜色")
 
 # 11 Picasso try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"✏️ 毕加索 试一试  Try Picasso!",PICASSO)
@@ -330,6 +339,7 @@ s=master_intro_slide("马蒂斯","Henri Matisse","法国","France","1869-1954",
     "他用剪刀「画画」。",
     "He painted with scissors.",
     MATISSE,"📷 马蒂斯头像 Matisse portrait");n+=1;pn(s,n)
+notes(s,"老师备课:\n• 法国画家, 与毕加索齐名的 20 世纪大师\n• 他追求「颜色的自由运用」— 那年代画家用色还受真实限制 (天必须蓝, 草必须绿)\n• 比印象派和梵高更进一步, 敢用「不真实」的颜色\n• 老了 + 生病后开始用剪刀做剪纸, 这是他第二次艺术革命\n• 追问: 「你有没有用过「不像真的」的颜色画过画？」")
 
 # 13 Matisse style — image example on left, story + shapes on right
 s=ns();n+=1;bg(s,CREAM);hb(s,"✂️ 马蒂斯的风格 — 彩色剪纸",MATISSE)
@@ -360,18 +370,21 @@ sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(4.3),Inche
 sh.fill.solid();sh.fill.fore_color.rgb=MATISSE;sh.line.fill.background()
 tb(s,5.0,4.35,4.65,0.5,"🤔 你能剪出哪些形状？  What shapes?",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
+notes(s,"老师备课:\n• 马蒂斯把画面简化到像儿童画 — 没有光影、没有立体感, 只有形状 + 颜色\n• 互补色技巧 (色环): 红+绿 / 黄+紫 / 蓝+橙 — 放一起视觉冲击强烈\n• 趣闻: 他的名作《红房间》原本是蓝色, 后来才改成红色 — 因为红色和窗外绿色互补, 更有冲击力\n• 《波利尼西亚, 海》灵感来自他在大溪地的旅行, 看到的鱼和珊瑚\n• 追问: 「你能用 3 种颜色, 表达「夏天」吗？」")
 
 # 14 Matisse work 1
 s=example_slide("✂️","马蒂斯","蜗牛","The Snail",
     "Henri Matisse · 1953 年 · 剪纸作品",
     "彩色方块拼成一只蜗牛！\nA snail made of colored squares!",
     "📷 蜗牛 The Snail (彩色方块螺旋)",MATISSE);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1953 年作品, 马蒂斯生命最后阶段, 已经躺在床上做艺术 (84 岁)\n• 形状像蜗牛壳的螺旋: 红 → 橙 → 黄 → 绿 → 蓝 → 紫\n• 即使是简单彩色方块也是艺术 — 重点在颜色 + 形状的关系\n• 没有线条, 没有透视 — 但很有动感\n• 追问: 「你能看出蜗牛吗？」「为什么不画一只真的蜗牛？」")
 
 # 15 Matisse work 2
 s=example_slide("✂️","马蒂斯","伊卡洛斯","Icarus",
     "Henri Matisse · 1944 年 · 剪纸 + 油彩",
     "身体只是一个剪影 — 心是红色的星！\nBody = silhouette · heart = red star!",
     "📷 伊卡洛斯 Icarus",MATISSE);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1944 年作品, 来自他的「Jazz」剪纸书\n• 故事: 希腊神话 — 伊卡洛斯用蜡做的翅膀飞, 太靠近太阳, 蜡融化, 他坠落\n• 黑色 = 身体剪影 / 红色 = 心 / 黄色点 = 星星 / 蓝色 = 天空\n• 不强调坠落悲剧, 重点是「剪影 + 一个亮点」的画法\n• 追问: 「红色代表什么？为什么心是亮的？」(链接 D1 心情色)")
 
 # 16 Matisse try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"✂️ 马蒂斯 试一试  Try Matisse!",MATISSE)
@@ -404,6 +417,7 @@ s=master_intro_slide("梵高","Vincent van Gogh","荷兰","Netherlands","1853-18
     "他的颜色会跳舞。",
     "His colors dance.",
     VANGOGH,"📷 梵高头像 Van Gogh portrait");n+=1;pn(s,n)
+notes(s,"老师备课:\n• 荷兰画家, 一生只活了 37 岁\n• 27 岁才开始画画, 10 年内画了 2000 多幅作品 (画 / 素描)\n• 生前只卖出 1 幅画! 死后才被全世界认可\n• 他不是「疯子」, 是用颜色 + 线条表达内心强烈情绪\n• 比印象派更进一步 — 不只画看到的, 更要画感受到的\n• 追问: 「你今天的心情是什么颜色？」")
 
 # 18 Van Gogh style — image example on left, concept cards on right
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌻 梵高的风格 — 有情绪的颜色和线条",VANGOGH)
@@ -428,18 +442,21 @@ sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.6),Inches
 sh.fill.solid();sh.fill.fore_color.rgb=VANGOGH;sh.line.fill.background()
 tb(s,0.4,4.65,9.2,0.5,"🤔 看线条 — 你觉得他开心还是难过？  Happy or sad?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
 pn(s,n)
+notes(s,"老师备课:\n• 1888 年画的, 梵高在阿尔勒 (Arles) 河边写生\n• 与 1889 年的《星夜》是「姐妹作」\n• 黄色光点 = 天上的星 + 河边煤气灯的倒影\n• 短粗笔触表现夜晚的空气在「呼吸」, 风像在动\n• 期待: 学生从颜色亮 / 暗 + 线条快 / 慢, 来判断心情\n• 关键: 梵高一生很苦, 但用亮色画 — 颜色不是直接 = 心情, 是表达\n• 追问: 「天上的星星和河里的灯影分得清吗？」「为什么画家用旋转的笔？」")
 
 # 19 Van Gogh work 1
 s=example_slide("🌻","梵高","向日葵","Sunflowers",
     "Vincent van Gogh · 1888 年 · 油画",
     "黄色 + 黄色 — 像太阳！\nYellow + yellow — like the sun!",
     "📷 向日葵 Sunflowers",VANGOGH);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1888 年画的, 准备给好朋友 Gauguin (高更) 看 — 高更要来阿尔勒和梵高同住\n• 梵高一系列向日葵共 11 幅, 这是最有名的几幅之一\n• 黄色 = 友谊 + 希望 (梵高的色彩象征)\n• 你看到的花有的开了, 有的谢了 — 像生命过程\n• 追问: 「你看到几朵？它们都一样吗？」「你最喜欢哪一朵？」")
 
 # 20 Van Gogh work 2
 s=example_slide("🌻","梵高","星夜","The Starry Night",
     "Vincent van Gogh · 1889 年 · 油画",
     "天上的星星在转 — 风在动！\nStars are spinning · wind is moving!",
     "📷 星夜 The Starry Night",VANGOGH);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 1889 年在精神病院 (Saint-Rémy) 画的, 梵高从窗户看出去\n• 这不是真实的景, 是想象 + 记忆 — 中间的尖塔是村里的教堂 (荷兰记忆), 但景是法国南部的山\n• 画里有 11 颗星 + 1 个月亮, 螺旋的天空像漩涡\n• 趣闻: 现代天文学家发现, 螺旋的形状非常像真实的星系！梵高在 1889 年就「画对了」\n• 这是世界上最有名的画之一, 可以问「你在哪里看过？」(海报、马克杯、T 恤……)\n• 追问: 「天上的星星会动吗？为什么画家画成这样？」「你做梦时, 看到的世界和真实一样吗？」")
 
 # 21 Van Gogh try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌻 梵高 试一试  Try Van Gogh!",VANGOGH)
