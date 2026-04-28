@@ -58,6 +58,12 @@ def hb(s,txt,c=VERMILLION,t=0.15):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(t),Inches(9.4),Inches(0.55));sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     tb(s,0.4,t+0.03,9.2,0.5,txt,sz=20,b=True,c=WHITE)
 def pn(s,n): tb(s,9.0,5.25,0.8,0.3,str(n),sz=10,c=GRAY,a=PP_ALIGN.RIGHT)
+def notes(s,text):
+    nf=s.notes_slide.notes_text_frame
+    lines=text.split("\n")
+    nf.text=lines[0]
+    for line in lines[1:]:
+        p=nf.add_paragraph();p.text=line
 def div(title,sub,color,emoji=""):
     s=ns();bg(s,color)
     tb(s,1,1.5,8,1.2,f"{emoji} {title}",sz=42,b=True,c=WHITE,a=PP_ALIGN.CENTER)
@@ -235,9 +241,15 @@ pn(s,n)
 gallery=[
     ("📷 《竹子》郑板桥  Bamboo by Zheng Banqiao","《竹子》郑板桥","🎋",1),
     ("📷 《虾》齐白石  Shrimp by Qi Baishi","《虾》齐白石","🦐",2),
-    ("📷 《熊猫》水墨画  Panda ink painting","《熊猫》","🐼",3),
+    ("📷 《熊猫》吴作人  Panda by Wu Zuoren (1908-1997)","《熊猫》吴作人","🐼",3),
     ("📷 《溪山行旅图》范宽  Landscape by Fan Kuan","《溪山行旅图》范宽","🏔️",4),
 ]
+GALLERY_NOTES_D3={
+    1:"老师备课:\n• 郑板桥 (1693-1765), 清代画家、书法家\n• 「扬州八怪」之一, 一生只画三样: 竹、兰、石\n• 他的竹子瘦、硬、有节 — 像他自己的脾气: 正直\n• 著名诗句: 「咬定青山不放松, 立根原在破岩中」\n• 追问: 「竹子为什么一节一节？」「像不像在长大？」",
+    2:"老师备课:\n• 齐白石 (1864-1957), 中国近现代水墨大师\n• 出身木匠, 60 岁后才出名 — 大器晚成\n• 最有名的就是画虾, 看似简单, 但极难画\n• 他研究真虾几十年, 才画出「虾的活」\n• 用浓墨画虾头, 淡墨画身体, 飞白画须 — 一笔一画都有讲究\n• 追问: 「数一数有几只虾？」「它们在做什么？」「为什么没画水？」(留白即水)",
+    3:"老师备课:\n• 吴作人 (1908-1997), 中国现代美术大师, 中央美术学院前院长\n• 早年学西洋油画, 后回归中国水墨\n• 他把西画的体积感 + 中国水墨的笔墨结合\n• 最有名的就是画熊猫和金鱼, 1973-1980 年代创作了一系列熊猫作品\n• 用浓墨画耳朵 / 眼圈 / 四肢, 留白画身体 — 黑白对比天然\n• 趣闻: 熊猫的黑白本来就像水墨画! 简直是为水墨画而生的动物\n• 图片参考: 搜索「吴作人 熊猫」可以找到他的代表作\n• 收藏地: 中央美院美术馆, 中国美术馆\n• 追问: 「熊猫为什么是黑白的？」「画家用了多少颜色？」「水墨画里的熊猫和照片里的熊猫有什么不一样？」",
+    4:"老师备课:\n• 范宽 (约 950-1032), 北宋画家\n• 《溪山行旅图》是中国十大名画之一, 现存台北故宫博物院\n• 画面气势磅礴: 山很大很高, 旅人和驴子很小很小\n• 这表现了「人在自然中很渺小」的哲学\n• 提示学生: 找一找小小的旅人! (在画中下方, 很难找)\n• 追问: 「你能找到人吗？」「为什么山画得那么大？」「人画得那么小？」",
+}
 for img_lb,title,em,idx in gallery:
     s=ns();n+=1;bg(s,SCROLL);hb(s,f"🖼️ 看 — 第 {idx} 幅 / {len(gallery)}  Look · {idx}/{len(gallery)}",VERMILLION)
     ib(s,0.5,1.0,9.0,3.5,img_lb)
@@ -247,6 +259,8 @@ for img_lb,title,em,idx in gallery:
     tb(s,1.6,4.68,7.8,0.35,title,sz=15,b=True,c=WHITE)
     tb(s,0.5,5.15,9.0,0.35,"👀 颜色？主题？空白？— 你看到了什么？",sz=12,c=VERMILLION,a=PP_ALIGN.CENTER)
     pn(s,n)
+    if idx in GALLERY_NOTES_D3:
+        notes(s,GALLERY_NOTES_D3[idx])
 
 # ============================================================
 # 6 INQUIRY — what do you see? (Student observation, no answers)
@@ -411,36 +425,44 @@ s=type_overview_slide("🌿","水墨画的主题","Common Subjects",JADE,
      ("⛰️","山水","Landscape"),("🌸","梅花","Plum Blossom")]);n+=1;pn(s,n)
 
 # ============================================================
-# 10 BAMBOO example
+# 10 VIDEO — see ink painting in action (replaces duplicate bamboo)
 # ============================================================
-s=example_slide("🎋","竹子 Bamboo","竹石图","Bamboo & Rock",
-    "郑板桥 Zheng Banqiao · 清朝 · ~1750",
-    "竹子节节高 — 像不像在长大？\nBamboo grows joint by joint — like it's growing up!",
-    "📷 郑板桥 竹子图  (teacher: insert bamboo painting)",JADE);n+=1;pn(s,n)
+s=ns();n+=1;bg(s,INK)
+tb(s,1,0.7,8,0.8,"🎬 看视频  Watch a Video",sz=36,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1,1.55,8,0.45,"水墨画家是怎么画的？  How does an ink painter paint?",sz=18,c=WARM,a=PP_ALIGN.CENTER)
+ib(s,1.2,2.2,7.6,2.5,"📷 视频截图位置 / Video screenshot")
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.85),Inches(9),Inches(0.5))
+sh.fill.solid();sh.fill.fore_color.rgb=VERMILLION;sh.line.fill.background()
+tb(s,0.6,4.9,8.8,0.4,"🔗 推荐: YouTube 搜「Chinese ink painting demo」/ B站 搜「水墨画 教学」",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+pn(s,n)
+notes(s,"老师备课:\n• 选 1-2 段 2-3 分钟的水墨画过程视频, 让学生看到「真正在画」\n• 重点观察: 笔的姿势 / 蘸墨蘸水的多少 / 一笔下去的速度\n• 推荐搜索:\n   - YouTube: \"Chinese ink painting demo\" / \"sumi-e brush demo\"\n   - 哔哩哔哩 (B站): \"水墨画 教程\" / \"齐白石 画虾 过程\"\n   - 抖音/小红书: \"国画 教学\"\n• 看完追问: 「画家先画哪里？」「水多还是水少？」「他犹豫了吗？」\n• 趣闻: 水墨画一笔下去不能改, 所以画家要先在心里「画」一遍")
 
 # ============================================================
-# 11 SHRIMP example
+# 11 FISH example — 八大山人 (different artist, covers 鱼 language goal)
 # ============================================================
-s=example_slide("🦐","虾 Shrimp","虾","Shrimp",
-    "齐白石 Qi Baishi · 中国近代 · 20 世纪",
-    "只用黑墨水，虾就像活的！数一数 — 几只虾？\nJust black ink — shrimp look alive! Count them!",
-    "📷 齐白石 虾  (teacher: insert Qi Baishi shrimp)",JADE);n+=1;pn(s,n)
+s=example_slide("🐟","鱼 Fish","鳜鱼图","Mandarin Fish",
+    "八大山人 Bada Shanren · 朱耷 · 1626-1705 · 明末清初",
+    "一条鱼 + 一片空白 = 一个世界。\nOne fish + lots of empty space = a whole world!",
+    "📷 八大山人《鱼》(搜「八大山人 鱼」)",JADE);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 八大山人 (本名朱耷, 1626-1705) 明朝皇室后裔, 明亡后出家当和尚\n• 他的画很特别: 鱼的眼睛是「白眼向天」— 表达对当时世界的不满\n• 画一条孤独的鱼, 周围全是空白 — 这就是「极致留白」\n• 他常常只画一个东西: 一条鱼、一只鸟、一朵荷花\n• 简到不能再简, 但每一笔都很有力量\n• 图片参考: 网搜「八大山人 鱼」/「朱耷 鱼」\n• 收藏: 北京故宫博物院 / 上海博物馆\n• 追问: 「为什么只画一条鱼？」「鱼的眼睛在哪里？为什么这么画？」「这条鱼开心还是难过？」")
 
 # ============================================================
-# 12 PANDA example
+# 12 LOTUS example — 张大千 (covers 花 language goal, new subject!)
 # ============================================================
-s=example_slide_generic("🐼","熊猫 Panda","水墨熊猫","Ink Panda",
-    "现代水墨画家 Modern ink painter",
-    "黑白本来就像熊猫的颜色！\nBlack and white — perfect for a panda!",
-    "📷 水墨熊猫  (teacher: insert ink panda)",JADE);n+=1;pn(s,n)
+s=example_slide("🪷","花 Flower (荷花)","泼墨荷花","Splashed Ink Lotus",
+    "张大千 Zhang Daqian · 1899-1983 · 中国现代水墨大师",
+    "「泼墨」— 把墨泼上去！花就出来了！\nSplash the ink — and a flower appears!",
+    "📷 张大千《荷花》(搜「张大千 荷花 泼墨」)",JADE);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 张大千 (1899-1983) 是 20 世纪最有名的中国画家之一\n• 他什么都画 — 山水、花鸟、人物, 还会临摹古画 (传说曾骗过专家)\n• 后来发明了「泼墨泼彩」技法 — 把墨和颜料直接泼到纸上\n• 这种画法很大胆, 一旦泼下去就改不了\n• 荷花是中国的传统题材 (出淤泥而不染), 但张大千的荷花是「现代的」\n• 图片参考: 网搜「张大千 荷花」/「张大千 泼墨」\n• 收藏: 台北故宫博物院 / 苏富比拍卖纪录\n• 趣闻: 他的画是当今拍卖纪录最高的中国画家之一, 一幅荷花拍过几亿\n• 追问: 「「泼」墨是什么意思？」「荷花和别的花有什么不一样？」「为什么古人爱画荷花？」")
 
 # ============================================================
-# 13 LANDSCAPE example
+# 13 PANDA example — 韩美林 (different from gallery's 吴作人)
 # ============================================================
-s=example_slide("⛰️","山水 Landscape","溪山行旅图","Travelers Among Mountains",
-    "范宽 Fan Kuan · 北宋 · ~1000 年",
-    "山很高，人很小 — 你能找到人吗？\nMountains are huge, people are tiny — can you find them?",
-    "📷 范宽 溪山行旅图  (teacher: insert Fan Kuan landscape)",JADE);n+=1;pn(s,n)
+s=example_slide_generic("🐼","熊猫 Panda","卡通熊猫","Folk-Style Panda",
+    "韩美林 Han Meilin · 1936-至今 · 现代艺术家",
+    "他的熊猫圆滚滚 — 像不像奥运福娃？\nHis pandas are round and cute — like Olympic mascots!",
+    "📷 韩美林《熊猫》(搜「韩美林 熊猫」)",JADE);n+=1;pn(s,n)
+notes(s,"老师备课:\n• 韩美林 (1936-至今) 中国现代艺术家、设计师\n• 他设计了 2008 北京奥运会吉祥物「福娃」, 也是熊猫主题设计大师\n• 他的熊猫不是「写实」的, 是「卡通化」的水墨 — 圆圆的, 萌萌的\n• 用最简单的几笔, 就抓住熊猫的特征\n• 这种风格融合了中国民间艺术 + 现代设计\n• 图片参考: 网搜「韩美林 熊猫」\n• 趣闻: 他设计的福娃熊猫 (晶晶) 全世界 30 亿人都认识\n• 收藏: 韩美林艺术馆 (北京 / 杭州 / 银川)\n• 对比: 吴作人画熊猫像写真, 韩美林画熊猫像卡通\n• 追问: 「这只熊猫和上一幅 (吴作人) 不一样在哪里？」「你更喜欢哪一种？为什么？」")
 
 # ============================================================
 # 14 比较 中国水墨画 vs 西洋画
