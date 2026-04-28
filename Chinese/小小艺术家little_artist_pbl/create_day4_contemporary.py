@@ -206,30 +206,50 @@ div("Session 1  上午","什么是当代艺术？  What is Contemporary Art?\n�
 n+=1
 
 # ============================================================
-# 5 GALLERY — 6 contemporary artworks (no labels giving features yet)
+# 5 GALLERY INTRO — preview the 6 examples we'll see one by one
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"🖼️ 看一看  Look at These Artworks",HOT_PINK)
-tb(s,0.4,0.9,9.2,0.32,"这 6 幅都是「当代艺术」 — 你能发现什么共同点？",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.22,9.2,0.28,"All 6 are contemporary art — what do they have in common?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-gallery=[
-    ("📷 达利《永恒的记忆》(融化的钟)  Dalí: Melting Clocks","《融化的钟》"),
-    ("📷 马格利特《这不是烟斗》  Magritte: The Treachery of Images","《这不是烟斗》"),
-    ("📷 草间弥生 圆点南瓜  Kusama: Pumpkin","🎃 圆点南瓜"),
-    ("📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines","视错觉条纹"),
-    ("📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)","现成品 自行车轮"),
-    ("📷 黑白对称图案  Symmetric pattern","黑白对称图案"),
-]
-for i,(img_lb,title) in enumerate(gallery):
-    col=i%3;row=i//2 if False else i//3
-    x=0.3+col*3.2;y=1.55+row*1.7
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.55))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=HOT_PINK;sh.line.width=Pt(2)
-    ib(s,x+0.1,y+0.1,2.8,1.0,img_lb)
-    tb(s,x+0.1,y+1.15,2.8,0.35,title,sz=11,b=True,c=HOT_PINK,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.0),Inches(9.4),Inches(0.4))
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(1.0),Inches(8.0),Inches(1.5))
 sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
-tb(s,0.4,5.04,9.2,0.32,"👀 仔细看 — 它们和「蒙娜丽莎」一样吗？为什么？",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.2,1.15,7.6,0.55,"接下来，我们一起看 6 幅画",sz=24,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.2,1.7,7.6,0.4,"Next, we'll look at 6 artworks together",sz=14,c=LIME,a=PP_ALIGN.CENTER)
+tb(s,1.2,2.1,7.6,0.4,"它们都是「当代艺术」 — 你能发现什么共同点？",sz=14,c=YELLOW,a=PP_ALIGN.CENTER)
+# 6 small thumbnails preview (2 rows × 3)
+items=[("🕰️","融化的钟"),("🚭","这不是烟斗"),("🎃","圆点南瓜"),
+       ("👁️","视错觉"),("🚲","自行车轮"),("🦋","黑白对称")]
+for i,(em,t) in enumerate(items):
+    col=i%3;row=i//3
+    x=0.6+col*3.0;y=2.7+row*1.2
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.8),Inches(1.05))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=HOT_PINK;sh.line.width=Pt(2)
+    tb(s,x+0.1,y+0.05,0.9,0.55,em,sz=26,a=PP_ALIGN.CENTER)
+    tb(s,x+1.0,y+0.1,1.7,0.4,t,sz=12,b=True,c=HOT_PINK)
+    tb(s,x+1.0,y+0.5,1.7,0.4,f"#{i+1}",sz=10,c=GRAY)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.15),Inches(9.4),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=JET;sh.line.fill.background()
+tb(s,0.4,5.18,9.2,0.35,"👀 仔细看 — 不要急着回答，让眼睛先告诉你！",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
+
+# ============================================================
+# 5a-5f  ONE ARTWORK PER SLIDE (big image, no features revealed)
+# ============================================================
+gallery=[
+    ("📷 达利《永恒的记忆》(融化的钟)  Dalí: The Persistence of Memory","《永恒的记忆》(融化的钟) · Salvador Dalí","🕰️",1),
+    ("📷 马格利特《这不是烟斗》  Magritte: The Treachery of Images","《这不是烟斗》· René Magritte","🚭",2),
+    ("📷 草间弥生 圆点南瓜  Yayoi Kusama: Pumpkin (黄底黑点)","圆点南瓜 · 草间弥生 Yayoi Kusama","🎃",3),
+    ("📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines","视错觉条纹 · Bridget Riley","👁️",4),
+    ("📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)","现成品 — 自行车轮 · Marcel Duchamp","🚲",5),
+    ("📷 黑白对称图案  Symmetric paper-cut pattern","黑白对称图案 · Symmetry","🦋",6),
+]
+for img_lb,title,em,idx in gallery:
+    s=ns();n+=1;bg(s,CREAM);hb(s,f"🖼️ 看 — 第 {idx} 幅 / {len(gallery)}  Look · {idx}/{len(gallery)}",HOT_PINK)
+    ib(s,0.5,1.0,9.0,3.5,img_lb)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.6),Inches(9.0),Inches(0.45))
+    sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
+    tb(s,0.6,4.65,1.0,0.35,em,sz=22,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.6,4.68,7.8,0.35,title,sz=14,b=True,c=WHITE)
+    tb(s,0.5,5.15,9.0,0.35,"👀 像不像真的？奇怪吗？— 你看到了什么？",sz=12,c=HOT_PINK,a=PP_ALIGN.CENTER)
+    pn(s,n)
 
 # ============================================================
 # 6 INQUIRY — what do you see? (Student observation, no answers)

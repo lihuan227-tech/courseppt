@@ -207,29 +207,46 @@ div("Session 1  上午","认识中国水墨画 + 比较中西画法\n🖌️ 毛
 n+=1
 
 # ============================================================
-# 5 GALLERY — 4 ink-painting examples (NO answers yet, only images)
+# 5 GALLERY INTRO — preview the 4 examples we'll see one by one
 # ============================================================
 s=ns();n+=1;bg(s,SCROLL);hb(s,"🖼️ 看一看  Look at These Paintings",VERMILLION)
-tb(s,0.4,0.9,9.2,0.35,"这 4 幅画都是「中国水墨画」 — 你能发现什么共同点？",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.25,9.2,0.3,"All 4 are Chinese ink paintings — what do they have in common?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-gallery=[
-    ("📷 《竹子》郑板桥  Bamboo by Zheng Banqiao","《竹子》"),
-    ("📷 《虾》齐白石  Shrimp by Qi Baishi","《虾》"),
-    ("📷 《熊猫》水墨画  Panda ink painting","《熊猫》"),
-    ("📷 《溪山行旅图》范宽  Landscape by Fan Kuan","《溪山行旅图》"),
-]
-for i,(img_lb,title) in enumerate(gallery):
-    col=i%2;row=i//2
-    x=0.3+col*4.75;y=1.65+row*1.75
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.6),Inches(1.6))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=INK;sh.line.width=Pt(2)
-    ib(s,x+0.15,y+0.1,3.0,1.4,img_lb)
-    tb(s,x+3.25,y+0.3,1.25,0.4,title,sz=14,b=True,c=INK,a=PP_ALIGN.CENTER)
-    tb(s,x+3.25,y+0.75,1.25,0.4,"看!",sz=12,c=VERMILLION,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.2),Inches(9.4),Inches(0.35))
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(1.3),Inches(8.0),Inches(1.6))
 sh.fill.solid();sh.fill.fore_color.rgb=VERMILLION;sh.line.fill.background()
-tb(s,0.4,5.22,9.2,0.32,"👀 仔细看 — 不要急着回答，让眼睛先告诉你！",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.2,1.45,7.6,0.6,"接下来，我们一起看 4 幅画",sz=26,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.2,2.05,7.6,0.5,"Next, we look at 4 paintings together",sz=15,c=WARM,a=PP_ALIGN.CENTER)
+tb(s,1.2,2.5,7.6,0.4,"它们都是「中国水墨画」 — 你能发现什么共同点？",sz=14,c=YELLOW,a=PP_ALIGN.CENTER)
+# 4 small thumbnails preview
+items=[("🎋","《竹子》"),("🦐","《虾》"),("🐼","《熊猫》"),("🏔️","《山水》")]
+for i,(em,t) in enumerate(items):
+    x=0.6+i*2.3
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(3.4),Inches(2.0),Inches(1.5))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=INK;sh.line.width=Pt(2)
+    tb(s,x+0.1,3.5,1.8,0.65,em,sz=36,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.2,1.8,0.4,t,sz=14,b=True,c=INK,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.6,1.8,0.3,str(i+1),sz=10,c=VERMILLION,a=PP_ALIGN.CENTER)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.05),Inches(9.4),Inches(0.45))
+sh.fill.solid();sh.fill.fore_color.rgb=VERMILLION;sh.line.fill.background()
+tb(s,0.4,5.1,9.2,0.4,"👀 仔细看 — 不要急着回答，让眼睛先告诉你！",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
+
+# ============================================================
+# 5a-5d  ONE PAINTING PER SLIDE (big image, no features revealed)
+# ============================================================
+gallery=[
+    ("📷 《竹子》郑板桥  Bamboo by Zheng Banqiao","《竹子》郑板桥","🎋",1),
+    ("📷 《虾》齐白石  Shrimp by Qi Baishi","《虾》齐白石","🦐",2),
+    ("📷 《熊猫》水墨画  Panda ink painting","《熊猫》","🐼",3),
+    ("📷 《溪山行旅图》范宽  Landscape by Fan Kuan","《溪山行旅图》范宽","🏔️",4),
+]
+for img_lb,title,em,idx in gallery:
+    s=ns();n+=1;bg(s,SCROLL);hb(s,f"🖼️ 看 — 第 {idx} 幅 / {len(gallery)}  Look · {idx}/{len(gallery)}",VERMILLION)
+    ib(s,0.5,1.0,9.0,3.5,img_lb)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.6),Inches(9.0),Inches(0.45))
+    sh.fill.solid();sh.fill.fore_color.rgb=INK;sh.line.fill.background()
+    tb(s,0.6,4.65,1.0,0.35,em,sz=22,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.6,4.68,7.8,0.35,title,sz=15,b=True,c=WHITE)
+    tb(s,0.5,5.15,9.0,0.35,"👀 颜色？主题？空白？— 你看到了什么？",sz=12,c=VERMILLION,a=PP_ALIGN.CENTER)
+    pn(s,n)
 
 # ============================================================
 # 6 INQUIRY — what do you see? (Student observation, no answers)
