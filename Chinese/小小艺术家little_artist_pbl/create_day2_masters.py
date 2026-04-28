@@ -88,6 +88,29 @@ def dot(s,x,y,r,color):
     d=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x),Inches(y),Inches(r),Inches(r))
     d.fill.solid();d.fill.fore_color.rgb=color;d.line.fill.background()
 
+def observe_slide(emoji, work_cn, work_en, color, img_lb, questions, url=None, key=None):
+    """Observe-first slide: students study painting + answer guided questions BEFORE teacher explains."""
+    s=ns();bg(s,CREAM)
+    hb(s,f"👀 先看一看 · 《{work_cn}》",color)
+    tb(s,0.4,0.9,9.2,0.3,f"Look First · {work_en} — what do you see?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+    # LEFT: image
+    ib(s,0.3,1.3,4.4,3.6,img_lb,url=url,key=key)
+    # RIGHT: 4 questions panel
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.3),Inches(4.85),Inches(3.6))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2.5)
+    head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.3),Inches(4.85),Inches(0.5))
+    head.fill.solid();head.fill.fore_color.rgb=color;head.line.fill.background()
+    tb(s,5.0,1.38,4.6,0.4,"🤔 你看到什么？  What Do You See?",sz=14,b=True,c=WHITE)
+    tf=tb(s,5.05,1.95,4.55,0.5,f"❓ {questions[0]}",sz=13,c=DARK)
+    for q in questions[1:]:
+        ap(tf,"",sz=6)
+        ap(tf,f"❓ {q}",sz=13,c=DARK)
+    # bottom hint
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.0),Inches(9.4),Inches(0.4))
+    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
+    tb(s,0.4,5.04,9.2,0.32,"👁️ 不要急 — 让眼睛先告诉你! 然后听老师讲。",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    return s
+
 def spotlight_slide(emoji, work_cn, color, trivia, locations, inquiry):
     """Trivia + life-connection follow-up slide for an iconic work.
     locations: list of (emoji, label) — where students see it in daily life
@@ -349,6 +372,16 @@ tb(s,0.4,4.65,9.2,0.5,"🤔 看这幅画 — 你能找出几个「不一样的�
 pn(s,n)
 notes(s,"老师备课:\n• 立体派 (Cubism) 的核心: 同一张脸里有「正面」+「侧面」混在一起\n• 传统画法只能选一个角度, 毕加索打破了这个规则\n• 找角度提示: 眼睛(正面) / 鼻子(侧面) / 嘴(扭曲) / 脸(几何块)\n• 追问: 「平常我们只能看到正面 OR 侧面, 毕加索同时画两个 — 你试过吗？」\n• 趣闻: 毕加索全名超长 — Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz Picasso!")
 
+# 9a Observe Three Musicians (before teacher explains)
+s=observe_slide("🎭","三个音乐家","Three Musicians",PICASSO,
+    "📷 三个音乐家 Three Musicians",
+    ["你看到几个人？他们在做什么？",
+     "你能找到几个乐器？分别是什么？",
+     "形状像什么？(三角形 / 方形 / 圆?)",
+     "桌下面藏着一个小动物 — 你能找到吗？"],
+    url="en.wikipedia.org/wiki/Three_Musicians",key="three_musicians")
+n+=1;pn(s,n)
+
 # 9 Picasso work 1
 s=example_slide("🎭","毕加索","三个音乐家","Three Musicians",
     "Pablo Picasso · 1921 年 · 综合立体派",
@@ -362,6 +395,16 @@ s=spotlight_slide("🎭","三个音乐家",PICASSO,
     "毕加索把人变成「几何形状」拼起来 — 像剪贴画! 三个音乐家 + 一只小狗都藏在几何形里。",
     [("🎵","音乐会海报"),("🎸","乐队 T 恤"),("🏛️","纽约 MoMA"),("🎨","艺术教科书"),("🧩","拼图"),("🎬","纪录片")],
     "你能找到桌子下面那只小狗吗？三个乐器分别是什么？")
+n+=1;pn(s,n)
+
+# 10a Observe Weeping Woman
+s=observe_slide("😢","哭泣的女人","Weeping Woman",PICASSO,
+    "📷 哭泣的女人 Weeping Woman",
+    ["这个人在做什么？你怎么知道？",
+     "她的眼睛是什么形状？(像不像眼泪？)",
+     "嘴是什么形状？锯齿让你想到什么？",
+     "主要用了什么颜色？这些颜色让你感觉?"],
+    url="en.wikipedia.org/wiki/The_Weeping_Woman",key="weeping_woman")
 n+=1;pn(s,n)
 
 # 10 Picasso work 2
@@ -444,6 +487,16 @@ tb(s,5.0,4.35,4.65,0.5,"🤔 你能剪出哪些形状？  What shapes?",sz=13,b=
 pn(s,n)
 notes(s,"老师备课:\n• 马蒂斯把画面简化到像儿童画 — 没有光影、没有立体感, 只有形状 + 颜色\n• 互补色技巧 (色环): 红+绿 / 黄+紫 / 蓝+橙 — 放一起视觉冲击强烈\n• 趣闻: 他的名作《红房间》原本是蓝色, 后来才改成红色 — 因为红色和窗外绿色互补, 更有冲击力\n• 《波利尼西亚, 海》灵感来自他在大溪地的旅行, 看到的鱼和珊瑚\n• 追问: 「你能用 3 种颜色, 表达「夏天」吗？」")
 
+# 14a Observe Snail
+s=observe_slide("🐌","蜗牛","The Snail",MATISSE,
+    "📷 蜗牛 The Snail (彩色方块螺旋)",
+    ["这是什么？(让你猜!)",
+     "颜色按什么顺序排？(红→橙→黄→…?)",
+     "形状是规则的, 还是随意的？",
+     "哪里是「空白」？为什么留白？"],
+    url="en.wikipedia.org/wiki/The_Snail",key="snail")
+n+=1;pn(s,n)
+
 # 14 Matisse work 1
 s=example_slide("✂️","马蒂斯","蜗牛","The Snail",
     "Henri Matisse · 1953 年 · 剪纸作品",
@@ -457,6 +510,16 @@ s=spotlight_slide("🐌","蜗牛",MATISSE,
     "马蒂斯 84 岁躺在床上做的 — 不能画就剪! 你也可以用最简单的方法做大艺术。",
     [("🛏️","卧床养病"),("✂️","彩纸 + 剪刀"),("👶","幼儿园艺术课"),("🖼️","Tate 美术馆")],
     "如果你也只能躺着, 你会怎么做艺术？")
+n+=1;pn(s,n)
+
+# 15a Observe Icarus
+s=observe_slide("⭐","伊卡洛斯","Icarus",MATISSE,
+    "📷 伊卡洛斯 Icarus",
+    ["黑色的形状是什么？",
+     "中间那颗红色的圆 — 你觉得是什么？",
+     "你看到几颗黄色的星？",
+     "蓝色背景代表什么？(天空? 海? 夜晚?)"],
+    url="搜「Matisse Icarus Jazz」",key="icarus")
 n+=1;pn(s,n)
 
 # 15 Matisse work 2
@@ -532,6 +595,16 @@ tb(s,0.4,4.65,9.2,0.5,"🤔 看线条 — 你觉得他开心还是难过？  Hap
 pn(s,n)
 notes(s,"老师备课:\n• 1888 年画的, 梵高在阿尔勒 (Arles) 河边写生\n• 与 1889 年的《星夜》是「姐妹作」\n• 黄色光点 = 天上的星 + 河边煤气灯的倒影\n• 短粗笔触表现夜晚的空气在「呼吸」, 风像在动\n• 期待: 学生从颜色亮 / 暗 + 线条快 / 慢, 来判断心情\n• 关键: 梵高一生很苦, 但用亮色画 — 颜色不是直接 = 心情, 是表达\n• 追问: 「天上的星星和河里的灯影分得清吗？」「为什么画家用旋转的笔？」")
 
+# 19a Observe Sunflowers
+s=observe_slide("🌻","向日葵","Sunflowers",VANGOGH,
+    "📷 向日葵 Sunflowers",
+    ["数一数 — 一共几朵向日葵？",
+     "花都长得一样吗？(有的开了, 有的谢了?)",
+     "主要用了什么颜色？",
+     "花瓶上写了什么？(有「Vincent」签名!)"],
+    url="en.wikipedia.org/wiki/Sunflowers_(Van_Gogh_series)",key="sunflowers")
+n+=1;pn(s,n)
+
 # 19 Van Gogh work 1
 s=example_slide("🌻","梵高","向日葵","Sunflowers",
     "Vincent van Gogh · 1888 年 · 油画",
@@ -545,6 +618,16 @@ s=spotlight_slide("🌻","向日葵",VANGOGH,
     "梵高画了 11 幅向日葵, 当礼物送给好朋友高更! 黄色 = 友谊 + 希望。",
     [("🖼️","海报"),("☕","马克杯"),("📕","书本封面"),("📮","邮票"),("🎒","帆布包"),("📒","笔记本")],
     "你画过给朋友的画吗？什么颜色 = 友谊？")
+n+=1;pn(s,n)
+
+# 20a Observe Starry Night
+s=observe_slide("🌌","星夜","The Starry Night",VANGOGH,
+    "📷 星夜 The Starry Night",
+    ["是白天还是晚上？怎么知道？",
+     "数一数 — 多少颗星星？多少个月亮？",
+     "天空在动吗？画家怎么让它「动」起来?",
+     "下面地上有什么？(村庄? 教堂? 树?)"],
+    url="en.wikipedia.org/wiki/The_Starry_Night",key="starry_night")
 n+=1;pn(s,n)
 
 # 20 Van Gogh work 2
