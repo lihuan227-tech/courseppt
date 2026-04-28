@@ -207,50 +207,120 @@ div("Session 1  上午","认识中国水墨画 + 比较中西画法\n🖌️ 毛
 n+=1
 
 # ============================================================
-# 5 WHAT IS 水墨画 — big idea
+# 5 GALLERY — 4 ink-painting examples (NO answers yet, only images)
 # ============================================================
-s=ns();n+=1;bg(s,SCROLL);hb(s,"💡 什么是水墨画？  What is Chinese Ink Painting?",VERMILLION)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(1.0),Inches(8.0),Inches(1.6))
-sh.fill.solid();sh.fill.fore_color.rgb=INK;sh.line.fill.background()
-tb(s,1.2,1.1,7.6,0.7,"毛笔 + 墨 + 水 = 水墨画",sz=38,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1.2,1.85,7.6,0.7,"Brush + Ink + Water = Ink Painting",sz=20,c=WARM,a=PP_ALIGN.CENTER)
-bubbles=[
-    ("🖌️","工具","Brush · Ink · Water · Paper",INK),
-    ("⚫","颜色","Mostly black, white & gray",INK_LIGHT),
-    ("🍃","感觉","Quiet · Simple · Poetic",JADE),
+s=ns();n+=1;bg(s,SCROLL);hb(s,"🖼️ 看一看  Look at These Paintings",VERMILLION)
+tb(s,0.4,0.9,9.2,0.35,"这 4 幅画都是「中国水墨画」 — 你能发现什么共同点？",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.25,9.2,0.3,"All 4 are Chinese ink paintings — what do they have in common?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+gallery=[
+    ("📷 《竹子》郑板桥  Bamboo by Zheng Banqiao","《竹子》"),
+    ("📷 《虾》齐白石  Shrimp by Qi Baishi","《虾》"),
+    ("📷 《熊猫》水墨画  Panda ink painting","《熊猫》"),
+    ("📷 《溪山行旅图》范宽  Landscape by Fan Kuan","《溪山行旅图》"),
 ]
-for i,(em,cn,en,cl) in enumerate(bubbles):
-    x=0.5+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.95),Inches(3.0),Inches(2.15))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
-    tb(s,x+0.1,3.05,2.8,0.7,em,sz=44,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.85,2.8,0.45,cn,sz=20,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,4.4,2.8,0.55,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+for i,(img_lb,title) in enumerate(gallery):
+    col=i%2;row=i//2
+    x=0.3+col*4.75;y=1.65+row*1.75
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.6),Inches(1.6))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=INK;sh.line.width=Pt(2)
+    ib(s,x+0.15,y+0.1,3.0,1.4,img_lb)
+    tb(s,x+3.25,y+0.3,1.25,0.4,title,sz=14,b=True,c=INK,a=PP_ALIGN.CENTER)
+    tb(s,x+3.25,y+0.75,1.25,0.4,"看!",sz=12,c=VERMILLION,a=PP_ALIGN.CENTER)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.2),Inches(9.4),Inches(0.35))
+sh.fill.solid();sh.fill.fore_color.rgb=VERMILLION;sh.line.fill.background()
+tb(s,0.4,5.22,9.2,0.32,"👀 仔细看 — 不要急着回答，让眼睛先告诉你！",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
-# 6 SIX FEATURES — 2x3 grid
+# 6 INQUIRY — what do you see? (Student observation, no answers)
 # ============================================================
-s=ns();n+=1;bg(s,SCROLL);hb(s,"🔍 水墨画的六个特点  6 Features of Ink Painting")
+s=ns();n+=1;bg(s,SCROLL);hb(s,"🤔 你看到什么？  What Did You See?",VERMILLION)
+tb(s,0.4,0.9,9.2,0.35,"看完 4 张画，一起想一想 / After looking, let's think together",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+# LEFT: 5 observation questions
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.35),Inches(5.3),Inches(3.7))
+sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=VERMILLION;sh.line.width=Pt(2.5)
+head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.35),Inches(5.3),Inches(0.5))
+head.fill.solid();head.fill.fore_color.rgb=VERMILLION;head.line.fill.background()
+tb(s,0.45,1.43,5.0,0.4,"❓ 一起想一想  Let's Think",sz=14,b=True,c=WHITE)
+qs=[
+    "颜色多 还是 少？",
+    "主要是什么颜色？",
+    "画的是真人，还是自然 (动物 / 植物 / 山)？",
+    "画里有没有空白？为什么？",
+    "看起来 — 安静 还是 热闹？",
+]
+tf=tb(s,0.5,2.0,5.0,0.5,f"❓ {qs[0]}",sz=13,c=DARK)
+for q in qs[1:]:
+    ap(tf,"",sz=6)
+    ap(tf,f"❓ {q}",sz=13,c=DARK)
+# RIGHT: sentence frames
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.85),Inches(1.35),Inches(3.85),Inches(3.7))
+sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=JADE;sh.line.width=Pt(2.5)
+head2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.85),Inches(1.35),Inches(3.85),Inches(0.5))
+head2.fill.solid();head2.fill.fore_color.rgb=JADE;head2.line.fill.background()
+tb(s,6.0,1.43,3.55,0.4,"💬 我会说  I Can Say",sz=14,b=True,c=WHITE)
+frames=[
+    "我看到 ________。",
+    "颜色 ________。",
+    "画的是 ________。",
+    "画里 ________。",
+    "我觉得 ________。",
+]
+tf2=tb(s,6.05,2.0,3.65,0.5,f"·  {frames[0]}",sz=13,c=DARK)
+for fr in frames[1:]:
+    ap(tf2,"",sz=6)
+    ap(tf2,f"·  {fr}",sz=13,c=DARK)
+# Bottom transition
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.15),Inches(9.4),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=INK;sh.line.fill.background()
+tb(s,0.4,5.18,9.2,0.35,"👉 大家说完，我们一起总结 — 这就是「水墨画的特点」!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
+# 7 REVEAL — big idea (now confirms what students discovered)
+# ============================================================
+s=ns();n+=1;bg(s,SCROLL);hb(s,"💡 你说对啦！水墨画 = ?",VERMILLION)
+tb(s,0.4,0.9,9.2,0.35,"You discovered it! Here's the formula.",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(1.4),Inches(8.0),Inches(1.5))
+sh.fill.solid();sh.fill.fore_color.rgb=INK;sh.line.fill.background()
+tb(s,1.2,1.5,7.6,0.7,"毛笔 + 墨 + 水 = 水墨画",sz=36,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.2,2.2,7.6,0.55,"Brush + Ink + Water = Chinese Ink Painting",sz=18,c=WARM,a=PP_ALIGN.CENTER)
+bubbles=[
+    ("🖌️","工具","Tools",INK),
+    ("⚫","颜色","Colors",INK_LIGHT),
+    ("🍃","感觉","Feeling",JADE),
+]
+for i,(em,cn,en,cl) in enumerate(bubbles):
+    x=0.5+i*3.15
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(3.2),Inches(3.0),Inches(1.95))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
+    tb(s,x+0.1,3.3,2.8,0.65,em,sz=40,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.0,2.8,0.45,cn,sz=20,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.55,2.8,0.4,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
+# 8 SIX FEATURES — 2x3 grid (summary of what students discovered)
+# ============================================================
+s=ns();n+=1;bg(s,SCROLL);hb(s,"📌 总结  6 Features of Ink Painting")
+tb(s,0.4,0.85,9.2,0.3,"我们一起发现的 6 个特点 / The 6 features we found together",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 features=[
     ("🖌️","工具","Brush, ink, water, rice paper\n毛笔、墨、水、宣纸",INK),
     ("🎨","颜色","Mostly black/white/gray\n黑白灰为主",INK_LIGHT),
     ("💧","浓淡","Dark or light\n深一点 / 浅一点",JADE),
-    ("🌿","主题","Nature: bamboo, fish, panda…\n自然 — 竹子、花、鱼、熊猫、山水",GREEN_L),
+    ("🌿","主题","Nature: bamboo, fish, panda…\n自然 — 竹子、花、鱼、熊猫",GREEN_L),
     ("🌬️","留白","Don't fill it up — leave space\n不用画满",VERMILLION),
     ("🧘","感觉","Quiet, simple, poetic\n安静、简单、有意境",PURPLE),
 ]
 for i,(em,cn,en,cl) in enumerate(features):
     col=i%3;row=i//3
-    x=0.3+col*3.2;y=0.95+row*2.05
+    x=0.3+col*3.2;y=1.2+row*2.05
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
     tb(s,x+0.1,y+0.1,2.8,0.65,em,sz=34,c=cl,a=PP_ALIGN.CENTER)
     tb(s,x+0.1,y+0.8,2.8,0.4,cn,sz=20,b=True,c=cl,a=PP_ALIGN.CENTER)
     ls=en.split('\n')
-    tf=tb(s,x+0.1,1+row*2.05+0.3,2.8,0.3,ls[0],sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-    # actually place description right inside the card
-    tb_desc=tb(s,x+0.1,y+1.25,2.8,0.3,ls[0],sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,y+1.25,2.8,0.3,ls[0],sz=10,c=GRAY,a=PP_ALIGN.CENTER)
     if len(ls)>1:
         tb(s,x+0.1,y+1.5,2.8,0.3,ls[1],sz=10,c=DARK,a=PP_ALIGN.CENTER)
 pn(s,n)

@@ -206,13 +206,85 @@ div("Session 1  上午","什么是当代艺术？  What is Contemporary Art?\n�
 n+=1
 
 # ============================================================
-# 5 BIG IDEA — 艺术不一定要像真的
+# 5 GALLERY — 6 contemporary artworks (no labels giving features yet)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"💡 当代艺术  What is Contemporary Art?",HOT_PINK)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.2),Inches(1.05),Inches(7.6),Inches(1.6))
+s=ns();n+=1;bg(s,CREAM);hb(s,"🖼️ 看一看  Look at These Artworks",HOT_PINK)
+tb(s,0.4,0.9,9.2,0.32,"这 6 幅都是「当代艺术」 — 你能发现什么共同点？",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.22,9.2,0.28,"All 6 are contemporary art — what do they have in common?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+gallery=[
+    ("📷 达利《永恒的记忆》(融化的钟)  Dalí: Melting Clocks","《融化的钟》"),
+    ("📷 马格利特《这不是烟斗》  Magritte: The Treachery of Images","《这不是烟斗》"),
+    ("📷 草间弥生 圆点南瓜  Kusama: Pumpkin","🎃 圆点南瓜"),
+    ("📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines","视错觉条纹"),
+    ("📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)","现成品 自行车轮"),
+    ("📷 黑白对称图案  Symmetric pattern","黑白对称图案"),
+]
+for i,(img_lb,title) in enumerate(gallery):
+    col=i%3;row=i//2 if False else i//3
+    x=0.3+col*3.2;y=1.55+row*1.7
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.55))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=HOT_PINK;sh.line.width=Pt(2)
+    ib(s,x+0.1,y+0.1,2.8,1.0,img_lb)
+    tb(s,x+0.1,y+1.15,2.8,0.35,title,sz=11,b=True,c=HOT_PINK,a=PP_ALIGN.CENTER)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.0),Inches(9.4),Inches(0.4))
 sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
-tb(s,1.4,1.15,7.2,0.7,"艺术不一定要像真的！",sz=36,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1.4,1.95,7.2,0.7,"Art doesn't have to look REAL!",sz=20,c=LIME,a=PP_ALIGN.CENTER)
+tb(s,0.4,5.04,9.2,0.32,"👀 仔细看 — 它们和「蒙娜丽莎」一样吗？为什么？",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
+# 6 INQUIRY — what do you see? (Student observation, no answers)
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"🤔 你看到什么？  What Did You See?",HOT_PINK)
+tb(s,0.4,0.9,9.2,0.35,"看完 6 张画，一起想一想 / After looking, let's think together",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+# LEFT: 5 observation questions
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.35),Inches(5.3),Inches(3.7))
+sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=HOT_PINK;sh.line.width=Pt(2.5)
+head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.35),Inches(5.3),Inches(0.5))
+head.fill.solid();head.fill.fore_color.rgb=HOT_PINK;head.line.fill.background()
+tb(s,0.45,1.43,5.0,0.4,"❓ 一起想一想  Let's Think",sz=14,b=True,c=WHITE)
+qs=[
+    "画得像不像真实的东西？",
+    "看起来奇怪 还是 普通？",
+    "用了点点 / 线条 / 重复图案吗？",
+    "有没有「日常物品」也变成了艺术？",
+    "你觉得这是「艺术」吗？为什么？",
+]
+tf=tb(s,0.5,2.0,5.0,0.5,f"❓ {qs[0]}",sz=13,c=DARK)
+for q in qs[1:]:
+    ap(tf,"",sz=6)
+    ap(tf,f"❓ {q}",sz=13,c=DARK)
+# RIGHT: sentence frames
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.85),Inches(1.35),Inches(3.85),Inches(3.7))
+sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=ELECTRIC_BLUE;sh.line.width=Pt(2.5)
+head2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.85),Inches(1.35),Inches(3.85),Inches(0.5))
+head2.fill.solid();head2.fill.fore_color.rgb=ELECTRIC_BLUE;head2.line.fill.background()
+tb(s,6.0,1.43,3.55,0.4,"💬 我会说  I Can Say",sz=14,b=True,c=WHITE)
+frames=[
+    "我看到 ________。",
+    "它和真实 ________。",
+    "我觉得很 ________。",
+    "用了 ________。",
+    "我喜欢 ________ 因为 ________。",
+]
+tf2=tb(s,6.05,2.0,3.65,0.5,f"·  {frames[0]}",sz=12,c=DARK)
+for fr in frames[1:]:
+    ap(tf2,"",sz=6)
+    ap(tf2,f"·  {fr}",sz=12,c=DARK)
+# Bottom transition
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.15),Inches(9.4),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=JET;sh.line.fill.background()
+tb(s,0.4,5.18,9.2,0.35,"👉 大家说完，我们一起总结 — 这就是「当代艺术」!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
+# 7 REVEAL — 你说对啦！big idea (now confirms what students discovered)
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"💡 你说对啦！当代艺术 = ?",HOT_PINK)
+tb(s,0.4,0.9,9.2,0.35,"You discovered it! Here's the big idea.",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.2),Inches(1.4),Inches(7.6),Inches(1.5))
+sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
+tb(s,1.4,1.5,7.2,0.7,"艺术不一定要像真的！",sz=34,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.4,2.2,7.2,0.55,"Art doesn't have to look REAL!",sz=18,c=LIME,a=PP_ALIGN.CENTER)
 bubbles=[
     ("🤪","可以很奇怪","Can be WEIRD",DOT_RED),
     ("🌈","可以很大胆","Can be BOLD",ELECTRIC_BLUE),
@@ -220,11 +292,11 @@ bubbles=[
 ]
 for i,(em,cn,en,cl) in enumerate(bubbles):
     x=0.5+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.95),Inches(3.0),Inches(2.15))
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(3.2),Inches(3.0),Inches(1.95))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
-    tb(s,x+0.1,3.05,2.8,0.7,em,sz=44,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.85,2.8,0.45,cn,sz=18,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,4.4,2.8,0.35,en,sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,3.3,2.8,0.65,em,sz=40,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.0,2.8,0.45,cn,sz=18,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.55,2.8,0.4,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
@@ -254,8 +326,8 @@ pn(s,n)
 # ============================================================
 # 7 FEATURES GRID 2x3
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"✨ 当代艺术的特点  Features",HOT_PINK)
-tb(s,0.4,0.9,9,0.4,"看一看，你能找到几个特点？",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
+s=ns();n+=1;bg(s,CREAM);hb(s,"📌 总结 — 当代艺术的 6 个特点  6 Features",HOT_PINK)
+tb(s,0.4,0.9,9,0.4,"我们一起发现的 6 个特点 / The 6 features we found together",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
 features=[
     ("🚫","不一定像真","Not realistic",HOT_PINK),
     ("🤪","可以奇怪","Can be weird",DOT_RED),
