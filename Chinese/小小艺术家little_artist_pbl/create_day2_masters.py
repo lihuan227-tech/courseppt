@@ -111,34 +111,6 @@ def observe_slide(emoji, work_cn, work_en, color, img_lb, questions, url=None, k
     tb(s,0.4,5.04,9.2,0.32,"👁️ 不要急 — 让眼睛先告诉你! 然后听老师讲。",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
     return s
 
-def spotlight_slide(emoji, work_cn, color, trivia, locations, inquiry):
-    """Trivia + life-connection follow-up slide for an iconic work.
-    locations: list of (emoji, label) — where students see it in daily life
-    """
-    s=ns();bg(s,CREAM)
-    hb(s,f"{emoji} 看点 Spotlight · 《{work_cn}》",color)
-    # Trivia banner
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(0.95),Inches(9.2),Inches(0.85))
-    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
-    tb(s,0.6,1.0,8.8,0.32,"💡 趣闻  Did You Know?",sz=13,b=True,c=YELLOW)
-    tb(s,0.6,1.32,8.8,0.5,trivia,sz=14,b=True,c=WHITE)
-    # Life-connection section title
-    tb(s,0.4,1.95,9.2,0.4,"👀 你在哪里看过？  Where Have You Seen It?",sz=15,b=True,c=color,a=PP_ALIGN.CENTER)
-    # location cards
-    cols=min(len(locations),6)
-    card_w=(9.2-0.15*(cols-1))/cols
-    for i,(em,lb) in enumerate(locations):
-        x=0.4+i*(card_w+0.15)
-        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.45),Inches(card_w),Inches(2.0))
-        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2.5)
-        tb(s,x+0.05,2.6,card_w-0.1,0.9,em,sz=42,a=PP_ALIGN.CENTER)
-        tb(s,x+0.05,3.55,card_w-0.1,0.4,lb,sz=12,b=True,c=color,a=PP_ALIGN.CENTER)
-    # Inquiry bottom strip
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.65),Inches(9.2),Inches(0.6))
-    sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=color;sh.line.width=Pt(2)
-    tb(s,0.6,4.7,8.8,0.5,f"🤔 {inquiry}",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    return s
-
 def example_slide(cat_emoji, cat_cn, work_cn, work_en, artist, fact, img_lb, color, url=None, key=None, trivia=None, connect=None):
     s=ns();bg(s,CREAM)
     hb(s,f"{cat_emoji} {cat_cn}  ·  《{work_cn}》",color)
@@ -390,13 +362,6 @@ s=example_slide("🎭","毕加索","三个音乐家","Three Musicians",
     url="en.wikipedia.org/wiki/Three_Musicians",key="three_musicians");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1921 年作品, 立体派的彩色、欢乐版本 (「综合立体派」)\n• 三个角色: 左边 Pierrot (戴白帽小丑) + 中间 Harlequin (花格小丑) + 右边修道士\n• 像剪贴画 — 几何形状拼起来\n• 找一找: 三个乐器 (单簧管 / 吉他 / 乐谱), 桌下的小狗也是几何形\n• 趣闻: 这幅画有两个版本 — 一个在 MoMA, 一个在费城\n• 追问: 「他们在演奏什么？」「形状像什么？」「能不能用纸剪出这样的人？」")
 
-# 9b Three Musicians spotlight — life connection
-s=spotlight_slide("🎭","三个音乐家",PICASSO,
-    "毕加索把人变成「几何形状」拼起来 — 像剪贴画! 三个音乐家 + 一只小狗都藏在几何形里。",
-    [("🎵","音乐会海报"),("🎸","乐队 T 恤"),("🏛️","纽约 MoMA"),("🎨","艺术教科书"),("🧩","拼图"),("🎬","纪录片")],
-    "你能找到桌子下面那只小狗吗？三个乐器分别是什么？")
-n+=1;pn(s,n)
-
 # 10a Observe Weeping Woman
 s=observe_slide("😢","哭泣的女人","Weeping Woman",PICASSO,
     "📷 哭泣的女人 Weeping Woman",
@@ -414,13 +379,6 @@ s=example_slide("🎭","毕加索","哭泣的女人","Weeping Woman",
     "📷 哭泣的女人 Weeping Woman",PICASSO,
     url="en.wikipedia.org/wiki/The_Weeping_Woman",key="weeping_woman");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1937 年, 画家女友 Dora Maar 的肖像\n• 同一年毕加索画了著名的《格尔尼卡》— 反战, 因为纳粹刚轰炸西班牙小镇 Guernica, 死了 1000 多平民\n• 锯齿形眼泪 + 蓝绿色调 = 痛苦 + 哭泣\n• 嘴巴是锯齿状, 眼睛形状像眼泪\n• 追问: 「眼泪在哪里？锯齿让你想到什么？」\n• 链接 D1: 蓝/绿 = 难过的颜色")
-
-# 10b Weeping Woman spotlight — life connection
-s=spotlight_slide("😢","哭泣的女人",PICASSO,
-    "1937 年画的, 同年毕加索画了《格尔尼卡》— 都是因为纳粹轰炸西班牙小镇而画。艺术也可以「反战」!",
-    [("📰","新闻照片"),("🎬","战争电影"),("🖼️","艺术展"),("📚","历史课本")],
-    "你伤心的时候, 用什么颜色画？什么形状？")
-n+=1;pn(s,n)
 
 # 11 Picasso try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"✏️ 毕加索 试一试  Try Picasso!",PICASSO)
@@ -505,13 +463,6 @@ s=example_slide("✂️","马蒂斯","蜗牛","The Snail",
     url="en.wikipedia.org/wiki/The_Snail",key="snail");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1953 年作品, 马蒂斯生命最后阶段, 已经躺在床上做艺术 (84 岁)\n• 形状像蜗牛壳的螺旋: 红 → 橙 → 黄 → 绿 → 蓝 → 紫\n• 即使是简单彩色方块也是艺术 — 重点在颜色 + 形状的关系\n• 没有线条, 没有透视 — 但很有动感\n• 追问: 「你能看出蜗牛吗？」「为什么不画一只真的蜗牛？」")
 
-# 14b Snail spotlight — life connection
-s=spotlight_slide("🐌","蜗牛",MATISSE,
-    "马蒂斯 84 岁躺在床上做的 — 不能画就剪! 你也可以用最简单的方法做大艺术。",
-    [("🛏️","卧床养病"),("✂️","彩纸 + 剪刀"),("👶","幼儿园艺术课"),("🖼️","Tate 美术馆")],
-    "如果你也只能躺着, 你会怎么做艺术？")
-n+=1;pn(s,n)
-
 # 15a Observe Icarus
 s=observe_slide("⭐","伊卡洛斯","Icarus",MATISSE,
     "📷 伊卡洛斯 Icarus",
@@ -529,13 +480,6 @@ s=example_slide("✂️","马蒂斯","伊卡洛斯","Icarus",
     "📷 伊卡洛斯 Icarus",MATISSE,
     url="搜「Matisse Icarus Jazz」",key="icarus");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1944 年作品, 来自他的「Jazz」剪纸书\n• 故事: 希腊神话 — 伊卡洛斯用蜡做的翅膀飞, 太靠近太阳, 蜡融化, 他坠落\n• 黑色 = 身体剪影 / 红色 = 心 / 黄色点 = 星星 / 蓝色 = 天空\n• 不强调坠落悲剧, 重点是「剪影 + 一个亮点」的画法\n• 追问: 「红色代表什么？为什么心是亮的？」(链接 D1 心情色)")
-
-# 15b Icarus spotlight — Greek myth connection
-s=spotlight_slide("⭐","伊卡洛斯",MATISSE,
-    "希腊神话: 伊卡洛斯用蜡翅膀飞太高, 太阳融化了翅膀。但他的「红心」还在闪!",
-    [("📚","希腊神话故事书"),("🎬","动画电影"),("🌞","太阳神话"),("🪶","「飞」的传说")],
-    "你做过「飞太高」的事吗？")
-n+=1;pn(s,n)
 
 # 16 Matisse try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"✂️ 马蒂斯 试一试  Try Matisse!",MATISSE)
@@ -613,13 +557,6 @@ s=example_slide("🌻","梵高","向日葵","Sunflowers",
     url="en.wikipedia.org/wiki/Sunflowers_(Van_Gogh_series)",key="sunflowers");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1888 年画的, 准备给好朋友 Gauguin (高更) 看 — 高更要来阿尔勒和梵高同住\n• 梵高一系列向日葵共 11 幅, 这是最有名的几幅之一\n• 黄色 = 友谊 + 希望 (梵高的色彩象征)\n• 你看到的花有的开了, 有的谢了 — 像生命过程\n• 追问: 「你看到几朵？它们都一样吗？」「你最喜欢哪一朵？」")
 
-# 19b Sunflowers spotlight — friendship + life connection
-s=spotlight_slide("🌻","向日葵",VANGOGH,
-    "梵高画了 11 幅向日葵, 当礼物送给好朋友高更! 黄色 = 友谊 + 希望。",
-    [("🖼️","海报"),("☕","马克杯"),("📕","书本封面"),("📮","邮票"),("🎒","帆布包"),("📒","笔记本")],
-    "你画过给朋友的画吗？什么颜色 = 友谊？")
-n+=1;pn(s,n)
-
 # 20a Observe Starry Night
 s=observe_slide("🌌","星夜","The Starry Night",VANGOGH,
     "📷 星夜 The Starry Night",
@@ -637,13 +574,6 @@ s=example_slide("🌻","梵高","星夜","The Starry Night",
     "📷 星夜 The Starry Night",VANGOGH,
     url="en.wikipedia.org/wiki/The_Starry_Night",key="starry_night");n+=1;pn(s,n)
 notes(s,"老师备课:\n• 1889 年在精神病院 (Saint-Rémy) 画的, 梵高从窗户看出去\n• 这不是真实的景, 是想象 + 记忆 — 中间的尖塔是村里的教堂 (荷兰记忆), 但景是法国南部的山\n• 画里有 11 颗星 + 1 个月亮, 螺旋的天空像漩涡\n• 趣闻: 现代天文学家发现, 螺旋的形状非常像真实的星系！梵高在 1889 年就「画对了」\n• 这是世界上最有名的画之一, 可以问「你在哪里看过？」(海报、马克杯、T 恤……)\n• 追问: 「天上的星星会动吗？为什么画家画成这样？」「你做梦时, 看到的世界和真实一样吗？」")
-
-# 20b Starry Night spotlight — galaxy fact + merch
-s=spotlight_slide("🌌","星夜",VANGOGH,
-    "现代天文学家发现 — 螺旋形状真的像银河系! 梵高 1889 年就「画对了」, 比科学家还早 100 年!",
-    [("🖼️","海报"),("☕","马克杯"),("👕","T 恤"),("📱","手机壳"),("🎒","帆布包"),("🧩","拼图")],
-    "你在家里 / 商店里看过这幅画吗？为什么大家都喜欢它？")
-n+=1;pn(s,n)
 
 # 21 Van Gogh try-it — concrete 5-step recipe
 s=ns();n+=1;bg(s,CREAM);hb(s,"🌻 梵高 试一试  Try Van Gogh!",VANGOGH)
@@ -946,5 +876,5 @@ ap(tf,"",sz=10)
 ap(tf,"明天见，小艺术家！",sz=15,b=True,c=YELLOW,a=PP_ALIGN.CENTER)
 pn(s,n)
 
-OUT='/Users/Huan/projects/summercourse/Chinese/小小艺术家little_artist_pbl/day2_masters.pptx'
+OUT='/Users/huanli/projects/courseppt/Chinese/小小艺术家little_artist_pbl/day2_masters.pptx'
 prs.save(OUT);print(f"Created {n} slides → {OUT}")
