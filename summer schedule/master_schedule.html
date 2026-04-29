@@ -19,6 +19,7 @@
   .subject-header.chinese { background: #FF8C00; }
   .subject-header.english { background: #1976d2; }
   .subject-header.math    { background: #388e3c; }
+  .subject-header.art     { background: #9c27b0; }
 
   .table-footnote {
     font-size: 13px; color: #333; padding: 6px 4px; line-height: 1.5;
@@ -35,6 +36,7 @@
   .sched-table th.chinese { background: #f59d00; }
   .sched-table th.english { background: #1e88e5; }
   .sched-table th.math    { background: #43a047; }
+  .sched-table th.art     { background: #ab47bc; }
 
   .sched-table td {
     font-size: 15px; padding: 9px 12px;
@@ -51,6 +53,7 @@
   .sched-table tbody tr.selected.chinese-row td { background: #fff3e0 !important; }
   .sched-table tbody tr.selected.english-row td { background: #e3f2fd !important; }
   .sched-table tbody tr.selected.math-row td { background: #e8f5e9 !important; }
+  .sched-table tbody tr.selected.art-row td { background: #f3e5f5 !important; }
   .sched-table tbody tr.conflict td { background: #ffebee !important; }
 
   .check-col {
@@ -60,11 +63,13 @@
   .selected.chinese-row .check-col { color: #FF8C00; }
   .selected.english-row .check-col { color: #1976d2; }
   .selected.math-row .check-col { color: #388e3c; }
+  .selected.art-row .check-col { color: #9c27b0; }
 
   .level-name { font-weight: 700; font-size: 15px; }
   .level-name.chinese { color: #e65100; }
   .level-name.english { color: #1565c0; }
   .level-name.math    { color: #2e7d32; }
+  .level-name.art     { color: #6a1b9a; }
 
   .course-desc { font-weight: 400; font-size: 12px; color: #777; display: block; margin-top: 2px; }
   .course-desc a { color: #1976d2; text-decoration: none; font-weight: 500; }
@@ -135,6 +140,7 @@
   .slot-block.chinese { background: #FF8C00; }
   .slot-block.english { background: #1976d2; }
   .slot-block.math    { background: #388e3c; }
+  .slot-block.art     { background: #9c27b0; }
   .slot-block .slot-time { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }
 
   /* Summary */
@@ -343,6 +349,48 @@
     <div class="table-footnote">* 数学课按实际水平分级，非按学校年级分班。上表年级仅供参考，建议查看<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-math-course" target="_blank">各级别详细课程内容</a>，根据孩子实际水平选择最适合的级别。</div>
   </div>
 
+  <!-- ======== ART ======== -->
+  <div class="subject-section">
+    <div class="subject-header art">艺术 Art</div>
+    <table class="sched-table" id="table-art">
+      <thead>
+        <tr>
+          <th class="art" style="width:24px"></th>
+          <th class="art" style="width:30%">Course</th>
+          <th class="art" style="width:28%">Schedule</th>
+          <th class="art" style="width:38%">参考年龄 Suggested Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="art-row" data-subject="art" data-id="ar1" data-days="Fri" data-start="12.5" data-end="14" data-name="Art 5-7 yrs">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name art">Art 5-7 yrs</span><span class="course-desc">每周一个艺术主题：拉面、行李箱、立体美术馆等</span></td>
+          <td><span class="day">Fri</span> 12:30–2:00</td>
+          <td><span class="grade-tag">5–7岁</span> <span class="grade-tag">K–1st</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="ar2" data-days="Fri" data-start="16" data-end="17.5" data-name="Art 5-7 yrs">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name art">Art 5-7 yrs</span><span class="course-desc">每周一个艺术主题：拉面、行李箱、立体美术馆等</span></td>
+          <td><span class="day">Fri</span> 4:00–5:30</td>
+          <td><span class="grade-tag">5–7岁</span> <span class="grade-tag">K–1st</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="ar3" data-days="Wed" data-start="12.5" data-end="14" data-name="Art 8 yrs+">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name art">Art 8 yrs+</span><span class="course-desc">每周一个艺术主题：粘土蛋糕、Dream Career、立体房间等</span></td>
+          <td><span class="day">Wed</span> 12:30–2:00</td>
+          <td><span class="grade-tag">8岁+</span> <span class="grade-tag">3rd–5th</span></td>
+        </tr>
+        <tr class="art-row" data-subject="art" data-id="ar4" data-days="Wed" data-start="16" data-end="17.5" data-name="Art 8 yrs+">
+          <td class="check-col">&#9675;</td>
+          <td><span class="level-name art">Art 8 yrs+</span><span class="course-desc">每周一个艺术主题：粘土蛋糕、Dream Career、立体房间等</span></td>
+          <td><span class="day">Wed</span> 4:00–5:30</td>
+          <td><span class="grade-tag">8岁+</span> <span class="grade-tag">3rd–5th</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-footnote">* 艺术课按年龄分组，每周一个独立主题，可按 Session 单独报名。<a href="schedule_art.html" target="_blank">查看每周主题 →</a></div>
+  </div>
+
   <!-- ======== MY SCHEDULE ======== -->
   <div class="my-schedule" id="mySchedule">
     <div class="my-schedule-title">我的课表 My Schedule</div>
@@ -367,7 +415,7 @@ function buildPrintHTML() {
     + ".grid-cell { border: 1px solid #eee; padding: 4px; min-height: 54px; }"
     + ".grid-time { font-size: 12px; font-weight: 600; color: #555; padding: 8px 4px; text-align: center; background: #fafafa; border: 1px solid #eee; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
     + ".slot-block { padding: 5px 6px; border-radius: 5px; font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 3px; line-height: 1.3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
-    + ".slot-block.chinese { background: #FF8C00; } .slot-block.english { background: #1976d2; } .slot-block.math { background: #388e3c; }"
+    + ".slot-block.chinese { background: #FF8C00; } .slot-block.english { background: #1976d2; } .slot-block.math { background: #388e3c; } .slot-block.art { background: #9c27b0; }"
     + ".slot-time { font-weight: 400; font-size: 10px; opacity: 0.9; display: block; }"
     + ".summary-box { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; }"
     + ".summary-item { font-size: 14px; color: #333; padding: 3px 0; display: flex; align-items: center; gap: 8px; }"
@@ -460,13 +508,14 @@ function downloadCanvas(canvas) {
 
 const BASE_DAYS = ['Mon','Tue','Wed','Thu','Fri'];
 const DAY_LABELS = { Mon:'周一 Mon', Tue:'周二 Tue', Wed:'周三 Wed', Thu:'周四 Thu', Fri:'周五 Fri', Sat:'周六 Sat', Sun:'周日 Sun' };
-const COLORS = { chinese:'#FF8C00', english:'#1976d2', math:'#388e3c' };
-const TUITION_PER_SESSION = { chinese: 120, english: 160, math: 160 };
+const COLORS = { chinese:'#FF8C00', english:'#1976d2', math:'#388e3c', art:'#9c27b0' };
+const TUITION_PER_SESSION = { chinese: 120, english: 160, math: 160, art: 120 };
 
-let selected = { chinese: null, english: null, math: null };
+let selected = { chinese: null, english: null, math: null, art: null };
 
 function formatTime(h) {
-  var hour = Math.floor(h > 12 ? h - 12 : h);
+  var hour = Math.floor(h);
+  if (hour > 12) hour -= 12;
   var min = Math.round((h % 1) * 60);
   return hour + ':' + (min < 10 ? '0' : '') + min;
 }
