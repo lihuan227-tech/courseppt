@@ -240,10 +240,10 @@ tb(s,0.4,0.9,9,0.4,"艺术有很多种，你认识哪些？",sz=14,c=GRAY,a=PP_A
 forms=[
     ("🎨","绘画","Painting",MAGENTA),
     ("🎵","音乐","Music",SKY),
-    ("💃","舞蹈","Dance",CORAL),
     ("🗿","雕塑","Sculpture",GREEN_L),
     ("🎭","戏剧","Drama",PURPLE),
     ("🎬","电影","Film",YELLOW),
+    ("💃","舞蹈","Dance",CORAL),
 ]
 for i,(em,cn,en,cl) in enumerate(forms):
     col=i%3;row=i//3
@@ -336,30 +336,6 @@ s=example_slide_generic("🥁","鼓 Drums","咚咚咚！","Boom Boom Boom!",
     "📷 鼓 Drums",SKY);n+=1;pn(s,n)
 
 # ============================================================
-# DANCE 舞蹈 — overview + 3 example slides
-# ============================================================
-s=type_overview_slide("💃","舞蹈","Dance",CORAL,
-    "舞蹈用身体讲故事！",
-    [("🩰","芭蕾","Ballet"),("🪭","中国舞","Chinese Dance"),
-     ("🕺","街舞","Hip-hop"),("💫","现代舞","Modern"),
-     ("🎎","民族舞","Folk"),("🎭","踢踏舞","Tap")]);n+=1;pn(s,n)
-
-s=example_slide("🩰","芭蕾","天鹅湖","Swan Lake",
-    "柴可夫斯基 Tchaikovsky · 1877 年",
-    "跳舞的人像天鹅一样优雅！\nDancers move like graceful swans!",
-    "📷 天鹅湖 Swan Lake ballet",CORAL);n+=1;pn(s,n)
-
-s=example_slide_generic("🪭","中国古典舞","扇子舞","Fan Dance",
-    "中国民族舞 Chinese folk",
-    "扇子一开一合，像花一样漂亮！\nFans open & close like blooming flowers!",
-    "📷 扇子舞 Fan Dance",CORAL);n+=1;pn(s,n)
-
-s=example_slide_generic("🕺","街舞","Hip-hop","Street Dance",
-    "现代都市舞蹈 Modern urban",
-    "快节奏 + 酷动作 = 自由表达！\nFast beats + cool moves = freedom!",
-    "📷 街舞 Hip-hop",CORAL);n+=1;pn(s,n)
-
-# ============================================================
 # SCULPTURE 雕塑 — overview + 2 example slides
 # ============================================================
 s=type_overview_slide("🗿","雕塑","Sculpture",GREEN_L,
@@ -415,6 +391,30 @@ s=example_slide("🎞️","动画电影","功夫熊猫","Kung Fu Panda",
     "梦工厂 DreamWorks · 2008 年",
     "熊猫也可以当功夫大师！\nEven a panda can be a kung fu master!",
     "📷 功夫熊猫 Kung Fu Panda",YELLOW);n+=1;pn(s,n)
+
+# ============================================================
+# DANCE 舞蹈 — overview + 3 example slides
+# ============================================================
+s=type_overview_slide("💃","舞蹈","Dance",CORAL,
+    "舞蹈用身体讲故事！",
+    [("🩰","芭蕾","Ballet"),("🪭","中国舞","Chinese Dance"),
+     ("🕺","街舞","Hip-hop"),("💫","现代舞","Modern"),
+     ("🎎","民族舞","Folk"),("🎭","踢踏舞","Tap")]);n+=1;pn(s,n)
+
+s=example_slide("🩰","芭蕾","天鹅湖","Swan Lake",
+    "柴可夫斯基 Tchaikovsky · 1877 年",
+    "跳舞的人像天鹅一样优雅！\nDancers move like graceful swans!",
+    "📷 天鹅湖 Swan Lake ballet",CORAL);n+=1;pn(s,n)
+
+s=example_slide_generic("🪭","中国古典舞","扇子舞","Fan Dance",
+    "中国民族舞 Chinese folk",
+    "扇子一开一合，像花一样漂亮！\nFans open & close like blooming flowers!",
+    "📷 扇子舞 Fan Dance",CORAL);n+=1;pn(s,n)
+
+s=example_slide_generic("🕺","街舞","Hip-hop","Street Dance",
+    "现代都市舞蹈 Modern urban",
+    "快节奏 + 酷动作 = 自由表达！\nFast beats + cool moves = freedom!",
+    "📷 街舞 Hip-hop",CORAL);n+=1;pn(s,n)
 
 # ============================================================
 # 11 ART IN DAILY LIFE — Is this art?
