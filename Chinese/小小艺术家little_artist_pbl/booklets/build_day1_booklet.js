@@ -172,7 +172,6 @@ const coverChildren = [
       new TextRun({ text: '____________________________', size: 26, color: GRAY }),
     ],
   }),
-  new Paragraph({ children: [new PageBreak()] }),
 ];
 
 // ===== Section 1: Multiple choice =====
@@ -201,35 +200,36 @@ const mcQuestions = [
 
 function mcQuestion(num, q) {
   const blocks = [];
-  // Question header
   blocks.push(new Paragraph({
-    spacing: { before: 200, after: 100 },
+    spacing: { before: 80, after: 40 },
     children: [
-      new TextRun({ text: `第 ${num} 题 / Question ${num}`, bold: true, size: 24, color: ACCENT }),
+      new TextRun({ text: `第 ${num} 题 / Q ${num}`, bold: true, size: 20, color: ACCENT }),
     ],
   }));
-  // Photo placeholder
-  blocks.push(photoBox(q.img, 1600, ACCENT));
-  blocks.push(new Paragraph({ spacing: { before: 80, after: 80 }, children: [new TextRun('')] }));
-  // Question text
-  blocks.push(p(q.q, { bold: true, size: 24 }));
-  // Options A/B/C
-  ['A', 'B', 'C'].forEach((letter, i) => {
-    blocks.push(new Paragraph({
-      spacing: { before: 80, after: 80 },
-      indent: { left: 360 },
-      children: [
-        new TextRun({ text: `☐  ${letter}.  `, size: 26, bold: true, color: DARK }),
-        new TextRun({ text: q.options[i], size: 24 }),
-      ],
-    }));
-  });
-  // Spacer
-  blocks.push(new Paragraph({ spacing: { before: 100 }, children: [new TextRun('')] }));
+  blocks.push(photoBox(q.img, 1100, ACCENT));
+  blocks.push(new Paragraph({
+    spacing: { before: 60, after: 20 },
+    children: [new TextRun({ text: q.q, bold: true, size: 20 })],
+  }));
+  blocks.push(new Paragraph({
+    spacing: { before: 0, after: 60 },
+    indent: { left: 200 },
+    children: [
+      new TextRun({ text: '☐  A.  ', size: 20, bold: true, color: DARK }),
+      new TextRun({ text: q.options[0], size: 18 }),
+      new TextRun({ text: '     ', size: 18 }),
+      new TextRun({ text: '☐  B.  ', size: 20, bold: true, color: DARK }),
+      new TextRun({ text: q.options[1], size: 18 }),
+      new TextRun({ text: '     ', size: 18 }),
+      new TextRun({ text: '☐  C.  ', size: 20, bold: true, color: DARK }),
+      new TextRun({ text: q.options[2], size: 18 }),
+    ],
+  }));
   return blocks;
 }
 
 const section1Children = [
+  new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
   shadedBar('一、看图选择 / Multiple Choice  (圈出正确答案)', ACCENT, 24),
   new Paragraph({
     spacing: { before: 200, after: 200 },
@@ -240,18 +240,18 @@ const section1Children = [
   }),
 ];
 mcQuestions.forEach((q, i) => mcQuestion(i + 1, q).forEach(b => section1Children.push(b)));
-section1Children.push(new Paragraph({ children: [new PageBreak()] }));
 
-// ===== Section 2: Subjective — pick favorite + draw =====
+// ===== Section 2: Subjective — pick favorite + small draw (compact, share page with §3) =====
 const section2Children = [
-  shadedBar('二、我的最爱 / My Favorite Art', SKY, 24),
+  new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
+  shadedBar('二、我的最爱 / My Favorite Art', SKY, 22),
   new Paragraph({
-    spacing: { before: 200, after: 200 },
-    children: [new TextRun({ text: '👉 你最喜欢什么艺术？(可以选一个或多个)', size: 26, bold: true, color: DARK })],
+    spacing: { before: 100, after: 80 },
+    children: [new TextRun({ text: '👉 你最喜欢什么艺术？(可以选一个或多个)', size: 24, bold: true, color: DARK })],
   }),
   new Paragraph({
-    spacing: { before: 80, after: 200 },
-    children: [new TextRun({ text: 'What is your favorite art form? (Pick one or more)', size: 22, italics: true, color: GRAY })],
+    spacing: { before: 40, after: 100 },
+    children: [new TextRun({ text: 'What is your favorite art form? (Pick one or more)', size: 18, italics: true, color: GRAY })],
   }),
 ];
 
@@ -263,54 +263,127 @@ const favOptions = [
   { em: '🎬', cn: '电影', en: 'Film' },
   { em: '🗿', cn: '雕塑', en: 'Sculpture' },
 ];
-favOptions.forEach(opt => {
-  section2Children.push(new Paragraph({
-    spacing: { before: 80, after: 80 },
-    indent: { left: 360 },
-    children: [
-      new TextRun({ text: '☐  ', size: 30, bold: true }),
-      new TextRun({ text: `${opt.em}  `, size: 24 }),
-      new TextRun({ text: `${opt.cn}  `, size: 26, bold: true, color: DARK }),
-      new TextRun({ text: opt.en, size: 22, color: GRAY }),
-    ],
-  }));
-});
+// 6 checkboxes in a 2-column table to save vertical space
+function favCell(opt) {
+  return new TableCell({
+    width: { size: Math.floor(CW / 2), type: WidthType.DXA },
+    borders: allBorders(noBorder()),
+    margins: { top: 40, bottom: 40, left: 200, right: 100 },
+    children: [new Paragraph({
+      children: [
+        new TextRun({ text: '☐  ', size: 24, bold: true }),
+        new TextRun({ text: `${opt.em}  `, size: 22 }),
+        new TextRun({ text: `${opt.cn}  `, size: 22, bold: true, color: DARK }),
+        new TextRun({ text: opt.en, size: 18, color: GRAY }),
+      ],
+    })],
+  });
+}
+section2Children.push(new Table({
+  width: { size: CW, type: WidthType.DXA },
+  columnWidths: [Math.floor(CW / 2), Math.floor(CW / 2)],
+  borders: allBorders(noBorder()),
+  rows: [
+    new TableRow({ children: [favCell(favOptions[0]), favCell(favOptions[1])] }),
+    new TableRow({ children: [favCell(favOptions[2]), favCell(favOptions[3])] }),
+    new TableRow({ children: [favCell(favOptions[4]), favCell(favOptions[5])] }),
+  ],
+}));
 
-// Draw section
-section2Children.push(new Paragraph({ spacing: { before: 300 }, children: [new TextRun('')] }));
+// Draw section — compact frame so §2+§3 fit one page
 section2Children.push(new Paragraph({
-  spacing: { before: 200, after: 200 },
-  children: [new TextRun({ text: '🎨 画一画  Draw your favorite art', size: 26, bold: true, color: SKY })],
+  spacing: { before: 200, after: 80 },
+  children: [
+    new TextRun({ text: '🎨 画一画  Draw your favorite art ', size: 22, bold: true, color: SKY }),
+    new TextRun({ text: '— 画画的你 / 跳舞 / 乐器 / 表演……', size: 16, italics: true, color: GRAY }),
+  ],
 }));
-section2Children.push(new Paragraph({
-  spacing: { before: 80, after: 200 },
-  children: [new TextRun({
-    text: '👉 画你喜欢的艺术 (画画的你 / 跳舞 / 乐器 / 表演……都可以)',
-    size: 22, italics: true, color: GRAY,
-  })],
-}));
-// Big drawing frame
 section2Children.push(new Table({
   width: { size: CW, type: WidthType.DXA },
   columnWidths: [CW],
   borders: allBorders(border(SKY, 12)),
   rows: [new TableRow({
-    height: { value: 6800, rule: 'atLeast' },
+    height: { value: 3200, rule: 'atLeast' },
     children: [new TableCell({
       width: { size: CW, type: WidthType.DXA },
       shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
-      margins: { top: 120, bottom: 120, left: 120, right: 120 },
+      margins: { top: 80, bottom: 80, left: 120, right: 120 },
       verticalAlign: 'center',
       children: [new Paragraph({
         alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: '✏️  在这里画 / Draw here', italics: true, color: LGRAY, size: 22 })],
+        children: [new TextRun({ text: '✏️  在这里画 / Draw here', italics: true, color: LGRAY, size: 18 })],
       })],
     })],
   })],
 }));
-section2Children.push(new Paragraph({ children: [new PageBreak()] }));
+// NO page break — §3 follows on same page
 
-// ===== Section 3: Match (连一连) — 我会认 5 chars =====
+// ===== Section 3: Trace (描一描) — 我会写 3 chars (shares page with §2) =====
+const traceChars = [
+  { char: '开心', py: 'kāi xīn', en: 'happy' },
+  { char: '喜欢', py: 'xǐ huān', en: 'like / love' },
+  { char: '生气', py: 'shēng qì', en: 'angry' },
+];
+
+const section3Children = [
+  new Paragraph({ spacing: { before: 200, after: 0 }, children: [new TextRun('')] }),
+  shadedBar('三、描一描, 写一写 / Trace and Write', PURPLE, 22),
+  new Paragraph({
+    spacing: { before: 80, after: 80 },
+    children: [new TextRun({
+      text: '👉 先描灰色的字, 然后自己写一遍。',
+      size: 18, italics: true, color: GRAY,
+    })],
+  }),
+];
+
+traceChars.forEach((w, idx) => {
+  // Compact word title row
+  section3Children.push(new Paragraph({
+    spacing: { before: 80, after: 40 },
+    children: [
+      new TextRun({ text: `${idx + 1}. `, bold: true, size: 22, color: PURPLE }),
+      new TextRun({ text: w.char, bold: true, size: 28, color: DARK }),
+      new TextRun({ text: `   ${w.py}   `, size: 18, italics: true, color: GRAY }),
+      new TextRun({ text: w.en, size: 18, color: GRAY }),
+    ],
+  }));
+  const traceCellW = Math.floor(CW / 8);
+  const cells = [];
+  // 4 trace cells + 4 blank cells
+  for (let i = 0; i < 4; i++) {
+    cells.push(new TableCell({
+      width: { size: traceCellW, type: WidthType.DXA },
+      borders: allBorders(border('CCCCCC', 6)),
+      margins: { top: 60, bottom: 60, left: 40, right: 40 },
+      verticalAlign: 'center',
+      children: [new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [new TextRun({ text: w.char, size: 40, color: 'D8D8D8' })],
+      })],
+    }));
+  }
+  for (let i = 0; i < 4; i++) {
+    cells.push(new TableCell({
+      width: { size: traceCellW, type: WidthType.DXA },
+      borders: allBorders(border('CCCCCC', 6)),
+      margins: { top: 60, bottom: 60, left: 40, right: 40 },
+      verticalAlign: 'center',
+      children: [new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [new TextRun({ text: ' ', size: 40 })],
+      })],
+    }));
+  }
+  section3Children.push(new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: Array(8).fill(traceCellW),
+    rows: [new TableRow({ height: { value: 900, rule: 'atLeast' }, children: cells })],
+  }));
+});
+// (Page break is on §4's first paragraph instead)
+
+// ===== Section 4: Match (连一连) — 我会认 5 chars =====
 const matchWords = [
   { char: '开心', py: 'kāi xīn', en: 'happy', em: '😄' },
   { char: '难过', py: 'nán guò', en: 'sad', em: '😢' },
@@ -319,7 +392,7 @@ const matchWords = [
   { char: '心情', py: 'xīn qíng', en: 'mood', em: '🎭' },
 ];
 
-// Build a 2-column match table: left = Chinese word, right = emoji+English (shuffled)
+// 2-column match table: left = Chinese word, right = emoji+English (shuffled)
 const matchShuffled = [matchWords[2], matchWords[0], matchWords[4], matchWords[1], matchWords[3]];
 const matchRows = matchWords.map((w, i) => {
   const right = matchShuffled[i];
@@ -327,7 +400,6 @@ const matchRows = matchWords.map((w, i) => {
   return new TableRow({
     height: { value: 1100, rule: 'atLeast' },
     children: [
-      // LEFT: word + pinyin
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
         borders: allBorders(border(CORAL, 8)),
@@ -344,7 +416,6 @@ const matchRows = matchWords.map((w, i) => {
           }),
         ],
       }),
-      // RIGHT: emoji + English
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
         borders: allBorders(border(SKY, 8)),
@@ -365,10 +436,11 @@ const matchRows = matchWords.map((w, i) => {
   });
 });
 
-const section3Children = [
-  shadedBar('三、连一连 / Match  (用线连起来)', CORAL, 24),
+const section4Children = [
+  new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
+  shadedBar('四、连一连 / Match  (用线连起来)', CORAL, 24),
   new Paragraph({
-    spacing: { before: 200, after: 300 },
+    spacing: { before: 200, after: 200 },
     children: [new TextRun({
       text: '👉 把中文词语和正确的英文/表情用一根线连起来。',
       size: 22, italics: true, color: GRAY,
@@ -387,77 +459,10 @@ const section3Children = [
     borders: allBorders(noBorder()),
     rows: matchRows,
   }),
-  new Paragraph({ children: [new PageBreak()] }),
+  // Final encouragement
+  new Paragraph({ spacing: { before: 400 }, children: [new TextRun('')] }),
+  shadedBar('🎉  恭喜你完成 Day 1 练习册! Great job, Little Artist!', GREEN, 22),
 ];
-
-// ===== Section 4: Trace (描一描) — 我会写 3 chars =====
-const traceChars = [
-  { char: '开心', py: 'kāi xīn', en: 'happy' },
-  { char: '喜欢', py: 'xǐ huān', en: 'like / love' },
-  { char: '生气', py: 'shēng qì', en: 'angry' },
-];
-
-const section4Children = [
-  shadedBar('四、描一描, 写一写 / Trace and Write', PURPLE, 24),
-  new Paragraph({
-    spacing: { before: 200, after: 300 },
-    children: [new TextRun({
-      text: '👉 先描一描灰色的字, 然后自己写一遍。',
-      size: 22, italics: true, color: GRAY,
-    })],
-  }),
-];
-
-traceChars.forEach((w, idx) => {
-  // Word title row
-  section4Children.push(new Paragraph({
-    spacing: { before: 320, after: 120 },
-    children: [
-      new TextRun({ text: `${idx + 1}. `, bold: true, size: 28, color: PURPLE }),
-      new TextRun({ text: w.char, bold: true, size: 36, color: DARK }),
-      new TextRun({ text: `   ${w.py}   `, size: 24, italics: true, color: GRAY }),
-      new TextRun({ text: w.en, size: 22, color: GRAY }),
-    ],
-  }));
-  // Trace row — 4 trace boxes (gray characters) + 4 blank boxes for student
-  const traceCellW = Math.floor(CW / 8);
-  const cells = [];
-  // 4 trace cells (light gray character)
-  for (let i = 0; i < 4; i++) {
-    cells.push(new TableCell({
-      width: { size: traceCellW, type: WidthType.DXA },
-      borders: allBorders(border('CCCCCC', 6)),
-      margins: { top: 120, bottom: 120, left: 60, right: 60 },
-      verticalAlign: 'center',
-      children: [new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: w.char, size: 56, color: 'D8D8D8' })],
-      })],
-    }));
-  }
-  // 4 blank cells
-  for (let i = 0; i < 4; i++) {
-    cells.push(new TableCell({
-      width: { size: traceCellW, type: WidthType.DXA },
-      borders: allBorders(border('CCCCCC', 6)),
-      margins: { top: 120, bottom: 120, left: 60, right: 60 },
-      verticalAlign: 'center',
-      children: [new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: ' ', size: 56 })],
-      })],
-    }));
-  }
-  section4Children.push(new Table({
-    width: { size: CW, type: WidthType.DXA },
-    columnWidths: Array(8).fill(traceCellW),
-    rows: [new TableRow({ height: { value: 1300, rule: 'atLeast' }, children: cells })],
-  }));
-});
-
-// Final encouragement page
-section4Children.push(new Paragraph({ spacing: { before: 600 }, children: [new TextRun('')] }));
-section4Children.push(shadedBar('🎉  恭喜你完成 Day 1 练习册! Great job, Little Artist!', GREEN, 24));
 
 // ===== Build doc =====
 const doc = new Document({
