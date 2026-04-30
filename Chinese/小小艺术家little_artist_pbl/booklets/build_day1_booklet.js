@@ -423,7 +423,7 @@ const section5Children = [
     columnWidths: [CW],
     borders: allBorders(border(PURPLE, 12)),
     rows: [new TableRow({
-      height: { value: 9400, rule: 'atLeast' },
+      height: { value: 11000, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
         shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
@@ -439,9 +439,6 @@ const section5Children = [
       })],
     })],
   }),
-  // Final encouragement
-  new Paragraph({ spacing: { before: 200 }, children: [new TextRun('')] }),
-  shadedBar('🎉  恭喜你完成 Day 1 练习册! Great job, Little Artist!', GREEN, 22),
 ];
 
 // ===== Build doc =====
