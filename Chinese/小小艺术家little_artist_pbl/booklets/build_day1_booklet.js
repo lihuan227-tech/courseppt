@@ -318,70 +318,8 @@ section2Children.push(new Table({
 }));
 // NO page break — §3 follows on same page
 
-// ===== Section 3: Trace (描一描) — 我会写 3 chars (shares page with §2) =====
-const traceChars = [
-  { char: '开心', py: 'kāi xīn', en: 'happy' },
-  { char: '喜欢', py: 'xǐ huān', en: 'like / love' },
-  { char: '生气', py: 'shēng qì', en: 'angry' },
-];
-
-const section3Children = [
-  new Paragraph({ spacing: { before: 200, after: 0 }, children: [new TextRun('')] }),
-  shadedBar('三、描一描, 写一写 / Trace and Write', PURPLE, 22),
-  new Paragraph({
-    spacing: { before: 80, after: 80 },
-    children: [new TextRun({
-      text: '👉 先描灰色的字, 然后自己写一遍。',
-      size: 18, italics: true, color: GRAY,
-    })],
-  }),
-];
-
-traceChars.forEach((w, idx) => {
-  // Compact word title row
-  section3Children.push(new Paragraph({
-    spacing: { before: 80, after: 40 },
-    children: [
-      new TextRun({ text: `${idx + 1}. `, bold: true, size: 22, color: PURPLE }),
-      new TextRun({ text: w.char, bold: true, size: 28, color: DARK }),
-      new TextRun({ text: `   ${w.py}   `, size: 18, italics: true, color: GRAY }),
-      new TextRun({ text: w.en, size: 18, color: GRAY }),
-    ],
-  }));
-  const traceCellW = Math.floor(CW / 8);
-  const cells = [];
-  // 4 trace cells + 4 blank cells
-  for (let i = 0; i < 4; i++) {
-    cells.push(new TableCell({
-      width: { size: traceCellW, type: WidthType.DXA },
-      borders: allBorders(border('CCCCCC', 6)),
-      margins: { top: 60, bottom: 60, left: 40, right: 40 },
-      verticalAlign: 'center',
-      children: [new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: w.char, size: 40, color: 'D8D8D8' })],
-      })],
-    }));
-  }
-  for (let i = 0; i < 4; i++) {
-    cells.push(new TableCell({
-      width: { size: traceCellW, type: WidthType.DXA },
-      borders: allBorders(border('CCCCCC', 6)),
-      margins: { top: 60, bottom: 60, left: 40, right: 40 },
-      verticalAlign: 'center',
-      children: [new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: ' ', size: 40 })],
-      })],
-    }));
-  }
-  section3Children.push(new Table({
-    width: { size: CW, type: WidthType.DXA },
-    columnWidths: Array(8).fill(traceCellW),
-    rows: [new TableRow({ height: { value: 900, rule: 'atLeast' }, children: cells })],
-  }));
-});
-// (Page break is on §4's first paragraph instead)
+// (Section 3 — old trace section removed; now just an empty array)
+const section3Children = [];
 
 // ===== Section 4: Match (连一连) — 我会认 5 chars =====
 const matchWords = [
