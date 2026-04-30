@@ -127,27 +127,27 @@ const coverChildren = [
   }),
 ];
 
-// ===== §1 看图选择 / MC =====
+// ===== §1 看图选择 / MC — 水墨画的特点 (characteristics of ink painting) =====
 const mcQuestions = [
   {
-    img: '细长的绿叶, 一节一节的茎  Tall thin leaves, jointed stem',
-    q: '这幅水墨画画的是什么？  What is in this ink painting?',
-    options: ['竹子 Bamboo', '花 Flower', '熊猫 Panda'],
+    img: '毛笔 — 长长的笔杆, 软软的笔毛, 尖尖的笔尖  Long handle, soft hair, pointed tip',
+    q: '水墨画用什么「笔」来画？  What kind of brush is used for ink painting?',
+    options: ['铅笔 Pencil', '毛笔 Maobi (ink brush)', '蜡笔 Crayon'],
   },
   {
-    img: '黑白圆圆的动物, 黑眼圈  Round black-and-white animal',
-    q: '这幅水墨画画的是什么？  What is in this ink painting?',
-    options: ['鱼 Fish', '熊猫 Panda', '竹子 Bamboo'],
+    img: '一幅水墨山水画 — 只有黑、白、灰  An ink landscape — only black, white & gray',
+    q: '水墨画主要是什么颜色？  What colors does ink painting mainly use?',
+    options: ['五颜六色 Many colors', '只有红色 Only red', '黑、白、灰 Black, white & gray'],
   },
   {
-    img: '在水里游, 有尾巴和鳍  Swimming, with tail and fins',
-    q: '这幅水墨画画的是什么？  What is in this ink painting?',
-    options: ['花 Flower', '熊猫 Panda', '鱼 Fish'],
+    img: '画的角落有一个红色方块, 上面有字  A small red square stamp in the corner, with characters',
+    q: '画上那个红色方块的「印」是什么？  What is the small red stamp on the painting?',
+    options: ['一个错误 Mistake', '印章 — 画家的签名 Artist’s seal', '装饰 Decoration'],
   },
   {
-    img: '远远的山和云  Mountains and clouds in the distance',
-    q: '这幅水墨画画的是什么？  What is in this ink painting?',
-    options: ['花 Flower', '山水 Landscape', '鱼 Fish'],
+    img: '一幅水墨画, 中间和上方有大片白色, 没有画满  Large empty white spaces — the paper is not filled',
+    q: '为什么水墨画常常有大片空白？  Why does ink painting leave so much white space?',
+    options: ['画家忘记画了 Forgot to paint', '纸不够好 Paper is bad', '留白 — 让画「呼吸」 Negative space'],
   },
 ];
 
@@ -185,7 +185,7 @@ const section1Children = [
   new Paragraph({
     spacing: { before: 200, after: 200 },
     children: [new TextRun({
-      text: '看一看, 这幅水墨画里有什么？',
+      text: '想一想, 水墨画有什么特点？/ Think — what makes ink painting special?',
       size: 22, italics: true, color: GRAY,
     })],
   }),
