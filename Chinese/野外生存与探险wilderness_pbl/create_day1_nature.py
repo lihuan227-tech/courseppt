@@ -373,62 +373,95 @@ def experience_slide(em,cn,en_name,env_color,see_q,hear_q,feel_q,think_chips):
     tb(s,1.7,fy+0.30,7.9,0.25,"我觉得会 ___ 。",sz=11,b=True,c=DARK)
     return s
 
-def safety_slide(em,cn,en_name,env_color,say_summary,situations,move_cn):
-    """SLIDE 2 of 2 — Stage 3️⃣ 说 + 4️⃣ 判 + 5️⃣ 做 (Say + Decide + Act).
-    say_summary: short teacher-summary line on key situations
-    situations: list of 3 (question, opt_a, opt_b, correct_idx)
-    move_cn: physical action prompt"""
-    s=ns();bg(s,CREAM);hb(s,f"{em} {cn} · 3️⃣ 说 + 4️⃣ 判 + 5️⃣ 做  Say · Decide · Act  ⭐",ALERT)
+def safety_slide(em,cn,en_name,env_color,say_summary,situations,move_cn,reveal=True):
+    """SLIDE 2 OR 3 of env — Stage 3️⃣ 说 + 4️⃣ 判 (+ 5️⃣ 做 on reveal).
+    Two-phase activity (Version B): call once with reveal=False (Question), then reveal=True (Reveal).
+    - reveal=False  : ALL A/B neutral (no green/red clue), countdown prompt, "我选 A/B" frames.
+    - reveal=True   : correct=green ✓, wrong=faded gray, movement strip + reinforcement frames."""
+    s=ns();bg(s,CREAM)
+    if reveal:
+        hb(s,f"{em} {cn} · 💡 答案揭晓 Answer Reveal!  ⭐",ALERT)
+    else:
+        hb(s,f"{em} {cn} · 🤔 你觉得呢?  Think — 先选, 再看答案!",env_color)
     # === 3️⃣ 说 (Say) — teacher summary band ===
     sb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.92),Inches(9.4),Inches(0.45))
     sb.fill.solid();sb.fill.fore_color.rgb=BROWN;sb.line.fill.background()
     tb(s,0.45,0.96,1.7,0.35,"3️⃣ 📢 说",sz=12,b=True,c=SUNYEL)
     tb(s,2.0,0.96,7.6,0.35,say_summary,sz=12,b=True,c=WHITE)
-    # === 4️⃣ 判 (Decide) — 3 compact A/B rows ===
+    # === 4️⃣ 判 — header changes by mode ===
+    if reveal:
+        tb(s,0.3,1.42,9.4,0.25,"4️⃣ 💡 判 — 答案揭晓!  绿色 ✓ = 安全的选择",sz=11,b=True,c=ALERT)
+    else:
+        tb(s,0.3,1.42,9.4,0.25,"4️⃣ ⚖️ 判 — 你觉得呢? A 还是 B?  (先选, 再看!)",sz=11,b=True,c=env_color)
     sit_h=0.74
     base_y=1.75
-    # Section header line (between 说 band and rows)
-    tb(s,0.3,1.42,9.4,0.25,"4️⃣ ⚖️ 判 — 选 A 还是 B?  Choose A or B?",sz=11,b=True,c=ALERT)
     for i,(q,opt_a,opt_b,correct) in enumerate(situations):
         y=base_y+i*(sit_h+0.05)
+        # Outer card frame
         sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(y),Inches(9.4),Inches(sit_h))
         sh.fill.solid();sh.fill.fore_color.rgb=WHITE
-        sh.line.color.rgb=ALERT;sh.line.width=Pt(1.5)
+        sh.line.color.rgb=ALERT if reveal else GRAY
+        sh.line.width=Pt(1.5)
+        # Number badge
         nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.40),Inches(y+0.06),Inches(0.32),Inches(0.32))
-        nb.fill.solid();nb.fill.fore_color.rgb=ALERT;nb.line.fill.background()
+        nb.fill.solid()
+        nb.fill.fore_color.rgb=ALERT if reveal else env_color
+        nb.line.fill.background()
         tb(s,0.40,y+0.08,0.32,0.28,str(i+1),sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
         tb(s,0.85,y+0.05,8.5,0.30,q,sz=12,b=True,c=DARK)
-        # A and B side by side
-        a_correct=(correct==0);b_correct=(correct==1)
-        a_color=GREEN_OK if a_correct else ALERT
-        b_color=GREEN_OK if b_correct else ALERT
-        a_fill=WARM if a_correct else WHITE
-        b_fill=WARM if b_correct else WHITE
+        # A and B styling — neutral on Question, color-revealed on Reveal
+        if reveal:
+            a_correct=(correct==0);b_correct=(correct==1)
+            a_color=GREEN_OK if a_correct else GRAY
+            b_color=GREEN_OK if b_correct else GRAY
+            a_fill=WARM if a_correct else WHITE
+            b_fill=WARM if b_correct else WHITE
+            a_label="A. ✓" if a_correct else "A."
+            b_label="B. ✓" if b_correct else "B."
+        else:
+            # NEUTRAL — both options same style, no clue
+            a_color=b_color=DARK
+            a_fill=b_fill=WHITE
+            a_label="A."
+            b_label="B."
         a_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(y+0.40),Inches(4.3),Inches(0.32))
         a_box.fill.solid();a_box.fill.fore_color.rgb=a_fill
         a_box.line.color.rgb=a_color;a_box.line.width=Pt(1.2)
-        tb(s,0.6,y+0.42,0.4,0.3,"A.",sz=11,b=True,c=a_color)
-        tb(s,1.0,y+0.42,3.7,0.3,opt_a,sz=11,c=DARK)
+        tb(s,0.6,y+0.42,0.7,0.3,a_label,sz=11,b=True,c=a_color)
+        tb(s,1.3,y+0.42,3.4,0.3,opt_a,sz=11,c=DARK)
         b_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.2),Inches(y+0.40),Inches(4.3),Inches(0.32))
         b_box.fill.solid();b_box.fill.fore_color.rgb=b_fill
         b_box.line.color.rgb=b_color;b_box.line.width=Pt(1.2)
-        tb(s,5.3,y+0.42,0.4,0.3,"B.",sz=11,b=True,c=b_color)
-        tb(s,5.7,y+0.42,3.7,0.3,opt_b,sz=11,c=DARK)
-    # === 5️⃣ 做 (Act) — movement strip ===
+        tb(s,5.3,y+0.42,0.7,0.3,b_label,sz=11,b=True,c=b_color)
+        tb(s,6.0,y+0.42,3.4,0.3,opt_b,sz=11,c=DARK)
+    # Bottom strip — countdown (Question) OR movement (Reveal)
     act_y=base_y+3*(sit_h+0.05)+0.05
-    mv=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(act_y),Inches(9.4),Inches(0.40))
-    mv.fill.solid();mv.fill.fore_color.rgb=GREEN_OK;mv.line.fill.background()
-    tb(s,0.45,act_y+0.04,1.7,0.32,"5️⃣ 🚶 做 30s:",sz=12,b=True,c=SUNYEL)
-    tb(s,2.0,act_y+0.04,7.6,0.32,move_cn,sz=12,b=True,c=WHITE)
+    if reveal:
+        # 5️⃣ 做 movement strip (green)
+        mv=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(act_y),Inches(9.4),Inches(0.40))
+        mv.fill.solid();mv.fill.fore_color.rgb=GREEN_OK;mv.line.fill.background()
+        tb(s,0.45,act_y+0.04,1.7,0.32,"5️⃣ 🚶 做 30s:",sz=12,b=True,c=SUNYEL)
+        tb(s,2.0,act_y+0.04,7.6,0.32,move_cn,sz=12,b=True,c=WHITE)
+    else:
+        # Countdown / "Think!" prompt strip
+        cd=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(act_y),Inches(9.4),Inches(0.40))
+        cd.fill.solid();cd.fill.fore_color.rgb=SUN;cd.line.fill.background()
+        tb(s,0.45,act_y+0.04,9.0,0.32,"👉 先选 A 或 B!  A → 指左 ⬅️    B → 指右 ➡️    🤔 3 ... 2 ... 1 ...",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
     # === Frames bar at bottom ===
     fy=act_y+0.50
     sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(fy),Inches(9.4),Inches(0.50))
     sf.fill.solid();sf.fill.fore_color.rgb=SUNYEL
     sf.line.color.rgb=SUN;sf.line.width=Pt(1.5)
-    tb(s,0.5,fy+0.03,1.3,0.25,"💬 K-G1:",sz=10,b=True,c=ALERT)
-    tb(s,1.7,fy+0.03,7.9,0.25,"不可以 ___ 。 安全 / 不安全。",sz=11,b=True,c=DARK)
-    tb(s,0.5,fy+0.27,1.3,0.25,"💬 G2-G3:",sz=10,b=True,c=PINE)
-    tb(s,1.7,fy+0.27,7.9,0.25,"___ 不安全, 因为 ___ 。 我应该 ___ 。",sz=11,b=True,c=DARK)
+    if reveal:
+        tb(s,0.5,fy+0.03,1.3,0.25,"💬 K-G1:",sz=10,b=True,c=ALERT)
+        tb(s,1.7,fy+0.03,7.9,0.25,"不可以 ___ 。 安全 / 不安全。",sz=11,b=True,c=DARK)
+        tb(s,0.5,fy+0.27,1.3,0.25,"💬 G2-G3:",sz=10,b=True,c=PINE)
+        tb(s,1.7,fy+0.27,7.9,0.25,"___ 不安全, 因为 ___ 。 我应该 ___ 。",sz=11,b=True,c=DARK)
+    else:
+        tb(s,0.5,fy+0.03,1.3,0.25,"💬 K-G1:",sz=10,b=True,c=env_color)
+        tb(s,1.7,fy+0.03,7.9,0.25,"我选 A 。 / 我选 B 。",sz=11,b=True,c=DARK)
+        tb(s,0.5,fy+0.27,1.3,0.25,"💬 G2-G3:",sz=10,b=True,c=PINE)
+        tb(s,1.7,fy+0.27,7.9,0.25,"我选 A , 因为 ___ 。 / 我选 B , 因为 ___ 。",sz=11,b=True,c=DARK)
     return s
 
 n=0
@@ -877,7 +910,9 @@ env_list=[
 for em,cn,en_name,env_color in env_list:
     see,hear,feel=ENV_OBSERVE[cn]
     s=experience_slide(em,cn,en_name,env_color,see,hear,feel,ENV_THINK[cn]);n+=1;pn(s,n)
-    s=safety_slide(em,cn,en_name,env_color,ENV_SAY[cn],ENV_DECIDE[cn],ENV_ACT[cn]);n+=1;pn(s,n)
+    # Two-phase A/B: Question (neutral, no clue) → Reveal (correct in green ✓)
+    s=safety_slide(em,cn,en_name,env_color,ENV_SAY[cn],ENV_DECIDE[cn],ENV_ACT[cn],reveal=False);n+=1;pn(s,n)
+    s=safety_slide(em,cn,en_name,env_color,ENV_SAY[cn],ENV_DECIDE[cn],ENV_ACT[cn],reveal=True);n+=1;pn(s,n)
 
 # ============================================================
 # 12 COMPARISON TABLE
