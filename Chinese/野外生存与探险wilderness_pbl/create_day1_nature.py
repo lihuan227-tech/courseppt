@@ -163,8 +163,8 @@ def mission_narrative_slide():
     return s
 
 def mission_overview_slide():
-    s=ns();bg(s,CREAM);hb(s,"🎒 6 个任务  6 Missions",SUN)
-    tb(s,0.4,0.85,9.2,0.35,"每个地方都有一个任务. Each place has one mission.",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+    s=ns();bg(s,CREAM);hb(s,"🎒 6 个任务 · 6 颗 ⭐",SUN)
+    tb(s,0.4,0.85,9.2,0.35,"每个地方一个任务 → 完成 1 个 = 拿 1 ⭐  ·  Earn 1 star per mission!",sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
     missions=[
         ("🌲","森林",FOREST,    "听 3 种声音",        "Listen for 3 sounds"),
         ("🏔️","山地",MOUNTAIN,  "决定: 上山 or 下山?","Decide: up or down?"),
@@ -175,56 +175,68 @@ def mission_overview_slide():
     ]
     for i,(em,cn,cl,m_cn,m_en) in enumerate(missions):
         col=i%3;row=i//3
-        x=0.3+col*3.2;y=1.25+row*1.95
-        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.75))
+        x=0.3+col*3.2;y=1.20+row*1.80
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.65))
         sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-        tb(s,x+0.1,y+0.05,0.7,0.5,em,sz=28)
+        tb(s,x+0.1,y+0.05,0.7,0.5,em,sz=26)
         tb(s,x+0.85,y+0.1,2.1,0.4,cn,sz=18,b=True,c=cl)
-        tb(s,x+0.1,y+0.65,2.8,0.45,f"🎯 {m_cn}",sz=14,b=True,c=DARK)
-        tb(s,x+0.1,y+1.10,2.8,0.4,m_en,sz=11,c=GRAY)
-        tb(s,x+0.1,y+1.4,2.8,0.3,"完成 → 拿 ⭐",sz=10,b=True,c=SUN)
+        tb(s,x+0.1,y+0.6,2.8,0.45,f"🎯 {m_cn}",sz=13,b=True,c=DARK)
+        tb(s,x+0.1,y+1.05,2.8,0.35,m_en,sz=10,c=GRAY)
+        tb(s,x+0.1,y+1.32,2.8,0.3,"→ 拿 1 ⭐",sz=12,b=True,c=SUN)
+    # ⭐⭐⭐⭐⭐⭐ Star tracker bar
+    tk=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.3),Inches(4.95),Inches(7.4),Inches(0.55))
+    tk.fill.solid();tk.fill.fore_color.rgb=SUNYEL;tk.line.color.rgb=SUN;tk.line.width=Pt(2)
+    tb(s,1.3,4.98,7.4,0.5,"☆  ☆  ☆  ☆  ☆  ☆   →   一共 6 颗 ⭐!",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
     return s
 
-def env_interaction_slide(em,cn,en_name,env_color,video_desc,pre,post,
+def env_interaction_slide(em,cn,en_name,env_color,video_desc,before,during,after,
                           either_q,opt_a,opt_b,answer,reason,move_cn,move_en):
-    s=ns();bg(s,CREAM);hb(s,f"{em} {cn} · 🎬 探险任务  Mission",env_color)
-    # Video card (top)
-    v=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(9.4),Inches(1.25))
-    v.fill.solid();v.fill.fore_color.rgb=WHITE;v.line.color.rgb=env_color;v.line.width=Pt(2)
-    pb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(1.05),Inches(2.1),Inches(0.4))
-    pb.fill.solid();pb.fill.fore_color.rgb=env_color;pb.line.fill.background()
-    tb(s,0.55,1.10,2.0,0.35,"🎬 视频灵感 Video",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,2.7,1.05,7.0,0.4,video_desc,sz=13,b=True,c=DARK)
-    tb(s,0.55,1.55,9.1,0.3,f"👂 看之前 / Before:  {pre}",sz=11,c=DARK)
-    tb(s,0.55,1.85,9.1,0.3,f"🎯 看完后 / After:  {post}",sz=11,b=True,c=SUN)
-    # Either/or (left)
-    eo=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(2.3),Inches(6.4),Inches(2.45))
+    s=ns();bg(s,CREAM);hb(s,f"{em} {cn} · 🎬 探险任务  Mission  ·  完成 = ⭐",env_color)
+    # Thin video strip (top)
+    v=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.85),Inches(9.4),Inches(0.45))
+    v.fill.solid();v.fill.fore_color.rgb=env_color;v.line.fill.background()
+    tb(s,0.45,0.91,1.6,0.35,"🎬 视频",sz=12,b=True,c=WHITE)
+    tb(s,2.0,0.91,7.6,0.35,video_desc,sz=12,b=True,c=WHITE)
+    # B / D / A — three cards across
+    bda=[("👀 看之前 Before",before),
+         ("🔎 看时 During",during),
+         ("💬 看之后 After",after)]
+    for i,(lbl,content) in enumerate(bda):
+        x=0.3+i*3.15
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.45),Inches(3.05),Inches(1.05))
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=env_color;sh.line.width=Pt(2)
+        head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.45),Inches(3.05),Inches(0.35))
+        head.fill.solid();head.fill.fore_color.rgb=env_color;head.line.fill.background()
+        tb(s,x+0.1,1.48,2.9,0.3,lbl,sz=11,b=True,c=WHITE)
+        tb(s,x+0.1,1.85,2.9,0.6,content,sz=11,c=DARK)
+    # Either/or (left, smaller)
+    eo=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(2.65),Inches(6.4),Inches(2.10))
     eo.fill.solid();eo.fill.fore_color.rgb=WARM;eo.line.color.rgb=ALERT;eo.line.width=Pt(2)
-    pb2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(2.4),Inches(2.4),Inches(0.4))
+    pb2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(2.74),Inches(2.4),Inches(0.4))
     pb2.fill.solid();pb2.fill.fore_color.rgb=ALERT;pb2.line.fill.background()
-    tb(s,0.55,2.45,2.3,0.35,"🤔 你来选 Choose",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,2.95,2.45,3.6,0.35,either_q,sz=12,b=True,c=DARK)
-    a_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(2.95),Inches(3.0),Inches(1.7))
+    tb(s,0.55,2.79,2.3,0.35,"🤔 你来选 Choose",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,2.95,2.79,3.6,0.35,either_q,sz=11,b=True,c=DARK)
+    a_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(3.22),Inches(3.0),Inches(1.45))
     a_box.fill.solid();a_box.fill.fore_color.rgb=WHITE;a_box.line.color.rgb=PINE;a_box.line.width=Pt(2)
-    tb(s,0.55,3.05,2.8,0.4,"A",sz=14,b=True,c=PINE)
-    tb(s,0.55,3.40,2.8,1.2,opt_a,sz=11,c=DARK)
-    b_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(3.55),Inches(2.95),Inches(3.05),Inches(1.7))
+    tb(s,0.55,3.27,2.8,0.4,"A",sz=14,b=True,c=PINE)
+    tb(s,0.55,3.62,2.8,1.0,opt_a,sz=11,c=DARK)
+    b_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(3.55),Inches(3.22),Inches(3.05),Inches(1.45))
     b_box.fill.solid();b_box.fill.fore_color.rgb=WHITE;b_box.line.color.rgb=ALERT;b_box.line.width=Pt(2)
-    tb(s,3.65,3.05,2.85,0.4,"B",sz=14,b=True,c=ALERT)
-    tb(s,3.65,3.40,2.85,1.2,opt_b,sz=11,c=DARK)
+    tb(s,3.65,3.27,2.85,0.4,"B",sz=14,b=True,c=ALERT)
+    tb(s,3.65,3.62,2.85,1.0,opt_b,sz=11,c=DARK)
     # Movement (right)
-    mv=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.95),Inches(2.3),Inches(2.75),Inches(2.45))
+    mv=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.95),Inches(2.65),Inches(2.75),Inches(2.10))
     mv.fill.solid();mv.fill.fore_color.rgb=GREEN_OK;mv.line.fill.background()
-    tb(s,7.05,2.4,2.55,0.35,"🚶 演一演 Act!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,7.05,2.85,2.55,0.55,move_cn,sz=15,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,7.05,3.50,2.55,0.4,move_en,sz=10,c=WARM,a=PP_ALIGN.CENTER)
-    tb(s,7.05,4.05,2.55,0.3,"全班一起 30 秒",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,7.05,4.32,2.55,0.3,"Whole class · 30 sec",sz=10,c=WARM,a=PP_ALIGN.CENTER)
-    # Sentence frame
-    sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.88),Inches(9.4),Inches(0.4))
-    sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=SUN;sf.line.width=Pt(1.5)
-    tb(s,0.5,4.94,9.0,0.3,"💬 我选 ___, 因为 ___ 。 / I choose ___ because ___.",sz=12,b=True,c=DARK)
-    notes(s,f"老师备课:\n• 答案 Answer: {answer}\n• 原因 Reason: {reason}\n• 视频建议: {video_desc} (老师可以从 YouTube 找 30-60 秒短片)\n• 全班动作 30 秒 — 站起来一起做。\n• 选择题: 把教室分 A/B 两边, 学生站到选择的一边, 然后说原因。")
+    tb(s,7.05,2.74,2.55,0.35,"🚶 演一演 Act!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,7.05,3.18,2.55,0.5,move_cn,sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,7.05,3.72,2.55,0.35,move_en,sz=10,c=WARM,a=PP_ALIGN.CENTER)
+    tb(s,7.05,4.18,2.55,0.3,"全班 30 秒",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,7.05,4.42,2.55,0.25,"Whole class · 30s",sz=9,c=WARM,a=PP_ALIGN.CENTER)
+    # ⭐ + sentence frame
+    sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.85),Inches(9.4),Inches(0.4))
+    sf.fill.solid();sf.fill.fore_color.rgb=SUNYEL;sf.line.color.rgb=SUN;sf.line.width=Pt(1.5)
+    tb(s,0.45,4.91,9.0,0.3,"💬 我选 ___, 因为 ___ 。   →   完成挑战 = 拿 1 ⭐",sz=12,b=True,c=DARK)
+    notes(s,f"老师备课:\n• 答案 Answer: {answer}\n• 原因 Reason: {reason}\n• 视频建议: {video_desc}\n• 全班动作 30 秒 — 站起来一起做。\n• A/B: 把教室分两边, 学生站到选择的一边, 说出原因。\n• 完成 = 全班拿 1 ⭐ → 涂在白板上的星图。")
     return s
 
 def gesture_game_slide():
@@ -279,35 +291,38 @@ def where_am_i_slide():
 
 def sentence_frames_slide():
     s=ns();bg(s,CREAM);hb(s,"💬 句型卡  Sentence Frames (K · G1–3)",SUN)
-    # K column
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.0),Inches(4.55),Inches(3.9))
+    # K column — 5 frames
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(4.55),Inches(4.0))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=SUN;sh.line.width=Pt(2.5)
-    pb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(1.15),Inches(1.6),Inches(0.4))
+    pb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.45),Inches(1.05),Inches(1.6),Inches(0.4))
     pb.fill.solid();pb.fill.fore_color.rgb=SUN;pb.line.fill.background()
-    tb(s,0.55,1.20,1.5,0.35,"K (TK-K)",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,0.5,1.7,4.3,0.5,"·  这是 ____ 。",sz=20,b=True,c=PINE)
-    tb(s,0.5,2.15,4.3,0.35,"This is ___.",sz=10,c=GRAY)
-    tb(s,0.5,2.55,4.3,0.5,"·  很 ____ 。",sz=20,b=True,c=PINE)
-    tb(s,0.5,3.0,4.3,0.35,"Very ___ (hot/cold/scary).",sz=10,c=GRAY)
-    tb(s,0.5,3.4,4.3,0.5,"·  我看到 ____ 。",sz=20,b=True,c=PINE)
-    tb(s,0.5,3.85,4.3,0.35,"I see ___.",sz=10,c=GRAY)
-    tb(s,0.5,4.25,4.3,0.4,"💡 例: 这是森林。很冷。我看到雪。",sz=11,c=DARK)
-    tb(s,0.5,4.6,4.3,0.3,"Ex: This is a forest. Very cold. I see snow.",sz=9,c=GRAY)
-    # G1-3 column
-    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.0),Inches(4.65),Inches(3.9))
+    tb(s,0.55,1.10,1.5,0.35,"K (TK-K)",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    k_frames=[("这是 ____ 。",      "This is ___."),
+              ("很 ____ 。",        "Very ___."),
+              ("我看到 ____ 。",    "I see ___."),
+              ("安全 / 不安全",     "Safe / not safe"),
+              ("可以 / 不可以",     "Can / cannot")]
+    for i,(cn,en) in enumerate(k_frames):
+        y=1.55+i*0.62
+        tb(s,0.5,y,4.3,0.4,f"·  {cn}",sz=18,b=True,c=PINE)
+        tb(s,0.5,y+0.32,4.3,0.25,en,sz=9,c=GRAY)
+    # G1-3 column — 4 frames
+    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(0.95),Inches(4.65),Inches(4.0))
     sh2.fill.solid();sh2.fill.fore_color.rgb=WHITE;sh2.line.color.rgb=PINE;sh2.line.width=Pt(2.5)
-    pb2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.20),Inches(1.15),Inches(1.7),Inches(0.4))
+    pb2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.20),Inches(1.05),Inches(1.7),Inches(0.4))
     pb2.fill.solid();pb2.fill.fore_color.rgb=PINE;pb2.line.fill.background()
-    tb(s,5.30,1.20,1.6,0.35,"G1 - G3",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,5.25,1.7,4.4,0.5,"·  这里很 ___, 因为 ___ 。",sz=18,b=True,c=PINE)
-    tb(s,5.25,2.15,4.4,0.35,"It's very ___ here, because ___.",sz=10,c=GRAY)
-    tb(s,5.25,2.55,4.4,0.5,"·  我应该 ___ 。",sz=18,b=True,c=PINE)
-    tb(s,5.25,3.0,4.4,0.35,"I should ___.",sz=10,c=GRAY)
-    tb(s,5.25,3.4,4.4,0.5,"·  ___ 不安全, 因为 ___ 。",sz=18,b=True,c=PINE)
-    tb(s,5.25,3.85,4.4,0.35,"___ is not safe, because ___.",sz=10,c=GRAY)
-    tb(s,5.25,4.25,4.4,0.4,"💡 例: 河边很危险, 因为水很急。我应该跟着大人。",sz=11,c=DARK)
-    tb(s,5.25,4.6,4.4,0.3,"Ex: River is dangerous because the water is fast.",sz=9,c=GRAY)
-    notes(s,"老师准备 (零 prep): 把这 1 张 PPT 截屏打印, 放在每张桌子上让学生做参考。")
+    tb(s,5.30,1.10,1.6,0.35,"G1 - G3",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    g_frames=[("这里很 ___, 因为 ___ 。",     "It's very ___ here, because ___."),
+              ("我应该 ___ 。",                "I should ___."),
+              ("___ 不安全, 因为 ___ 。",      "___ is not safe, because ___."),
+              ("我选 ___, 因为 ___ 。",        "I choose ___, because ___.")]
+    for i,(cn,en) in enumerate(g_frames):
+        y=1.65+i*0.78
+        tb(s,5.25,y,4.4,0.45,f"·  {cn}",sz=16,b=True,c=PINE)
+        tb(s,5.25,y+0.4,4.4,0.25,en,sz=9,c=GRAY)
+    # Bottom hint
+    tb(s,0.4,5.1,9.2,0.3,"💡 把这张 PPT 截屏打印, 贴在每张桌子上 — 学生整堂课参考。",sz=11,b=True,c=BROWN,a=PP_ALIGN.CENTER)
+    notes(s,"零 prep: 打印这张当桌签。\nK 重点: 2-字短语 + 短句 (这是, 很, 我看到, 安全, 可以)。\nG1-3: 用 因为 + 应该 + 选 串成完整句。")
     return s
 
 n=0
@@ -498,6 +513,9 @@ for i,(em,cn,en,cl) in enumerate(envs):
     tb(s,x+0.1,y+1.4,2.8,0.3,en,sz=12,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
+# Sentence frames slide moved here — students see frames BEFORE doing aspect work
+s=sentence_frames_slide();n+=1;pn(s,n)
+
 # ============================================================
 # 6-29  Inquiry slides — 6 environments × 4 aspects = 24 slides
 #       Each aspect gets its own slide. Students discover answers
@@ -512,100 +530,101 @@ ASPECTS=[
 
 inquiry_data=[
     ("🌲","森林","Forest",FOREST,[
-        # Looks Like
-        ["你去过森林吗？或者公园里树很多的地方？",
-         "森林里有什么？你最先想到什么？",
-         "森林里的树是多还是少？高还是矮？"],
+        # Looks Like (observation — kept concrete)
+        ["森林的光线 — 亮 还是 暗?",
+         "树是 多 还是 少? 高 还是 矮?",
+         "你最先看到什么?"],
         # Features
-        ["森林里可能住着哪些动物？",
-         "这里的空气闻起来怎么样？",
-         "你能在森林里找到吃的吗？什么样的？"],
-        # Dangers
-        ["一个人在森林里，可能会发生什么？",
-         "看到不认识的蘑菇，能不能吃？",
-         "听到树丛「沙沙」响，可能是什么？"],
-        # Safety Rules
-        ["怎么做才不会迷路？",
-         "靠近野生动物，要安静还是要发出声音？",
-         "不认识的果子和蘑菇，能尝一口吗？"],
+        ["森林里 — 冷 还是 暖?",
+         "空气闻起来 — 香 还是 没味道?",
+         "森林里有什么动物?"],
+        # Dangers (K-5 either/or)
+        ["看到不认识的蘑菇 — 能吃 还是 不能吃?",
+         "听到「沙沙」声 — 大喊 还是 安静?",
+         "看到野生动物 — 走近 还是 站住?"],
+        # Safety Rules (K-5 action-based)
+        ["迷路了 — 跑 还是 留在原地?",
+         "不认识的果子 — 尝一口 还是 不要碰?",
+         "走森林 — 一个人 还是 跟着大人?"],
     ]),
     ("🏔️","山地","Mountain",MOUNTAIN,[
-        ["你爬过山吗？或者在车里看过山？",
-         "山是高还是矮？你见过的山是什么样？",
-         "你觉得山顶上能看到什么？"],
-        ["站在山顶，你能看到多远？",
-         "山上和山下，哪里更冷？为什么？",
-         "山上的风大吗？你怎么知道？"],
-        ["在山上最容易怎样受伤？",
-         "天气突然变冷下雨，会怎样？",
-         "上面的石头掉下来会怎样？"],
-        ["爬山要穿什么样的鞋？为什么？",
-         "出发前要看什么？(提示：天上)",
-         "下山时手要扶着什么？"],
+        ["山 — 高 还是 矮?",
+         "山顶 — 能看远 还是 看不远?",
+         "山上 — 树多 还是 石头多?"],
+        ["山上和山下 — 哪边冷?",
+         "山上的风 — 大 还是 小?",
+         "山上很安静 — 你能听到什么?"],
+        ["山顶很滑 — 走快 还是 走慢?",
+         "看到大石头掉下来 — 摸 还是 不摸?",
+         "天上有黑云 — 上山 还是 下山?"],
+        ["爬山穿 — 拖鞋 还是 运动鞋?",
+         "山上 — 冷 还是 热?",
+         "下山时 — 手放口袋 还是 扶东西?"],
     ]),
     ("🌾","草地","Grassland",GRASS,[
-        ["你去过有草地的公园吗？在草地上玩过什么？",
-         "草地是什么颜色？什么时候颜色不一样？",
-         "除了草，你还在草地上看到过什么？"],
-        ["太阳能晒到草地吗？亮不亮？",
-         "你想在草地上玩什么？",
-         "草丛里可能有哪些小动物？"],
-        ["一直晒太阳，皮肤会怎样？",
-         "草丛里可能藏着什么让你痒？",
-         "看到一只蜜蜂飞过来，能挥手赶它吗？"],
-        ["头上要戴什么？",
-         "皮肤上要涂什么？",
-         "看到蜜蜂应该怎么办？"],
+        ["草地 — 平 还是 不平?",
+         "草地是什么颜色?",
+         "除了草, 你看到什么?"],
+        ["太阳 — 晒 还是 不晒?",
+         "草地里的虫 — 多 还是 少?",
+         "草地 — 软 还是 硬?"],
+        ["蜜蜂飞过来 — 挥手 还是 站着不动?",
+         "草地走路 — 看脚下 还是 看天?",
+         "太阳很大 — 戴帽子 还是 不戴?"],
+        ["草地穿 — 短裤 还是 长裤?",
+         "皮肤要 — 涂防晒 还是 不涂?",
+         "看到小虫 — 拍打 还是 不动?"],
     ]),
     ("🏞️","河边","Riverside",RIVER,[
-        ["你见过小河、小溪或湖吗？在哪里见过？",
-         "你看到的水是在动还是不动？",
-         "岸边是泥、沙还是石头？你摸过吗？"],
-        ["用手摸一摸，河水冷还是热？",
-         "你觉得水里可能有哪些小动物？",
-         "河边为什么常常长柳树和芦苇？"],
-        ["河边最危险的是什么？",
-         "水看起来很浅，真的就浅吗？",
-         "脚下湿湿的石头，走上去会怎样？"],
-        ["谁必须一直在你身边？",
-         "没有大人允许，可以下水吗？",
-         "穿什么样的鞋才不会滑？"],
+        ["你看到的水 — 在动 还是 不动?",
+         "岸边 — 泥 还是 石头?",
+         "水 — 干净 还是 浑浊?"],
+        ["河水 — 冷 还是 热?",
+         "水里 — 有鱼 还是 没鱼?",
+         "河边树 — 多 还是 少?"],
+        ["河水看起来浅 — 安全 还是 不安全?",
+         "湿石头 — 跳过去 还是 慢慢走?",
+         "想喝水 — 河水 还是 水壶水?"],
+        ["下水玩 — 可以 还是 不可以?",
+         "穿什么? — 拖鞋 还是 防滑鞋?",
+         "身边要有 — 大人 还是 自己一个人?"],
     ]),
     ("🏜️","沙漠","Desert",DESERT,[
-        ["你在哪里见过沙？沙滩上、玩具盒里？",
-         "沙漠里到处是沙，你觉得还有什么？",
-         "沙漠里树多吗？为什么这么少？"],
-        ["什么样的植物能在沙漠里活下来？",
-         "你能想到哪些住在沙漠里的动物？",
-         "沙丘是怎么形成的？"],
-        ["在沙漠里最怕发生什么？",
-         "为什么沙漠里很容易迷路？",
-         "沙尘暴来了会怎样？"],
-        ["一天大约要喝多少水？",
-         "穿什么样的衣服比较好？长袖还是短袖？",
-         "能不能一个人离开队伍？"],
+        ["沙漠 — 树多 还是 树少?",
+         "沙漠 — 很热 还是 很冷?",
+         "你看到什么? 沙、还是石头?"],
+        ["沙漠里植物 — 高 还是 矮?",
+         "沙漠的动物 — 大 还是 小?",
+         "沙丘 — 圆 还是 平?"],
+        ["中午太阳大 — 走 还是 找阴凉?",
+         "一个人离队 — 可以 还是 不可以?",
+         "渴了 — 喝水 还是 等等?"],
+        ["穿 — 长袖 还是 短袖?",
+         "戴 — 帽子 还是 不戴?",
+         "水带 — 多 还是 少?"],
     ]),
     ("❄️","雪地","Snow",SNOW,[
-        ["你见过雪吗？在哪里？摸过雪吗？",
-         "雪是什么颜色？冷不冷？",
-         "走在雪上会发出什么声音？你听过吗？"],
-        ["在雪地里可以玩什么游戏？",
-         "这里的空气暖和还是寒冷？",
-         "摸一摸雪，是软的还是硬的？"],
-        ["太冷了，手和脚会有什么感觉？",
-         "雪反光太亮，眼睛会怎样？",
-         "看起来是雪，下面会不会是水？"],
-        ["应该穿什么样的衣服和鞋？",
-         "眼睛要戴什么来挡光？",
-         "湖面、河面上能走吗？为什么？"],
+        ["雪 — 软 还是 硬?",
+         "雪是什么颜色? 冷不冷?",
+         "踩雪的声音 — 你听过吗?"],
+        ["空气 — 暖和 还是 寒冷?",
+         "雪 — 软 还是 硬?",
+         "雪地里能玩什么?"],
+        ["雪地很冷 — 手套要 还是 不要?",
+         "河面是冰 — 走过去 还是 绕道?",
+         "太阳 + 雪 — 戴墨镜 还是 不戴?"],
+        ["穿 — 厚衣 还是 短袖?",
+         "走湖面 — 可以 还是 不可以?",
+         "脚 — 穿雪靴 还是 拖鞋?"],
     ]),
 ]
 
-# Per-env interaction packs (video idea + either/or + movement)
+# Per-env interaction packs (B / D / A + either-or + movement)
 ENV_INTERACTIONS={
     "森林":dict(video_desc="森林里的声音 / Forest soundscape (1 min)",
-        pre="闭上眼睛 — 听 3 种声音。 Close eyes — hear 3 sounds.",
-        post="模仿一个声音 — 风、鸟、还是虫? Mimic one sound!",
+        before="闭上眼睛\nClose your eyes",
+        during="听 3 个声音\nListen for 3 sounds",
+        after="模仿 1 个声音\nMimic 1 sound!",
         either_q="听到树丛「沙沙」响 — 怎么办?",
         opt_a="A. 跑开\nRun away",
         opt_b="B. 安静站着\nStand still & quiet",
@@ -613,8 +632,9 @@ ENV_INTERACTIONS={
         reason="跑会惊到野生动物, 它可能追过来。安静观察。",
         move_cn="弯腰拨树枝走路",move_en="Bend, push branches"),
     "山地":dict(video_desc="登山者爬山顶 / Climbers reaching summit (30s)",
-        pre="看登山者怎么放脚? Watch their footing.",
-        post="学一个动作: 一步一步, 慢慢走。",
+        before="看登山者的脚\nWatch their feet",
+        during="数 5 个小心的脚步\nCount 5 careful steps",
+        after="学他爬山 (慢慢)\nAct slow climbing",
         either_q="山顶上有黑云 — 上还是下?",
         opt_a="A. 继续上\nKeep going up",
         opt_b="B. 下山\nGo back down",
@@ -622,8 +642,9 @@ ENV_INTERACTIONS={
         reason="山上的雷雨很危险, 闪电先打高的地方。",
         move_cn="扶着假岩壁, 一步一步爬",move_en="Climb, hold the wall"),
     "草地":dict(video_desc="草地虫子和花 / Insects and flowers (30s)",
-        pre="数一数: 草地上有几种动物? Count animals.",
-        post="模仿一只小动物 1 秒钟。 Mimic one for 1 sec.",
+        before="看草地什么颜色\nWhat color is it?",
+        during="找 2 个动物\nFind 2 animals",
+        after="模仿 1 个动物 1 秒\nMimic 1 animal · 1s",
         either_q="蜜蜂飞过来 — 怎么办?",
         opt_a="A. 挥手赶走\nWave hands",
         opt_b="B. 站着不动\nStand still",
@@ -631,8 +652,9 @@ ENV_INTERACTIONS={
         reason="挥手会让蜜蜂以为你要打它, 就会蛰你。慢慢走开。",
         move_cn="慢慢走 + 看脚下 + 戴帽子",move_en="Walk slow, look down"),
     "河边":dict(video_desc="孩子在河边玩 / Kids by river (30s)",
-        pre="看孩子离水多近? How close to water?",
-        post="说: 太近 / 刚好 / 太远? Say: too close / just right / too far?",
+        before="看孩子离水多近\nHow close to water?",
+        during="找 3 块湿石头\nSpot 3 wet rocks",
+        after="假装小心走\nStep carefully",
         either_q="想喝水 — 哪个水?",
         opt_a="A. 河里的水\nRiver water",
         opt_b="B. 水壶里的水\nFrom the bottle",
@@ -640,8 +662,9 @@ ENV_INTERACTIONS={
         reason="河水可能有细菌、虫子 — 喝了会拉肚子。煮过的水才能喝。",
         move_cn="小心踩湿石头, 双手张开",move_en="Step on wet rocks carefully"),
     "沙漠":dict(video_desc="沙漠里的骆驼和探险家 / Camel + explorer (30s)",
-        pre="听: 沙漠多热? 一天要喝多少水? Listen for facts.",
-        post="假装喝一大口水 + 擦汗。 Drink + wipe sweat!",
+        before="看探险家穿什么\nWhat is he wearing?",
+        during="数他喝几口水\nCount his sips",
+        after="擦汗 + 喝水\nWipe + drink!",
         either_q="正午太阳很大 — 怎么办?",
         opt_a="A. 多走快点\nWalk faster",
         opt_b="B. 找阴凉休息\nRest in the shade",
@@ -649,8 +672,9 @@ ENV_INTERACTIONS={
         reason="正午温度可达 50°C — 走快会中暑。等下午凉了再走。",
         move_cn="擦汗, 慢慢走, 喝水",move_en="Wipe, walk slow, drink"),
     "雪地":dict(video_desc="雪山上的探险家 / Snow mountain explorer (30s)",
-        pre="看探险家穿了几件衣服? Count layers.",
-        post="说出 3 件冬天的衣物。 Name 3 winter items.",
+        before="数他穿几件衣服\nCount layers",
+        during="找他的手套\nFind his gloves",
+        after="发抖 + 抱紧\nShiver + hug!",
         either_q="看到河面是冰 — 走过去?",
         opt_a="A. 走过去\nWalk across",
         opt_b="B. 绕道走\nGo around",
@@ -663,9 +687,10 @@ for em,cn,en_name,env_color,aspect_questions in inquiry_data:
     for (aspect_label,aspect_color,frame),questions in zip(ASPECTS,aspect_questions):
         s=aspect_slide(em,cn,en_name,env_color,aspect_label,aspect_color,questions,frame)
         n+=1;pn(s,n)
-    # NEW: per-env interaction slide (video + either/or + movement)
+    # NEW: per-env interaction slide (B/D/A + either/or + movement)
     ix=ENV_INTERACTIONS[cn]
-    s=env_interaction_slide(em,cn,en_name,env_color,ix["video_desc"],ix["pre"],ix["post"],
+    s=env_interaction_slide(em,cn,en_name,env_color,ix["video_desc"],
+        ix["before"],ix["during"],ix["after"],
         ix["either_q"],ix["opt_a"],ix["opt_b"],ix["answer"],ix["reason"],
         ix["move_cn"],ix["move_en"])
     n+=1;pn(s,n)
@@ -707,7 +732,6 @@ pn(s,n)
 # ============================================================
 s=gesture_game_slide();n+=1;pn(s,n)
 s=where_am_i_slide();n+=1;pn(s,n)
-s=sentence_frames_slide();n+=1;pn(s,n)
 
 # ============================================================
 # 13 SESSION 2 DIVIDER
@@ -940,16 +964,20 @@ pn(s,n)
 # 32 Day 1 Badge / Visa stamp
 # ============================================================
 s=ns();n+=1;bg(s,CREAM)
-tb(s,0.5,0.4,9,0.8,"🎖️ Day 1 探险家徽章  Explorer Badge",sz=26,b=True,c=PINE,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(3.5),Inches(1.4),Inches(3),Inches(3))
+tb(s,0.5,0.3,9,0.7,"🎖️ Day 1 探险家徽章  Explorer Badge",sz=24,b=True,c=PINE,a=PP_ALIGN.CENTER)
+sh=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(3.5),Inches(1.05),Inches(3),Inches(3))
 sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=PINE;sh.line.width=Pt(5)
-tf=tb(s,3.6,1.65,2.8,2.7,"DAY 1",sz=18,b=True,c=SUN,a=PP_ALIGN.CENTER)
+tf=tb(s,3.6,1.30,2.8,2.7,"DAY 1",sz=18,b=True,c=SUN,a=PP_ALIGN.CENTER)
 ap(tf,"🏕️",sz=40,a=PP_ALIGN.CENTER)
 ap(tf,"认识自然",sz=20,b=True,c=PINE,a=PP_ALIGN.CENTER)
 ap(tf,"✓ COMPLETED",sz=13,b=True,c=GREEN_OK,a=PP_ALIGN.CENTER)
 ap(tf,"🌲🏔️🌾🏞️🏜️❄️",sz=14,a=PP_ALIGN.CENTER)
-tb(s,1,4.55,8,0.4,"恭喜你完成 Day 1！Congratulations, young explorer! 🎉",sz=16,b=True,c=PINE,a=PP_ALIGN.CENTER)
-tb(s,1,5.0,8,0.4,"学会了 6 种环境 · 6 条安全规则 · 3 个词",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+# 6 stars filled in — earned!
+sb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.3),Inches(4.20),Inches(7.4),Inches(0.65))
+sb.fill.solid();sb.fill.fore_color.rgb=SUNYEL;sb.line.color.rgb=SUN;sb.line.width=Pt(2.5)
+tb(s,1.3,4.25,7.4,0.55,"⭐  ⭐  ⭐  ⭐  ⭐  ⭐",sz=32,b=True,c=ALERT,a=PP_ALIGN.CENTER)
+tb(s,1,4.95,8,0.4,"6 颗星都拿到啦! All 6 stars earned! 🎉",sz=16,b=True,c=PINE,a=PP_ALIGN.CENTER)
+tb(s,1,5.30,8,0.3,"学会了 6 种环境 · 6 条安全规则 · 3 个词",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
