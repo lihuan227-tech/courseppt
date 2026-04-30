@@ -120,7 +120,7 @@ def type_overview_slide(emoji, name_cn, name_en, color, hint, subtypes):
 def connect_slide(emoji, art_cn, art_en, color, questions):
     """2-3 connection questions before introducing an art form."""
     s=ns();bg(s,CREAM)
-    hb(s,f"🤝 你认识 {art_cn} 吗？  Do You Know {art_en}?",color)
+    hb(s,f"{emoji} {art_cn}  {art_en}",color)
     tb(s,0.4,0.9,9.2,0.3,"先聊一聊 — 分享你的经验! / Let's chat — share what YOU know!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
     # Big emoji circle on left
     sh=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.8),Inches(1.5),Inches(3.0),Inches(3.0))
