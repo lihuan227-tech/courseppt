@@ -325,6 +325,87 @@ def sentence_frames_slide():
     notes(s,"零 prep: 打印这张当桌签。\nK 重点: 2-字短语 + 短句 (这是, 很, 我看到, 安全, 可以)。\nG1-3: 用 因为 + 应该 + 选 串成完整句。")
     return s
 
+# --- New 2-slide-per-env helpers (Experience + Safety) ---
+
+def experience_slide(em,cn,en_name,env_color,see_q,hear_q,feel_q,move_cn):
+    """SLIDE 1 of 2 per env — sensory observation: SEE / HEAR / FEEL.
+    No safety topic on this slide. Movement strip at bottom."""
+    s=ns();bg(s,CREAM);hb(s,f"{em} {cn}  {en_name} · 👀 用感官观察  Use Your Senses",env_color)
+    # Image (left)
+    ib(s,0.3,0.95,4.4,3.10,f"📷 {cn} 图片 / 视频")
+    # Sensory panel (right)
+    panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(0.95),Inches(4.85),Inches(3.10))
+    panel.fill.solid();panel.fill.fore_color.rgb=WHITE
+    panel.line.color.rgb=env_color;panel.line.width=Pt(2.5)
+    head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(0.95),Inches(4.85),Inches(0.45))
+    head.fill.solid();head.fill.fore_color.rgb=env_color;head.line.fill.background()
+    tb(s,5.0,1.00,4.6,0.4,"🔭 你看到 / 听到 / 感觉到什么?",sz=14,b=True,c=WHITE)
+    # 3 sensory cards
+    rows=[("👀",see_q),("👂",hear_q),("✋",feel_q)]
+    for i,(icon,q) in enumerate(rows):
+        y=1.55+i*0.78
+        tb(s,5.05,y,0.55,0.55,icon,sz=28)
+        tb(s,5.70,y+0.05,3.95,0.6,q,sz=14,b=True,c=DARK)
+    # Frames bar (K-G1 + G2-G3)
+    fy=4.20
+    sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(fy),Inches(9.4),Inches(0.75))
+    sf.fill.solid();sf.fill.fore_color.rgb=WARM
+    sf.line.color.rgb=SUN;sf.line.width=Pt(2)
+    tb(s,0.5,fy+0.05,1.3,0.3,"💬 K-G1:",sz=11,b=True,c=SUN)
+    tb(s,1.85,fy+0.05,7.7,0.3,"我看到 ___ 。  我听到 ___ 。  我感觉 ___ 。",sz=12,b=True,c=DARK)
+    tb(s,0.5,fy+0.42,1.3,0.3,"💬 G2-G3:",sz=11,b=True,c=PINE)
+    tb(s,1.85,fy+0.42,7.7,0.3,"我看到 ___ 和 ___ 。 我听到 ___ 。 它感觉 ___ 。",sz=12,b=True,c=DARK)
+    # Movement strip (bottom)
+    mv=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.05),Inches(8.5),Inches(0.40))
+    mv.fill.solid();mv.fill.fore_color.rgb=GREEN_OK;mv.line.fill.background()
+    tb(s,0.45,5.10,8.3,0.3,f"🚶 演一演 30s:  {move_cn}",sz=12,b=True,c=WHITE)
+    return s
+
+def safety_slide(em,cn,en_name,env_color,situations):
+    """SLIDE 2 of 2 per env — 3 situational A/B choices.
+    situations: list of (question, opt_a, opt_b, correct_idx) — 3 entries."""
+    s=ns();bg(s,CREAM);hb(s,f"{em} {cn} · 🛡️ 安全 Safety  ·  完成 = ⭐",ALERT)
+    # 3 stacked situation rows
+    sit_h=1.05
+    base_y=0.95
+    for i,(q,opt_a,opt_b,correct) in enumerate(situations):
+        y=base_y+i*(sit_h+0.10)
+        # Card frame
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(y),Inches(9.4),Inches(sit_h))
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE
+        sh.line.color.rgb=ALERT;sh.line.width=Pt(2)
+        # Number badge + question
+        nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.42),Inches(y+0.10),Inches(0.40),Inches(0.40))
+        nb.fill.solid();nb.fill.fore_color.rgb=ALERT;nb.line.fill.background()
+        tb(s,0.42,y+0.13,0.4,0.35,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+        tb(s,0.95,y+0.10,8.6,0.35,q,sz=13,b=True,c=DARK)
+        # A and B side by side
+        a_correct=(correct==0);b_correct=(correct==1)
+        a_color=GREEN_OK if a_correct else ALERT
+        b_color=GREEN_OK if b_correct else ALERT
+        a_fill=WARM if a_correct else WHITE
+        b_fill=WARM if b_correct else WHITE
+        a_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(y+0.50),Inches(4.3),Inches(0.50))
+        a_box.fill.solid();a_box.fill.fore_color.rgb=a_fill
+        a_box.line.color.rgb=a_color;a_box.line.width=Pt(1.5)
+        tb(s,0.6,y+0.55,0.5,0.4,"A.",sz=13,b=True,c=a_color)
+        tb(s,1.05,y+0.55,3.7,0.4,opt_a,sz=12,c=DARK)
+        b_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.2),Inches(y+0.50),Inches(4.3),Inches(0.50))
+        b_box.fill.solid();b_box.fill.fore_color.rgb=b_fill
+        b_box.line.color.rgb=b_color;b_box.line.width=Pt(1.5)
+        tb(s,5.3,y+0.55,0.5,0.4,"B.",sz=13,b=True,c=b_color)
+        tb(s,5.75,y+0.55,3.7,0.4,opt_b,sz=12,c=DARK)
+    # Frames bar at bottom
+    fy=base_y+3*(sit_h+0.10)+0.05
+    sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(fy),Inches(9.4),Inches(0.70))
+    sf.fill.solid();sf.fill.fore_color.rgb=SUNYEL
+    sf.line.color.rgb=SUN;sf.line.width=Pt(2)
+    tb(s,0.5,fy+0.04,1.3,0.3,"💬 K-G1:",sz=11,b=True,c=SUN)
+    tb(s,1.85,fy+0.04,7.7,0.3,"不可以 ___ 。  要 ___ 。",sz=12,b=True,c=DARK)
+    tb(s,0.5,fy+0.38,1.3,0.3,"💬 G2-G3:",sz=11,b=True,c=PINE)
+    tb(s,1.85,fy+0.38,7.7,0.3,"我应该 ___ 。  我不应该 ___, 因为 ___ 。",sz=12,b=True,c=DARK)
+    return s
+
 n=0
 
 # ============================================================
@@ -387,7 +468,7 @@ n+=1
 # 4-NEW  EXPLORER MISSION (narrative + 6 missions)
 # ============================================================
 s=mission_narrative_slide();n+=1;pn(s,n)
-s=mission_overview_slide();n+=1;pn(s,n)
+# s=mission_overview_slide();n+=1;pn(s,n)  # removed per request — no more star tracker overview
 
 # ============================================================
 # 4a PICTURE BOOK INTRO — Story Time hook
@@ -513,8 +594,7 @@ for i,(em,cn,en,cl) in enumerate(envs):
     tb(s,x+0.1,y+1.4,2.8,0.3,en,sz=12,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
-# Sentence frames slide moved here — students see frames BEFORE doing aspect work
-s=sentence_frames_slide();n+=1;pn(s,n)
+# Sentence frames moved INTO each env's Experience + Safety slide (per-env, leveled)
 
 # ============================================================
 # 6-29  Inquiry slides — 6 environments × 4 aspects = 24 slides
@@ -683,17 +763,66 @@ ENV_INTERACTIONS={
         move_cn="发抖, 跺脚, 抱紧自己",move_en="Shiver, stomp, hug self"),
 }
 
-for em,cn,en_name,env_color,aspect_questions in inquiry_data:
-    for (aspect_label,aspect_color,frame),questions in zip(ASPECTS,aspect_questions):
-        s=aspect_slide(em,cn,en_name,env_color,aspect_label,aspect_color,questions,frame)
-        n+=1;pn(s,n)
-    # NEW: per-env interaction slide (B/D/A + either/or + movement)
-    ix=ENV_INTERACTIONS[cn]
-    s=env_interaction_slide(em,cn,en_name,env_color,ix["video_desc"],
-        ix["before"],ix["during"],ix["after"],
-        ix["either_q"],ix["opt_a"],ix["opt_b"],ix["answer"],ix["reason"],
-        ix["move_cn"],ix["move_en"])
-    n+=1;pn(s,n)
+# NEW STRUCTURE: 2 slides per environment
+# Slide 1: EXPERIENCE — sensory observation (SEE / HEAR / FEEL)
+# Slide 2: SAFETY — 3 situational A/B choices
+
+ENV_EXPERIENCE={
+    # see_q, hear_q, feel_q, movement
+    "森林":("树, 叶子, 花?", "鸟? 风? 虫?", "凉 还是 暖?", "弯腰拨树枝走路"),
+    "山地":("石头, 山, 天空?", "风的声音?", "冷 还是 热?", "扶岩壁慢慢爬"),
+    "草地":("草, 花, 虫?", "风? 蜜蜂? 鸟?", "软 还是 硬? 暖?", "慢慢走 + 看脚下"),
+    "河边":("水, 鱼, 石头?", "水流的声音?", "凉 还是 暖? 湿吗?", "小心踩湿石头"),
+    "沙漠":("沙, 太阳, 仙人掌?", "安静 还是 有风?", "热 还是 冷? 干?", "擦汗 + 喝水"),
+    "雪地":("雪, 冰, 天空?", "踩雪的声音?", "冷 还是 暖?", "发抖 + 跺脚 + 抱紧"),
+}
+
+ENV_SAFETY={
+    # 3 situations: (question, opt_a, opt_b, correct_idx where correct=0 means A, 1 means B)
+    "森林":[
+        ("看到不认识的蘑菇", "摸一摸", "不要碰", 1),
+        ("听到树丛里有声音", "跑开", "安静站着", 1),
+        ("看到野生动物",     "走近看", "站住别动", 1),
+    ],
+    "山地":[
+        ("山顶很滑",          "走快", "走慢", 1),
+        ("看到石头掉下来",    "去摸", "跑开", 1),
+        ("天上有黑云",        "继续上山", "下山", 1),
+    ],
+    "草地":[
+        ("蜜蜂飞过来",        "挥手赶走", "不动", 1),
+        ("太阳很大",          "戴帽子", "不戴", 0),
+        ("草丛里有小虫",      "拍打", "不动", 1),
+    ],
+    "河边":[
+        ("想喝水",            "河里的水", "水壶里的水", 1),
+        ("湿石头要走过去",    "跳过去", "慢慢走", 1),
+        ("想下水玩",          "自己下水", "等大人", 1),
+    ],
+    "沙漠":[
+        ("中午太阳很大",      "继续走", "找阴凉", 1),
+        ("渴了",              "喝水", "等等再喝", 0),
+        ("走的时候",          "自己走", "跟着大人", 1),
+    ],
+    "雪地":[
+        ("看到河面是冰",      "走过去", "绕道走", 1),
+        ("太阳 + 雪很亮",     "戴墨镜", "不戴", 0),
+        ("手很冷",            "戴手套", "不戴", 0),
+    ],
+}
+
+env_list=[
+    ("🌲","森林","Forest",FOREST),
+    ("🏔️","山地","Mountain",MOUNTAIN),
+    ("🌾","草地","Grassland",GRASS),
+    ("🏞️","河边","Riverside",RIVER),
+    ("🏜️","沙漠","Desert",DESERT),
+    ("❄️","雪地","Snow",SNOW),
+]
+for em,cn,en_name,env_color in env_list:
+    see,hear,feel,move=ENV_EXPERIENCE[cn]
+    s=experience_slide(em,cn,en_name,env_color,see,hear,feel,move);n+=1;pn(s,n)
+    s=safety_slide(em,cn,en_name,env_color,ENV_SAFETY[cn]);n+=1;pn(s,n)
 
 # ============================================================
 # 12 COMPARISON TABLE
