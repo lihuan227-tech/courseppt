@@ -741,29 +741,31 @@ ib(s,0.4,0.9,9.2,4.3,"📷 练习册截图 / Booklet pages")
 pn(s,n)
 
 # ============================================================
-# 27 Projects overview — 2 levels
+# 27 Projects overview — 3 options (painting + self-portrait + clay sculpture)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🎨 今天做什么？  Two Project Levels",CORAL)
-tb(s,0.4,0.9,9,0.4,"老师会根据你的年级选一个！Teacher will pick for your level.",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+s=ns();n+=1;bg(s,CREAM);hb(s,"🎨 今天做什么？  Pick a Project!",CORAL)
+tb(s,0.4,0.9,9,0.4,"3 个选择 — 老师帮你选, 或者你自己选! / Teacher picks, or YOU pick!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
 projects=[
-    ("低 Level\n(K-2)","🎨 我的心情画","My Mood Painting","用颜色画出你今天的心情\nUse colors to show your mood",E_HAPPY,MAGENTA),
-    ("高 Level\n(3-5)","👤 我是谁","Self-Portrait: Who Am I","画你自己 + 加喜欢的东西\nDraw yourself + things you love",E_MOOD,PURPLE),
+    ("低 Level\n(K-2)","🎨 我的心情画","Mood Painting","用颜色画心情\nColors = mood",E_HAPPY,MAGENTA),
+    ("高 Level\n(3-5)","👤 我是谁","Self-Portrait","画自己 + 喜欢的东西\nYou + your favs",E_MOOD,PURPLE),
+    ("人人可做\n(All Levels)","🟫 粘土雕塑","Clay Sculpture","捏一个小动物 / 心情脸\nMake a small clay piece",GREEN_OK,GREEN_L),
 ]
+card_w=3.0;gap=0.15;start_x=(10-card_w*3-gap*2)/2
 for i,(lvl,nm,en,d,ltcl,cl) in enumerate(projects):
-    x=0.5+i*4.6
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.4),Inches(4.3),Inches(3.75))
+    x=start_x+i*(card_w+gap)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.4),Inches(card_w),Inches(3.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(4)
-    # level label
-    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.25),Inches(1.55),Inches(1.4),Inches(0.7))
+    # level label pill
+    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.2),Inches(1.55),Inches(card_w-0.4),Inches(0.55))
     sh2.fill.solid();sh2.fill.fore_color.rgb=ltcl;sh2.line.fill.background()
-    tf=tb(s,x+0.3,1.62,1.3,0.5,lvl.split('\n')[0],sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    ap(tf,lvl.split('\n')[1],sz=10,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,x+0.2,2.35,4.0,0.6,nm,sz=26,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.2,3.0,4.0,0.3,en,sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-    ib(s,x+0.5,3.4,3.4,1.2,"📷 作品示范")
+    tf=tb(s,x+0.25,1.6,card_w-0.5,0.3,lvl.split('\n')[0],sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    ap(tf,lvl.split('\n')[1],sz=9,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,2.25,card_w-0.2,0.5,nm,sz=20,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,2.78,card_w-0.2,0.3,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+    ib(s,x+0.2,3.15,card_w-0.4,1.3,"📷 作品示范")
     ls=d.split('\n')
-    tf=tb(s,x+0.2,4.65,4.0,0.25,ls[0],sz=12,c=DARK,a=PP_ALIGN.CENTER)
-    for l in ls[1:]:ap(tf,l,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+    tf=tb(s,x+0.1,4.55,card_w-0.2,0.3,ls[0],sz=11,c=DARK,a=PP_ALIGN.CENTER)
+    for l in ls[1:]:ap(tf,l,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
@@ -840,7 +842,53 @@ ap(tf3,"· 我画了……因为……",sz=13,c=DARK)
 pn(s,n)
 
 # ============================================================
-# 30 Share & Gallery
+# 30 Project — Clay Sculpture (粘土雕塑) — easy options for K-5
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"🟫 粘土雕塑  Clay Sculpture (人人可做)",GREEN_L)
+# Top-left: Materials
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(4.6),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=GREEN_L;sh.line.fill.background()
+tb(s,0.4,0.98,4.4,0.35,"🧺 材料 Materials",sz=14,b=True,c=WHITE)
+tf=tb(s,0.4,1.45,4.6,1.0,"🟫 黏土 (空气干 / 橡皮泥)",sz=12,c=DARK)
+ap(tf,"🍢 牙签 (做眼睛、纹路)",sz=12,c=DARK)
+ap(tf,"🍽️ 白纸盘 (做底)",sz=12,c=DARK)
+ap(tf,"💧 一小杯水 (湿手)",sz=12,c=DARK)
+# Top-right: Steps
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.0),Inches(0.95),Inches(4.7),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=CORAL;sh.line.fill.background()
+tb(s,5.1,0.98,4.5,0.35,"👉 做法 Steps",sz=14,b=True,c=WHITE)
+tf2=tb(s,5.1,1.45,4.6,1.0,"1️⃣ 揉一揉  Knead the clay soft",sz=12,c=DARK)
+ap(tf2,"2️⃣ 搓 / 捏 / 压成基本形状",sz=12,c=DARK)
+ap(tf2,"3️⃣ 加细节 (眼睛 / 嘴 / 纹路)",sz=12,c=DARK)
+ap(tf2,"4️⃣ 放纸盘上 — 晾干一晚",sz=12,c=DARK)
+# Title for ideas
+tb(s,0.4,2.55,9.2,0.32,"💡 选一个简单的 — Pick an easy one to make!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+# 6 easy idea cards 2x3 grid
+ideas=[
+    ("🐢","小乌龟","Turtle","圆 + 4 条腿",GREEN_L),
+    ("🐌","蜗牛","Snail","条 + 球 (链 D2 马蒂斯!)",CORAL),
+    ("🐱","小猫脸","Cat Face","圆 + 三角耳",MAGENTA),
+    ("😊","心情脸","Mood Face","圆 + 表情 (链 D1 心情!)",YELLOW),
+    ("🍰","杯子蛋糕","Cupcake","条 + 圆顶",PURPLE),
+    ("🍩","甜甜圈","Donut","条 → 圈",SKY),
+]
+for i,(em,cn,en,hint,cl) in enumerate(ideas):
+    col=i%3;row=i//3
+    x=0.3+col*3.2;y=2.95+row*1.05
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(0.95))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
+    tb(s,x+0.08,y+0.05,0.65,0.85,em,sz=28,a=PP_ALIGN.CENTER)
+    tb(s,x+0.78,y+0.07,2.15,0.32,cn,sz=14,b=True,c=cl)
+    tb(s,x+0.78,y+0.4,2.15,0.25,en,sz=10,c=GRAY)
+    tb(s,x+0.78,y+0.65,2.15,0.25,hint,sz=9,c=DARK)
+# Sentence frames at bottom
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.05),Inches(9.4),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=GREEN_L;sh.line.width=Pt(2)
+tb(s,0.4,5.08,9.2,0.32,"🗣️ 我做的是 ____。它有 ____。/ I made a ____. It has ____.",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+pn(s,n)
+
+# ============================================================
+# 31 Share & Gallery
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"🖼️ 小小画展  Gallery Walk",YELLOW)
 tb(s,0.4,0.9,9,0.5,"把作品贴在墙上，大家一起看！",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
