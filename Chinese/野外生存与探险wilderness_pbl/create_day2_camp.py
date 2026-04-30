@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-野外生存与探险 Day 2 — 搭一个小营地 Build a Mini Camp (Camping & Safety)
+野外生存与探险 Day 2 — 搭建营地 Build a Mini Camp (Camping & Safety)
 "Explorer Mission" framing — kids = small explorers building a safe camp.
 Each section = a task: pack, build, choose location, protect.
 Reuses Day 1 palette + helper conventions.
@@ -203,7 +203,7 @@ s=ns();bg(s,PINE)
 sh=s.shapes.add_shape(MSO_SHAPE.RECTANGLE,0,Inches(2.4),W,Inches(2.0))
 sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.fill.background()
 tb(s,1,0.4,8,0.5,"DAY 2",sz=18,b=True,c=SUN,a=PP_ALIGN.CENTER)
-tb(s,1,0.95,8,0.7,"🏕️ 搭一个小营地",sz=42,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1,0.95,8,0.7,"🏕️ 搭建营地",sz=42,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 tb(s,1,1.7,8,0.5,"Build a Mini Camp",sz=22,c=WARM,a=PP_ALIGN.CENTER)
 tb(s,1,2.6,8,0.5,"🧭 探险家任务  Explorer Mission",sz=24,b=True,c=PINE,a=PP_ALIGN.CENTER)
 tb(s,1,3.15,8,0.4,"Pack · Build · Choose · Protect",sz=14,c=BROWN,a=PP_ALIGN.CENTER)
