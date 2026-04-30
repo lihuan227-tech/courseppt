@@ -239,15 +239,21 @@ def env_interaction_slide(em,cn,en_name,env_color,video_desc,before,during,after
     notes(s,f"老师备课:\n• 答案 Answer: {answer}\n• 原因 Reason: {reason}\n• 视频建议: {video_desc}\n• 全班动作 30 秒 — 站起来一起做。\n• A/B: 把教室分两边, 学生站到选择的一边, 说出原因。\n• 完成 = 全班拿 1 ⭐ → 涂在白板上的星图。")
     return s
 
-def gesture_game_slide():
-    s=ns();bg(s,CREAM);hb(s,"🛡️ 安全 vs 危险!  Safe vs Dangerous!",ALERT)
+def gesture_game_slide(reveal=True):
+    """Two-phase: call once with reveal=False (Question — answer column shows ?),
+    then once with reveal=True (Reveal — show ✅/❌)."""
+    s=ns();bg(s,CREAM)
+    if reveal:
+        hb(s,"🛡️ 安全 vs 危险!  💡 答案揭晓 Reveal!",ALERT)
+    else:
+        hb(s,"🛡️ 安全 vs 危险!  🤔 你觉得呢? Think!",ALERT)
     # Rules box
     rb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.0),Inches(9.4),Inches(1.1))
     rb.fill.solid();rb.fill.fore_color.rgb=WARM;rb.line.color.rgb=ALERT;rb.line.width=Pt(2)
     tb(s,0.5,1.10,9.0,0.4,"老师说一件事 — 学生用动作回答!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
     tb(s,0.5,1.50,4.4,0.5,"✅ 安全 = 双手举高 (V)",sz=15,b=True,c=GREEN_OK,a=PP_ALIGN.CENTER)
     tb(s,5.1,1.50,4.4,0.5,"❌ 危险 = 双手交叉 (X)",sz=15,b=True,c=ALERT,a=PP_ALIGN.CENTER)
-    # 6 examples
+    # 6 examples — answer hidden until reveal
     examples=[("🌲","摸不认识的蘑菇",       "❌"),
               ("🏔️","在山顶看天有黑云就下山","✅"),
               ("🌾","看到蜜蜂就站着不动",   "✅"),
@@ -258,11 +264,25 @@ def gesture_game_slide():
         col=i%2;row=i//2
         x=0.3+col*4.7;y=2.3+row*0.85
         sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.5),Inches(0.75))
-        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=ALERT;sh.line.width=Pt(1.5)
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE
+        sh.line.color.rgb=ALERT if reveal else GRAY;sh.line.width=Pt(1.5)
         tb(s,x+0.1,y+0.15,0.6,0.5,em,sz=22)
         tb(s,x+0.75,y+0.18,3.2,0.4,desc,sz=12,b=True,c=DARK)
-        tb(s,x+3.95,y+0.15,0.5,0.5,ans,sz=22,a=PP_ALIGN.CENTER)
-    notes(s,"老师玩法 (3-5 分钟):\n• 念上面 6 个情境, 学生举手或交叉手回答。\n• 答错的不出局, 让他们再听一次。\n• G1-3 学生加一句: 「___ 不安全, 因为 ___」")
+        # Answer column — hidden ("?") on Question, shown on Reveal
+        if reveal:
+            tb(s,x+3.95,y+0.15,0.5,0.5,ans,sz=22,a=PP_ALIGN.CENTER)
+        else:
+            tb(s,x+3.95,y+0.15,0.5,0.5,"?",sz=22,b=True,c=GRAY,a=PP_ALIGN.CENTER)
+    # Bottom prompt strip — countdown on Question, reinforcement on Reveal
+    by=5.05
+    bs=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(by),Inches(9.4),Inches(0.4))
+    if reveal:
+        bs.fill.solid();bs.fill.fore_color.rgb=GREEN_OK;bs.line.fill.background()
+        tb(s,0.45,by+0.04,9.0,0.32,"💡 答案揭晓! 看看你猜对了吗? G1-3 加一句: 「___ 不安全, 因为 ___」",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    else:
+        bs.fill.solid();bs.fill.fore_color.rgb=SUN;bs.line.fill.background()
+        tb(s,0.45,by+0.04,9.0,0.32,"👉 老师念一句, 全班一起做动作!  ✅ 举手 V  /  ❌ 交叉 X    🤔 3 ... 2 ... 1!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    notes(s,"老师玩法 (3-5 分钟):\n• Question 页: 念 6 个情境, 全班用 V/X 动作回答, 不告诉答案。\n• Reveal 页: 揭晓答案, 数一数对的有几个。\n• 答错的不出局, 让他们再听一次。\n• G1-3 学生加一句: 「___ 不安全, 因为 ___」")
     return s
 
 def where_am_i_slide():
@@ -949,7 +969,9 @@ pn(s,n)
 # ============================================================
 # 12b WHOLE-CLASS GAMES + Sentence frames (NEW)
 # ============================================================
-s=gesture_game_slide();n+=1;pn(s,n)
+# Two-phase: Question (?) → Reveal (✅/❌)
+s=gesture_game_slide(reveal=False);n+=1;pn(s,n)
+s=gesture_game_slide(reveal=True);n+=1;pn(s,n)
 s=where_am_i_slide();n+=1;pn(s,n)
 
 # ============================================================
