@@ -376,7 +376,7 @@ const matchRows = matchWords.map((w, i) => {
 
 const section4Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('四、连一连 / Match  (用线连起来)', CORAL, 24),
+  shadedBar('三、连一连 / Match  (用线连起来)', CORAL, 24),
   new Paragraph({
     spacing: { before: 200, after: 200 },
     children: [new TextRun({
@@ -397,8 +397,50 @@ const section4Children = [
     borders: allBorders(noBorder()),
     rows: matchRows,
   }),
+];
+
+// ===== Section 5: Trace and Write (blank — teacher inserts writing paper) =====
+const section5Children = [
+  new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
+  shadedBar('四、描一描, 写一写 / Trace and Write', PURPLE, 24),
+  new Paragraph({
+    spacing: { before: 200, after: 100 },
+    children: [new TextRun({
+      text: '👉 在下面贴上写字纸, 写一写今天学到的字。',
+      size: 22, italics: true, color: GRAY,
+    })],
+  }),
+  new Paragraph({
+    spacing: { before: 60, after: 200 },
+    children: [new TextRun({
+      text: 'Insert your writing paper below and practice today’s characters.',
+      size: 20, italics: true, color: GRAY,
+    })],
+  }),
+  // Big blank framed area for teacher to insert writing paper
+  new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: [CW],
+    borders: allBorders(border(PURPLE, 12)),
+    rows: [new TableRow({
+      height: { value: 9400, rule: 'atLeast' },
+      children: [new TableCell({
+        width: { size: CW, type: WidthType.DXA },
+        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
+        margins: { top: 200, bottom: 200, left: 200, right: 200 },
+        verticalAlign: 'center',
+        children: [new Paragraph({
+          alignment: AlignmentType.CENTER,
+          children: [new TextRun({
+            text: '📄  在这里贴上写字纸 / Insert your writing paper here',
+            italics: true, color: LGRAY, size: 22,
+          })],
+        })],
+      })],
+    })],
+  }),
   // Final encouragement
-  new Paragraph({ spacing: { before: 400 }, children: [new TextRun('')] }),
+  new Paragraph({ spacing: { before: 200 }, children: [new TextRun('')] }),
   shadedBar('🎉  恭喜你完成 Day 1 练习册! Great job, Little Artist!', GREEN, 22),
 ];
 
@@ -418,6 +460,7 @@ const doc = new Document({
       ...section2Children,
       ...section3Children,
       ...section4Children,
+      ...section5Children,
     ],
   }],
 });
