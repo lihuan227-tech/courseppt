@@ -451,21 +451,16 @@ s=example_slide_generic("🏺","雕塑","兵马俑","Terracotta Warriors",
 # DRAMA 戏剧 — connect + overview + examples + experience
 # ============================================================
 s=connect_slide("🎭","戏剧","Drama",PURPLE,[
-    ("你喜欢演戏吗？","Do you like acting?"),
+    ("你知道什么是「戏剧」吗？","Do you know what drama is?"),
     ("你上过台吗？","Have you ever been on stage?"),
     ("能做开心 / 难过 / 生气的脸吗？","Can you make a happy / sad / angry face?"),
 ]);n+=1;pn(s,n)
 
 s=type_overview_slide("🎭","戏剧","Drama",PURPLE,
     "戏剧 = 演员 + 故事 + 舞台！",
-    [("🎭","京剧","Peking Opera"),("🎼","音乐剧","Musical"),
-     ("🎪","话剧","Spoken Drama"),("🎠","木偶戏","Puppet"),
-     ("🎬","歌剧","Opera"),("🎠","皮影","Shadow Play")]);n+=1;pn(s,n)
-
-s=example_slide_generic("🎭","京剧","《霸王别姬》","Farewell My Concubine",
-    "中国传统戏曲 · 200 多年历史",
-    "演员画脸谱，不同颜色 = 不同人物！\nPainted faces — each color = a character!",
-    "📷 京剧脸谱 Peking Opera",PURPLE);n+=1;pn(s,n)
+    [("🎼","音乐剧","Musical"),("🎪","话剧","Spoken Drama"),
+     ("🎠","木偶戏","Puppet"),("🌑","皮影","Shadow Play"),
+     ("🤡","哑剧","Mime"),("🎬","歌剧","Opera")]);n+=1;pn(s,n)
 
 s=example_slide("🎼","音乐剧","狮子王","The Lion King",
     "百老汇音乐剧 · 1997 年首演",
