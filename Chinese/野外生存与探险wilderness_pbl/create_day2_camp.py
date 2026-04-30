@@ -357,18 +357,38 @@ n+=1;s=zone_slide("🛡️","安全区","Safety Zone",SAFCL,
 pn(s,n)
 notes(s,"急救包: 创可贴、消毒湿巾、水、哨子。哨子是迷路时的工具!")
 
-# 13. WRONG CAMP ACTIVITY INTRO
-s=ns();bg(s,CREAM);hb(s,"🔍 找出 5 个错误!  Find 5 Mistakes!",ALERT)
-tb(s,0.4,0.9,9.2,0.5,"看一看 — 这个营地哪里不对？",sz=22,b=True,c=ALERT,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.45,9.2,0.4,"Look — what's WRONG with this camp?",sz=14,italic_c=False,c=GRAY,a=PP_ALIGN.CENTER) if False else tb(s,0.4,1.45,9.2,0.4,"Look — what's WRONG with this camp?",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
-# Big diagram placeholder
-ib(s,1.5,1.95,7.0,2.6,"📷 「错的营地」插画 / Wrong camp diagram (老师替换或手绘)")
-# Counter
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.65),Inches(9.2),Inches(0.55))
-sh.fill.solid();sh.fill.fore_color.rgb=ALERT;sh.line.fill.background()
-tb(s,0.5,4.72,9.0,0.4,"🎯 找到 5 个错误 = 探险家 1 级 ⭐  /  Find all 5 = Level 1 Explorer ⭐",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# 13. WRONG CAMP ACTIVITY INTRO — using real image
+s=ns();bg(s,CREAM);hb(s,"🔍 这里能搭营吗？  Can we camp HERE?",ALERT)
+tb(s,0.4,0.9,9.2,0.4,"看一看 — 这个地方搭营好不好？为什么？",sz=18,b=True,c=ALERT,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.27,9.2,0.3,"Look — is this a good spot? Why or why not?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Real image: D2_露营地点选择.png (1402x1122 ≈ 5:4). Fit into 4.6"w × 3.0"h on left.
+import os
+_img_path="/Users/Huan/projects/summercourse/Chinese/野外生存与探险wilderness_pbl/D2_露营地点选择.png"
+if os.path.exists(_img_path):
+    s.shapes.add_picture(_img_path,Inches(0.3),Inches(1.6),Inches(5.6),Inches(3.05))
+else:
+    ib(s,0.3,1.6,5.6,3.05,"📷 D2_露营地点选择.png")
+# Right: question prompts
+panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.05),Inches(1.6),Inches(3.65),Inches(3.05))
+panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=ALERT;panel.line.width=Pt(2.5)
+head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.05),Inches(1.6),Inches(3.65),Inches(0.45))
+head.fill.solid();head.fill.fore_color.rgb=ALERT;head.line.fill.background()
+tb(s,6.2,1.66,3.45,0.35,"🤔 想一想 — 为什么不好？",sz=13,b=True,c=WHITE)
+tf=tb(s,6.2,2.15,3.4,0.35,"❓ 帐篷搭在哪里？",sz=12,b=True,c=DARK)
+ap(tf," ",sz=6)
+ap(tf,"❓ 离水太近吗？",sz=12,b=True,c=DARK)
+ap(tf," ",sz=6)
+ap(tf,"❓ 上面有什么 (大树、岩石)?",sz=12,b=True,c=DARK)
+ap(tf," ",sz=6)
+ap(tf,"❓ 地平不平？(斜坡?)",sz=12,b=True,c=DARK)
+ap(tf," ",sz=6)
+ap(tf,"❓ 下大雨会怎样？",sz=12,b=True,c=DARK)
+# Sentence frame at bottom
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.78),Inches(9.4),Inches(0.5))
+sh.fill.solid();sh.fill.fore_color.rgb=WARM;sh.line.color.rgb=SUN;sh.line.width=Pt(2)
+tb(s,0.5,4.85,9.0,0.35,"💬 这里 ___ 安全, 因为 ___ 。/ This place is (not) safe, because ___.",sz=12,b=True,c=DARK)
 n+=1;pn(s,n)
-notes(s,"老师准备 (低投入):\n• 在白板上画一个简单的 4 区域营地, 故意放错 5 个东西。\n• 学生举手, 每说对 1 个画一个 ⭐。\n• 5 颗星 = 班级升 Level 1。\n• 也可用打印的图片让学生圈出错误。")
+notes(s,"老师玩法 (5 分钟):\n• 让学生先 30 秒自己看图, 找问题\n• 然后举手说: 「我觉得 ___ 不好, 因为 ___」\n• 把答案写在白板上, 数一数找到几个问题。\n• 关键问题示例:\n  - 帐篷太靠近水/河边 (会被洪水)\n  - 帐篷在斜坡上 (睡觉会滚)\n  - 帐篷在大树下 (枯枝)\n  - 火堆太靠近帐篷\n  - 食物放在外面没收\n• 找到 3+ 个 = 探险家 1 级 ⭐")
 
 # 14. WRONG CAMP — answer reveal
 s=ns();bg(s,CREAM);hb(s,"💡 答案揭晓  The 5 Mistakes",ALERT)
