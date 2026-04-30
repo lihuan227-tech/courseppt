@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 小小艺术家 Little Artist Unit — Day 2: 跟着大师学画画 Follow the Masters
 Picasso · Matisse · Van Gogh
@@ -297,43 +298,45 @@ tb(s,0.4,4.97,9.2,0.28,"👉 让学生先说说自己知道的, 老师再引出�
 pn(s,n)
 notes(s,"老师备课:\n• 这一页不要讲太多定义, 只做三件事:\n  1. 让学生「说出自己知道的」(参与感)\n  2. 从「班里画得好的人」过渡到「大师」(理解更自然)\n  3. 引出「艺术风格不同」(为后面铺垫)\n• 4 个问题不用每个都答 — 老师按节奏挑 2-3 个\n• 学生答案多样: 「画得快的人」「我妈妈」「我自己」都接受!\n• 关键引导: 「他们都很厉害对不对？我们叫这种人『大师』」")
 
-# 6 Master = ? + 3-painting tease
+# 6 Master = ? + 3-painting tease — bigger picture frames, smaller text
 s=ns();n+=1;bg(s,CREAM);hb(s,"💡 大师 = ?",MAGENTA)
-# Slim definition callout
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.8),Inches(0.95),Inches(8.4),Inches(0.75))
+# Slim definition callout (smaller)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(0.95),Inches(8.0),Inches(0.6))
 sh.fill.solid();sh.fill.fore_color.rgb=MAGENTA;sh.line.fill.background()
-tb(s,1.0,0.98,8.0,0.45,"大师 = 在艺术方面非常厉害的人",sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1.0,1.4,8.0,0.3,"A Master = someone VERY good at art",sz=12,c=YELLOW,a=PP_ALIGN.CENTER)
-# 3 small bubbles — what makes a master
-bubbles=[("🎨","画得很好","Draws really well",PICASSO),
+tb(s,1.1,0.98,7.8,0.32,"大师 = 在艺术方面非常厉害的人",sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.1,1.3,7.8,0.22,"A Master = someone VERY good at art",sz=10,c=YELLOW,a=PP_ALIGN.CENTER)
+# 3 small bubbles — what makes a master (compressed)
+bubbles=[("🎨","画得很好","Draws well",PICASSO),
          ("⭐","有自己的风格","Has own STYLE",MATISSE),
          ("🌍","很多人都认识","Everyone knows them",VANGOGH)]
 for i,(em,cn,en,cl) in enumerate(bubbles):
     x=0.5+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(3.0),Inches(1.0))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,1.92,0.6,0.55,em,sz=24,a=PP_ALIGN.CENTER)
-    tb(s,x+0.7,1.95,2.2,0.4,cn,sz=15,b=True,c=cl)
-    tb(s,x+0.7,2.35,2.2,0.3,en,sz=10,c=GRAY)
-# Tease section: 3 master paintings + "which is different?"
-tb(s,0.4,3.0,9.2,0.35,"🤔 所有画家画得一样吗？  Do all artists draw the SAME way?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.65),Inches(3.0),Inches(0.7))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2)
+    tb(s,x+0.1,1.7,0.5,0.5,em,sz=20,a=PP_ALIGN.CENTER)
+    tb(s,x+0.65,1.7,2.3,0.32,cn,sz=13,b=True,c=cl)
+    tb(s,x+0.65,2.02,2.3,0.25,en,sz=9,c=GRAY)
+# Bridge question (compact)
+tb(s,0.4,2.5,9.2,0.3,"🤔 所有画家画得一样吗？  Do all artists draw the SAME way?",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+# 3 master paintings — bigger image frames, image fills card top
 examples=[
     ("📷 《哭泣的女人》","《哭泣的女人》","毕加索",PICASSO,"weeping_woman","en.wikipedia.org/wiki/The_Weeping_Woman"),
     ("📷 《伊卡洛斯》","《伊卡洛斯》","马蒂斯",MATISSE,"icarus","搜「Matisse Icarus」"),
     ("📷 《星夜》","《星夜》","梵高",VANGOGH,"starry_night","en.wikipedia.org/wiki/The_Starry_Night"),
 ]
 for i,(img_lb,title,who,cl,key,url) in enumerate(examples):
-    x=0.5+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(3.45),Inches(3.0),Inches(1.5))
+    x=0.4+i*3.1
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(2.85),Inches(2.95),Inches(2.15))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    ib(s,x+0.1,3.55,2.0,1.3,img_lb,url=url,key=key)
-    tb(s,x+2.15,3.6,0.8,0.4,title,sz=10,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+2.15,4.0,0.8,0.3,who,sz=11,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+2.15,4.4,0.8,0.3,"看!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-# Bottom inquiry strip
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.05),Inches(9.4),Inches(0.4))
+    # Big image — top of card, full width
+    ib(s,x+0.1,2.95,2.75,1.55,img_lb,url=url,key=key)
+    # Compact caption row at bottom
+    tb(s,x+0.1,4.55,2.75,0.25,title,sz=11,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.78,2.75,0.18,who,sz=9,c=DARK,a=PP_ALIGN.CENTER)
+# Bottom inquiry strip (compact)
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.1),Inches(9.4),Inches(0.32))
 sh.fill.solid();sh.fill.fore_color.rgb=MAGENTA;sh.line.fill.background()
-tb(s,0.4,5.08,9.2,0.35,"哪一幅最不一样？你最喜欢哪个？  Which is different? Which do you like?",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.4,5.13,9.2,0.28,"哪一幅最不一样？你最喜欢哪个？  Which is different? Which do you like?",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
 notes(s,"老师备课:\n• 这是「大师概念 + 引出三位画家」的桥梁页\n• 让学生看 3 幅画, 不告诉名字 → 「都是大师画的, 但都不一样」\n• 接下来的「Today's 3 Masters」slide 会正式介绍每位画家\n• 互动: 让学生举手投票「最喜欢哪一幅？」\n• 关键铺垫: 「同样是大师, 风格不一样」 → 为接下来的 D2 内容做准备")
 
@@ -672,20 +675,25 @@ for r,rd in enumerate(rows):
             if r%2==1:cl.fill.solid();cl.fill.fore_color.rgb=RGBColor(0xF7,0xF3,0xE9)
 pn(s,n)
 
-# 23 Whose style guess
+# 23 Whose style guess — fresh artworks not shown before, similar style as clue
 s=ns();n+=1;bg(s,CREAM);hb(s,"🕵️ 这是谁的风格？  Whose Style?",MAGENTA)
-tb(s,0.4,0.85,9,0.35,"看图，猜大师！(口头) Look and guess the master!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-mysteries=[("？1","旋转的星空","Swirly stars",VANGOGH),("？2","三角形的脸","Triangle face",PICASSO),("？3","彩色剪纸","Cut-out shapes",MATISSE)]
-for i,(num,hint,en,cl) in enumerate(mysteries):
+tb(s,0.4,0.85,9,0.35,"看图，猜大师！(都是新的画 — 看风格) Look and guess the master from style!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+mysteries=[
+    ("？1","旋转的星空 / 短粗笔触","Swirly stars / short brush",VANGOGH,"📷 《柏树》Cypresses (1889)"),
+    ("？2","几何块脸","Geometric face",PICASSO,"📷 《玛雅与玩偶》Maya with Doll (1938)"),
+    ("？3","彩色剪纸 / 大块色形状","Cut-out shapes",MATISSE,"📷 《海洋生物》Beasts of the Sea (1950)"),
+]
+for i,(num,hint,en,cl,img_lb) in enumerate(mysteries):
     x=0.3+i*3.2
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.3),Inches(3.0),Inches(3.7))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
     tb(s,x+0.1,1.4,2.8,0.5,num,sz=26,b=True,c=cl,a=PP_ALIGN.CENTER)
-    ib(s,x+0.2,1.95,2.6,2.0,"📷 神秘画作 Mystery painting")
-    tb(s,x+0.1,4.05,2.8,0.4,f"线索: {hint}",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,4.45,2.8,0.3,f"Clue: {en}",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,4.75,2.8,0.3,"是谁？Who is it?",sz=12,b=True,c=cl,a=PP_ALIGN.CENTER)
+    ib(s,x+0.2,1.95,2.6,2.0,img_lb)
+    tb(s,x+0.1,4.05,2.8,0.4,f"线索: {hint}",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.43,2.8,0.3,f"Clue: {en}",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,4.73,2.8,0.3,"是谁？Who is it?",sz=12,b=True,c=cl,a=PP_ALIGN.CENTER)
 pn(s,n)
+notes(s,"老师备课 — 答案 + 出处:\n\n？1 → 梵高 Van Gogh 《柏树》Cypresses (1889)\n   • 这幅画和《星夜》是同一时期, 但学生没见过\n   • 同样的旋转笔触 + 戏剧性天空 → 风格相同\n   • 学生应该从「螺旋天空 / 短粗笔触」识别出梵高\n\n？2 → 毕加索 Picasso《玛雅与玩偶》Maya with Doll (1938)\n   • 毕加索画自己女儿 Maya 抱玩偶 — 立体派肖像\n   • 几何块脸 + 不对称的眼睛 → 风格相同\n   • 提示: 「同一张脸里有不同角度」是毕加索特点\n\n？3 → 马蒂斯 Matisse《海洋生物》Beasts of the Sea (1950)\n   • 蓝绿橙黄等彩色长条 + 海洋图案剪贴\n   • 和《蜗牛》《波利尼西亚, 海》是同一晚期剪纸系列\n   • 学生应从「大块剪纸色彩 + 没有线条」识别马蒂斯\n\n📌 教学要点:\n• 这些画学生没在前几页看过, 只能靠「风格」判断\n• 鼓励学生说出自己的判断依据 — 「我看到 ___, 所以是 ___」\n• 链接前面: 「梵高的笔触/毕加索的立体/马蒂斯的剪纸」")
 
 # 24 SESSION 2 DIVIDER
 div("Session 2  下午","复习 + 语言目标\n👀 我会认 4 词  ·  ✍️ 我会写 3 词",SKY,"📖");n+=1
