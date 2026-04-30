@@ -117,6 +117,70 @@ def type_overview_slide(emoji, name_cn, name_en, color, hint, subtypes):
         tb(s,x+0.1,y+1.15,card_w-0.2,0.3,sen,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
     return s
 
+def connect_slide(emoji, art_cn, art_en, color, questions):
+    """2-3 connection questions before introducing an art form."""
+    s=ns();bg(s,CREAM)
+    hb(s,f"🤝 你认识 {art_cn} 吗？  Do You Know {art_en}?",color)
+    tb(s,0.4,0.9,9.2,0.3,"先聊一聊 — 分享你的经验! / Let's chat — share what YOU know!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+    # Big emoji circle on left
+    sh=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.8),Inches(1.5),Inches(3.0),Inches(3.0))
+    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
+    tb(s,0.8,2.2,3.0,1.6,emoji,sz=110,c=WHITE,a=PP_ALIGN.CENTER)
+    # Question cards on right
+    nq=len(questions)
+    total_h=3.5
+    gap=0.15
+    card_h=(total_h-gap*(nq-1))/nq
+    for i,(q_cn,q_en) in enumerate(questions):
+        y=1.5+i*(card_h+gap)
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.2),Inches(y),Inches(5.5),Inches(card_h))
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2.5)
+        nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(4.35),Inches(y+(card_h-0.5)/2),Inches(0.5),Inches(0.5))
+        nb.fill.solid();nb.fill.fore_color.rgb=color;nb.line.fill.background()
+        tb(s,4.35,y+(card_h-0.5)/2+0.05,0.5,0.4,str(i+1),sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+        tb(s,5.0,y+0.13,4.55,0.4,q_cn,sz=14,b=True,c=DARK)
+        tb(s,5.0,y+0.55,4.55,0.3,q_en,sz=10,c=GRAY)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.05),Inches(9.4),Inches(0.4))
+    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
+    tb(s,0.4,5.08,9.2,0.32,"💬 没有错答案 — 都说说看! / No wrong answers — everyone share!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    return s
+
+def experience_slide(emoji, art_cn, art_en, color, instruction_cn, instruction_en, students_do, questions, youtube_url):
+    """Let's Experience It! — 1-2 min activity with YouTube clip."""
+    s=ns();bg(s,CREAM)
+    hb(s,f"🎬 一起来试试 {art_cn}!  Let's Experience {art_en}!",color)
+    # LEFT: video placeholder + YouTube link
+    ib(s,0.3,1.0,4.5,2.85,f"📺 YouTube 视频 / Video clip\n({art_en} activity)")
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.95),Inches(4.5),Inches(0.5))
+    sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
+    tb(s,0.4,4.0,4.4,0.4,f"🔗 {youtube_url}",sz=9,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    # Big emoji indicator
+    tb(s,0.3,4.55,4.5,0.45,emoji+" 1-2 minutes 动起来! Move it!",sz=14,b=True,c=color,a=PP_ALIGN.CENTER)
+    # RIGHT — 3 stacked panels
+    # 1. Teacher instruction
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.95),Inches(1.0),Inches(4.75),Inches(1.15))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
+    tb(s,5.1,1.05,4.5,0.3,"👩‍🏫 老师说明 Teacher Instruction",sz=11,b=True,c=color)
+    tb(s,5.1,1.35,4.5,0.35,instruction_cn,sz=13,b=True,c=DARK)
+    tb(s,5.1,1.72,4.5,0.35,instruction_en,sz=10,c=GRAY)
+    # 2. Students do
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.95),Inches(2.25),Inches(4.75),Inches(1.0))
+    sh.fill.solid();sh.fill.fore_color.rgb=YELLOW;sh.line.fill.background()
+    tb(s,5.1,2.3,4.5,0.3,"🙋 学生做什么 Students Do",sz=11,b=True,c=DARK)
+    tb(s,5.1,2.6,4.5,0.6,students_do,sz=13,b=True,c=DARK)
+    # 3. Reflection questions
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.95),Inches(3.35),Inches(4.75),Inches(1.65))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=color;sh.line.width=Pt(2)
+    tb(s,5.1,3.4,4.5,0.3,"❓ 试完聊一聊 Reflect",sz=11,b=True,c=color)
+    tf=tb(s,5.1,3.7,4.55,0.35,f"❓ {questions[0]}",sz=12,c=DARK)
+    for q in questions[1:]:
+        ap(tf,"",sz=4)
+        ap(tf,f"❓ {q}",sz=12,c=DARK)
+    pn=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.95),Inches(5.05),Inches(4.75),Inches(0.4))
+    pn.fill.solid();pn.fill.fore_color.rgb=color;pn.line.fill.background()
+    tb(s,5.1,5.08,4.5,0.32,"⏱️ 1-2 分钟 / 1-2 minutes",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    return s
+
 def word_card_read(w,py,en,sent,img,color=MAGENTA):
     s=ns();bg(s,CREAM);hb(s,"👀 我会认  I Can Read",color)
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(4.5),Inches(2.5))
@@ -256,8 +320,14 @@ for i,(em,cn,en,cl) in enumerate(forms):
 pn(s,n)
 
 # ============================================================
-# PAINTING 绘画 — overview + 5 example slides
+# PAINTING 绘画 — connect + overview + examples
 # ============================================================
+s=connect_slide("🎨","绘画","Painting",MAGENTA,[
+    ("你喜欢画画吗？","Do you like drawing?"),
+    ("你最喜欢画什么？","What do you like to draw?"),
+    ("你最喜欢什么颜色？","What's your favorite color?"),
+]);n+=1;pn(s,n)
+
 s=type_overview_slide("🎨","绘画","Painting",MAGENTA,
     "绘画有很多种！看看你认识哪些？",
     [("🖼️","油画","Oil Painting"),("🖌️","水墨画","Ink Painting"),
@@ -307,8 +377,14 @@ s=example_slide_generic("🎭","混合媒介 Mixed Media","什么都可以","Any
     "📷 混合媒介作品 (绘画 + 拼贴 + 实物)",MAGENTA);n+=1;pn(s,n)
 
 # ============================================================
-# MUSIC 音乐 — overview + 4 example slides
+# MUSIC 音乐 — connect + overview + examples + experience
 # ============================================================
+s=connect_slide("🎵","音乐","Music",SKY,[
+    ("你喜欢音乐吗？","Do you like music?"),
+    ("你最喜欢什么音乐？","What kind of music do you like?"),
+    ("你会乐器吗？","Do you play any instrument?"),
+]);n+=1;pn(s,n)
+
 s=type_overview_slide("🎵","音乐","Music",SKY,
     "音乐可以用不同的乐器 + 声音！",
     [("🎹","钢琴","Piano"),("🎻","小提琴","Violin"),
@@ -336,8 +412,25 @@ s=example_slide_generic("🥁","鼓 Drums","咚咚咚！","Boom Boom Boom!",
     "📷 鼓 Drums",SKY);n+=1;pn(s,n)
 
 # ============================================================
-# SCULPTURE 雕塑 — overview + 2 example slides
+# MUSIC EXPERIENCE — Let's try it!
 # ============================================================
+s=experience_slide("🎵","音乐","Music",SKY,
+    "看视频, 跟着节奏!",
+    "Watch the clip and follow the rhythm.",
+    "拍手 / 拍腿 / 跟着动!\nClap, tap, or move with the beat.",
+    ["简单还是难？  Was it easy or hard?",
+     "音乐让你感觉怎么样？  How did the music make you feel?"],
+    "youtube.com/watch?v=KUXYMgqw-eg");n+=1;pn(s,n)
+
+# ============================================================
+# SCULPTURE 雕塑 — connect + overview + examples
+# ============================================================
+s=connect_slide("🗿","雕塑","Sculpture",GREEN_L,[
+    ("你见过雕像吗？在哪里？","Have you seen sculptures? Where?"),
+    ("你玩过黏土 / 橡皮泥吗？","Have you played with clay or play-dough?"),
+    ("你想做一个什么雕像？","What sculpture would you make?"),
+]);n+=1;pn(s,n)
+
 s=type_overview_slide("🗿","雕塑","Sculpture",GREEN_L,
     "雕塑是立体的艺术，用石头/木头/黏土做！",
     [("🗿","石雕","Stone"),("🪵","木雕","Wood"),
@@ -355,8 +448,14 @@ s=example_slide_generic("🏺","雕塑","兵马俑","Terracotta Warriors",
     "📷 兵马俑 Terracotta Warriors",GREEN_L);n+=1;pn(s,n)
 
 # ============================================================
-# DRAMA 戏剧 — overview + 2 example slides
+# DRAMA 戏剧 — connect + overview + examples + experience
 # ============================================================
+s=connect_slide("🎭","戏剧","Drama",PURPLE,[
+    ("你喜欢演戏吗？","Do you like acting?"),
+    ("你上过台吗？","Have you ever been on stage?"),
+    ("能做开心 / 难过 / 生气的脸吗？","Can you make a happy / sad / angry face?"),
+]);n+=1;pn(s,n)
+
 s=type_overview_slide("🎭","戏剧","Drama",PURPLE,
     "戏剧 = 演员 + 故事 + 舞台！",
     [("🎭","京剧","Peking Opera"),("🎼","音乐剧","Musical"),
@@ -374,8 +473,25 @@ s=example_slide("🎼","音乐剧","狮子王","The Lion King",
     "📷 狮子王音乐剧 Lion King",PURPLE);n+=1;pn(s,n)
 
 # ============================================================
-# FILM 电影 — overview + 2 example slides
+# DRAMA EXPERIENCE — Reaction Acting Game
 # ============================================================
+s=experience_slide("🎭","戏剧","Drama",PURPLE,
+    "看演员热身游戏 → 一起玩!",
+    "Watch the warm-up game, then play together.",
+    "做出表情: 开心 / 难过 / 生气 / 害怕!\nMake faces: happy / sad / angry / scared!",
+    ["哪个表情最难做？  Which face was hardest?",
+     "演戏好玩吗？  Was acting fun?"],
+    "youtube.com/watch?v=zhmcVVTS3mI (Kids Acting Warm-up)");n+=1;pn(s,n)
+
+# ============================================================
+# FILM 电影 — connect + overview + examples
+# ============================================================
+s=connect_slide("🎬","电影","Film",YELLOW,[
+    ("你喜欢看电影吗？","Do you like watching movies?"),
+    ("你最喜欢的电影是什么？","What's your favorite movie?"),
+    ("动画 还是 真人？","Animation or live action?"),
+]);n+=1;pn(s,n)
+
 s=type_overview_slide("🎬","电影","Film",YELLOW,
     "电影用镜头讲故事！",
     [("🎞️","动画","Animation"),("🎬","真人","Live Action"),
@@ -393,8 +509,14 @@ s=example_slide("🎞️","动画电影","功夫熊猫","Kung Fu Panda",
     "📷 功夫熊猫 Kung Fu Panda",YELLOW);n+=1;pn(s,n)
 
 # ============================================================
-# DANCE 舞蹈 — overview + 3 example slides
+# DANCE 舞蹈 — connect + overview + examples + experience
 # ============================================================
+s=connect_slide("💃","舞蹈","Dance",CORAL,[
+    ("你喜欢跳舞吗？","Do you like dancing?"),
+    ("什么时候你想跳舞？","When do you dance?"),
+    ("给我们看一个动作!","Can you show us one dance move?"),
+]);n+=1;pn(s,n)
+
 s=type_overview_slide("💃","舞蹈","Dance",CORAL,
     "舞蹈用身体讲故事！",
     [("🩰","芭蕾","Ballet"),("🪭","中国舞","Chinese Dance"),
@@ -415,6 +537,17 @@ s=example_slide_generic("🕺","街舞","Hip-hop","Street Dance",
     "现代都市舞蹈 Modern urban",
     "快节奏 + 酷动作 = 自由表达！\nFast beats + cool moves = freedom!",
     "📷 街舞 Hip-hop",CORAL);n+=1;pn(s,n)
+
+# ============================================================
+# DANCE EXPERIENCE — Move and Freeze
+# ============================================================
+s=experience_slide("💃","舞蹈","Dance",CORAL,
+    "音乐响 → 动起来! 音乐停 → 定住不动!",
+    "Music plays → MOVE!  Music stops → FREEZE!",
+    "跟着视频跳 — 用全身!\nDance with the video — use your whole body!",
+    ["你定住的动作是什么？  What was your freeze pose?",
+     "你最喜欢哪一段？  Which part did you like most?"],
+    "youtube.com/watch?v=388Q44ReOWE (Move and Freeze)");n+=1;pn(s,n)
 
 # ============================================================
 # 11 ART IN DAILY LIFE — Is this art?
