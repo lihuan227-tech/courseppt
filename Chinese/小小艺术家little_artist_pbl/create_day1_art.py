@@ -56,6 +56,12 @@ def hb(s,txt,c=MAGENTA,t=0.15):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(t),Inches(9.4),Inches(0.55));sh.fill.solid();sh.fill.fore_color.rgb=c;sh.line.fill.background()
     tb(s,0.4,t+0.03,9.2,0.5,txt,sz=20,b=True,c=WHITE)
 def pn(s,n): tb(s,9.0,5.25,0.8,0.3,str(n),sz=10,c=GRAY,a=PP_ALIGN.RIGHT)
+def notes(s,text):
+    nf=s.notes_slide.notes_text_frame
+    lines=text.split("\n")
+    nf.text=lines[0]
+    for line in lines[1:]:
+        p=nf.add_paragraph();p.text=line
 def div(title,sub,color,emoji=""):
     s=ns();bg(s,color)
     tb(s,1,1.5,8,1.2,f"{emoji} {title}",sz=42,b=True,c=WHITE,a=PP_ALIGN.CENTER)
@@ -550,72 +556,102 @@ s=experience_slide("💃","舞蹈","Dance",CORAL,
 s=ns();n+=1;bg(s,CREAM);hb(s,"🔍 生活中的艺术  Art in Daily Life",YELLOW)
 tb(s,0.4,0.9,9,0.4,"哪些是艺术？Point to the art you see every day!",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
 items=[
-    ("👕","衣服图案","Clothes patterns",MAGENTA),
-    ("🏛️","漂亮建筑","Buildings",SKY),
-    ("🍱","摆盘艺术","Food plating",CORAL),
-    ("📱","手机壁纸","Phone wallpaper",PURPLE),
-    ("📚","绘本插图","Book drawings",GREEN_L),
-    ("🎪","公园雕塑","Park sculpture",YELLOW),
+    ("衣服图案","Clothes patterns",MAGENTA),
+    ("漂亮建筑","Buildings",SKY),
+    ("摆盘艺术","Food plating",CORAL),
+    ("手机壁纸","Phone wallpaper",PURPLE),
+    ("绘本插图","Book drawings",GREEN_L),
+    ("公园雕塑","Park sculpture",YELLOW),
 ]
-for i,(em,cn,en,cl) in enumerate(items):
+for i,(cn,en,cl) in enumerate(items):
     col=i%3;row=i//3
     x=0.3+col*3.2;y=1.35+row*2.0
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.8))
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.85))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,y+0.1,2.8,0.7,em,sz=36,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,y+0.95,2.8,0.45,cn,sz=17,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,y+1.4,2.8,0.3,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+    # Image placeholder (manual insert)
+    ib(s,x+0.15,y+0.1,2.7,0.95,f"📷 {cn}")
+    tb(s,x+0.1,y+1.1,2.8,0.4,cn,sz=16,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.1,y+1.48,2.8,0.3,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
 # 12 ART EXPRESSES EMOTIONS
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"❤️ 艺术表达心情  Art Expresses Emotions",E_MOOD)
-tb(s,0.4,0.9,9,0.4,"不同颜色 / 不同音乐 = 不同心情",sz=15,c=GRAY,a=PP_ALIGN.CENTER)
-mo=[
-    ("😄","开心","HAPPY",E_HAPPY,"亮色 Bright colors\n快音乐 Fast music"),
-    ("😢","难过","SAD",E_SAD,"蓝色 Blue tones\n慢音乐 Slow music"),
-    ("😡","生气","ANGRY",E_ANGRY,"红色 Red\n大声音 Loud sound"),
-    ("😍","喜欢","LOVE",E_LOVE,"粉色 Pink\n温柔音乐 Gentle music"),
-]
-for i,(em,cn,en,cl,d) in enumerate(mo):
-    x=0.3+i*2.4
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.4),Inches(2.2),Inches(3.7))
+tb(s,0.4,0.85,9.2,0.32,"同一个心情 — 在不同艺术里，表达方式都不一样!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.28,"Same feeling, different art forms — different ways to show it!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# Column headers — 4 art forms
+art_forms=[("🎨 绘画","Painting",MAGENTA),("🎵 音乐","Music",SKY),("🎭 戏剧","Drama",PURPLE),("💃 舞蹈","Dance",CORAL)]
+col_w=1.95;header_y=1.55;left_w=1.45
+for i,(cn,en,cl) in enumerate(art_forms):
+    x=left_w+0.1+i*(col_w+0.05)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(header_y),Inches(col_w),Inches(0.55))
     sh.fill.solid();sh.fill.fore_color.rgb=cl;sh.line.fill.background()
-    # Dark text on the bright yellow (happy) card for contrast; white on the others
-    txt_c = DARK if cl == E_HAPPY else WHITE
-    tb(s,x+0.1,1.5,2.0,0.7,em,sz=46,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.3,2.0,0.4,cn,sz=24,b=True,c=txt_c,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.75,2.0,0.3,en,sz=12,c=txt_c,a=PP_ALIGN.CENTER)
-    ls=d.split('\n')
-    tf=tb(s,x+0.1,3.25,2.0,0.4,ls[0],sz=12,c=txt_c,a=PP_ALIGN.CENTER)
-    for l in ls[1:]:ap(tf,l,sz=12,c=txt_c,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,header_y+0.04,col_w-0.1,0.28,cn,sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,header_y+0.31,col_w-0.1,0.22,en,sz=9,c=WARM,a=PP_ALIGN.CENTER)
+# 3 emotion rows
+emotions=[
+    ("😄","开心","HAPPY",E_HAPPY,["亮色\n黄+橙+粉","快节奏\n响亮欢快","笑脸 + 大动作\n跳起来","跳跃 + 转圈"]),
+    ("😢","难过","SAD",  E_SAD,  ["蓝色 / 灰色\n冷色调",  "慢, 轻\n钢琴慢调",  "哭脸 + 低头\n慢慢走",  "慢动作 / 蹲下"]),
+    ("😡","生气","ANGRY",E_ANGRY,["红色 + 黑色\n粗线条",  "大声 / 鼓\n快重",     "皱眉 + 跺脚\n大声喊",  "用力 + 重重的步"]),
+]
+row_h=1.05;y0=2.15
+for ri,(em,cn,en,e_cl,cells) in enumerate(emotions):
+    y=y0+ri*(row_h+0.05)
+    # emotion label (left col)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(y),Inches(left_w),Inches(row_h))
+    sh.fill.solid();sh.fill.fore_color.rgb=e_cl;sh.line.fill.background()
+    txt_c=DARK if e_cl==E_HAPPY else WHITE
+    tb(s,0.35,y+0.05,left_w-0.1,0.45,em,sz=28,c=txt_c,a=PP_ALIGN.CENTER)
+    tb(s,0.35,y+0.55,left_w-0.1,0.28,cn,sz=14,b=True,c=txt_c,a=PP_ALIGN.CENTER)
+    tb(s,0.35,y+0.82,left_w-0.1,0.2,en,sz=9,c=txt_c,a=PP_ALIGN.CENTER)
+    # 4 art-form cells
+    for ci,cell_text in enumerate(cells):
+        x=left_w+0.1+ci*(col_w+0.05)
+        col_color=art_forms[ci][2]
+        sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(col_w),Inches(row_h))
+        sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=col_color;sh.line.width=Pt(2)
+        ls=cell_text.split('\n')
+        tf=tb(s,x+0.06,y+0.18,col_w-0.12,0.4,ls[0],sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+        for l in ls[1:]:
+            ap(tf,l,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
 # 13 IS THIS ART? — judgment game
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🤔 这是艺术吗？  Is This Art?",YELLOW)
-tb(s,0.4,0.85,9,0.35,"看图，举手说「是」或「不是」！Show me yes 👍 or no 👎",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
-# 4 cards with big placeholders
-examples=[
-    ("🖼️","蒙娜丽莎","Mona Lisa","✅ 是",GREEN_OK),
-    ("🌳","一棵树","A tree","🤔 看情况",YELLOW),
-    ("🎵","一首歌","A song","✅ 是",GREEN_OK),
-    ("🗑️","一堆垃圾","Trash","❓ 讨论一下",CORAL),
+s=ns();n+=1;bg(s,CREAM);hb(s,"🤔 这是什么艺术？  What Art Form Is This?",YELLOW)
+tb(s,0.4,0.85,9.2,0.32,"看图分类 — 它属于哪种艺术？也可以是好几种!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.28,"Sort each picture — what art form? It can be MORE than one!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# 6 image cards in 2x3 grid (mix of single-form + multi-form items)
+items=[
+    ("📷 一幅画 / 蒙娜丽莎","1 种","1 form",MAGENTA),
+    ("📷 一首歌 / 钢琴曲","1 种","1 form",SKY),
+    ("📷 一座雕像","1 种","1 form",GREEN_L),
+    ("📷 动画片 (e.g. 哆啦A梦)","2 种!","2 forms!",YELLOW),
+    ("📷 音乐剧《狮子王》","3 种!","3 forms!",PURPLE),
+    ("📷 芭蕾舞剧《天鹅湖》","2 种!","2 forms!",CORAL),
 ]
-for i,(em,cn,en,ans,cl) in enumerate(examples):
-    col=i%2;row=i//2
-    x=0.3+col*4.75;y=1.25+row*1.95
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.6),Inches(1.8))
+for i,(img_lb,hint_cn,hint_en,cl) in enumerate(items):
+    col=i%3;row=i//3
+    x=0.3+col*3.2;y=1.55+row*1.5
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.4))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.15,y+0.15,1.0,0.9,em,sz=38,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+1.3,y+0.15,3.2,0.45,cn,sz=18,b=True,c=DARK)
-    tb(s,x+1.3,y+0.6,3.2,0.35,en,sz=12,c=GRAY)
-    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+1.3),Inches(y+1.05),Inches(3.1),Inches(0.55))
-    sh2.fill.solid();sh2.fill.fore_color.rgb=cl;sh2.line.fill.background()
-    tb(s,x+1.4,y+1.1,3.0,0.5,ans,sz=16,b=True,c=WHITE)
+    ib(s,x+0.1,y+0.1,1.95,1.2,img_lb)
+    tb(s,x+2.1,y+0.2,0.85,0.4,"?",sz=24,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+2.1,y+0.7,0.85,0.3,hint_cn,sz=11,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+2.1,y+1.0,0.85,0.25,hint_en,sz=8,c=GRAY,a=PP_ALIGN.CENTER)
+# Bottom: 6 art form category badges (the "answer boxes")
+tb(s,0.4,4.65,9.2,0.3,"👇 把每张图放进对应的艺术家庭 / Put each into its art family:",sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
+af=[("🎨 绘画",MAGENTA),("🎵 音乐",SKY),("🗿 雕塑",GREEN_L),("🎭 戏剧",PURPLE),("🎬 电影",YELLOW),("💃 舞蹈",CORAL)]
+cell_w=1.5
+for i,(label,cl) in enumerate(af):
+    x=0.4+i*(cell_w+0.05)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(5.0),Inches(cell_w),Inches(0.4))
+    sh.fill.solid();sh.fill.fore_color.rgb=cl;sh.line.fill.background()
+    tb(s,x+0.05,5.04,cell_w-0.1,0.32,label,sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
+notes(s,"老师备课:\n• 让学生指出图片属于哪些艺术家庭, 可以多选!\n• 答案参考:\n   - 一幅画 → 🎨 绘画\n   - 一首歌 → 🎵 音乐\n   - 一座雕像 → 🗿 雕塑\n   - 动画片 → 🎬 电影 + 🎨 绘画\n   - 音乐剧《狮子王》→ 🎵 音乐 + 🎭 戏剧 + 💃 舞蹈\n   - 芭蕾舞剧《天鹅湖》→ 💃 舞蹈 + 🎵 音乐\n• 强调: 艺术可以跨越多种形式, 没有固定边界\n• 鼓励学生举其他例子 — 你最喜欢什么艺术？是不是也是好几种？")
 
 # ============================================================
 # 14 SESSION 2 DIVIDER
