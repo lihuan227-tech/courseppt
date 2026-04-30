@@ -260,34 +260,51 @@ pn(s,n)
 # ============================================================
 s=type_overview_slide("🎨","绘画","Painting",MAGENTA,
     "绘画有很多种！看看你认识哪些？",
-    [("🖼️","油画","Oil Painting"),("🖌️","水墨画","Chinese Ink"),
-     ("🎨","水彩画","Watercolor"),("🖍️","蜡笔画","Crayon"),
-     ("✏️","素描","Pencil Sketch"),("👶","儿童画","Kids' Art")]);n+=1;pn(s,n)
+    [("🖼️","油画","Oil Painting"),("🖌️","水墨画","Ink Painting"),
+     ("💧","水彩画","Watercolor"),("✏️","素描","Pencil Sketch"),
+     ("✂️","拼贴画","Collage"),("🎭","混合媒介","Mixed Media")]);n+=1;pn(s,n)
 
-s=example_slide("🎨","油画","蒙娜丽莎","Mona Lisa",
+# 油画 Oil Painting — 蒙娜丽莎
+s=example_slide("🖼️","油画","蒙娜丽莎","Mona Lisa",
     "达·芬奇 Leonardo da Vinci · 约 1503 年 · 法国卢浮宫",
-    "她的微笑是世界上最有名的微笑！\nThe most famous smile in the world!",
+    "用油 + 颜料一层一层涂, 颜色慢慢干。\nOil + pigment, layered slowly — most famous smile!",
     "📷 蒙娜丽莎 Mona Lisa",MAGENTA);n+=1;pn(s,n)
 
-s=example_slide("🎨","油画","向日葵","Sunflowers",
+# 油画 Oil Painting — 向日葵 (different style)
+s=example_slide("🖼️","油画","向日葵","Sunflowers",
     "梵高 Vincent van Gogh · 1888 年 · 荷兰",
-    "亮黄色 + 粗笔触 = 像阳光一样温暖！\nBright yellow strokes = warm like sunshine!",
+    "亮黄色 + 粗笔触 = 像阳光一样温暖！\nBright yellow + bold brush = warm like sunshine!",
     "📷 梵高向日葵 Van Gogh Sunflowers",MAGENTA);n+=1;pn(s,n)
 
+# 水墨画 Ink Painting
 s=example_slide("🖌️","水墨画","虾","Shrimp",
     "齐白石 Qi Baishi · 中国 · 近代",
-    "只用黑色墨水，虾就像活的一样游！\nJust black ink — shrimp look alive!",
+    "毛笔 + 墨 + 水 = 水墨画。只用黑色, 虾像活的!\nBrush + ink + water — alive in just black!",
     "📷 齐白石 虾 Qi Baishi Shrimp",MAGENTA);n+=1;pn(s,n)
 
-s=example_slide_generic("🎨","水彩画","花园一角","A Corner of the Garden",
+# 水彩画 Watercolor
+s=example_slide_generic("💧","水彩画 Watercolor","花园一角","A Corner of the Garden",
     "水彩画示例 Watercolor example",
-    "水彩颜色透明，感觉很温柔。\nWatercolor is transparent & gentle.",
+    "用水 + 颜料, 颜色透明像彩虹。轻轻的, 柔柔的。\nTransparent like a rainbow — soft and gentle.",
     "📷 水彩画 Watercolor",MAGENTA);n+=1;pn(s,n)
 
-s=example_slide_generic("🖍️","蜡笔画 / 儿童画","我的家","My Family",
-    "小朋友画的 A kid's drawing",
-    "简单的线条和颜色，也是很棒的艺术！\nSimple lines + colors = great art too!",
-    "📷 儿童蜡笔画 Kids' crayon art",MAGENTA);n+=1;pn(s,n)
+# 素描 Pencil Sketch
+s=example_slide_generic("✏️","素描 Pencil Sketch","铅笔的世界","World of Pencil",
+    "只用铅笔 + 橡皮 Just pencil + eraser",
+    "深一点、浅一点 — 不用颜色也能画! 线条 + 阴影 = 立体。\nDark or light — no color needed! Lines + shadow = 3D.",
+    "📷 铅笔素描 (动物 / 静物 / 人脸)",MAGENTA);n+=1;pn(s,n)
+
+# 拼贴画 Collage — Eric Carle 好饿的毛毛虫
+s=example_slide("✂️","拼贴画","好饿的毛毛虫","The Very Hungry Caterpillar",
+    "Eric Carle 艾瑞·卡尔 · 1969 年 · 美国绘本作家",
+    "用彩纸 + 剪刀 + 胶水 = 故事书里的画！\nColored paper + scissors + glue = picture book art!",
+    "📷 Eric Carle 毛毛虫拼贴",MAGENTA);n+=1;pn(s,n)
+
+# 混合媒介 Mixed Media
+s=example_slide_generic("🎭","混合媒介 Mixed Media","什么都可以","Anything Goes",
+    "现代艺术家 Modern artists",
+    "颜料 + 纸 + 布 + 树叶 + 小物品... 全部混在一起!\nPaint + paper + cloth + leaves + objects — all together!",
+    "📷 混合媒介作品 (绘画 + 拼贴 + 实物)",MAGENTA);n+=1;pn(s,n)
 
 # ============================================================
 # MUSIC 音乐 — overview + 4 example slides
