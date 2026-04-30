@@ -264,34 +264,78 @@ pn(s,n)
 # 4 SESSION 1 DIVIDER
 div("Session 1  上午","认识三位大师\n🎨 毕加索  ·  ✂️ 马蒂斯  ·  🌻 梵高",MAGENTA,"🖼️");n+=1
 
-# 5 What is a Master
+# 5 OPENING QUESTIONS — connect to student experience BEFORE defining 大师
 s=ns();n+=1;bg(s,CREAM);hb(s,"💡 什么是大师？  What is a Master?",MAGENTA)
+tb(s,0.4,0.9,9.2,0.35,"先来聊一聊 — 你知道什么？  Let's chat first — what do YOU know?",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+# 4 question cards in 2x2 grid
+qs=[
+    ("1️⃣","你知道哪些有名的画家？","Do you know any famous artists?",PICASSO),
+    ("2️⃣","你见过哪些有名的画？","Have you seen famous paintings?\n(书上 / 动画 / 博物馆)",MATISSE),
+    ("3️⃣","你喜欢画画吗？最喜欢画什么？","Do you like drawing? What do you draw?",VANGOGH),
+    ("4️⃣","一件事做得特别厉害的人 — 叫他什么？","Someone VERY good — what do we call them?",CORAL),
+]
+for i,(num,q_cn,q_en,cl) in enumerate(qs):
+    col=i%2;row=i//2
+    x=0.3+col*4.7;y=1.4+row*1.55
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.4))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
+    # number badge
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.2),Inches(y+0.18),Inches(0.55),Inches(0.55))
+    nb.fill.solid();nb.fill.fore_color.rgb=cl;nb.line.fill.background()
+    tb(s,x+0.2,y+0.2,0.55,0.5,num,sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    # questions
+    tb(s,x+0.95,y+0.1,3.5,0.45,q_cn,sz=14,b=True,c=DARK)
+    en_lines=q_en.split("\n")
+    tf=tb(s,x+0.95,y+0.6,3.5,0.3,en_lines[0],sz=10,c=GRAY)
+    for ln in en_lines[1:]:
+        ap(tf,ln,sz=10,c=GRAY)
+# Hint banner at bottom
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.6),Inches(9.4),Inches(0.65))
+sh.fill.solid();sh.fill.fore_color.rgb=MAGENTA;sh.line.fill.background()
+tb(s,0.4,4.65,9.2,0.35,"⭐ 引导答案 Hint:  「高手」/「很厉害的人」/「大师 Master」",sz=14,b=True,c=YELLOW,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.97,9.2,0.28,"👉 让学生先说说自己知道的, 老师再引出「大师」概念",sz=10,c=WARM,a=PP_ALIGN.CENTER)
+pn(s,n)
+notes(s,"老师备课:\n• 这一页不要讲太多定义, 只做三件事:\n  1. 让学生「说出自己知道的」(参与感)\n  2. 从「班里画得好的人」过渡到「大师」(理解更自然)\n  3. 引出「艺术风格不同」(为后面铺垫)\n• 4 个问题不用每个都答 — 老师按节奏挑 2-3 个\n• 学生答案多样: 「画得快的人」「我妈妈」「我自己」都接受!\n• 关键引导: 「他们都很厉害对不对？我们叫这种人『大师』」")
+
+# 6 Master = ? + 3-painting tease
+s=ns();n+=1;bg(s,CREAM);hb(s,"💡 大师 = ?",MAGENTA)
 # Slim definition callout
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.8),Inches(0.95),Inches(8.4),Inches(0.75))
 sh.fill.solid();sh.fill.fore_color.rgb=MAGENTA;sh.line.fill.background()
-tb(s,1.0,0.98,8.0,0.45,"大师 = 有自己的风格的艺术家",sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1.0,1.4,8.0,0.3,"A Master = an artist with their own STYLE",sz=12,c=YELLOW,a=PP_ALIGN.CENTER)
-# 3 example cards: famous painting + signature feature label
+tb(s,1.0,0.98,8.0,0.45,"大师 = 在艺术方面非常厉害的人",sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.0,1.4,8.0,0.3,"A Master = someone VERY good at art",sz=12,c=YELLOW,a=PP_ALIGN.CENTER)
+# 3 small bubbles — what makes a master
+bubbles=[("🎨","画得很好","Draws really well",PICASSO),
+         ("⭐","有自己的风格","Has own STYLE",MATISSE),
+         ("🌍","很多人都认识","Everyone knows them",VANGOGH)]
+for i,(em,cn,en,cl) in enumerate(bubbles):
+    x=0.5+i*3.15
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(3.0),Inches(1.0))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
+    tb(s,x+0.1,1.92,0.6,0.55,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.7,1.95,2.2,0.4,cn,sz=15,b=True,c=cl)
+    tb(s,x+0.7,2.35,2.2,0.3,en,sz=10,c=GRAY)
+# Tease section: 3 master paintings + "which is different?"
+tb(s,0.4,3.0,9.2,0.35,"🤔 所有画家画得一样吗？  Do all artists draw the SAME way?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
 examples=[
-    ("📷 《哭泣的女人》Weeping Woman","《哭泣的女人》","变形的脸","Twisted face","= 毕加索",PICASSO,"en.wikipedia.org/wiki/The_Weeping_Woman","weeping_woman"),
-    ("📷 《伊卡洛斯》Icarus (黑色剪影 + 红心)","《伊卡洛斯》","彩色剪纸","Cut-out shapes","= 马蒂斯",MATISSE,"搜「Matisse Icarus Jazz」","icarus"),
-    ("📷 《星夜》The Starry Night (旋转的天空)","《星夜》","旋转线条","Swirly lines","= 梵高",VANGOGH,"en.wikipedia.org/wiki/The_Starry_Night","starry_night"),
+    ("📷 《哭泣的女人》","《哭泣的女人》","毕加索",PICASSO,"weeping_woman","en.wikipedia.org/wiki/The_Weeping_Woman"),
+    ("📷 《伊卡洛斯》","《伊卡洛斯》","马蒂斯",MATISSE,"icarus","搜「Matisse Icarus」"),
+    ("📷 《星夜》","《星夜》","梵高",VANGOGH,"starry_night","en.wikipedia.org/wiki/The_Starry_Night"),
 ]
-for i,(img_lb,title,feat_cn,feat_en,who,cl,url,key) in enumerate(examples):
-    x=0.3+i*3.2
-    # card background
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(3.0),Inches(3.35))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
-    # image placeholder (top)
-    ib(s,x+0.15,1.95,2.7,1.95,img_lb,url=url,key=key)
-    # painting title strip
-    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.15),Inches(3.95),Inches(2.7),Inches(0.35))
-    sh2.fill.solid();sh2.fill.fore_color.rgb=cl;sh2.line.fill.background()
-    tb(s,x+0.2,3.97,2.6,0.32,title,sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    # feature → master
-    tb(s,x+0.15,4.4,2.7,0.4,f"看! {feat_cn}",sz=16,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.15,4.78,2.7,0.3,who,sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+for i,(img_lb,title,who,cl,key,url) in enumerate(examples):
+    x=0.5+i*3.15
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(3.45),Inches(3.0),Inches(1.5))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
+    ib(s,x+0.1,3.55,2.0,1.3,img_lb,url=url,key=key)
+    tb(s,x+2.15,3.6,0.8,0.4,title,sz=10,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+2.15,4.0,0.8,0.3,who,sz=11,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+2.15,4.4,0.8,0.3,"看!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# Bottom inquiry strip
+sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.05),Inches(9.4),Inches(0.4))
+sh.fill.solid();sh.fill.fore_color.rgb=MAGENTA;sh.line.fill.background()
+tb(s,0.4,5.08,9.2,0.35,"哪一幅最不一样？你最喜欢哪个？  Which is different? Which do you like?",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 pn(s,n)
+notes(s,"老师备课:\n• 这是「大师概念 + 引出三位画家」的桥梁页\n• 让学生看 3 幅画, 不告诉名字 → 「都是大师画的, 但都不一样」\n• 接下来的「Today's 3 Masters」slide 会正式介绍每位画家\n• 互动: 让学生举手投票「最喜欢哪一幅？」\n• 关键铺垫: 「同样是大师, 风格不一样」 → 为接下来的 D2 内容做准备")
 
 # 6 3-master overview
 s=ns();n+=1;bg(s,CREAM);hb(s,"👥 今天的三位大师  Today's 3 Masters",MAGENTA)
@@ -876,5 +920,5 @@ ap(tf,"",sz=10)
 ap(tf,"明天见，小艺术家！",sz=15,b=True,c=YELLOW,a=PP_ALIGN.CENTER)
 pn(s,n)
 
-OUT='/Users/huanli/projects/courseppt/Chinese/小小艺术家little_artist_pbl/day2_masters.pptx'
+OUT='/Users/Huan/projects/summercourse/Chinese/小小艺术家little_artist_pbl/day2_masters.pptx'
 prs.save(OUT);print(f"Created {n} slides → {OUT}")
