@@ -645,7 +645,7 @@ tb(s,0.4,0.85,9.2,0.4,"看一看 — 这个地方搭营好不好？为什么？"
 tb(s,0.4,1.22,9.2,0.3,"Look — is this a good spot? Why or why not?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 # Cropped scenario image: tent next to big rocks/cliff (305x160 ~ 1.9:1)
 import os
-_img_path="/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/camp_rocks_scenario.png"
+_img_path="/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp_rocks_scenario.png"
 # Frame the image
 frame=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(5.4),Inches(2.95))
 frame.fill.solid();frame.fill.fore_color.rgb=WHITE;frame.line.color.rgb=ALERT;frame.line.width=Pt(2.5)
@@ -681,7 +681,7 @@ s=ns();bg(s,CREAM);hb(s,"🔍 这里能搭营吗？(2)  Can we camp HERE? (2)",A
 tb(s,0.4,0.85,9.2,0.4,"看一看 — 这个地方搭营好不好？为什么？",sz=18,b=True,c=ALERT,a=PP_ALIGN.CENTER)
 tb(s,0.4,1.22,9.2,0.3,"Look — is this a good spot? Why or why not?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 # Cropped scenario image: tent on grass with bugs
-_img_path2="/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/camp grass scenario.png"
+_img_path2="/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp grass scenario.png"
 frame=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(5.4),Inches(2.95))
 frame.fill.solid();frame.fill.fore_color.rgb=WHITE;frame.line.color.rgb=ALERT;frame.line.width=Pt(2.5)
 if os.path.exists(_img_path2):
@@ -738,7 +738,7 @@ def wrong_camp_scenario(num,img_path,caption_short,questions,frame_cn,frame_en,n
 
 # 13c. WRONG CAMP — scenario 3: under big tree (think first)
 s,nt=wrong_camp_scenario(3,
-    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/camp tree scenario.png",
+    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp tree scenario.png",
     "🏕️ 帐篷 + 大树 + ❗",
     [("❓ 这里搭帐篷, 安全吗?",      "Is it safe to camp here?"),
      ("❓ 上面有什么?",              "What's above the tent?"),
@@ -750,7 +750,7 @@ n+=1;pn(s,n);notes(s,nt)
 
 # 13d. WRONG CAMP — scenario 4: too close to water/wave (think first)
 s,nt=wrong_camp_scenario(4,
-    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/camp water scenario.png",
+    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp water scenario.png",
     "🏕️ 帐篷 + 海边 + 🌊",
     [("❓ 这里搭帐篷, 安全吗?",      "Is it safe to camp here?"),
      ("❓ 旁边是什么?",              "What's right next to the tent?"),
@@ -762,7 +762,7 @@ n+=1;pn(s,n);notes(s,nt)
 
 # 13e. WRONG CAMP — scenario 5: low/wet ground (think first)
 s,nt=wrong_camp_scenario(5,
-    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/low or wet place scenario.png",
+    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/low or wet place scenario.png",
     "🏕️ 帐篷 + 低洼地 + 🌧️",
     [("❓ 这里搭帐篷, 舒服吗?",      "Is it comfortable to camp here?"),
      ("❓ 地面怎么样?",              "What's the ground like?"),
@@ -969,30 +969,33 @@ notes(s,"原则: 重的放中间靠背 (重心稳)。睡袋放下面。常用的
 # 32. SESSION 2 DIVIDER
 s=div("Session 2  下午","🔄 复习 + 语言目标 (我会认/我会写)",PINE,"📖");n+=1;pn(s,n)
 
-# 33. SENTENCE FRAMES — 2 levels
-s=ns();bg(s,CREAM);hb(s,"💬 句型卡  Sentence Frames",SUN)
-# K column
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(4.5),Inches(3.6))
-sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=SUN;sh.line.width=Pt(2.5)
-pill(s,0.6,1.15,1.6,0.4,"K (TK-K)",SUN,sz=14)
-tb(s,0.6,1.7,4.1,0.5,"✅ 可以 / ❌ 不可以",sz=22,b=True,c=PINE)
-tb(s,0.6,2.2,4.1,0.4,"can / cannot",sz=12,c=GRAY)
-tb(s,0.6,2.7,4.1,0.5,"🛡️ 安全 / ⚠️ 不安全",sz=22,b=True,c=PINE)
-tb(s,0.6,3.2,4.1,0.4,"safe / not safe",sz=12,c=GRAY)
-tb(s,0.6,3.75,4.1,0.4,"💡 例: 火可以, 在帐篷里不可以",sz=13,c=DARK)
-tb(s,0.6,4.1,4.1,0.4,"Ex: Fire is OK, in tent is not",sz=11,c=GRAY)
-# G1-3 column
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.0),Inches(4.5),Inches(3.6))
-sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=PINE;sh.line.width=Pt(2.5)
-pill(s,5.3,1.15,1.6,0.4,"G1 - G3",PINE,sz=14)
-tb(s,5.3,1.7,4.1,0.5,"___ 不安全, 因为 ___ 。",sz=20,b=True,c=PINE)
-tb(s,5.3,2.2,4.1,0.4,"___ is not safe, because ___.",sz=12,c=GRAY)
-tb(s,5.3,2.7,4.1,0.5,"我应该 ___ 。",sz=20,b=True,c=PINE)
-tb(s,5.3,3.2,4.1,0.4,"I should ___.",sz=12,c=GRAY)
-tb(s,5.3,3.75,4.1,0.4,"💡 例: 帐篷在树下不安全, 因为枯枝会掉。",sz=13,c=DARK)
-tb(s,5.3,4.1,4.1,0.4,"Ex: Tent under tree is not safe, branch will fall.",sz=11,c=GRAY)
+# 33. REVIEW — Baamboozle game intro
+s=ns();bg(s,CREAM);hb(s,"🎮 复习  Review · Baamboozle Game",SUN)
+tb(s,0.4,0.85,9.2,0.45,"今天学了好多 — 来玩 Baamboozle 复习!",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.30,"We learned a lot today — let's review with Baamboozle!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 4 review topic cards
+topics=[("🏕️","5 个营地区","5 Zones",         SAFCL),
+        ("🎒","背包要带什么","Backpack items",  SUN),
+        ("📍","帐篷搭哪里","Tent location",    TENTCL),
+        ("🐵","乔治的故事","George's story",   ALERT)]
+for i,(em,cn,en,c) in enumerate(topics):
+    x=0.4+i*2.35
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.70),Inches(2.20),Inches(1.85))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE
+    sh.line.color.rgb=c;sh.line.width=Pt(2.5)
+    tb(s,x+0.05,1.80,2.10,0.65,em,sz=36,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.50,2.10,0.40,cn,sz=14,b=True,c=c,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.92,2.10,0.30,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    pill(s,x+0.40,3.25,1.40,0.25,"会答!",c,sz=10)
+# Game info banner
+gb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.85),Inches(9.2),Inches(0.95))
+gb.fill.solid();gb.fill.fore_color.rgb=WARM
+gb.line.color.rgb=SUN;gb.line.width=Pt(2)
+tb(s,0.55,3.95,9.0,0.40,"🎯 怎么玩 How to play:",sz=14,b=True,c=SUN)
+tb(s,0.55,4.30,9.0,0.30,"分组 → 老师点开 Baamboozle → 学生答对得分 → 最高分赢!",sz=12,b=True,c=DARK)
+tb(s,0.55,4.55,9.0,0.25,"Teams → teacher opens Baamboozle → answer to score → highest wins!",sz=10,c=GRAY)
 n+=1;pn(s,n)
-notes(s,"K 用 2 字短语 (可以/不可以, 安全/不安全)。G1-3 整句, 带「因为」、「应该」。")
+notes(s,"复习游戏 (10-15 分钟):\n• 老师提前在 Baamboozle 上 import 「day2_review_baamboozle.csv」 文件 (在同一文件夹).\n• 20 个问题, 涵盖 5 营区 / 背包 / 帐篷地点 / 乔治故事。\n• 分 2-4 组玩。每组答对加分。\n• 答错的问题, 全班一起复习正确答案。\n• Baamboozle 网址: https://www.baamboozle.com/")
 
 # 34. VOCAB OVERVIEW
 s=ns();bg(s,CREAM);hb(s,"📚 今天的字  Today's Words",PINE)
