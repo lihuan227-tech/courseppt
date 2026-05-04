@@ -708,7 +708,7 @@ sentence_frame_bar(s,4.70,
     "这里 ___ 好, 因为 ___ 。",
     "This place is (not) good, because ___.")
 n+=1;pn(s,n)
-notes(s,"先讨论, 不给答案 (4-5 分钟):\n• 「再看一张图 — 这里搭营好不好?」\n• 让学生 30 秒自己看, 找问题。\n• 老师追问: 「草丛里有什么? 蚊子、虫子怎么办? 早上草上湿不湿?」\n• 让 2-3 个学生说: 「这里 ___ 好, 因为 ___ 。」\n• 关键引导:\n  - 草丛里有虫子 (蚂蚁、蚊子、蜘蛛) — 会爬进帐篷\n  - 草地早上有露水, 帐篷底会潮湿\n  - 下雨后泥泞, 不容易干\n  - 草高视线不好, 看不到地面石头\n• 比较: 干的泥土 / 沙地 比草地更好 — 平、干、虫少。\n• 翻到下一页: 看下一个场景 (大树下)。")
+notes(s,"先讨论, 不给答案 (4-5 分钟):\n• 「再看一张图 — 这里搭营好不好?」\n• 让学生 30 秒自己看, 找问题。\n• 老师追问: 「草丛里有什么? 蚊子、虫子怎么办? 早上草上湿不湿?」\n• 让 2-3 个学生说: 「这里 ___ 好, 因为 ___ 。」\n• 关键引导:\n  - 草丛里有虫子 (蚂蚁、蚊子、蜘蛛) — 会爬进帐篷\n  - 草地早上有露水, 帐篷底会潮湿\n  - 下雨后泥泞, 不容易干\n  - 草高视线不好, 看不到地面石头\n• 比较: 干的泥土 / 沙地比草地更好 — 平、干、虫少。\n• 翻到下一页: 看下一个场景 (大树下)。")
 
 # Helper: builds one "Can we camp HERE?" scenario slide
 def wrong_camp_scenario(num,img_path,caption_short,questions,frame_cn,frame_en,notes_text):
@@ -943,7 +943,7 @@ for i,(em,cn,en) in enumerate(rules):
 n+=1;pn(s,n)
 
 # 28. SESSION 2.5 — Video interactions divider
-s=div("🎬 看视频 学探险","Watch & Learn  ·  Camping setup · Safe campsite · Backpack",SAFCL,"📺");n+=1;pn(s,n)
+s=div("🎬 看视频学探险","Watch & Learn  ·  Camping setup · Safe campsite · Backpack",SAFCL,"📺");n+=1;pn(s,n)
 
 # 29. VIDEO 1 — Camping setup
 s=video_slide("How to Set Up a Tent (Kids)","怎么搭帐篷",
