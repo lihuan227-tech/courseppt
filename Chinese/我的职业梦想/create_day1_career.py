@@ -439,8 +439,8 @@ tb(s,0.4,1.40,9.2,0.30,"Your hobby today — could become your job tomorrow!",sz
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.85),Inches(4.30),Inches(3.20))
 sh.fill.solid(); sh.fill.fore_color.rgb=WARM; sh.line.color.rgb=GOLD; sh.line.width=Pt(3)
 tb(s,0.4,2.10,4.30,1.0,"📖",sz=110,a=PP_ALIGN.CENTER)
-tb(s,0.4,3.20,4.30,0.45,"我喜欢做的事",sz=22,b=True,c=GOLD,a=PP_ALIGN.CENTER)
-tb(s,0.4,3.70,4.30,0.30,"What I Love → What I'll Do",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.15,4.30,0.45,"我的兴趣可以成为我未来的工作",sz=16,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.65,4.30,0.30,"My Interests Can Become My Future Job",sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
 tb(s,0.4,4.10,4.30,0.30,"📷 在这里贴书的封面",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
 tb(s,0.4,4.40,4.30,0.30,"Paste book cover here",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
 # Right: video link + listening prompts
@@ -452,14 +452,12 @@ tb(s,5.00,1.93,4.65,0.4,"🎬 听故事  Listen",sz=14,b=True,c=WHITE)
 tb(s,5.00,2.45,4.65,0.30,"📺 视频链接 / Video:",sz=11,b=True,c=GOLD)
 tb(s,5.00,2.75,4.65,0.30,"youtube.com/watch?v=y-jgklhlX3A",sz=10,b=True,c=NAVY)
 tb(s,5.00,3.05,4.65,0.30,"(老师: ~3-5 分钟, 看完一起聊)",sz=10,c=GRAY)
-tb(s,5.00,3.50,4.65,0.30,"👂 听的时候, 我们一起找:",sz=11,b=True,c=GOLD)
-tb(s,5.00,3.80,4.65,0.30,"1. 主角喜欢做什么?",sz=10,c=DARK)
-tb(s,5.00,4.05,4.65,0.30,"2. 长大后变成什么工作?",sz=10,c=DARK)
-tb(s,5.00,4.30,4.65,0.30,"3. 兴趣 和 工作 怎么连起来的?",sz=10,c=DARK)
-tb(s,5.00,4.65,4.65,0.30,"📌 听完一起回答 4 个问题!",sz=10,b=True,c=GOLD)
-sentence_frame_bar(s,5.20,
-    "故事里 ___ 喜欢 ___ , 长大变成 ___ 。",
-    "In the story, ___ loved ___ and became a ___.")
+tb(s,5.00,3.50,4.65,0.28,"👂 听的时候, 找 4 件事 (兴趣+能力+帮助+职业):",sz=11,b=True,c=GOLD)
+tb(s,5.00,3.78,4.65,0.24,"1. ❤️ 主角喜欢什么? (兴趣 Interest)",sz=10,c=DARK)
+tb(s,5.00,4.00,4.65,0.24,"2. 💪 主角擅长什么? (能力 Skill)",sz=10,c=DARK)
+tb(s,5.00,4.22,4.65,0.24,"3. 🤝 主角想帮谁? (帮助 Help)",sz=10,c=DARK)
+tb(s,5.00,4.44,4.65,0.24,"4. 💼 长大后做什么工作? (职业 Career)",sz=10,c=DARK)
+tb(s,5.00,4.70,4.65,0.28,"📌 听完一起回答 4 个问题!",sz=10,b=True,c=GOLD)
 n+=1; pn(s,n)
 notes(s,"3-5 分钟:\n• 主资源: https://www.youtube.com/watch?v=y-jgklhlX3A\n• 听之前先说: 「这个故事告诉我们 — 你今天喜欢的, 可能就是你长大后做的!」\n• 听完不要急着讲解 — 翻页让学生自己回答 4 个问题")
 
@@ -468,10 +466,10 @@ s=ns(); bg(s,CREAM); hb(s,"🤔 听完故事 · 一起讨论  Let's Talk",GOLD)
 tb(s,0.4,0.85,9.2,0.40,"4 个问题 — 一个比一个深!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
 tb(s,0.4,1.30,9.2,0.28,"4 questions — each goes a bit deeper.",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 discuss=[
-    ("🟢","L1","主角喜欢做什么？","What did the main character love?",DOC),
-    ("🟡","L2","他长大后变成什么工作？","What job did they grow up to become?",HELP),
-    ("🟠","L3","兴趣怎么变成工作的？","How did the hobby BECOME the job?",CHEF),
-    ("🔴","L4","你的兴趣 — 可能是什么工作？","Your hobby — could be what job?",NAVY),
+    ("❤️","兴趣","主角喜欢什么？","What does the character love?",DOC),
+    ("💪","能力","主角擅长什么？","What is the character good at?",HELP),
+    ("🤝","帮助","主角想帮助谁？","Who does the character want to help?",CHEF),
+    ("💼","职业","他长大后做什么工作？","What career as a grown-up?",NAVY),
 ]
 for i,(em,lvl,q_cn,q_en,cl) in enumerate(discuss):
     col=i%2; row=i//2
@@ -486,72 +484,192 @@ sentence_frame_bar(s,4.85,
     "我觉得 ___ , 因为 ___ 。",
     "I think ___, because ___.")
 n+=1; pn(s,n)
-notes(s,"5-6 分钟:\n• L1 简单, 大家一起回答\n• L2 让 1-2 个孩子说\n• L3 是关键 — 引出「兴趣 → 工作」的桥梁\n• L4 是个人的 — 让 3-4 个孩子说自己的想法\n• 不给「正确答案」 — 接受所有合理回答")
+notes(s,"5-6 分钟 (4 个问题对应公式: 兴趣 + 能力 + 帮助 = 职业):\n• Q1 兴趣 — 主角喜欢什么? (简单, 大家一起回答)\n• Q2 能力 — 主角擅长什么? (NEW! 关键 — 让学生注意 主角不只喜欢, 还会做)\n• Q3 帮助 — 主角想帮助谁?\n• Q4 职业 — 长大后做什么工作?\n• 4 个问题串起整个公式 — 准备引出 Big Discovery slide!\n• 不给「正确答案」 — 接受所有合理回答")
 
-# 4.5d — INTEREST → CAREER MAPPING + ANSWER KEY (paired rows)
-s=ns(); bg(s,CREAM); hb(s,"🔗 兴趣 → 工作  Interest → Career  (答案 Answer Key)",GOLD)
-tb(s,0.4,0.85,9.2,0.40,"看! 一个兴趣 → 可以变成一个工作:",sz=16,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.25,9.2,0.28,"See — each hobby maps to a real job!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# Aligned pairs (answer key)
-pairs=[
-    (("🎨","画画"),       ("🎨","画家 / 设计师")),
-    (("🧱","搭积木"),     ("👷","工程师 / 建筑师")),
-    (("🐶","爱小动物"),   ("🦒","兽医")),
-    (("🍳","做饭"),       ("👨‍🍳","厨师")),
-    (("⚽","运动"),       ("⚽","运动员 / 教练")),
-    (("🎮","玩游戏"),     ("🎮","游戏设计师")),
-]
-# Column headers
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.60),Inches(4.20),Inches(0.40))
-sh.fill.solid(); sh.fill.fore_color.rgb=GOLD; sh.line.fill.background()
-tb(s,0.4,1.65,4.20,0.30,"🎨 兴趣 Interests",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-# Arrow column header
-tb(s,4.65,1.65,0.7,0.30,"→",sz=22,b=True,c=GOLD,a=PP_ALIGN.CENTER)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.40),Inches(1.60),Inches(4.20),Inches(0.40))
-sh.fill.solid(); sh.fill.fore_color.rgb=NAVY; sh.line.fill.background()
-tb(s,5.40,1.65,4.20,0.30,"💼 工作 Jobs",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-# Aligned rows with arrow between
-for i,(left,right) in enumerate(pairs):
-    y=2.10+i*0.48
-    em_l,cn_l=left; em_r,cn_r=right
-    # Left card
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(4.20),Inches(0.40))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WARM; sh.line.color.rgb=GOLD; sh.line.width=Pt(1.5)
-    tb(s,0.55,y+0.05,0.5,0.30,em_l,sz=16,a=PP_ALIGN.CENTER)
-    tb(s,1.10,y+0.06,3.4,0.30,cn_l,sz=13,b=True,c=DARK)
-    # Arrow
-    tb(s,4.65,y,0.7,0.40,"→",sz=22,b=True,c=GOLD,a=PP_ALIGN.CENTER)
-    # Right card
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.40),Inches(y),Inches(4.20),Inches(0.40))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=NAVY; sh.line.width=Pt(1.5)
-    tb(s,5.55,y+0.05,0.5,0.30,em_r,sz=16,a=PP_ALIGN.CENTER)
-    tb(s,6.10,y+0.06,3.4,0.30,cn_r,sz=13,b=True,c=NAVY)
-# Answer key bottom note (small, doesn't overflow)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(5.05),Inches(9.20),Inches(0.45))
-sh.fill.solid(); sh.fill.fore_color.rgb=GOLD; sh.line.fill.background()
-tb(s,0.5,5.10,9.0,0.35,"✅ 答案 Answer Key — 一个兴趣可以变很多工作, 还有更多!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-n+=1; pn(s,n)
-notes(s,"4-5 分钟:\n• 一行一行读: 「喜欢 画画 → 可以当 画家」\n• 强调: 不止 1 个工作 — 一个兴趣可以变成 很多 工作!\n• 让学生加: 「喜欢 画画 还可以当 ___ ?」 (动画师 / 服装设计师 / 漫画家...)")
-
-# 4.5e — Key principle (兴趣 + 努力 + 帮别人 = 工作)
+# 4.5c-2 — Key principle (moved here AFTER Discussion — students discover formula via discussion)
 s=ns(); bg(s,GOLD)
-tb(s,1,1.0,8,0.8,"🌟 一个大发现!  A Big Discovery!",sz=26,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-big=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.6),Inches(2.05),Inches(8.8),Inches(1.85))
-big.fill.solid(); big.fill.fore_color.rgb=WHITE; big.line.color.rgb=NAVY; big.line.width=Pt(4)
-tb(s,0.6,2.30,8.8,0.7,"我喜欢的 + 我能帮别人的 = 我的工作",sz=26,b=True,c=NAVY,a=PP_ALIGN.CENTER)
-tb(s,0.6,3.10,8.8,0.40,"What I love  +  what helps others  =  my future job",sz=14,c=GRAY,a=PP_ALIGN.CENTER)
-tb(s,0.6,3.55,8.8,0.30,"💡 兴趣 + 努力 + 时间 → 工作",sz=14,b=True,c=GOLD,a=PP_ALIGN.CENTER)
-tb(s,1,4.20,8,0.40,"💭 想一想: 我的「喜欢」 + 「擅长」, 可能是什么工作?",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1,4.65,8,0.30,"Think: My 'love' + 'good at' — what job could that be?",sz=11,c=WARM,a=PP_ALIGN.CENTER)
-tb(s,1,5.05,8,0.30,"长大不可怕 — 你的兴趣会带你去!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1,0.55,8,0.65,"🌟 一个大发现!  A Big Discovery!",sz=26,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1,1.20,8,0.30,"Interest + Skill + Help = Career",sz=13,b=True,c=WARM,a=PP_ALIGN.CENTER)
+# 4-element formula row: [兴趣] + [能力] + [帮助别人] = [职业]
+fy=1.65    # formula y
+bh=1.85    # box height
+bw=1.85    # box width
+opw=0.45   # operator width
+fx=0.625   # formula left margin
+formula=[
+    ("Interest","兴趣","我喜欢的","I love ___","white",NAVY),
+    ("Skill",   "能力","我擅长的","I'm good at ___","white",HELP),
+    ("Help",    "帮助别人","我能帮的人","I help ___","white",DOC),
+    ("Career",  "职业","我的职业!","my career!","navy",WHITE),
+]
+for i,(en,cn_lbl,cn_sub,en_sub,fill,accent) in enumerate(formula):
+    bx = fx + i*(bw+opw)
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(bx),Inches(fy),Inches(bw),Inches(bh))
+    if fill=="navy":
+        sh.fill.solid(); sh.fill.fore_color.rgb=NAVY; sh.line.color.rgb=GOLD; sh.line.width=Pt(4)
+        text_c=WHITE; sub_c=WARM; en_c=GOLD
+    else:
+        sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=accent; sh.line.width=Pt(3)
+        text_c=accent; sub_c=DARK; en_c=accent
+    tb(s,bx+0.05,fy+0.10,bw-0.10,0.28,en,sz=11,b=True,c=en_c,a=PP_ALIGN.CENTER)
+    tb(s,bx+0.05,fy+0.42,bw-0.10,0.65,cn_lbl,sz=24,b=True,c=text_c,a=PP_ALIGN.CENTER)
+    tb(s,bx+0.05,fy+1.15,bw-0.10,0.30,cn_sub,sz=11,b=True,c=sub_c,a=PP_ALIGN.CENTER)
+    tb(s,bx+0.05,fy+1.45,bw-0.10,0.25,en_sub,sz=8,c=GRAY,a=PP_ALIGN.CENTER)
+# Operators (+ + =)
+for i,op in enumerate(["+","+","="]):
+    ox = fx + (i+1)*bw + i*opw
+    tb(s,ox,fy+0.55,opw,0.7,op,sz=42,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# Reflection prompt
+tb(s,0.5,3.75,9,0.32,"💭 我的兴趣 + 我的能力 + 我想帮的人 = 什么职业?",sz=15,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.5,4.10,9,0.26,"My interest + my skill + who I help = what career?",sz=10,c=WARM,a=PP_ALIGN.CENTER)
+tb(s,0.5,4.80,9,0.34,"长大以后做什么? 可以从你的兴趣、能力和想帮助的人开始想。",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.5,5.20,9,0.24,"What do you want to do? Start with your interests, skills, and people you want to help.",sz=10,c=WARM,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
-notes(s,"1 分钟 — 重要时刻:\n• 让全班齐读 2 遍: 「我喜欢的 + 我能帮别人的 = 我的工作」\n• 这是这本书的核心信息 — 长大不可怕, 你已经在走向你的工作了\n• 后面的所有职业都会回到这一点")
+notes(s,"2 分钟 — 关键时刻 (这个公式贯穿全天!):\n• 这是讨论后的总结 — 学生刚刚回答了 4 个问题, 现在揭示公式\n• 老师指着每个 box 解释:\n  - 兴趣 Interest: 你喜欢什么? (画画? 运动? 动物?)\n  - 能力 Skill: 你擅长什么? (跑得快? 算得快? 画得好?)\n  - 帮助 Help: 你想帮助谁? (病人? 小动物? 同学?)\n  - = 职业 Career: 三个加起来 = 你未来的工作!\n• 全班齐读 2 遍: 「兴趣 + 能力 + 帮助 = 职业!」\n• 这是 Day 1 的核心 — 后面所有讨论都回到这个公式!")
+
+# 4.5d — INTEREST + SKILL + HELP → JOBS (4-col, formula-aligned, discussion-first)
+s=ns(); bg(s,CREAM); hb(s,"🔗 兴趣 + 能力 + 帮助 → 职业  Interest + Skill + Help → Career",GOLD)
+# Discussion prompt bar
+prompt=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(0.85),Inches(9.2),Inches(0.65))
+prompt.fill.solid(); prompt.fill.fore_color.rgb=NAVY; prompt.line.color.rgb=GOLD; prompt.line.width=Pt(2)
+tb(s,0.55,0.90,9.0,0.28,"🤔 先讨论 — 一起猜! (don't read answers yet!)",sz=12,b=True,c=RGBColor(0xFF,0xC1,0x07),a=PP_ALIGN.CENTER)
+tb(s,0.55,1.18,9.0,0.28,"❓ 兴趣 → ❓ 能力 → ❓ 帮助谁 → ❓ 可能的职业?",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# 4 column headers (4 col layout)
+y0=1.62
+hdr=[("🎨 兴趣 Interest",  GOLD, 0.40, 1.75),
+     ("💪 能力 Skill",      HELP, 2.20, 1.95),
+     ("🤝 帮助谁 Help",     CHEF, 4.20, 2.30),
+     ("💼 可能的职业 Jobs", NAVY, 6.55, 3.05)]
+for label,color,x,w in hdr:
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y0),Inches(w),Inches(0.38))
+    sh.fill.solid(); sh.fill.fore_color.rgb=color; sh.line.fill.background()
+    tb(s,x,y0+0.04,w,0.30,label,sz=10,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# 6 rows: (interest, skill, help, jobs)
+mappings=[
+    ("⚽","运动",     "跑得快 · 身体好 · 有耐心",     "让人健康 · 教孩子",        "运动员 · 教练 · 体育老师 · 体育记者"),
+    ("🎨","画画",     "观察细 · 有创意 · 用色感",     "让生活美 · 给人快乐",       "画家 · 设计师 · 动画师 · 插画师"),
+    ("🧱","搭积木",   "想象力 · 空间感 · 动手强",     "造楼 · 造桥 · 安全的家",    "工程师 · 建筑师 · 设计师"),
+    ("🎮","玩游戏",   "反应快 · 解决问题 · 合作",     "让人开心 · 好玩的游戏",     "游戏设计师 · 程序员 · 测试员"),
+    ("🐶","爱小动物", "耐心 · 细心 · 有爱心",         "帮生病动物 · 保护动物",     "兽医 · 动物保护员 · 训练师"),
+    ("🍳","做饭",     "创造力 · 味觉好 · 动手强",     "做好吃的 · 家庭温暖",       "厨师 · 面包师 · 食品设计师"),
+]
+row_h=0.46
+for i,(em,interest,skill,help_,jobs) in enumerate(mappings):
+    y=2.05+i*row_h
+    rh=row_h-0.05
+    # Col 1: Interest
+    c1=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.40),Inches(y),Inches(1.75),Inches(rh))
+    c1.fill.solid(); c1.fill.fore_color.rgb=WARM; c1.line.color.rgb=GOLD; c1.line.width=Pt(1.5)
+    tb(s,0.45,y+0.05,0.50,0.30,em,sz=16,a=PP_ALIGN.CENTER)
+    tb(s,1.00,y+0.08,1.10,0.30,interest,sz=12,b=True,c=DARK)
+    # Col 2: Skill
+    c2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(2.20),Inches(y),Inches(1.95),Inches(rh))
+    c2.fill.solid(); c2.fill.fore_color.rgb=WHITE; c2.line.color.rgb=HELP; c2.line.width=Pt(1.5)
+    tb(s,2.28,y+0.08,1.85,0.30,skill,sz=8,b=True,c=HELP)
+    # Col 3: Help
+    c3=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.20),Inches(y),Inches(2.30),Inches(rh))
+    c3.fill.solid(); c3.fill.fore_color.rgb=WHITE; c3.line.color.rgb=CHEF; c3.line.width=Pt(1.5)
+    tb(s,4.28,y+0.08,2.20,0.30,help_,sz=8,b=True,c=CHEF)
+    # Col 4: Jobs
+    c4=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.55),Inches(y),Inches(3.05),Inches(rh))
+    c4.fill.solid(); c4.fill.fore_color.rgb=WHITE; c4.line.color.rgb=NAVY; c4.line.width=Pt(1.5)
+    tb(s,6.63,y+0.08,2.95,0.30,jobs,sz=8,b=True,c=NAVY)
+n+=1; pn(s,n)
+notes(s,"8-10 分钟 (DISCUSS FIRST — 不要急着读答案!):\n• 老师指着第一行 ⚽ 运动 — 一列一列问:\n  - Q1 兴趣: 「喜欢运动的人, 有什么 能力?」 (跑得快? 身体好?)\n  - Q2 帮助: 「他们能帮谁?」 (让人健康)\n  - Q3 职业: 「可以变什么工作?」 (运动员? 教练?)\n• 让 2-3 个学生猜每一列, 再揭示\n• 一行一行做 (~1.5 分钟/行)\n• 关键 takeaway: 一个兴趣 + 不同能力 → 很多不同的工作!")
+
+# 4.5d-2 — TURN & TALK (sentence frames + partner discussion)
+s=ns(); bg(s,CREAM); hb(s,"🗣️ Turn & Talk  ·  和同桌聊一聊",GOLD)
+tb(s,0.4,0.85,9.2,0.40,"和同桌轮流说 — 用句型框架!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.28,"Take turns with your partner — use the sentence frames below!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 3 question + sentence frame cards (vertical stack)
+ttdata=[
+    ("❤️","Interest","你喜欢什么?","What do you love?",          "我喜欢 ____ 。",     "I love ____.",         GOLD),
+    ("💪","Skill",   "你擅长什么?","What are you good at?",        "我擅长 ____ 。",     "I'm good at ____.",    HELP),
+    ("🤝","Help",    "你想帮助谁?","Who do you want to help?",    "我想帮助 ____ 。",   "I want to help ____.", DOC),
+    ("💼","Career",  "你想做什么工作?","What career do you want?", "我长大想当 ____ 。", "I want to be a ____.", NAVY),
+]
+for i,(em,en_lbl,q_cn,q_en,frame_cn,frame_en,color) in enumerate(ttdata):
+    y=1.55+i*0.92
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=color; sh.line.width=Pt(2.5)
+    # Emoji circle
+    cir=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.55),Inches(y+0.13),Inches(0.60),Inches(0.60))
+    cir.fill.solid(); cir.fill.fore_color.rgb=color; cir.line.fill.background()
+    tb(s,0.55,y+0.20,0.60,0.45,em,sz=22,a=PP_ALIGN.CENTER)
+    # Label + Question (left half)
+    tb(s,1.30,y+0.06,4.0,0.22,en_lbl,sz=10,b=True,c=color)
+    tb(s,1.30,y+0.28,4.0,0.30,q_cn,sz=15,b=True,c=color)
+    tb(s,1.30,y+0.55,4.0,0.22,q_en,sz=9,c=GRAY)
+    # Sentence frame (right half)
+    tb(s,5.50,y+0.12,4.0,0.30,f"💬  {frame_cn}",sz=14,b=True,c=DARK)
+    tb(s,5.50,y+0.42,4.0,0.22,frame_en,sz=9,c=GRAY)
+n+=1; pn(s,n)
+notes(s,"3-4 分钟:\n• 让学生和同桌轮流说 — 老师计时 30 秒\n• 用句型框架 — 学生填空\n• 老师巡视, 听 1-2 组的回答, 全班分享\n• 鼓励所有人说 — 没有错答案!")
+
+# 4.5d-3 — INTEREST SURVEY (movement activity, energetic)
+s=ns(); bg(s,CREAM); hb(s,"🎮 兴趣大调查  Interest Survey · Move with Me!",NAVY)
+tb(s,0.4,0.85,9.2,0.40,"老师说 — 你做! 听到你喜欢的, 一起动起来!",sz=18,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.28,"Teacher says — YOU do! Hear your interest? Move!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 4 prompt cards (2x2 grid)
+prompts=[
+    ("⚽","谁喜欢运动?","Who loves sports?",       "站起来!","STAND UP!",  "→ 你可能是未来的运动员!","Future athlete!",   NAVY),
+    ("🎨","谁喜欢画画?","Who loves drawing?",      "举手!",  "HAND UP!",   "→ 你可能是未来的设计师!","Future designer!",  GOLD),
+    ("🐶","谁喜欢动物?","Who loves animals?",      "拍拍手!","CLAP CLAP!", "→ 你可能是未来的兽医!",  "Future vet!",       HELP),
+    ("🤖","谁喜欢机器人?","Who loves robots?",     "跳一跳!","JUMP!",      "→ 你可能是未来的工程师!","Future engineer!",  CITY),
+]
+for i,(em,q_cn,q_en,act_cn,act_en,career_cn,career_en,color) in enumerate(prompts):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.75+row*1.75
+    # Big card
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.50),Inches(1.65))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=color; sh.line.width=Pt(3)
+    # Big emoji on left
+    tb(s,x+0.10,y+0.15,1.10,1.0,em,sz=44,a=PP_ALIGN.CENTER)
+    # Question (top right)
+    tb(s,x+1.30,y+0.10,3.10,0.32,q_cn,sz=14,b=True,c=color)
+    tb(s,x+1.30,y+0.40,3.10,0.22,q_en,sz=9,c=GRAY)
+    # Action prompt (highlighted bar)
+    actrect=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+1.30),Inches(y+0.65),Inches(3.10),Inches(0.42))
+    actrect.fill.solid(); actrect.fill.fore_color.rgb=color; actrect.line.fill.background()
+    tb(s,x+1.30,y+0.71,3.10,0.30,act_cn,sz=15,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    # Career hint at bottom of card
+    tb(s,x+0.10,y+1.18,4.30,0.24,career_cn,sz=11,b=True,c=color,a=PP_ALIGN.CENTER)
+    tb(s,x+0.10,y+1.40,4.30,0.18,career_en,sz=8,c=GRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"3-4 分钟 (能量满满!):\n• 老师 喊一个 prompt, 学生立刻 做动作\n• 节奏: 每个 prompt = 5-10 秒, 等所有反应后再下一个\n• 看到学生反应后, 老师点出对应 career: 「太棒了! 你可能是未来的运动员!」\n• 4 轮做完, 学生坐下\n• 关键: 把 兴趣 + 工作 连起来 — 让学生感受 「我也可以!」")
+
+# 4.5d-4 — GROWTH MINDSET (skill + practice — important for K-5)
+s=ns(); bg(s,CREAM); hb(s,"💪 能力 是 练 出来 的!  Skills Are Built Through Practice",HELP)
+tb(s,0.4,0.85,9.2,0.40,"现在 不会 — 没关系! 我们 都在 练习!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.28,"Not good at it yet? That's OK! We are all working on our skills.",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 3 reflection prompts (3-card row)
+gm=[
+    ("🤔","这个工作 需要 什么 能力?","What skills does this job need?",HELP),
+    ("🌱","我 现在 还 不会 ___ ,","I'm not very good at ___ yet,",NAVY),
+    ("💪","但我 正在 练习!","but I am working on this skill!",GOLD),
+]
+for i,(em,cn,en,c) in enumerate(gm):
+    x=0.4+i*3.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.75),Inches(2.95),Inches(2.45))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=c; sh.line.width=Pt(3)
+    tb(s,x+0.05,1.85,2.85,0.85,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.85,0.65,cn,sz=14,b=True,c=c,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.45,2.85,0.55,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# Sentence frames (whole class)
+sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.35),Inches(9.2),Inches(1.05))
+sf.fill.solid(); sf.fill.fore_color.rgb=HELP; sf.line.color.rgb=GOLD; sf.line.width=Pt(2.5)
+tb(s,0.55,4.42,9.0,0.30,"💬 我 正在 努力 练习 ___ 。",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.74,9.0,0.24,"I am working on ___.",sz=10,c=WARM,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.02,9.0,0.30,"💬 我 现在 还 不太 会 ___ , 但是 我 正在 练习。",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"3-4 分钟 — 成长型思维 (Growth Mindset):\n• 关键 message: 能力 不是 天生 的 — 是 练 出来 的!\n• 老师可以问: 「这个工作需要什么 能力?」 (例: 医生 — 耐心, 细心, 喜欢 帮助 人)\n• 让学生想: 「我现在 不擅长 什么? 我可以 练什么?」\n• 用句型说: 「我 现在 还 不太 会 ___, 但是 我 正在 练习」\n• 表扬: 「敢说 不会 — 才能 学会!」\n• 联系下面的 5 个职业 — 每个都需要 不同 的 能力 + 练习")
 
 # 7-16. Five GUESS clue + reveal pairs
 guesses=[
     ("🩺","Doctor",DOC,
-     [("我能听见你的心跳。","I can hear your heartbeat."),
-      ("我用手摸一摸, 就知道你哪里不舒服。","I touch you and can tell where it hurts.")],
+     [("我穿白大褂, 戴一个圆圆的工具 (听诊器)。","I wear a white coat and use a round tool (stethoscope)."),
+      ("我会问你: 「哪里不舒服?」","I ask you: 'Where do you feel uncomfortable?'"),
+      ("我会给你药, 帮你好起来。","I give you medicine to help you get better.")],
      "医生","Doctor","看病、给药、做手术","check, medicine, surgery","医院 / 诊所","hospital / clinic",
      "搜: 'doctor for kids' (Nat Geo Kids / SciShow Kids)"),
     ("📚","Teacher",TEACH,
@@ -576,31 +694,10 @@ guesses=[
      "搜: 'what does an engineer do for kids' (Crash Course Kids)"),
 ]
 try_it_data={
-    "医生": ("👂 听心跳游戏","Listen for a Heartbeat",
-            ("🤝","两人一组","Pair up"),
-            ("👂","耳朵贴对方手腕","Ear on partner's wrist"),
-            ("💓","数 10 秒里的心跳","Count beats for 10 sec"),
-            "我数到 ___ 下心跳!","I counted ___ heartbeats!"),
-    "老师": ("🎓 30 秒小老师","30-Second Teacher",
-            ("🤔","想一件你会的事","Pick something you can do"),
-            ("✋","上台 30 秒教大家","Teach for 30 sec"),
-            ("👏","全班鼓掌评分","Class claps a score"),
-            "今天我教大家 ___ 。","Today I teach you ___."),
-    "警察": ("🚦 我来指挥交通","Direct the Traffic",
-            ("✋","老师当车, 学生当警察","Teacher = car, student = police"),
-            ("🛑","学生举手 → 老师停, 挥手 → 老师走","Hand up = stop, wave = go"),
-            ("🔄","换人玩, 各试一次","Switch roles"),
-            "停! 走! 谢谢!","Stop! Go! Thank you!"),
-    "厨师": ("🍳 神秘菜单挑战","Mystery Menu Challenge",
-            ("🎲","抽 3 种食材 (老师准备)","Draw 3 ingredients"),
-            ("🧠","30 秒想一道新菜","30 sec to invent a dish"),
-            ("📣","给菜起个名 + 介绍","Name + present your dish"),
-            "我做的是 ___ , 用了 ___ 、___ 、___ 。","My dish is ___, with ___, ___, ___."),
-    "工程师": ("🌉 1 张纸的桥","The 1-Paper Bridge",
-            ("📄","拿 1 张 A4 纸","Take ONE sheet of paper"),
-            ("📐","折 / 卷 / 设计成桥","Fold / roll into a bridge"),
-            ("🔨","看能不能撑住一支笔","Test: can it hold a pencil?"),
-            "我的桥能撑住 ___ 。","My bridge held ___."),
+    # All individual Try-It slides removed per user request:
+    #   - 医生/老师 deleted (slides 13/16)
+    #   - 警察/厨师 deleted earlier
+    #   - 工程师 moved to Session 3 as a team paper-bridge competition
 }
 for em,j_en,col,clues,job_cn,job_en,what_cn,what_en,where_cn,where_en,video in guesses:
     s=guess_clue_slide(em,j_en,col,clues,
@@ -645,9 +742,6 @@ for i,(em,cn,en,wow,cl) in enumerate(cool_jobs):
     tb(s,x+0.85,y+0.08,2.10,0.32,cn,sz=14,b=True,c=cl)
     tb(s,x+0.85,y+0.36,2.10,0.24,en,sz=9,c=GRAY)
     tb(s,x+0.10,y+0.65,2.85,0.35,f"💫 {wow}",sz=10,c=DARK)
-sentence_frame_bar(s,5.10,
-    "我最想知道 ___ 的工作!",
-    "I most want to know about ___'s job!")
 n+=1; pn(s,n)
 notes(s,"3-4 分钟:\n• 快速过 9 个 — 每个 ~20 秒\n• 让举手: 「最想当哪个? 为什么?」\n• 不深入 — 只是激发兴趣\n• 提醒: 「这只是 9 个! 长大有几千种工作可以选!」")
 
@@ -717,13 +811,20 @@ notes(s,"猜谜 (1-2 分钟):\n• 提示 1 学生立刻笑 — 因为戳到他�
 ROBOT=RGBColor(0x55,0x6B,0x83)  # cool steel
 s=guess_clue_slide("🤖","Robotics Engineer",ROBOT,
     [("我的「员工」不需要睡觉, 也不需要吃饭。","My 'workers' don't need sleep — or food."),
-     ("我教机器一步一步做事, 它们才会动。","I teach machines step by step — only then do they move.")],
+     ("我画图、写步骤 — 让没有生命的东西也能动。","I draw and write steps — to make lifeless things move."),
+     ("工厂、医院、太空 — 我的发明都去过。","Factory, hospital, space — my inventions have gone everywhere.")],
     "我猜是 ___ !",
     "I guess it's a ___!")
 n+=1; pn(s,n)
-notes(s,"猜谜 (1-2 分钟):\n• 「不睡觉不吃饭的员工」 — 让学生想这是什么\n• 引导: 「在工厂里, 在医院里有这样的员工吗?」")
+notes(s,"猜谜 (2-3 分钟):\n• 慢慢念 3 条线索, 一条比一条具体\n• Clue 1 (最模糊): 「不睡觉不吃饭的员工」 — 学生想 (动物? 机器?)\n• Clue 2 (中等): 「画图、写步骤」 — 引出 design + programming\n• Clue 3 (最具体): 工厂/医院/太空 都有 — 引出 robots\n• 让 2-3 个学生猜, 不直接给答案 — 翻页揭晓!")
 
-# (Robotics reveal + Try It + Fun Facts slides deleted per user request)
+# Robotics — answer reveal
+s=reveal_job_slide("🤖","机器人工程师","Robotics Engineer",ROBOT,
+    "设计、编程、造机器人","design, code, build robots",
+    "工厂 / 实验室 / 公司","factory / lab / company",
+    video_url="搜: 'robotics engineer for kids' (BrainPOP / Crash Course Kids)")
+n+=1; pn(s,n)
+notes(s,"揭晓 机器人工程师 (1-2 分钟):\n• 全班一起喊: 「机器人工程师!」\n• 看 1 分钟视频 (老师提前找好链接)\n• 复习: 做什么? 在哪里?\n• 句型: 「我是机器人工程师, 我设计能 ___ 的机器人。」")
 
 # 17. STEP 3 — Career Charades
 s=ns(); bg(s,CREAM); hb(s,"🎭 演一演!  Career Charades",CHEF)
@@ -747,6 +848,49 @@ sentence_frame_bar(s,4.40,
     "Are you a ___? I am a ___.")
 n+=1; pn(s,n)
 notes(s,"8 分钟 — 道具准备 (低投入):\n• 把 5 个职业名写在小纸条上, 折起来。\n• 选 4-5 个志愿者上台演 (30 秒), 不能说话, 不能写。\n• 全班用句型猜: 「你是 医生 吗?」\n• 演完, 演员说: 「我是 ___ 。」\n• K 学生: 简单动作 + 老师帮忙\n• G1-3: 加道具 (假装) 让动作更明显")
+
+# 17.5 — CHARADES CARDS: FRONT (pictures) — print + cut out for students
+charades_jobs=[
+    ("🩺","医生","Doctor",DOC),
+    ("📚","老师","Teacher",TEACH),
+    ("👮","警察","Police",POLICE),
+    ("👨‍🍳","厨师","Chef",CHEF),
+    ("👷","工程师","Engineer",ENG),
+    ("🦒","兽医","Vet",WILD),
+    ("🚒","消防员","Firefighter",DOC),
+    ("✈️","飞行员","Pilot",POLICE),
+]
+# FRONT: pictures only (4 cols × 2 rows)
+s=ns(); bg(s,WHITE); hb(s,"🎴 演一演 卡片 · 正面 (Front) — 老师打印, 剪开",CHEF)
+tb(s,0.4,0.85,9.2,0.30,"打印这一页 + 下一页 (背面), 双面打印, 沿虚线剪开 — 学生抽卡演!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.24,"Print this page + next page (back), double-sided. Cut along dashed lines. Students draw a card to act out!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+for i,(em,job_cn,job_en,c) in enumerate(charades_jobs):
+    col=i%4; row=i//4
+    x=0.40+col*2.35; y=1.55+row*1.95
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.20),Inches(1.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=c; sh.line.width=Pt(3)
+    tb(s,x+0.05,y+0.30,2.10,1.30,em,sz=80,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"打印说明:\n• 这一页 = 卡片正面 (图片)\n• 下一页 = 卡片背面 (中文 + English)\n• 用 厚纸 (cardstock) 双面打印\n• 沿卡片边线剪开 — 8 张演一演卡片\n• 给每个上台的学生抽 1 张")
+
+# 17.6 — CHARADES CARDS: BACK (CN + EN text) — mirrored layout for double-sided alignment
+# When paper is flipped along long edge, back card N aligns with front card N
+s=ns(); bg(s,WHITE); hb(s,"🎴 演一演 卡片 · 背面 (Back) — 中文 + English",CHEF)
+tb(s,0.4,0.85,9.2,0.30,"卡片背面 — 双面打印时, 这一页与正面对齐",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.24,"Card backs — when printed double-sided, these align with the fronts opposite",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+# Mirrored: front order [1,2,3,4 / 5,6,7,8] → back order [4,3,2,1 / 8,7,6,5]
+for i,(em,job_cn,job_en,c) in enumerate(charades_jobs):
+    # Position card i at MIRRORED column position
+    row=i//4
+    front_col=i%4
+    back_col=3-front_col   # mirror horizontally
+    x=0.40+back_col*2.35; y=1.55+row*1.95
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.20),Inches(1.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=c; sh.line.color.rgb=c; sh.line.width=Pt(3)
+    tb(s,x+0.05,y+0.50,2.10,0.55,job_cn,sz=24,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,y+1.05,2.10,0.35,job_en,sz=14,b=True,c=WARM,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"卡片背面打印说明:\n• 背面是镜像布局 — 双面打印翻页后, 每张卡片正面和背面对齐\n• 打印设置: 双面打印, 沿长边翻转\n• 颜色背景 = 易于学生快速识别难度\n• 学生抽卡看背面 (答案), 上台演正面 (图片) 提示给观众")
 
 # 18. STEP 3.5 INTRO — 神秘职业! (improved cards with teaser hints)
 s=ns(); bg(s,CREAM); hb(s,"✨ 神秘职业  Mystery Jobs!",ENV)
@@ -917,29 +1061,32 @@ s=scenario_a_slide("🏘️","城市没有公园, 很乱。","The city has no pa
 n+=1; pn(s,n)
 notes(s,"揭晓: 城市规划师!\n• 句型: 「城市规划师帮助 ___ 。」")
 
-# 33. STEP 5 — What if we didn't have this job?
+# 33. STEP 5 — What if we didn't have this job? (open-ended, multiple occupations)
 s=ns(); bg(s,CREAM); hb(s,"💭 如果没有...?  What If We Didn't Have...?",NAVY)
-tb(s,0.4,0.85,9.2,0.45,"想一想 — 如果没有这个职业, 会怎样？",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.30,9.2,0.30,"Think — what if we didn't have this job?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-ifs=[("🌍","环境工程师","水会变 ___ ?","water gets ___?",ENV,"脏 / dirty"),
-     ("🦁","野生动物保护员","动物会 ___ ?","animals will ___?",WILD,"受伤 / get hurt"),
-     ("🏙️","城市规划师","城市会 ___ ?","city becomes ___?",CITY,"很乱 / messy")]
-for i,(em,job_cn,q_cn,q_en,c,hint) in enumerate(ifs):
-    y=1.70+i*0.95
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.85))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE
-    sh.line.color.rgb=c; sh.line.width=Pt(2)
-    tb(s,0.55,y+0.18,0.6,0.5,em,sz=28,a=PP_ALIGN.CENTER)
-    tb(s,1.25,y+0.10,3.0,0.40,job_cn,sz=14,b=True,c=c)
-    tb(s,1.25,y+0.45,3.0,0.30,"如果没有...",sz=10,c=GRAY)
-    tb(s,4.50,y+0.10,3.0,0.40,q_cn,sz=14,b=True,c=DARK)
-    tb(s,4.50,y+0.45,3.0,0.30,q_en,sz=10,c=GRAY)
-    pill(s,7.70,y+0.25,1.70,0.35,hint,GOLD,sz=11)
+tb(s,0.4,0.85,9.2,0.40,"想一想 — 如果没有这个职业, 我们的世界会怎样?",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.25,9.2,0.28,"Think — if there were no ___, what would our world be like?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 8 occupations in 4x2 grid — open-ended (no hint pills)
+ifs=[("🩺","医生","Doctor",DOC),
+     ("📚","老师","Teacher",TEACH),
+     ("👮","警察","Police",POLICE),
+     ("🚒","消防员","Firefighter",DOC),
+     ("👨‍🍳","厨师","Chef",CHEF),
+     ("👷","工程师","Engineer",ENG),
+     ("🦒","兽医","Vet",WILD),
+     ("🌍","环境工程师","Env Engineer",ENV)]
+for i,(em,job_cn,job_en,c) in enumerate(ifs):
+    col=i%4; row=i//4
+    x=0.4+col*2.35; y=1.70+row*1.40
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.20),Inches(1.30))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=c; sh.line.width=Pt(2.5)
+    tb(s,x+0.05,y+0.12,2.10,0.55,em,sz=36,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,y+0.72,2.10,0.30,job_cn,sz=14,b=True,c=c,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,y+1.02,2.10,0.22,job_en,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
 sentence_frame_bar(s,4.65,
-    "如果没有 ___ , ___ 会 ___ 。",
-    "Without ___, ___ would ___.")
+    "如果没有 ___ , 我们的世界会 ___ 。",
+    "Without ___, our world would ___.")
 n+=1; pn(s,n)
-notes(s,"5 分钟 — 加深意义:\n• 一个一个问: 「如果没有环境工程师呢?」\n• 让学生想 30 秒, 再说。\n• 老师总结: 「所以这个职业很重要!」\n• 让 1-2 个学生用句型说: 「如果没有 ___ , ___ 会 ___ 。」")
+notes(s,"5-8 分钟 — 开放式讨论 (不给标准答案!):\n• 老师指着一个职业, 问: 「如果没有医生, 会怎样?」\n• 不要给提示 — 让学生自由发挥, 收集所有想法\n• 鼓励多种回答: 「人生病了没人帮」「医院空了」「妈妈不能上班照顾我」 都对!\n• 一行一行地问 (1 分钟/职业)\n• 关键 takeaway: 每个职业都让世界更好 — 我们都需要彼此!\n• 高年级 stretch: 让学生想一个老师没列的职业, 「如果没有 ___」")
 
 # 33.5  JOBS KEEP CHANGING — Session 1 closing slide (3 columns: before / now / future)
 s=ns(); bg(s,CREAM); hb(s,"⏳ 工作一直在变!  Jobs Keep Changing!",HELP)
@@ -974,30 +1121,23 @@ notes(s,"3-4 分钟 — 收尾互动:\n• 关键句: 「以前没有这些工�
 s=div("Session 2  下午 2:00–2:45","📚 复习 + 我会认 + 我会写  Review · Read · Write",GOLD,"📖"); n+=1; pn(s,n)
 
 # 35. REVIEW — what we learned in Session 1
-s=ns(); bg(s,CREAM); hb(s,"🔄 复习  Review · Session 1",NAVY)
-tb(s,0.4,0.85,9.2,0.40,"早上学了什么？  What did we learn this morning?",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.25,9.2,0.30,"Quick recap before we read & write!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# 4 review cards (5 things to recall: 5 jobs / 3 mystery / 3 helpers / sentence)
-recap=[("🩺","5 个常见职业","Common jobs", "医生·老师·警察·厨师·工程师", DOC),
-       ("✨","3 个神秘职业","Mystery jobs","环境工程师·野生动物保护员·城市规划师", ENV),
-       ("🆘","谁来帮忙","Who can help","河 / 海龟 / 城市 → 谁来?", HELP),
-       ("💭","我的梦想","My dream","「我想当 ___ , 因为 ___ 。」", GOLD)]
-for i,(em,cn,en,detail,c) in enumerate(recap):
-    col=i%2; row=i//2
-    x=0.4+col*4.65
-    y=1.65+row*1.45
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.30))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE
-    sh.line.color.rgb=c; sh.line.width=Pt(2)
-    tb(s,x+0.10,y+0.12,0.7,0.65,em,sz=32,a=PP_ALIGN.CENTER)
-    tb(s,x+0.85,y+0.10,3.6,0.40,cn,sz=15,b=True,c=c)
-    tb(s,x+0.85,y+0.45,3.6,0.30,en,sz=10,c=GRAY)
-    tb(s,x+0.15,y+0.85,4.30,0.40,detail,sz=11,b=True,c=DARK)
-sentence_frame_bar(s,4.65,
-    "今天早上我学了 ___ 。",
-    "This morning I learned about ___.")
+s=ns(); bg(s,CREAM); hb(s,"🎮 复习游戏  Review · Baamboozle",GOLD)
+tb(s,0.4,0.95,9.2,0.45,"我们来玩 复习游戏! Let's play a review game!",sz=22,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.45,9.2,0.30,"Quick game to recap morning vocabulary + concepts",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Big Baamboozle placeholder area
+ph=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(2.10),Inches(8.0),Inches(2.55))
+ph.fill.solid(); ph.fill.fore_color.rgb=WARM; ph.line.color.rgb=GOLD; ph.line.width=Pt(3)
+tb(s,1.0,2.40,8.0,0.85,"🎮",sz=70,a=PP_ALIGN.CENTER)
+tb(s,1.0,3.30,8.0,0.45,"老师在这里 放 Baamboozle 链接",sz=18,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,1.0,3.78,8.0,0.30,"Teacher: paste Baamboozle game link / QR here",sz=11,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,1.0,4.15,8.0,0.30,"baamboozle.com",sz=12,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+# Bottom: instructions
+inst=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.65))
+inst.fill.solid(); inst.fill.fore_color.rgb=NAVY; inst.line.fill.background()
+tb(s,0.55,4.92,9.0,0.30,"📋 分组抢答 — 答对得分! Teams take turns answering for points!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.22,9.0,0.24,"题目涵盖: 5 常见职业 / 3 神秘职业 / 谁来帮忙 / 「我想当 ___」",sz=10,c=GOLD,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
-notes(s,"5-8 分钟 — 让学生先说 (don't tell):\n• 「早上学了什么职业?」让学生抢答。\n• 全班跟读: 5 个常见 + 3 个神秘。\n• 让 1-2 个学生用句型: 「我想当 ___ 。」\n• 高年级: 加 「因为 ___ 」")
+notes(s,"5-10 分钟 复习游戏:\n• 老师课前在 baamboozle.com 创建一个游戏 (或用已有的)\n• 题目涵盖早上学的内容: 5 常见职业 + 3 神秘职业 + 谁来帮忙 + 公式 (兴趣+能力+帮助=职业)\n• 把游戏链接贴在这一页 (老师手动添加)\n• 上课时直接打开链接玩\n• 全班分 2-3 组抢答得分\n• 不会的题 — 老师讲解后给小组机会再答")
 
 # 36. 我会认 — 5 jobs, ONE SLIDE PER WORD (modeled on 世界旅行 word card pattern)
 read_words=[
@@ -1104,55 +1244,111 @@ notes(s,"7-8 分钟:\n• 演示笔顺, 学生跟写。\n• 田字格练 3 遍�
 # 39. SESSION 3 DIVIDER
 s=div("Session 3  下午 3:00–4:30","🎨 Output: 小本子 + 职业帽子  Booklet + Career Hat",CITY,"💼"); n+=1; pn(s,n)
 
-# 40. STEP 1 — Complete the Booklet
-s=ns(); bg(s,CREAM); hb(s,"📖 完成小本子  Finish My Booklet",CITY)
-tb(s,0.4,0.85,9.2,0.40,"画 + 写 — 把梦想记下来!",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.25,9.2,0.30,"Draw and write — record your dream!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# 3 pages preview
-pages=[("1","封面","Cover","「我的职业梦想」+ 你的名字","Title + your name",CITY),
-       ("2","我想当","My Job","🔘 我想当 ___ 。 (圈一个或写)","Circle / write your job",GOLD),
-       ("3","图画","My Picture","✏️ 画你做这个职业的样子","Draw yourself doing the job",HELP)]
-for i,(num,cn,en,task_cn,task_en,c) in enumerate(pages):
-    x=0.4+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.65),Inches(3.0),Inches(2.85))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE
-    sh.line.color.rgb=c; sh.line.width=Pt(2.5)
-    pill(s,x+0.10,1.75,1.0,0.35,f"第 {num} 页",c,sz=12)
-    tb(s,x+0.05,2.20,2.9,0.45,cn,sz=18,b=True,c=c,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.62,2.9,0.30,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-    tb(s,x+0.10,3.05,2.8,0.55,task_cn,sz=12,b=True,c=DARK)
-    tb(s,x+0.10,3.55,2.8,0.40,task_en,sz=9,c=GRAY)
-    tb(s,x+0.10,4.00,2.8,0.35,"⏱️ 约 7 分钟",sz=9,c=GOLD,a=PP_ALIGN.CENTER)
-sentence_frame_bar(s,4.65,
-    "高年级: 我想当 ___, 因为 ___ 。",
-    "Higher level: I want to be ___, because ___.")
+# 39.5 — TEAM PAPER BRIDGE COMPETITION (replaces individual Try It · Engineer)
+s=ns(); bg(s,CREAM); hb(s,"🌉 团队比赛 · 纸桥挑战  Team Bridge Challenge!",ENG)
+tb(s,0.4,0.85,9.2,0.40,"分组 — 比一比 — 谁的纸桥最结实!",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.28,"Teams compete — whose paper bridge is strongest?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Materials + rules card (left)
+mat_card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.70),Inches(4.50),Inches(2.50))
+mat_card.fill.solid(); mat_card.fill.fore_color.rgb=WARM; mat_card.line.color.rgb=ENG; mat_card.line.width=Pt(2.5)
+tb(s,0.55,1.78,4.30,0.32,"📋 材料 + 规则  Materials + Rules",sz=14,b=True,c=ENG)
+tb(s,0.55,2.18,4.30,0.28,"📄 每队 1 张 A4 纸  ·  1 sheet of A4",sz=11,b=True,c=DARK)
+tb(s,0.55,2.48,4.30,0.28,"✂️ 1 把剪刀 + 1 卷胶带  ·  Scissors + tape",sz=11,b=True,c=DARK)
+tb(s,0.55,2.78,4.30,0.28,"⏱️ 10 分钟造桥  ·  10 min to build",sz=11,b=True,c=DARK)
+tb(s,0.55,3.08,4.30,0.28,"📚 桥架在两本书中间 (10 cm)  ·  Span 10 cm",sz=11,b=True,c=DARK)
+tb(s,0.55,3.45,4.30,0.32,"🎯 目标: 撑住最多的硬币!",sz=13,b=True,c=ENG)
+tb(s,0.55,3.78,4.30,0.24,"Goal: hold the most coins!",sz=10,c=GRAY)
+# Engineer 4-step loop (right)
+loop_card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.10),Inches(1.70),Inches(4.50),Inches(2.50))
+loop_card.fill.solid(); loop_card.fill.fore_color.rgb=WHITE; loop_card.line.color.rgb=ENG; loop_card.line.width=Pt(2.5)
+tb(s,5.25,1.78,4.30,0.32,"🔁 工程师 4 步  Engineer's 4 Steps",sz=14,b=True,c=ENG)
+steps=[("1","看","See","观察 the gap"),
+       ("2","想","Think","Design the bridge"),
+       ("3","做","Make","Build with paper"),
+       ("4","改","Improve","Test, fix, retest!")]
+for i,(num,cn,en,detail) in enumerate(steps):
+    yy=2.20+i*0.46
+    pill(s,5.25,yy,0.45,0.36,num,ENG,sz=14)
+    tb(s,5.80,yy+0.02,1.0,0.32,cn,sz=16,b=True,c=ENG)
+    tb(s,6.85,yy+0.04,1.05,0.30,en,sz=11,b=True,c=DARK)
+    tb(s,7.95,yy+0.07,1.65,0.24,detail,sz=9,c=GRAY)
+# Competition / scoring (bottom)
+score_card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.35),Inches(9.20),Inches(1.0))
+score_card.fill.solid(); score_card.fill.fore_color.rgb=ENG; score_card.line.color.rgb=GOLD; score_card.line.width=Pt(2.5)
+tb(s,0.55,4.42,9.0,0.32,"🏆 比赛 + 评奖  Test & Award",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.78,9.0,0.30,"每队测试 — 撑硬币最多的赢!  也给「最有创意」「最团结合作」奖!",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.10,9.0,0.22,"Each team tests — most coins = winner. Also award 'Most Creative' + 'Best Teamwork'!",sz=9,c=GOLD,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
-notes(s,"20-25 分钟 — 学生独立做:\n• K 学生: 圈选 + 画画\n• G1-3: 写句子「我想当 ___, 因为 ___ 。」\n• 老师巡视, 帮助拼字。\n• 完成后加贴纸鼓励。")
+notes(s,"团队比赛 (15-20 分钟):\n• 老师提前准备: A4 纸 (每队 1 张), 剪刀, 胶带, 一些硬币 (or 小石头), 两本厚度相同的书\n• 分组: 4-5 人一队, 共 4-6 队\n• 1 看: 老师摆好两本书 (10 cm gap) — 让学生看「桥」要架的位置\n• 2 想: 每队 2 分钟头脑风暴怎么折/卷/拼 — 不动手!\n• 3 做: 10 分钟造桥 — 老师巡视, 鼓励, 不直接帮\n• 4 改: 第 1 次测试 → 调整 → 第 2 次测试\n• 比赛: 老师给每队的桥逐个加硬币, 直到塌. 撑最多的赢!\n• 颁奖 (3 个): 「最强桥」「最有创意」「最团结合作」 — 每队都有奖\n• 反思: 「桥塌了没关系 — 工程师就是改了再试!」")
 
-# 41. STEP 2 INTRO — Career Hat (主推)
-s=ns(); bg(s,CREAM); hb(s,"🎩 职业帽子  Career Hat!",GOLD)
-tb(s,0.4,0.85,9.2,0.45,"做一顶你的职业帽子 — 戴上演一演!",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.30,9.2,0.30,"Make a hat for your job — wear it and act!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# 4 example hats
-hats=[("👨‍⚕️","医生帽","Doctor's hat","白色 + 红十字",DOC),
-      ("👮","警察帽","Police hat","蓝色 + 警徽",POLICE),
-      ("👨‍🍳","厨师帽","Chef's hat","白色, 高高的",CHEF),
-      ("👷","工程师帽","Engineer hat","黄色 + 安全帽",ENG)]
-for i,(em,cn,en,hint,c) in enumerate(hats):
-    x=0.4+i*2.35
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.70),Inches(2.20),Inches(2.85))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE
-    sh.line.color.rgb=c; sh.line.width=Pt(2.5)
-    tb(s,x+0.05,1.80,2.10,1.00,em,sz=60,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.85,2.10,0.45,cn,sz=16,b=True,c=c,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.30,2.10,0.30,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.70,2.10,0.30,hint,sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    pill(s,x+0.40,4.10,1.40,0.30,"小小 "+cn[0:2],c,sz=10)
-sentence_frame_bar(s,4.65,
-    "我是小小 ___ ! 我戴 ___ 帽。",
-    "I'm a junior ___! I wear a ___ hat.")
+# 40. PROJECT 1 — My Dream Job Poster (4 sections aligned to formula)
+s=ns(); bg(s,CREAM); hb(s,"🪧 Project 1: 我的梦想职业海报  My Dream Job Poster",CITY)
+tb(s,0.4,0.85,9.2,0.36,"画一张海报 — 4 个部分! Draw a poster — 4 parts!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.22,9.2,0.26,"Use the formula: 兴趣 + 能力 + 帮助 = 职业",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 4 poster sections in 2x2 grid
+sections=[
+    ("💼","我的梦想职业","Dream Job","我想当 ___ 。","I want to be ___",NAVY),
+    ("❤️","我的兴趣","My Interest","我喜欢 ___ 。","I love ___",CITY),
+    ("💪","我的能力","My Skill","我会 / 我在练 ___ 。","I can / I'm working on ___",HELP),
+    ("🤝","我帮助谁","Who I Help","这个工作帮助 ___ 。","This job helps ___",DOC),
+]
+for i,(em,cn,en,task_cn,task_en,c) in enumerate(sections):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.55+row*1.55
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.45))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=c; sh.line.width=Pt(2.5)
+    tb(s,x+0.10,y+0.10,0.85,0.6,em,sz=32,a=PP_ALIGN.CENTER)
+    tb(s,x+1.05,y+0.10,3.45,0.36,cn,sz=15,b=True,c=c)
+    tb(s,x+1.05,y+0.45,3.45,0.24,en,sz=10,c=GRAY)
+    tb(s,x+1.05,y+0.78,3.45,0.30,task_cn,sz=12,b=True,c=DARK)
+    tb(s,x+1.05,y+1.06,3.45,0.24,task_en,sz=9,c=GRAY)
+sentence_frame_bar(s,4.75,
+    "我想当 ___ , 因为 我喜欢 ___ , 我会 ___ , 我想帮助 ___ 。",
+    "I want to be ___ because I love ___, I can ___, and I want to help ___.")
 n+=1; pn(s,n)
-notes(s,"主推项目 — 30 分钟:\n• 简单介绍每个职业的帽子样式 (上图)。\n• 学生选一种, 然后用纸条做帽圈, 加图案 / 颜色 / 装饰。\n• 戴上帽子, 演一演 (1 分钟): 「我是小小医生 — 听一听!」\n• 帽子贴在头围纸条上, 一戴就成形。\n• 鼓励创意! 学生可以做今天学的 8 个职业的任何一个。")
+notes(s,"PROJECT 1 · 20-25 分钟:\n• 老师发 1 张大纸 (A3 / 11×17)\n• 学生 折成 4 格 (或老师提前画好 4 框)\n• 4 部分对应公式:\n  - 第 1 部分: 我的梦想职业 (画 + 写)\n  - 第 2 部分: 我的兴趣 (画喜欢的)\n  - 第 3 部分: 我的能力 (画擅长的, 或正在练习的)\n  - 第 4 部分: 我帮助谁 (画受益的人)\n• 差异化: K 画为主, G1-3 加句子, G4-5 写完整段落\n• 完成后挂在墙上 — 准备 Gallery Walk")
+
+# 41. PROJECT 2 — Dream Job Hat AND Badge
+s=ns(); bg(s,CREAM); hb(s,"🎩 Project 2: 梦想职业帽子 + 徽章  Hat + Badge!",GOLD)
+tb(s,0.4,0.85,9.2,0.40,"选你的梦想职业 — 做一顶帽子 + 一个徽章!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.25,9.2,0.28,"Pick your dream job — make a hat AND a badge!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Two columns: HAT examples (left), BADGE examples (right)
+hat_card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(4.55),Inches(3.10))
+hat_card.fill.solid(); hat_card.fill.fore_color.rgb=WHITE; hat_card.line.color.rgb=GOLD; hat_card.line.width=Pt(2.5)
+hat_h=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(4.55),Inches(0.45))
+hat_h.fill.solid(); hat_h.fill.fore_color.rgb=GOLD; hat_h.line.fill.background()
+tb(s,0.55,1.71,4.30,0.33,"🎩 帽子 Hat — 戴上演一演!",sz=14,b=True,c=WHITE)
+hats=[("👨‍⚕️","医生帽","白色 + 红十字"),
+      ("👮","警察帽","蓝色 + 警徽"),
+      ("👨‍🍳","厨师帽","白色, 高高的"),
+      ("👷","工程师帽","黄色 + 安全帽")]
+for i,(em,cn,hint) in enumerate(hats):
+    col=i%2; row=i//2
+    x=0.55+col*2.10; y=2.25+row*1.20
+    tb(s,x,y,0.55,0.55,em,sz=30,a=PP_ALIGN.CENTER)
+    tb(s,x+0.55,y+0.05,1.45,0.30,cn,sz=12,b=True,c=DARK)
+    tb(s,x+0.55,y+0.32,1.45,0.20,hint,sz=8,c=GRAY)
+# Badge examples (right)
+bdg_card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.65),Inches(4.55),Inches(3.10))
+bdg_card.fill.solid(); bdg_card.fill.fore_color.rgb=WHITE; bdg_card.line.color.rgb=DOC; bdg_card.line.width=Pt(2.5)
+bdg_h=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.65),Inches(4.55),Inches(0.45))
+bdg_h.fill.solid(); bdg_h.fill.fore_color.rgb=DOC; bdg_h.line.fill.background()
+tb(s,5.20,1.71,4.30,0.33,"🎖️ 徽章 Badge — 别在胸前!",sz=14,b=True,c=WHITE)
+badges=[("⚕️","医生徽章","红十字 + 名字"),
+        ("🛡️","警察徽章","盾牌 + 编号"),
+        ("🍴","厨师徽章","刀叉 + 帽子"),
+        ("⚙️","工程师徽章","齿轮 + 工具")]
+for i,(em,cn,hint) in enumerate(badges):
+    col=i%2; row=i//2
+    x=5.20+col*2.10; y=2.25+row*1.20
+    tb(s,x,y,0.55,0.55,em,sz=30,a=PP_ALIGN.CENTER)
+    tb(s,x+0.55,y+0.05,1.45,0.30,cn,sz=12,b=True,c=DARK)
+    tb(s,x+0.55,y+0.32,1.45,0.20,hint,sz=8,c=GRAY)
+sentence_frame_bar(s,4.85,
+    "我是小小 ___ ! 我戴 ___ 帽 + ___ 徽章。",
+    "I'm a junior ___! I wear a ___ hat + ___ badge.")
+n+=1; pn(s,n)
+notes(s,"PROJECT 2 · 25-30 分钟:\n• 学生选一个梦想职业 (可以是上午学过的 8 个, 也可以自己想)\n• 做帽子 (15 分钟): 头围纸条 + 帽子图案/装饰\n• 做徽章 (10 分钟): 圆纸片 + 别针/胶带 + 图案\n• 戴上 + 别上 — 「我是小小 ___」 互相介绍\n• 鼓励创意 — 不一定是上面 4 个示例")
 
 # 42. HAT MATERIALS & HOW-TO
 s=ns(); bg(s,CREAM); hb(s,"🛠️ 帽子材料 & 做法  Hat Materials & How-To",GOLD)
@@ -1197,36 +1393,53 @@ sentence_frame_bar(s,4.75,
 n+=1; pn(s,n)
 notes(s,"老师准备 (低投入):\n• 提前剪好头围纸条 (省时间)。\n• 准备彩纸 + 装饰品 1 桌一份。\n• 老师演示 1 顶 (e.g. 厨师帽: 白色, 加纸团做高顶)。\n• 学生 25 分钟做完, 5 分钟戴上展示。\n• 鼓励合作 — 同桌互相帮忙。")
 
-# 43. PROJECT ALTERNATIVES — 2-3 other ideas
-s=ns(); bg(s,CREAM); hb(s,"💡 其他项目选择  Other Project Ideas",NAVY)
-tb(s,0.4,0.85,9.2,0.40,"不想做帽子？还可以做这些!",sz=20,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.25,9.2,0.30,"Don't want a hat? Try one of these!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# 3 alternative projects
-alts=[("🎖️","职业徽章","Career Badge",
-       "圆纸片 + 别针 + 图案", "Paper circle + pin + icon",
-       "5 分钟 / 简单", DOC),
-      ("🪧","职业小海报","Mini Poster",
-       "1 张纸: 「我是 / 我用 / 我帮助」", "1 page: name + tools + helps",
-       "15 分钟 / 中等", HELP),
-      ("🎴","职业卡片","Career Card",
-       "像游戏卡: 名字 + 工具 + 技能", "Like a trading card",
-       "10 分钟 / 创意", CITY)]
-for i,(em,cn,en,what_cn,what_en,time_cn,c) in enumerate(alts):
-    x=0.4+i*3.15
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.65),Inches(3.0),Inches(3.05))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE
-    sh.line.color.rgb=c; sh.line.width=Pt(2.5)
-    tb(s,x+0.05,1.80,2.9,0.85,em,sz=52,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.75,2.9,0.45,cn,sz=18,b=True,c=c,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.20,2.9,0.30,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-    tb(s,x+0.10,3.60,2.8,0.40,what_cn,sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    tb(s,x+0.10,4.00,2.8,0.30,what_en,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
-    pill(s,x+0.50,4.35,2.0,0.30,"⏱️ "+time_cn,c,sz=10)
-sentence_frame_bar(s,4.85,
-    "我做 ___ 。我是小小 ___ !",
-    "I made a ___. I'm a junior ___!")
+# 43. PROJECT 3 — Future Jobs Group Project
+s=ns(); bg(s,CREAM); hb(s,"🔮 Project 3: 未来 会消失 的 工作  Future Jobs · Group Project",NAVY)
+tb(s,0.4,0.85,9.2,0.40,"分组讨论 — 哪些工作 未来 可能 会消失? 为什么?",sz=17,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.25,9.2,0.28,"Group project — which jobs may disappear in the future? Why?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Left: examples / candidates
+ex=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(4.55),Inches(2.55))
+ex.fill.solid(); ex.fill.fore_color.rgb=WHITE; ex.line.color.rgb=NAVY; ex.line.width=Pt(2.5)
+exh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(4.55),Inches(0.45))
+exh.fill.solid(); exh.fill.fore_color.rgb=NAVY; exh.line.fill.background()
+tb(s,0.55,1.71,4.30,0.33,"💡 例子: 哪些可能消失? Examples",sz=13,b=True,c=WHITE)
+candidates=[
+    ("📞","电话接线员","Phone operator"),
+    ("🚕","出租车司机","Taxi driver (自驾车?)"),
+    ("📰","报纸送报员","Newspaper carrier"),
+    ("🧾","收银员","Cashier (自助结账?)"),
+]
+for i,(em,cn,en) in enumerate(candidates):
+    y=2.20+i*0.48
+    tb(s,0.60,y,0.55,0.40,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,1.20,y+0.04,3.6,0.30,cn,sz=12,b=True,c=DARK)
+    tb(s,1.20,y+0.32,3.6,0.20,en,sz=8,c=GRAY)
+# Right: task instructions
+task=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.65),Inches(4.55),Inches(2.55))
+task.fill.solid(); task.fill.fore_color.rgb=WHITE; task.line.color.rgb=HELP; task.line.width=Pt(2.5)
+taskh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.65),Inches(4.55),Inches(0.45))
+taskh.fill.solid(); taskh.fill.fore_color.rgb=HELP; taskh.line.fill.background()
+tb(s,5.20,1.71,4.30,0.33,"📋 你的任务  Your Task",sz=13,b=True,c=WHITE)
+tasks=[
+    ("1️⃣","列 4 个 以上 工作","List at least 4 jobs"),
+    ("2️⃣","写 / 说 为什么 会消失","Why might they disappear?"),
+    ("3️⃣","画 / 写 你的想法","Draw or write your ideas"),
+    ("4️⃣","小组分享","Share with the class"),
+]
+for i,(em,cn,en) in enumerate(tasks):
+    y=2.20+i*0.48
+    tb(s,5.25,y,0.45,0.40,em,sz=18,b=True,c=HELP)
+    tb(s,5.80,y+0.04,3.7,0.30,cn,sz=12,b=True,c=DARK)
+    tb(s,5.80,y+0.32,3.7,0.20,en,sz=8,c=GRAY)
+# Differentiation bar at bottom
+diff=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.30),Inches(9.2),Inches(1.10))
+diff.fill.solid(); diff.fill.fore_color.rgb=GOLD; diff.line.fill.background()
+tb(s,0.55,4.36,9.0,0.30,"🎯 分级 Differentiation",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.66,9.0,0.30,"📚 高年级 (G3+): 用中文写出 4 个原因 (因为 ___)",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.94,9.0,0.30,"🎨 低年级 (K-G2): 口头说原因 + 画图 / 写关键词",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.20,9.0,0.20,"Higher: write reasons in Chinese · Lower: oral reasons + draw / keywords",sz=8,c=DARK,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
-notes(s,"学生可以选项目 (老师推荐 1-2 个让全班一起做):\n• 帽子 (主推) — 视觉强, 戴上立刻有「I am」感觉\n• 徽章 — 最快, 适合时间紧\n• 海报 — 文字最多, 适合 G2-3, 句型练习\n• 卡片 — 最有趣, 像游戏卡, 可以收集交换\n• 全部 都让学生说: 「我是小小 ___ , 我帮助 ___ 。」\n• 老师可以选 2 种让学生选一种, 不用提供全部 4 种 (太复杂)。")
+notes(s,"PROJECT 3 · 20-25 分钟 — 分组项目:\n• 4-5 人一组, 4-6 组\n• 老师先讨论 1 个例子: 「电话接线员 — 现在我们用手机, 不需要接线员了」\n• 每组用大纸 / 海报:\n  - 1️⃣ 列 4 个以上可能消失的工作\n  - 2️⃣ 解释 为什么 会消失 (新科技? AI? 自动化?)\n  - 3️⃣ 画 / 写 — 视觉化\n  - 4️⃣ 小组上台分享\n• 差异化:\n  - 高年级: 写完整中文句子 「___ 可能会消失, 因为 ___」\n  - 低年级: 老师帮记录, 学生口头说 + 画图\n• 引导思考: 「不要害怕 — 新工作也会出现! 你长大可能做的工作 现在还没发明!」")
 
 # 44. STEP 3 — Gallery Walk
 s=ns(); bg(s,CREAM); hb(s,"🚶 画展!  Gallery Walk!",HELP)
