@@ -431,16 +431,16 @@ def book_scene_slide(emoji,scene_cn,scene_en,color,
         tb(s,4.95,y+1.02,4.65,0.25,f"💡 老师提示: {hint}",sz=9,c=cl)
     return s
 
-# 4.5b — BOOK INTRO (new video: interests can become your future job)
+# 4.5b — BOOK INTRO (绘本: 长大后你想做什么工作 — 小狗们的职业梦想)
 s=ns(); bg(s,CREAM); hb(s,"📖 听一个故事  Story Time",GOLD)
-tb(s,0.4,0.85,9.2,0.50,"💡 你的兴趣 — 可能就是你未来的工作!",sz=22,b=True,c=GOLD,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.40,9.2,0.30,"Your hobby today — could become your job tomorrow!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,0.85,9.2,0.50,"📚 长大后你想做什么工作？",sz=22,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.40,9.2,0.30,"What Do You Want To Be When You Grow Up?",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
 # Cover panel
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.85),Inches(4.30),Inches(3.20))
 sh.fill.solid(); sh.fill.fore_color.rgb=WARM; sh.line.color.rgb=GOLD; sh.line.width=Pt(3)
-tb(s,0.4,2.10,4.30,1.0,"📖",sz=110,a=PP_ALIGN.CENTER)
-tb(s,0.4,3.15,4.30,0.45,"我的兴趣可以成为我未来的工作",sz=16,b=True,c=GOLD,a=PP_ALIGN.CENTER)
-tb(s,0.4,3.65,4.30,0.30,"My Interests Can Become My Future Job",sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,2.10,4.30,1.0,"🐶",sz=110,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.15,4.30,0.45,"小狗们的职业梦想",sz=16,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.65,4.30,0.30,"The Puppies' Career Dreams",sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
 tb(s,0.4,4.10,4.30,0.30,"📷 在这里贴书的封面",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
 tb(s,0.4,4.40,4.30,0.30,"Paste book cover here",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
 # Right: video link + listening prompts
@@ -450,41 +450,64 @@ head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.85),In
 head.fill.solid(); head.fill.fore_color.rgb=GOLD; head.line.fill.background()
 tb(s,5.00,1.93,4.65,0.4,"🎬 听故事  Listen",sz=14,b=True,c=WHITE)
 tb(s,5.00,2.45,4.65,0.30,"📺 视频链接 / Video:",sz=11,b=True,c=GOLD)
-tb(s,5.00,2.75,4.65,0.30,"youtube.com/watch?v=y-jgklhlX3A",sz=10,b=True,c=NAVY)
+tb(s,5.00,2.75,4.65,0.30,"youtube.com/watch?v=EVFPL_qXChU",sz=10,b=True,c=NAVY)
 tb(s,5.00,3.05,4.65,0.30,"(老师: ~3-5 分钟, 看完一起聊)",sz=10,c=GRAY)
-tb(s,5.00,3.50,4.65,0.28,"👂 听的时候, 找 4 件事 (兴趣+能力+帮助+职业):",sz=11,b=True,c=GOLD)
-tb(s,5.00,3.78,4.65,0.24,"1. ❤️ 主角喜欢什么? (兴趣 Interest)",sz=10,c=DARK)
-tb(s,5.00,4.00,4.65,0.24,"2. 💪 主角擅长什么? (能力 Skill)",sz=10,c=DARK)
-tb(s,5.00,4.22,4.65,0.24,"3. 🤝 主角想帮谁? (帮助 Help)",sz=10,c=DARK)
-tb(s,5.00,4.44,4.65,0.24,"4. 💼 长大后做什么工作? (职业 Career)",sz=10,c=DARK)
-tb(s,5.00,4.70,4.65,0.28,"📌 听完一起回答 4 个问题!",sz=10,b=True,c=GOLD)
+tb(s,5.00,3.50,4.65,0.28,"👂 听的时候, 注意 4 件事:",sz=11,b=True,c=GOLD)
+tb(s,5.00,3.78,4.65,0.24,"1. 🐶 小狗们 想做 什么 工作?",sz=10,c=DARK)
+tb(s,5.00,4.00,4.65,0.24,"2. ❤️ 它们 喜欢 什么? (兴趣)",sz=10,c=DARK)
+tb(s,5.00,4.22,4.65,0.24,"3. 💪 它们 擅长 什么? (能力)",sz=10,c=DARK)
+tb(s,5.00,4.44,4.65,0.24,"4. 🤝 它们 想 帮 谁? (帮助)",sz=10,c=DARK)
+tb(s,5.00,4.70,4.65,0.28,"📌 听完, 一起 讨论!",sz=10,b=True,c=GOLD)
 n+=1; pn(s,n)
-notes(s,"3-5 分钟:\n• 主资源: https://www.youtube.com/watch?v=y-jgklhlX3A\n• 听之前先说: 「这个故事告诉我们 — 你今天喜欢的, 可能就是你长大后做的!」\n• 听完不要急着讲解 — 翻页让学生自己回答 4 个问题")
+notes(s,"3-5 分钟:\n• 主资源: https://www.youtube.com/watch?v=EVFPL_qXChU\n• 绘本:《长大后你想做什么工作》— 小狗们的职业梦想\n• 听之前先说: 「故事里的小狗都长大了 — 它们都想做什么工作? 一起听!」\n• 听完不要急着讲解 — 翻页让学生自己讨论\n• 关键: 这本书会带出 — 小狗们从 自己的兴趣 + 擅长 中找到职业 → 这就是今天的公式!")
 
-# 4.5c — POST-STORY DISCUSSION (4 lead-in questions)
+# 4.5c — POST-STORY DISCUSSION (K-2 vs G3-5 differentiated questions with sample answers)
 s=ns(); bg(s,CREAM); hb(s,"🤔 听完故事 · 一起讨论  Let's Talk",GOLD)
-tb(s,0.4,0.85,9.2,0.40,"4 个问题 — 一个比一个深!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.30,9.2,0.28,"4 questions — each goes a bit deeper.",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-discuss=[
-    ("❤️","兴趣","主角喜欢什么？","What does the character love?",DOC),
-    ("💪","能力","主角擅长什么？","What is the character good at?",HELP),
-    ("🤝","帮助","主角想帮助谁？","Who does the character want to help?",CHEF),
-    ("💼","职业","他长大后做什么工作？","What career as a grown-up?",NAVY),
-]
-for i,(em,lvl,q_cn,q_en,cl) in enumerate(discuss):
-    col=i%2; row=i//2
-    x=0.4+col*4.7; y=1.65+row*1.55
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.50),Inches(1.40))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(2.5)
-    tb(s,x+0.10,y+0.10,0.7,0.55,em,sz=28,a=PP_ALIGN.CENTER)
-    tb(s,x+0.85,y+0.10,3.55,0.35,lvl,sz=12,b=True,c=cl)
-    tb(s,x+0.85,y+0.45,3.55,0.45,q_cn,sz=13,b=True,c=DARK)
-    tb(s,x+0.85,y+0.95,3.55,0.30,q_en,sz=10,c=GRAY)
-sentence_frame_bar(s,4.85,
-    "我觉得 ___ , 因为 ___ 。",
-    "I think ___, because ___.")
+tb(s,0.4,0.80,9.2,0.32,"按年龄分 — K-2 / G3-5 不同问题",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.13,9.2,0.24,"Differentiated questions for K-2 vs G3-5",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# K-2 column (left)
+k2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.40),Inches(1.45),Inches(4.55),Inches(3.50))
+k2.fill.solid(); k2.fill.fore_color.rgb=WHITE; k2.line.color.rgb=DOC; k2.line.width=Pt(3)
+k2h=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.40),Inches(1.45),Inches(4.55),Inches(0.45))
+k2h.fill.solid(); k2h.fill.fore_color.rgb=DOC; k2h.line.fill.background()
+tb(s,0.50,1.50,4.40,0.36,"🐣 K-2  ·  小朋友 (简单)",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# K-2 Q1
+tb(s,0.55,2.00,4.30,0.30,"❓ 1. 故事里的小狗, 长大都想做什么工作?",sz=11,b=True,c=DARK)
+tb(s,0.55,2.30,4.30,0.22,"What jobs do the puppies want?",sz=8,c=GRAY)
+tb(s,0.65,2.55,4.20,0.22,"💡 警察 · 医生 · 卖冰激凌 · 飞行员 ...",sz=10,b=True,c=DOC)
+# K-2 Q2
+tb(s,0.55,2.95,4.30,0.30,"❓ 2. 小狗们怎么决定做什么工作?",sz=11,b=True,c=DARK)
+tb(s,0.55,3.25,4.30,0.22,"How did they decide their future jobs?",sz=8,c=GRAY)
+tb(s,0.65,3.50,4.20,0.50,"💡 从生活经验、擅长的事、平日喜好里 联想出来的!",sz=10,b=True,c=DOC)
+# K-2 sentence frame
+sf1=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.55),Inches(4.20),Inches(4.25),Inches(0.65))
+sf1.fill.solid(); sf1.fill.fore_color.rgb=WARM; sf1.line.color.rgb=DOC; sf1.line.width=Pt(1.5)
+tb(s,0.65,4.25,4.10,0.28,"💬 我喜欢的小狗想当 ___ 。",sz=11,b=True,c=DOC)
+tb(s,0.65,4.55,4.10,0.22,"My favorite puppy wants to be a ___.",sz=8,c=GRAY)
+
+# G3-5 column (right)
+g3=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.45),Inches(4.55),Inches(3.50))
+g3.fill.solid(); g3.fill.fore_color.rgb=WHITE; g3.line.color.rgb=NAVY; g3.line.width=Pt(3)
+g3h=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(1.45),Inches(4.55),Inches(0.45))
+g3h.fill.solid(); g3h.fill.fore_color.rgb=NAVY; g3h.line.fill.background()
+tb(s,5.15,1.50,4.40,0.36,"🌟 G3-5  ·  大孩子 (深一点)",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+# G3-5 Q1
+tb(s,5.20,2.00,4.30,0.30,"❓ 1. 这本书想告诉我们什么道理?",sz=11,b=True,c=DARK)
+tb(s,5.20,2.30,4.30,0.22,"What's the message of this book?",sz=8,c=GRAY)
+tb(s,5.30,2.55,4.20,0.50,"💡 小事也能 启发 大梦想 — 兴趣 + 擅长 = 未来工作!",sz=10,b=True,c=NAVY)
+# G3-5 Q2
+tb(s,5.20,3.20,4.30,0.30,"❓ 2. 怎么把 兴趣 变成 工作?",sz=11,b=True,c=DARK)
+tb(s,5.20,3.50,4.30,0.22,"How to turn interest into a career?",sz=8,c=GRAY)
+tb(s,5.30,3.75,4.20,0.20,"💡 ① 兴趣 → 专业: 练到专业水准",sz=9,c=NAVY)
+tb(s,5.30,3.95,4.20,0.20,"💡 ② 想 — 能不能 养活自己 (赚钱)?",sz=9,c=NAVY)
+tb(s,5.30,4.15,4.20,0.20,"💡 ③ 多元 — 主业 + 副业 (斜杠)",sz=9,c=NAVY)
+# G3-5 sentence frame
+sf2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.20),Inches(4.45),Inches(4.25),Inches(0.45))
+sf2.fill.solid(); sf2.fill.fore_color.rgb=WARM; sf2.line.color.rgb=NAVY; sf2.line.width=Pt(1.5)
+tb(s,5.30,4.50,4.10,0.28,"💬 我的兴趣 ___ 可以变成 ___ 工作。",sz=10,b=True,c=NAVY)
+tb(s,5.30,4.78,4.10,0.20,"My interest in ___ could become a ___ job.",sz=8,c=GRAY)
 n+=1; pn(s,n)
-notes(s,"5-6 分钟 (4 个问题对应公式: 兴趣 + 能力 + 帮助 = 职业):\n• Q1 兴趣 — 主角喜欢什么? (简单, 大家一起回答)\n• Q2 能力 — 主角擅长什么? (NEW! 关键 — 让学生注意 主角不只喜欢, 还会做)\n• Q3 帮助 — 主角想帮助谁?\n• Q4 职业 — 长大后做什么工作?\n• 4 个问题串起整个公式 — 准备引出 Big Discovery slide!\n• 不给「正确答案」 — 接受所有合理回答")
+notes(s,"6-8 分钟 (按年龄分组讨论):\n\n🐣 K-2 (低年级 — 具体, 简单):\n• Q1: 「故事里的小狗都想做什么工作?」让学生抢答 — 引导答案: 警察/医生/卖冰激凌/飞行员\n• Q2: 「他们是怎么想到的?」 — 答案: 从他们 喜欢的、擅长的、平时玩的东西 想出来的\n• 强调: 小狗也是从 自己的兴趣 找到 工作!\n\n🌟 G3-5 (大孩子 — 抽象, 深一点):\n• Q1 引出书的道理: 「小事可以启发大梦想 — 兴趣 + 擅长 = 工作」\n• Q2 引出实操: 怎么把兴趣变工作?\n  - ① 兴趣转专业 (要练到专业水准)\n  - ② 考虑能不能赚钱 (养活自己)\n  - ③ 不行就 斜杠 — 白天上班, 晚上做兴趣\n• 鼓励家长引导: 「什么事做起来 顺手? 什么事 特别喜欢?」\n\n• 不要混在一起讲 — 先 K-2 (3 分钟), 再 G3-5 (3 分钟)")
 
 # 4.5c-2 — Key principle (moved here AFTER Discussion — students discover formula via discussion)
 s=ns(); bg(s,GOLD)
@@ -577,34 +600,117 @@ for i,(em,interest,skill,help_,jobs) in enumerate(mappings):
 n+=1; pn(s,n)
 notes(s,"8-10 分钟 (DISCUSS FIRST — 不要急着读答案!):\n• 老师指着第一行 ⚽ 运动 — 一列一列问:\n  - Q1 兴趣: 「喜欢运动的人, 有什么 能力?」 (跑得快? 身体好?)\n  - Q2 帮助: 「他们能帮谁?」 (让人健康)\n  - Q3 职业: 「可以变什么工作?」 (运动员? 教练?)\n• 让 2-3 个学生猜每一列, 再揭示\n• 一行一行做 (~1.5 分钟/行)\n• 关键 takeaway: 一个兴趣 + 不同能力 → 很多不同的工作!")
 
-# 4.5d-2 — TURN & TALK (sentence frames + partner discussion)
-s=ns(); bg(s,CREAM); hb(s,"🗣️ Turn & Talk  ·  和同桌聊一聊",GOLD)
-tb(s,0.4,0.85,9.2,0.40,"和同桌轮流说 — 用句型框架!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.30,9.2,0.28,"Take turns with your partner — use the sentence frames below!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# 3 question + sentence frame cards (vertical stack)
-ttdata=[
-    ("❤️","Interest","你喜欢什么?","What do you love?",          "我喜欢 ____ 。",     "I love ____.",         GOLD),
-    ("💪","Skill",   "你擅长什么?","What are you good at?",        "我擅长 ____ 。",     "I'm good at ____.",    HELP),
-    ("🤝","Help",    "你想帮助谁?","Who do you want to help?",    "我想帮助 ____ 。",   "I want to help ____.", DOC),
-    ("💼","Career",  "你想做什么工作?","What career do you want?", "我长大想当 ____ 。", "I want to be a ____.", NAVY),
-]
-for i,(em,en_lbl,q_cn,q_en,frame_cn,frame_en,color) in enumerate(ttdata):
-    y=1.55+i*0.92
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.85))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=color; sh.line.width=Pt(2.5)
-    # Emoji circle
-    cir=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.55),Inches(y+0.13),Inches(0.60),Inches(0.60))
-    cir.fill.solid(); cir.fill.fore_color.rgb=color; cir.line.fill.background()
-    tb(s,0.55,y+0.20,0.60,0.45,em,sz=22,a=PP_ALIGN.CENTER)
-    # Label + Question (left half)
-    tb(s,1.30,y+0.06,4.0,0.22,en_lbl,sz=10,b=True,c=color)
-    tb(s,1.30,y+0.28,4.0,0.30,q_cn,sz=15,b=True,c=color)
-    tb(s,1.30,y+0.55,4.0,0.22,q_en,sz=9,c=GRAY)
-    # Sentence frame (right half)
-    tb(s,5.50,y+0.12,4.0,0.30,f"💬  {frame_cn}",sz=14,b=True,c=DARK)
-    tb(s,5.50,y+0.42,4.0,0.22,frame_en,sz=9,c=GRAY)
+# 4.5d-2 — TURN & TALK · 4 sequential rounds (Interest → Skill → Help → Career)
+# Helper for one Turn & Talk round slide
+def tt_round_slide(round_num, em, theme_cn, theme_en, q_cn, q_en, frame_cn, frame_en,
+                   samples, color, bonus_lines=None):
+    """One round of Turn & Talk — single question, big & focused."""
+    s=ns(); bg(s,CREAM); hb(s,f"🗣️ Turn & Talk · Round {round_num} · {theme_cn}",color)
+    # Big round badge + question card
+    qcard=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(0.85),Inches(9.2),Inches(1.50))
+    qcard.fill.solid(); qcard.fill.fore_color.rgb=color; qcard.line.fill.background()
+    # Round badge (left)
+    badge=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.65),Inches(1.10),Inches(1.0),Inches(1.0))
+    badge.fill.solid(); badge.fill.fore_color.rgb=WHITE; badge.line.color.rgb=color; badge.line.width=Pt(3)
+    tb(s,0.65,1.30,1.0,0.6,str(round_num),sz=42,b=True,c=color,a=PP_ALIGN.CENTER)
+    # Big emoji + question
+    tb(s,1.85,1.00,7.5,0.85,em,sz=48,a=PP_ALIGN.LEFT)
+    tb(s,2.85,1.05,6.6,0.55,q_cn,sz=26,b=True,c=WHITE)
+    tb(s,2.85,1.65,6.6,0.30,q_en,sz=12,c=WARM)
+    tb(s,2.85,1.95,6.6,0.30,theme_en,sz=10,c=WARM)
+    # Sentence frame strip
+    sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(2.50),Inches(9.2),Inches(0.65))
+    sf.fill.solid(); sf.fill.fore_color.rgb=WARM; sf.line.color.rgb=color; sf.line.width=Pt(2.5)
+    tb(s,0.55,2.55,2.0,0.30,"💬 句型 Frame",sz=12,b=True,c=color)
+    tb(s,2.50,2.55,7.0,0.32,frame_cn,sz=18,b=True,c=DARK)
+    tb(s,2.50,2.88,7.0,0.22,frame_en,sz=10,c=GRAY)
+    # Teacher samples (4 examples in a row)
+    tb(s,0.4,3.25,9.2,0.30,"💡 老师举例 · Teacher Examples (don't read all — pick 2-3)",sz=11,b=True,c=color,a=PP_ALIGN.CENTER)
+    n_samples=len(samples)
+    sw=(9.2-0.20*(n_samples-1))/n_samples
+    for i,(s_em,s_cn) in enumerate(samples):
+        x=0.4+i*(sw+0.20)
+        sb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(3.60),Inches(sw),Inches(0.85))
+        sb.fill.solid(); sb.fill.fore_color.rgb=WHITE; sb.line.color.rgb=color; sb.line.width=Pt(2)
+        tb(s,x,3.70,sw,0.40,s_em,sz=24,a=PP_ALIGN.CENTER)
+        tb(s,x,4.10,sw,0.32,s_cn,sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    # Bonus / extension lines at bottom
+    if bonus_lines:
+        bb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.60),Inches(9.2),Inches(0.55))
+        bb.fill.solid(); bb.fill.fore_color.rgb=color; bb.line.fill.background()
+        for i,line in enumerate(bonus_lines[:2]):
+            tb(s,0.55,4.65+i*0.25,9.0,0.25,line,sz=11,b=True,c=WHITE)
+    return s
+
+# Round 1 — Interest (easiest, broadest entry)
+s=tt_round_slide(1,"❤️","兴趣 Interest","Start with what you LOVE",
+    "你喜欢什么?","What do you love?",
+    "我喜欢 ____ 。","I love ____.",
+    [("🎨","画画"),("🐶","动物"),("⚽","运动"),("📚","读书")],
+    GOLD,
+    bonus_lines=["💭 加难: 为什么? Why?  →  「因为很好玩」「因为我觉得很酷」"])
 n+=1; pn(s,n)
-notes(s,"3-4 分钟:\n• 让学生和同桌轮流说 — 老师计时 30 秒\n• 用句型框架 — 学生填空\n• 老师巡视, 听 1-2 组的回答, 全班分享\n• 鼓励所有人说 — 没有错答案!")
+notes(s,"⏱️ 1 分钟:\n• 一次只问 一个问题! (这是 Round 1 — 最简单)\n• 让学生和同桌轮流说: 「我喜欢 ___」\n• 老师举 2-3 个 例子 — 让 K 学生 也敢说\n• 高年级: 加 「为什么?」 — 因为好玩 / 因为 cool\n• 不评价 — 鼓励所有答案")
+
+# Round 2 — Skill (with Growth Mindset)
+s=tt_round_slide(2,"💪","能力 Skill","What you're good at",
+    "你擅长什么?","What are you good at?",
+    "我擅长 ____ 。","I'm good at ____.",
+    [("🎨","画画"),("🏃","跑步"),("🧱","乐高"),("🧮","数学"),("📖","讲故事")],
+    HELP,
+    bonus_lines=["🌱 现在 不会, 也可以练习! Not good yet? You can practice!",
+                 "💬 加: 我正在学习 ____ 。  I'm working on ____."])
+n+=1; pn(s,n)
+notes(s,"⏱️ 1.5 分钟 — 这是关键的一轮!\n• Round 2 比 Round 1 难一点 — 学生可能不知道 「擅长什么」\n• 给 choices: 画画 / 跑步 / 乐高 / 数学 / 讲故事 / 帮助别人\n• ❗ 重要: 告诉学生 「现在不会, 也可以练习!」 — Growth Mindset!\n• 如果学生说 「我不擅长任何东西」: 让他们说 「我正在学习 ___」\n• 这个 frame 特别 powerful — 让学生 own 自己的成长\n• 翻下一页: 深入 Growth Mindset")
+
+# Round 2.5 — GROWTH MINDSET (能力 是 练 出来 的) — moved here to follow Round 2 Skill
+s=ns(); bg(s,CREAM); hb(s,"💪 能力 是 练 出来 的!  Skills Are Built Through Practice",HELP)
+tb(s,0.4,0.85,9.2,0.40,"现在 不会 — 没关系! 我们 都在 练习!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.28,"Not good at it yet? That's OK! We are all working on our skills.",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# 3 reflection prompts (3-card row)
+gm=[
+    ("🤔","这个工作 需要 什么 能力?","What skills does this job need?",HELP),
+    ("🌱","我 现在 还 不会 ___ ,","I'm not very good at ___ yet,",NAVY),
+    ("💪","但我 正在 练习!","but I am working on this skill!",GOLD),
+]
+for i,(em,cn,en,c) in enumerate(gm):
+    x=0.4+i*3.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.75),Inches(2.95),Inches(2.45))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=c; sh.line.width=Pt(3)
+    tb(s,x+0.05,1.85,2.85,0.85,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.85,0.65,cn,sz=14,b=True,c=c,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.45,2.85,0.55,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# Sentence frames (whole class)
+sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.35),Inches(9.2),Inches(1.05))
+sf.fill.solid(); sf.fill.fore_color.rgb=HELP; sf.line.color.rgb=GOLD; sf.line.width=Pt(2.5)
+tb(s,0.55,4.42,9.0,0.30,"💬 我 正在 努力 练习 ___ 。",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.74,9.0,0.24,"I am working on ___.",sz=10,c=WARM,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.02,9.0,0.30,"💬 我 现在 还 不太 会 ___ , 但是 我 正在 练习。",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"3-4 分钟 — 成长型思维 (Growth Mindset) — 紧接着 Round 2 Skill:\n• 关键 message: 能力 不是 天生 的 — 是 练 出来 的!\n• 老师可以问: 「这个工作需要什么 能力?」 (例: 医生 — 耐心, 细心, 喜欢 帮助 人)\n• 让学生想: 「我现在 不擅长 什么? 我可以 练什么?」\n• 用句型说: 「我 现在 还 不太 会 ___, 但是 我 正在 练习」\n• 表扬: 「敢说 不会 — 才能 学会!」\n• 联系下面的 5 个职业 — 每个都需要 不同 的 能力 + 练习")
+
+# Round 3 — Help
+s=tt_round_slide(3,"🤝","帮助 Help","Who you want to help",
+    "你想帮助谁?","Who do you want to help?",
+    "我想帮助 ____ 。","I want to help ____.",
+    [("🐾","小动物"),("🤒","生病的人"),("🧒","小朋友"),("🌍","地球"),("👨‍👩‍👧","爸爸妈妈")],
+    DOC,
+    bonus_lines=["✨ 让职业 不只是 赚钱 — 是 帮人!",
+                 "Career is more than money — it's about helping people!"])
+n+=1; pn(s,n)
+notes(s,"⏱️ 1 分钟:\n• 「你想帮助谁?」 — 这一轮 让职业 有意义\n• 引导多元答案: 小动物 / 生病的人 / 小朋友 / 地球 / 爸爸妈妈\n• 重点: 不要 让职业 只关于 钱 — 强调 帮人")
+
+# Round 4 — Career (connect everything + share)  · uses CHAINED example sentence
+s=tt_round_slide(4,"💼","职业 Career","Putting it all together",
+    "你长大想做什么?","What do you want to be?",
+    "我喜欢___, 我擅长___, 我想帮___, 所以我想当___!",
+    "I love ___, I'm good at ___, I want to help ___, so I want to be a ___!",
+    [("🩺","医生"),("👨‍🏫","老师"),("👩‍🚀","宇航员"),("🎨","动画师"),("🦒","兽医")],
+    NAVY,
+    bonus_lines=["📝 例子 Example: 我喜欢画画, 我擅长画卡通, 我想帮小朋友开心, 所以我想当动画师!",
+                 "🎤 找 2-3 个学生上台分享 (Whole-Class Share)"])
+n+=1; pn(s,n)
+notes(s,"⏱️ 2 分钟 (最后一轮 + 全班分享):\n• Round 4 把前面 3 轮 串起来 — 用 完整 chain sentence\n• 老师 念 example: 「我喜欢画画, 我擅长画卡通, 我想帮小朋友开心, 所以我想当动画师!」\n• 让 2-3 个学生上台 用同样的 chain:\n  - 「我喜欢动物, 我擅长安静观察, 我想帮 流浪猫, 所以我想当兽医!」\n  - 「我喜欢运动, 我擅长跑步, 我想帮 小朋友 健康, 所以我想当 体育老师!」\n• Bonus question: 「这个工作 会帮助谁?」 — 让所有职业 都关于帮人\n• 收尾金句: 「🌟 每个人都可以用 自己的兴趣 和 能力 帮助 世界」\n• 这个金句 是 整套课的 灵魂!")
 
 # 4.5d-3 — INTEREST SURVEY (movement activity, energetic)
 s=ns(); bg(s,CREAM); hb(s,"🎮 兴趣大调查  Interest Survey · Move with Me!",NAVY)
@@ -638,58 +744,40 @@ for i,(em,q_cn,q_en,act_cn,act_en,career_cn,career_en,color) in enumerate(prompt
 n+=1; pn(s,n)
 notes(s,"3-4 分钟 (能量满满!):\n• 老师 喊一个 prompt, 学生立刻 做动作\n• 节奏: 每个 prompt = 5-10 秒, 等所有反应后再下一个\n• 看到学生反应后, 老师点出对应 career: 「太棒了! 你可能是未来的运动员!」\n• 4 轮做完, 学生坐下\n• 关键: 把 兴趣 + 工作 连起来 — 让学生感受 「我也可以!」")
 
-# 4.5d-4 — GROWTH MINDSET (skill + practice — important for K-5)
-s=ns(); bg(s,CREAM); hb(s,"💪 能力 是 练 出来 的!  Skills Are Built Through Practice",HELP)
-tb(s,0.4,0.85,9.2,0.40,"现在 不会 — 没关系! 我们 都在 练习!",sz=18,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.30,9.2,0.28,"Not good at it yet? That's OK! We are all working on our skills.",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# 3 reflection prompts (3-card row)
-gm=[
-    ("🤔","这个工作 需要 什么 能力?","What skills does this job need?",HELP),
-    ("🌱","我 现在 还 不会 ___ ,","I'm not very good at ___ yet,",NAVY),
-    ("💪","但我 正在 练习!","but I am working on this skill!",GOLD),
-]
-for i,(em,cn,en,c) in enumerate(gm):
-    x=0.4+i*3.10
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.75),Inches(2.95),Inches(2.45))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=c; sh.line.width=Pt(3)
-    tb(s,x+0.05,1.85,2.85,0.85,em,sz=44,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.75,2.85,0.65,cn,sz=14,b=True,c=c,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.45,2.85,0.55,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-# Sentence frames (whole class)
-sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.35),Inches(9.2),Inches(1.05))
-sf.fill.solid(); sf.fill.fore_color.rgb=HELP; sf.line.color.rgb=GOLD; sf.line.width=Pt(2.5)
-tb(s,0.55,4.42,9.0,0.30,"💬 我 正在 努力 练习 ___ 。",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,0.55,4.74,9.0,0.24,"I am working on ___.",sz=10,c=WARM,a=PP_ALIGN.CENTER)
-tb(s,0.55,5.02,9.0,0.30,"💬 我 现在 还 不太 会 ___ , 但是 我 正在 练习。",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-n+=1; pn(s,n)
-notes(s,"3-4 分钟 — 成长型思维 (Growth Mindset):\n• 关键 message: 能力 不是 天生 的 — 是 练 出来 的!\n• 老师可以问: 「这个工作需要什么 能力?」 (例: 医生 — 耐心, 细心, 喜欢 帮助 人)\n• 让学生想: 「我现在 不擅长 什么? 我可以 练什么?」\n• 用句型说: 「我 现在 还 不太 会 ___, 但是 我 正在 练习」\n• 表扬: 「敢说 不会 — 才能 学会!」\n• 联系下面的 5 个职业 — 每个都需要 不同 的 能力 + 练习")
+# (Growth Mindset slide moved earlier — now appears right after Round 2 Skill)
 
 # 7-16. Five GUESS clue + reveal pairs
+# Clue 难度 progression: 兴趣 (抽象) → 擅长 (中等) → 具体 hint (近答案)
+# Clue 1 不能 直接 说 职业 — 要让学生 听 完 3 个 才猜!
 guesses=[
     ("🩺","Doctor",DOC,
-     [("我穿白大褂, 戴一个圆圆的工具 (听诊器)。","I wear a white coat and use a round tool (stethoscope)."),
-      ("我会问你: 「哪里不舒服?」","I ask you: 'Where do you feel uncomfortable?'"),
-      ("我会给你药, 帮你好起来。","I give you medicine to help you get better.")],
+     [("❤️ 我的兴趣是: 让 别人 不 难受。","❤️ My interest: making others feel better."),
+      ("💪 我擅长: 找出 哪里 不 对劲。","💪 I'm good at: finding what's wrong."),
+      ("👕 我穿 白 大褂, 用 听诊器 听 心跳。","👕 I wear a white coat, use a stethoscope.")],
      "医生","Doctor","看病、给药、做手术","check, medicine, surgery","医院 / 诊所","hospital / clinic",
      "搜: 'doctor for kids' (Nat Geo Kids / SciShow Kids)"),
     ("📚","Teacher",TEACH,
-     [("我每天要说很多话, 嗓子常常很累。","I talk a LOT every day — my throat often gets tired."),
-      ("我最喜欢看你眼睛里有「啊! 我懂了」的样子。","My favorite thing is the 'aha — I get it!' look in your eyes.")],
+     [("❤️ 我的兴趣是: 看 别人 学会 新 东西。","❤️ My interest: seeing others learn something new."),
+      ("💪 我擅长: 把 难的 变 简单。","💪 I'm good at: making hard things simple."),
+      ("🏫 我每天 在 学校 跟 你 说话, 还会 改 作业。","🏫 I talk with you at school every day, and grade homework.")],
      "老师","Teacher","教课、改作业、讲故事","teach, grade, tell stories","学校 / 教室","school / classroom",
      "搜: 'a day in the life of a teacher for kids'"),
     ("👮","Police",POLICE,
-     [("我有一个手电筒和一本小本子。","I have a flashlight and a small notebook."),
-      ("我能让一辆车停下来, 也能让它开走。","I can make a car stop — and make it go again.")],
+     [("❤️ 我的兴趣是: 让 坏事 不 发生。","❤️ My interest: stopping bad things from happening."),
+      ("💪 我擅长: 跑得 快, 听到 哨子 立刻 行动。","💪 I'm good at: running fast, acting on a whistle."),
+      ("👮 我穿 制服, 开 红蓝灯 的 车。","👮 I wear a uniform, drive a red-blue-light car.")],
      "警察","Police Officer","抓坏人、保护大家","catch bad guys, protect people","街上 / 警察局","street / police station",
      "搜: 'police officer for kids' (Cocomelon / Sesame Street)"),
     ("👨‍🍳","Chef",CHEF,
-     [("我每天闻到的味道最多。","I smell the most flavors every day."),
-      ("我用刀的时候不能开小差。","I cannot get distracted when I use a knife.")],
+     [("❤️ 我的兴趣是: 让 大家 笑着 吃 完。","❤️ My interest: making people smile while they eat."),
+      ("💪 我擅长: 闻 味道, 配 颜色, 用 火。","💪 I'm good at: smelling flavors, mixing colors, using fire."),
+      ("🍳 我戴 高高的 白 帽子, 在 厨房 里。","🍳 I wear a tall white hat, in the kitchen.")],
      "厨师","Chef","做菜、做点心","cook meals, make desserts","餐厅 / 厨房","restaurant / kitchen",
      "搜: 'kid chef cooking' or 'MasterChef Junior' (1-min clip)"),
     ("👷","Engineer",ENG,
-     [("我喜欢画图, 但不是画画。","I love to draw — but not for art."),
-      ("我画的图后来会变成大楼或者大桥。","My drawings later become buildings and bridges.")],
+     [("❤️ 我的兴趣是: 把 想 出来 的 东西 变 真。","❤️ My interest: turning ideas into real things."),
+      ("💪 我擅长: 画 图, 量 尺寸, 解决 难题。","💪 I'm good at: drawing plans, measuring, solving puzzles."),
+      ("🏗️ 我 画的图 后来 变 成 大楼、大桥。","🏗️ My drawings later become buildings & bridges.")],
      "工程师","Engineer","设计、建造、修理","design, build, repair","公司 / 工地","company / construction site",
      "搜: 'what does an engineer do for kids' (Crash Course Kids)"),
 ]
@@ -782,37 +870,37 @@ def silhouette_guess_slide(emoji,job_cn,job_en,color,clue1_cn,clue1_en,clue2_cn,
 
 # Round 1: 🚀 Astronaut
 s=silhouette_guess_slide("🚀","宇航员","Astronaut",NAVY,
-    "我穿的衣服自带氧气罐, 不带不行。","My suit comes with its own oxygen tank — I can't go without it.",
-    "我「上班的地方」 — 没有空气, 也没有重力!","My 'workplace' has no air — and no gravity!",
-    "我能看到整个地球, 像一个蓝色的球。","I can see the whole Earth — like a blue marble.",
-    "上过太空 = 全世界只有几百人!")
+    "❤️ 我的兴趣是: 飞 去 很远 很远 的 地方。","❤️ My interest: flying to faraway places.",
+    "💪 我擅长: 不晕, 用 工具 在 没有 重力 工作。","💪 I'm good at: working with zero gravity.",
+    "🌍 我的 工作 地方 — 没有 空气, 能 看到 整个 地球!","🌍 My workplace: no air, can see the whole Earth!",
+    "上过太空 = 全世界 只有 几百 人!")
 n+=1; pn(s,n)
-notes(s,"猜谜 (1-2 分钟):\n• 慢慢读 3 个提示 — 让学生在第 1 个就开始想\n• 第 2 提示加难度, 第 3 提示几乎送答案\n• 让学生喊: 「我猜是 ___ !」\n• 答案: 宇航员 — 老师等学生猜过后口头揭晓 (PPT 不显示)")
+notes(s,"猜谜 (1-2 分钟):\n• 让 大孩子 念中文, 小孩子 猜\n• Clue 1 (抽象 — 飞远) → Clue 2 (工具 + 没重力) → Clue 3 (没空气 + 看地球 = 答案)\n• 答案: 宇航员 — 老师 等学生 猜过后 口头揭晓")
 
 # Round 2: 🦒 Vet
 s=silhouette_guess_slide("🦒","兽医","Vet (Animal Doctor)",WILD,
-    "我的「病人」从来不会用嘴说哪里疼。","My 'patients' can never tell me with words where it hurts.",
-    "我会被汪汪、喵喵、咩咩声「叫」去工作。","I get called to work by barking, meowing, even baa-ing.",
-    "我给小狗、小猫、有时还有小老虎打针。","I give shots to dogs, cats — sometimes baby tigers.",
-    "你家的宠物生病了 → 找我!")
+    "❤️ 我的兴趣是: 帮 不会 说话 的 朋友。","❤️ My interest: helping friends who can't speak.",
+    "💪 我擅长: 听 心跳, 安静 靠近, 不让 病人 害怕。","💪 I'm good at: hearing heartbeats, getting close gently.",
+    "🐶 我 给 小狗、小猫、有时 还有 小老虎 打 针。","🐶 I give shots to dogs, cats — sometimes baby tigers!",
+    "你家 的宠物 生病 → 找我!")
 n+=1; pn(s,n)
-notes(s,"猜谜 (1-2 分钟):\n• 「不会说话的病人」是关键 — 让学生想是谁\n• 提到「小老虎」会让全班兴奋\n• 联想: 「你家有宠物吗? 它生病时谁帮忙?」")
+notes(s,"猜谜 (1-2 分钟):\n• 大孩子 念, 小孩子 猜\n• Clue 1 (抽象 — 不会说话的朋友) — 学生 可能 猜 婴儿、外国人, 引导他们 想 动物!\n• Clue 2 (听心跳 + 安静靠近) → 像 医生, 但 病人不一样\n• Clue 3 (具体动物名) — 答案 出来\n• 联想: 「你家 有 宠物 吗? 生病时 谁帮忙?」")
 
 # Round 3: 🎮 Game Designer
 s=silhouette_guess_slide("🎮","游戏设计师","Game Designer",CITY,
-    "我做的东西 — 你每天都想玩, 玩到爸爸妈妈喊「停!」","I make things you want to play — until your parents shout 'stop!'",
-    "我画一个小角色, 让他跳过 100 个关卡。","I draw a tiny character, then send him through 100 levels.",
-    "Minecraft、Roblox、马里奥 — 都是这种工作做的。","Minecraft, Roblox, Mario — all made by people in this job.",
-    "你最喜欢的游戏 = 一群「他们」做的!")
+    "❤️ 我的兴趣是: 想 出 好玩 的 故事 和 关卡。","❤️ My interest: making up fun stories and levels.",
+    "💪 我擅长: 画 角色, 让 角色 跳过 100 关。","💪 I'm good at: drawing characters, making them jump 100 levels.",
+    "🎮 你玩 的 Minecraft / Roblox / 马里奥 = 我们 做 的!","🎮 Minecraft / Roblox / Mario — all made by us!",
+    "30 年前 这个工作 还没有! 现在最火!")
 n+=1; pn(s,n)
-notes(s,"猜谜 (1-2 分钟):\n• 提示 1 学生立刻笑 — 因为戳到他们日常\n• 提到具体游戏 (Minecraft / Roblox / 马里奥) 学生绝对炸\n• 收尾: 「这个工作, 30 年前根本没有 — 现在是最热门的工作之一!」")
+notes(s,"猜谜 (1-2 分钟):\n• 大孩子 念, 小孩子 猜\n• Clue 1 (抽象 — 故事 + 关卡) — 不直接 说 「游戏」, 让 学生 自己 联想\n• Clue 2 (画角色 + 跳关) → 比较 明显 但还没说 「游戏」\n• Clue 3 (具体游戏名) — 学生 全炸\n• 收尾: 「30 年前 没这工作 — 兴趣 + 时代 = 新职业!」")
 
 # 16.7  SPOTLIGHT — 机器人工程师 (Robotics Engineer)
 ROBOT=RGBColor(0x55,0x6B,0x83)  # cool steel
 s=guess_clue_slide("🤖","Robotics Engineer",ROBOT,
-    [("我的「员工」不需要睡觉, 也不需要吃饭。","My 'workers' don't need sleep — or food."),
-     ("我画图、写步骤 — 让没有生命的东西也能动。","I draw and write steps — to make lifeless things move."),
-     ("工厂、医院、太空 — 我的发明都去过。","Factory, hospital, space — my inventions have gone everywhere.")],
+    [("❤️ 我的兴趣是: 让 没有 生命 的 东西 自己 动 起来。","❤️ My interest: making lifeless things move by themselves."),
+     ("💪 我擅长: 写 程序, 画 图, 解决 难题。","💪 I'm good at: coding, drawing plans, solving problems."),
+     ("🤖 我做的 「员工」 不睡觉、不吃饭, 去过 工厂、医院、太空!","🤖 My 'workers' don't sleep or eat — been to factories, hospitals, space!")],
     "我猜是 ___ !",
     "I guess it's a ___!")
 n+=1; pn(s,n)
@@ -1469,6 +1557,41 @@ tb(s,5.25,4.00,4.30,0.40,"💡 3 句 + 演示 1 个工具",sz=12,b=True,c=GOLD)
 tb(s,5.25,4.40,4.30,0.30,"3 sentences + demo 1 tool",sz=9,c=GRAY)
 n+=1; pn(s,n)
 notes(s,"15 分钟 — 玩法:\n• 桌面摆好工具箱, 学生轮流当「展览员」和「客人」。\n• 5 分钟换一组。\n• K: 1 句 + 指。\n• G1-3: 3 句 + 演示 (例如「我用听诊器 — 听一听!」)\n• 老师在旁拍照记录。")
+
+# 44.5 — END-OF-DAY · 听绘本 + Turn & Talk (回到 long-after-day reflection)
+s=ns(); bg(s,CREAM); hb(s,"🎬 听绘本 + 想一想  Listen & Reflect",GOLD)
+tb(s,0.4,0.85,9.2,0.40,"🐶 再听一次:《长大后你想做什么工作》",sz=18,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.30,9.2,0.28,"Listen again — 'What Do You Want To Be When You Grow Up?'",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+# Left — video reference card (compact)
+vcard=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(4.30),Inches(2.85))
+vcard.fill.solid(); vcard.fill.fore_color.rgb=WARM; vcard.line.color.rgb=GOLD; vcard.line.width=Pt(3)
+tb(s,0.4,1.80,4.30,0.85,"🐶",sz=80,a=PP_ALIGN.CENTER)
+tb(s,0.4,2.75,4.30,0.40,"📺 视频  Video",sz=14,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.15,4.30,0.30,"youtube.com/watch?v=EVFPL_qXChU",sz=10,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.55,4.30,0.30,"⏱️ 3-5 分钟",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,3.95,4.30,0.30,"💭 这次 — 不是 听 小狗 的故事,",sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.20,4.30,0.30,"是 想 — 我自己 长大 想做 什么!",sz=11,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+# Right — Turn & Talk prompt (big, focused)
+ttcard=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.65),Inches(4.85),Inches(2.85))
+ttcard.fill.solid(); ttcard.fill.fore_color.rgb=NAVY; ttcard.line.color.rgb=GOLD; ttcard.line.width=Pt(3)
+tb(s,4.85,1.75,4.85,0.40,"🗣️ Turn & Talk",sz=15,b=True,c=GOLD,a=PP_ALIGN.CENTER)
+tb(s,4.85,2.20,4.85,0.55,"💼 我 长大 想做 什么 工作?",sz=22,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,4.85,2.78,4.85,0.30,"What do I want to be when I grow up?",sz=10,c=WARM,a=PP_ALIGN.CENTER)
+# Chained sentence frame — pulls together everything from today
+chain=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.00),Inches(3.20),Inches(4.55),Inches(1.20))
+chain.fill.solid(); chain.fill.fore_color.rgb=WARM; chain.line.color.rgb=GOLD; chain.line.width=Pt(2)
+tb(s,5.10,3.25,4.40,0.25,"💬 用 完整句型 (Today's Formula!)",sz=10,b=True,c=NAVY)
+tb(s,5.10,3.50,4.40,0.30,"我喜欢 ___ ,",sz=12,b=True,c=DARK)
+tb(s,5.10,3.75,4.40,0.30,"我擅长 ___ ,",sz=12,b=True,c=DARK)
+tb(s,5.10,4.00,4.40,0.30,"我想帮 ___ ,",sz=12,b=True,c=DARK)
+tb(s,5.10,4.25,4.40,0.30,"所以 我想当 ___ !",sz=12,b=True,c=GOLD)
+# Bottom — closing line ("灵魂 line")
+closing=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.65),Inches(9.2),Inches(0.55))
+closing.fill.solid(); closing.fill.fore_color.rgb=GOLD; closing.line.fill.background()
+tb(s,0.4,4.72,9.2,0.30,"🌟 每个人 都可以 用 自己的 兴趣 和 能力 帮助 世界!",sz=16,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.4,5.02,9.2,0.20,"Everyone can use their interests and skills to help the world!",sz=10,c=WARM,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"5-7 分钟 — Day 1 收尾反思:\n\n📺 第一阶段 (3-5 分钟): 再放视频\n• 链接: https://www.youtube.com/watch?v=EVFPL_qXChU\n• 这次 不是 听小狗的故事 — 是 让自己 想 「我」长大 想做 什么\n• 不打断 — 让学生 静静 听 + 想\n\n🗣️ 第二阶段 (Turn & Talk, 2-3 分钟):\n• 同桌轮流 用 chain sentence 说:\n  「我喜欢 ___, 我擅长 ___, 我想帮 ___, 所以我想当 ___ 」\n• 这是 today's formula 的最终应用 — 把 4 轮 Turn & Talk 串起来\n\n🎤 第三阶段 (1-2 分钟): 全班 分享\n• 找 3-4 个学生上台 用 chain sentence 说\n• 用 applause-meter 鼓励\n• 收尾 全班齐喊 闪光金句:\n  「🌟 每个人 都可以 用 自己的兴趣 和 能力 帮助 世界!」\n\n• 这是 Day 1 的 灵魂 — 学生离开教室 时, 应该 带着 这个 mantra")
 
 # 45. MISSION COMPLETE!
 s=ns(); bg(s,GOLD)
