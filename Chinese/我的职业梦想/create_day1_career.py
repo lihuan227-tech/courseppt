@@ -746,6 +746,33 @@ notes(s,"3-4 分钟 (能量满满!):\n• 老师 喊一个 prompt, 学生立刻 
 
 # (Growth Mindset slide moved earlier — now appears right after Round 2 Skill)
 
+# 14.5  COOL JOBS SHOWCASE — moved BEFORE the guess game
+# (introduce: there are thousands of jobs; THEN play guess game)
+s=ns(); bg(s,CREAM); hb(s,"🌟 世界上有几千种职业!  Thousands of Jobs!",GOLD)
+tb(s,0.4,0.85,9.2,0.30,"There are thousands of jobs in the world — let's meet a few!",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+cool_jobs=[
+    ("🚀","宇航员","Astronaut","在太空漂!",NAVY),
+    ("✈️","飞行员","Pilot","开飞机看云!",POLICE),
+    ("🦒","兽医","Vet","给小动物看病!",WILD),
+    ("🎮","游戏设计师","Game Designer","你玩的游戏 = 他做的!",CITY),
+    ("🌊","海洋生物学家","Marine Biologist","和海豚做朋友!",ENV),
+    ("🚒","消防员","Firefighter","坐红色大车救人!",DOC),
+    ("🎬","动画师","Animator","你看的卡通 = 他画的!",CHEF),
+    ("🍫","巧克力师","Chocolatier","每天发明新糖果!",GOLD),
+    ("🎩","魔术师","Magician","让东西「消失」!",HELP),
+]
+for i,(em,cn,en,wow,cl) in enumerate(cool_jobs):
+    col=i%3; row=i//3
+    x=0.30+col*3.20; y=1.30+row*1.25
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.10))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(2.5)
+    tb(s,x+0.10,y+0.07,0.7,0.55,em,sz=28,a=PP_ALIGN.CENTER)
+    tb(s,x+0.85,y+0.08,2.10,0.32,cn,sz=14,b=True,c=cl)
+    tb(s,x+0.85,y+0.36,2.10,0.24,en,sz=9,c=GRAY)
+    tb(s,x+0.10,y+0.65,2.85,0.40,f"💫 {wow}",sz=10,c=DARK)
+n+=1; pn(s,n)
+notes(s,"3-4 分钟 (世界上 几千种 职业 — 让 学生 看 多样性):\n• 快速过 9 个 — 每个 ~20 秒\n• 让举手: 「最想当 哪个? 为什么?」\n• 不深入 — 只是 激发兴趣\n• 关键 talk: 「这只是 9 个! 长大有 几千种 工作 可以选!」\n• 转: 「现在 我们 来 猜 5 个 最常见的 — 你能猜出 谁是 谁吗?」")
+
 # 7-16. Five GUESS clue + reveal pairs
 # Clue 难度 progression: 兴趣 (抽象) → 擅长 (中等) → 具体 hint (近答案)
 # Clue 1 不能 直接 说 职业 — 要让学生 听 完 3 个 才猜!
@@ -805,33 +832,7 @@ for em,j_en,col,clues,job_cn,job_en,what_cn,what_en,where_cn,where_en,video in g
         n+=1; pn(s,n)
         notes(s,f"试一试 (~2 分钟):\n• 让全班真的做一遍 — 不只看, 要做!\n• 给积极参与的孩子一个 ✓ 在白板上。\n• 简单收尾: 「现在你也是小小 {job_cn}!」")
 
-# 16.5. COOL JOBS SHOWCASE — wide variety of "wow" jobs
-s=ns(); bg(s,CREAM); hb(s,"🌟 还有这些超酷的职业!  More Cool Careers!",GOLD)
-tb(s,0.4,0.85,9.2,0.34,"世界上有几千种职业 — 看看这 9 个超酷的!",sz=15,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.20,9.2,0.26,"There are thousands of jobs — here are 9 cool ones!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-cool_jobs=[
-    ("🚀","宇航员","Astronaut","在太空漂!",NAVY),
-    ("✈️","飞行员","Pilot","开飞机看云!",POLICE),
-    ("🦒","兽医","Vet","给小动物看病!",WILD),
-    ("🎮","游戏设计师","Game Designer","你玩的游戏 = 他做的!",CITY),
-    ("🌊","海洋生物学家","Marine Biologist","和海豚做朋友!",ENV),
-    ("🚒","消防员","Firefighter","坐红色大车救人!",DOC),
-    ("🎬","动画师","Animator","你看的卡通 = 他画的!",CHEF),
-    ("🍫","巧克力师","Chocolatier","每天发明新糖果!",GOLD),
-    ("🎩","魔术师","Magician","让东西「消失」!",HELP),
-]
-for i,(em,cn,en,wow,cl) in enumerate(cool_jobs):
-    col=i%3; row=i//3
-    # 3×3 grid — tighter cards to fit 9
-    x=0.30+col*3.20; y=1.45+row*1.20
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(3.0),Inches(1.05))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(2.5)
-    tb(s,x+0.10,y+0.07,0.7,0.55,em,sz=28,a=PP_ALIGN.CENTER)
-    tb(s,x+0.85,y+0.08,2.10,0.32,cn,sz=14,b=True,c=cl)
-    tb(s,x+0.85,y+0.36,2.10,0.24,en,sz=9,c=GRAY)
-    tb(s,x+0.10,y+0.65,2.85,0.35,f"💫 {wow}",sz=10,c=DARK)
-n+=1; pn(s,n)
-notes(s,"3-4 分钟:\n• 快速过 9 个 — 每个 ~20 秒\n• 让举手: 「最想当哪个? 为什么?」\n• 不深入 — 只是激发兴趣\n• 提醒: 「这只是 9 个! 长大有几千种工作可以选!」")
+# (Cool Jobs Showcase moved earlier — now BEFORE the guess game, not after)
 
 # 16.6  🔍 SILHOUETTE GUESS GAME — pick 3 jobs from the Cool Jobs Showcase (slide 31)
 # Same format on each slide: silhouette/clues on top, ANSWER strip at bottom
@@ -980,71 +981,9 @@ for i,(em,job_cn,job_en,c) in enumerate(charades_jobs):
 n+=1; pn(s,n)
 notes(s,"卡片背面打印说明:\n• 背面是镜像布局 — 双面打印翻页后, 每张卡片正面和背面对齐\n• 打印设置: 双面打印, 沿长边翻转\n• 颜色背景 = 易于学生快速识别难度\n• 学生抽卡看背面 (答案), 上台演正面 (图片) 提示给观众")
 
-# 18. STEP 3.5 INTRO — 神秘职业! (improved cards with teaser hints)
-s=ns(); bg(s,CREAM); hb(s,"✨ 神秘职业  Mystery Jobs!",ENV)
-tb(s,0.4,0.85,9.2,0.50,"我再跟你介绍三个职业。",sz=22,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.40,9.2,0.30,"3 more jobs — have you heard of them?",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
-mysteries=[
-    ("🌍","Mystery 1","和地球有关的工作","About our Earth",      "💧 水 · 空气 · 树",ENV),
-    ("🦁","Mystery 2","和动物有关的工作","About wild animals",   "🦒 救动物 · 看动物",WILD),
-    ("🏙️","Mystery 3","和我们的「家」有关","About where we live","🗺️ 街道 · 公园 · 路",CITY),
-]
-for i,(em,tag,hint_cn,hint_en,domain,c) in enumerate(mysteries):
-    x=0.4+i*3.15
-    # Card box
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.85),Inches(3.0),Inches(2.95))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE
-    sh.line.color.rgb=c; sh.line.width=Pt(3)
-    # Tag badge at top
-    badge=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.65),Inches(1.95),Inches(1.70),Inches(0.36))
-    badge.fill.solid(); badge.fill.fore_color.rgb=c; badge.line.fill.background()
-    tb(s,x+0.65,2.00,1.70,0.30,tag,sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    # Big emoji
-    tb(s,x+0.05,2.40,2.9,0.85,em,sz=58,a=PP_ALIGN.CENTER)
-    # Teaser hint (CN bold, EN italics gray)
-    tb(s,x+0.05,3.35,2.9,0.40,hint_cn,sz=15,b=True,c=c,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.78,2.9,0.30,hint_en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-    # Domain keywords (separator + small text)
-    sep=s.shapes.add_shape(MSO_SHAPE.RECTANGLE,Inches(x+0.50),Inches(4.18),Inches(2.0),Inches(0.02))
-    sep.fill.solid(); sep.fill.fore_color.rgb=c; sep.line.fill.background()
-    tb(s,x+0.05,4.30,2.9,0.40,domain,sz=11,c=DARK,a=PP_ALIGN.CENTER)
-sentence_frame_bar(s,4.95,
-    "我猜是 ___ 的工作?",
-    "I guess this is a ___ job?")
-n+=1; pn(s,n)
-notes(s,"30 秒过渡:\n• 「现在 — 3 个新职业! 看看你能不能猜出来。」\n• 不要直接说出职业名 — 让学生从「领域提示」里想\n• 我们一个一个看图猜!")
+# (Mystery Jobs intro + 环境工程师 pair + 野生动物保护员 pair removed per user request — slides 34-38)
 
-# 19-24. Three MYSTERY JOBS — Q + Reveal pairs
-
-# Mystery 1: 环境工程师
-s=mystery_job_q_slide("🌍","Environmental Engineer",ENV,
-    "💧 检测水 / 清洁",
-    "他们在做什么？","What are they doing?",
-    "是在玩水, 还是让水变干净？","Playing with water — or cleaning it?",
-    video_url="搜: 'environmental engineer for kids'  (YouTube)")
-n+=1; pn(s,n)
-notes(s,"3-4 分钟:\n• 投影一张「人们检测水/清洁水」的真实照片 (建议老师贴一张)。\n• 老师追问: 「他们手里拿什么? 那个瓶子是干什么的?」\n• 让学生先猜, 不要直接给答案!\n• 让 2-3 个孩子说: 「我觉得他们在 ___ 。」")
-
-s=mystery_job_label_slide("🌍","环境工程师","Environmental Engineer",
-    "保护水和空气的人","helps keep water and air clean",ENV,
-    "他们让水变干净, 让空气变好!")
-n+=1; pn(s,n)
-notes(s,"揭晓 (1-2 分钟):\n• 「答案是 — 环境工程师!」\n• 让全班跟读 3 遍: 「环境工程师 — 保护水和空气的人」\n• 简单解释: 「水脏了 → 他们让水变干净。空气脏了 → 他们检查空气。」")
-
-# Mystery 2: 野生动物保护员
-s=mystery_job_q_slide("🦁","Wildlife Protector",WILD,
-    "🦒 救动物 / 观察",
-    "他们在做什么？","What are they doing?",
-    "是在抓动物, 还是保护动物？","Catching animals — or protecting them?",
-    video_url="搜: 'wildlife ranger video for kids'  (YouTube / Nat Geo Kids)")
-n+=1; pn(s,n)
-notes(s,"3-4 分钟:\n• 投影一张「人们在帮助 / 观察动物」的真实照片。\n• 老师追问: 「动物开心吗? 这些人对动物好不好?」\n• 让学生猜, 不直接给答案!\n• 让 2-3 个孩子说: 「我觉得他们在 ___ 。」")
-
-s=mystery_job_label_slide("🦁","野生动物保护员","Wildlife Protector",
-    "保护动物的人","protects animals",WILD,
-    "他们救受伤的动物, 看着不让坏人伤害动物!")
-n+=1; pn(s,n)
-notes(s,"揭晓:\n• 跟读: 「野生动物保护员 — 保护动物的人」\n• 解释: 「动物受伤 → 他们救; 有人想伤害动物 → 他们保护。」")
+# 19-24. Mystery Jobs (only 城市规划师 pair remains)
 
 # Mystery 3: 城市规划师
 s=mystery_job_q_slide("🏙️","City Planner",CITY,
@@ -1161,7 +1100,7 @@ ifs=[("🩺","医生","Doctor",DOC),
      ("👨‍🍳","厨师","Chef",CHEF),
      ("👷","工程师","Engineer",ENG),
      ("🦒","兽医","Vet",WILD),
-     ("🌍","环境工程师","Env Engineer",ENV)]
+     ("🎩","魔术师","Magician",HELP)]
 for i,(em,job_cn,job_en,c) in enumerate(ifs):
     col=i%4; row=i//4
     x=0.4+col*2.35; y=1.70+row*1.40
