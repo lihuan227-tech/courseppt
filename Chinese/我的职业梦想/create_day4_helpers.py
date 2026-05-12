@@ -426,52 +426,154 @@ notes(s,"🎬 Transition · 30 秒:\n• 老师 戏剧化 地 念 这两行\n•
 s=phase_marker("🎭","Part 3 · Role Play","一日 小老师 / 小医生 / 小厨师",30,PH_PLAY,"全班 一起 — 几个 上台 演, 其他 配合 + 观察","Whole class — a few perform, the rest play along")
 n+=1; pn(s,n)
 
-# 6-1. Role Play rules
-s=ns(); bg(s,CREAM); hb(s,"📋 Role Play 规则  Role Play Rules",PH_PLAY)
-tb(s,0.4,0.85,9.2,0.40,"4 个 简单 规则 — 让 角色扮演 顺利 + 好玩!",sz=15,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.30,9.2,0.28,"4 simple rules to make role play smooth + fun!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# 6-1. Role Play rules — 6 simple steps for 小小职业剧场 (audience rules moved to next slide)
+s=ns(); bg(s,CREAM); hb(s,"🎭 小小职业剧场 · 6 个规则  Mini Career Theater · 6 Rules",PH_PLAY)
+tb(s,0.4,0.85,9.2,0.30,"6 个 简单 规则 — 让 角色扮演 顺利 + 好玩!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"6 simple rules — audience rules on the next page!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
 rules=[
-    ("1","🎬","进入 角色","Stay in character","当 你 是 老师 — 就像 老师 一样说话!",TEACH),
-    ("2","🤝","互相 帮助","Help each other","队友 卡 住 — 你 帮 一下!",HELP),
-    ("3","🙊","声音 适中","Voice volume","不 喊 不 闹 — 用 'inside voice'",PH_BOOK),
-    ("4","🌟","试 一试","Try it","不会 没关系 — 试 就 是 英雄!",IDEA),
+    ("1","🎲","抽 一张 情景卡","Draw a scenario card","每组 抽 一张 — 决定 演 什么 情况",NAVY),
+    ("2","🎭","分 角色","Assign roles","1 人 演 职业 · 1-2 人 演 其他",PH_PLAY),
+    ("3","🤫","不 直接 说 答案","No spoiler","不说「我 是 医生!」 — 用 动作 + 对话 演 出来",LAB),
+    ("4","🙋","每个 人 都 参与","Everyone joins","至少 说 一句话 或 做 一个 动作",HELP),
+    ("5","⏰","准备 1 分钟","1 min prep","小声 讨论 — 不 大喊",IDEA),
+    ("6","🎬","表演 1-2 分钟","1-2 min show","用 「室内 声音」",CHEF),
 ]
 for i,(num,em,cn,en,detail,cl) in enumerate(rules):
     col=i%2; row=i//2
-    x=0.4+col*4.65; y=1.65+row*1.65
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.50))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
-    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.50),Inches(0.50))
+    x=0.4+col*4.65; y=1.45+row*1.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.00))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.28),Inches(0.46),Inches(0.46))
     nb.fill.solid(); nb.fill.fore_color.rgb=cl; nb.line.fill.background()
-    tb(s,x+0.10,y+0.16,0.50,0.40,num,sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,x+0.70,y+0.10,0.70,0.55,em,sz=28,a=PP_ALIGN.CENTER)
-    tb(s,x+1.45,y+0.12,3.0,0.36,cn,sz=15,b=True,c=cl)
-    tb(s,x+1.45,y+0.50,3.0,0.26,en,sz=9,c=GRAY)
-    tb(s,x+0.15,y+0.92,4.30,0.50,detail,sz=11,b=True,c=DARK)
+    tb(s,x+0.10,y+0.32,0.46,0.38,num,sz=16,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.62,y+0.15,0.65,0.70,em,sz=28,a=PP_ALIGN.CENTER)
+    tb(s,x+1.35,y+0.10,3.15,0.34,cn,sz=14,b=True,c=cl)
+    tb(s,x+1.35,y+0.42,3.15,0.22,en,sz=9,c=GRAY)
+    tb(s,x+1.35,y+0.66,3.15,0.30,detail,sz=10,c=DARK)
+# Closing inspirational strip
+close=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.55))
+close.fill.solid(); close.fill.fore_color.rgb=GOLD; close.line.color.rgb=IDEA; close.line.width=Pt(2)
+tb(s,0.55,4.91,9.0,0.34,"⭐ 最 重要: 玩得 开心 · 勇敢 表演!  Most important: have fun + be brave!",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
-notes(s,"📋 Rules · 2 分钟:\n• 老师 念 4 条 规则 — 用 戏剧 语气\n• 重点 — 第 4 条: 「不会 也 OK! 试 就 是 英雄!」\n• 让 K-5 都 安心 — 没有 完美 表演")
+notes(s,"📋 Rules · 2 分钟:\n• 老师 一条 一条 念, 边 念 边 示范\n  - 第 3 条 关键: 用 动作 + 对话 演 出来 — 不 直接 说「我 是 医生!」\n  - 第 4 条: 不只 主角 演, 配角 也 要 说 一句话 或 做 一个 动作\n• 观众 规则 在 下一页 (Observer Job) — 不 上台 的 同学 也 有 任务!\n• 最后 强调: 「玩得 开心, 勇敢 表演 — 不会 也 OK!」")
 
-# 6-2. 小观察员任务
-s=ns(); bg(s,CREAM); hb(s,"👀 小 观察员 任务  Observer Job",PH_PLAY)
-tb(s,0.4,0.85,9.2,0.38,"不 上台 的 同学 — 你 也 有 任务!",sz=15,b=True,c=DARK,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.25,9.2,0.26,"Audience members — you have a job too!",sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+# 6-1b. 情景卡 — 老师 (4 draw cards on one slide)
+s=ns(); bg(s,CREAM); hb(s,"🎴 老师 情景卡  Teacher Scenario Cards",TEACH)
+tb(s,0.4,0.85,9.2,0.30,"🎲 抽 一张 — 决定 你们 演 什么 情况!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Draw one card — decide your scenario!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+teacher_cards=[
+    ("🗣️","学生 一直 讲话","Students won't stop talking","你 是 老师 — 学生 一直 在 聊天, 你 怎么 让 大家 安静?"),
+    ("😢","有人 哭 了","Someone is crying","你 是 老师 — 一个 学生 哭 了, 你 怎么 安慰 他?"),
+    ("🤔","有 人 不会 做 题","Someone can't do the work","你 是 老师 — 一个 学生 说「我 不会」, 你 怎么 帮 他?"),
+    ("🏃","大家 不会 排队","No one is lining up","你 是 老师 — 大家 跑 来 跑 去, 你 怎么 让 大家 排队?"),
+]
+for i,(em,cn,en,desc) in enumerate(teacher_cards):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.50+row*1.65
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.55))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=TEACH; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.12),Inches(y+0.12),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=TEACH; nb.line.fill.background()
+    tb(s,x+0.12,y+0.16,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.62,y+0.18,1.20,1.05,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+1.90,y+0.18,2.55,0.36,cn,sz=14,b=True,c=TEACH)
+    tb(s,x+1.90,y+0.55,2.55,0.25,en,sz=9,c=GRAY)
+    tb(s,x+1.90,y+0.82,2.55,0.65,desc,sz=10,b=True,c=DARK)
+rn=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.95),Inches(9.2),Inches(0.50))
+rn.fill.solid(); rn.fill.fore_color.rgb=TEACH; rn.line.color.rgb=IDEA; rn.line.width=Pt(1.5)
+tb(s,0.55,5.00,9.0,0.30,"👥 分角色: 1 人 演 老师 · 1-2 人 演 学生 (其他 是 观众)",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🎴 老师 情景卡 · 1 分钟:\n• 老师 把 4 张 情景卡 打印 + 剪开\n• 每组 抽 一张 — 不 让 其他组 看到\n• 演 的 时候 — 用 动作 + 对话, 不 说「我 是 老师!」\n• 配角 (学生) 也 要 演 出来 — 装 哭 / 装 不会 / 装 讲话\n\n📘 专业 处理 方式 (老师 参考 — 每个 情景 演 完 后 引导):\n1️⃣ 学生 一直 讲话:\n  • 用 安静 信号 (举手 / 关灯) — 不 喊\n  • 走 过去, 用 平静 的 声音 说: 「请 安静 — 我们 来 听 ___」\n2️⃣ 有人 哭 了:\n  • 蹲 下来 — 跟 学生 同 高度\n  • 温柔 地 问: 「你 怎么 了?」— 别 急\n  • 先 听 — 不 急着 给 答案\n3️⃣ 有 人 不会 做 题:\n  • 不 直接 给 答案\n  • 问: 「你 已经 知道 什么?」\n  • 一步 一步 教 — 给 提示\n4️⃣ 大家 不会 排队:\n  • 用 数 数 信号: 「3, 2, 1 — 排队!」\n  • 表扬 第一个 排好 的\n  • 用 唱 的 / 拍 节奏 带动")
+
+# 6-1c. 情景卡 — 医生 (4 draw cards on one slide)
+s=ns(); bg(s,CREAM); hb(s,"🎴 医生 情景卡  Doctor Scenario Cards",DOC)
+tb(s,0.4,0.85,9.2,0.30,"🎲 抽 一张 — 决定 你们 演 什么 情况!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Draw one card — decide your scenario!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+doctor_cards=[
+    ("🤢","肚子 疼","Stomach ache","你 是 医生 — 一个 小朋友 说 肚子 疼, 你 怎么 帮 他?"),
+    ("🤕","摔倒 哭 了","Fell and crying","你 是 医生 — 一个 小朋友 摔倒 在 哭, 你 怎么 看 他?"),
+    ("😨","害怕 打 针","Scared of shots","你 是 医生 — 一个 小朋友 怕 打针, 你 怎么 安慰 他?"),
+    ("🪑","很多 病人 排队","Many patients waiting","你 是 医生 — 候诊室 排了 好多 人, 你 怎么 一个 一个 看?"),
+]
+for i,(em,cn,en,desc) in enumerate(doctor_cards):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.50+row*1.65
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.55))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=DOC; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.12),Inches(y+0.12),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=DOC; nb.line.fill.background()
+    tb(s,x+0.12,y+0.16,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.62,y+0.18,1.20,1.05,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+1.90,y+0.18,2.55,0.36,cn,sz=14,b=True,c=DOC)
+    tb(s,x+1.90,y+0.55,2.55,0.25,en,sz=9,c=GRAY)
+    tb(s,x+1.90,y+0.82,2.55,0.65,desc,sz=10,b=True,c=DARK)
+rn=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.95),Inches(9.2),Inches(0.50))
+rn.fill.solid(); rn.fill.fore_color.rgb=DOC; rn.line.color.rgb=IDEA; rn.line.width=Pt(1.5)
+tb(s,0.55,5.00,9.0,0.30,"👥 分角色: 1 人 演 医生 · 1-2 人 演 病人 (其他 是 观众)",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🎴 医生 情景卡 · 1 分钟:\n• 道具 建议: 玩具 听诊器 / 创可贴 / 纸杯\n• 每组 抽 一张 — 用 动作 + 对话 演 出来\n• 病人 也 要 演 — 装 肚子 疼 / 装 怕 / 装 摔倒\n\n📘 专业 处理 方式 (老师 参考 — 每个 情景 演 完 后 引导):\n1️⃣ 肚子 疼:\n  • 让 病人 坐 下\n  • 温柔 地 问: 「哪里 不 舒服? 什么 时候 开始 的?」\n  • 检查 + 不 着急\n2️⃣ 摔倒 哭 了:\n  • 蹲 下来 — 看 伤口\n  • 安慰: 「不 怕 — 我 在 这里」\n  • 处理 伤口 — 慢慢 来\n3️⃣ 害怕 打 针:\n  • 不 假装 — 承认 「会 一点点 痛」\n  • 给 选择: 「左手 还是 右手?」\n  • 表扬 后 给 贴纸 / 棒棒糖\n4️⃣ 很多 病人 排队:\n  • 保持 微笑 — 不 慌\n  • 一个 一个 看 — 不 跳过\n  • 让 助手 帮 安抚 排队 的 人")
+
+# 6-1d. 情景卡 — 厨师 (4 draw cards on one slide)
+s=ns(); bg(s,CREAM); hb(s,"🎴 厨师 情景卡  Chef Scenario Cards",CHEF)
+tb(s,0.4,0.85,9.2,0.30,"🎲 抽 一张 — 决定 你们 演 什么 情况!",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Draw one card — decide your scenario!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+chef_cards=[
+    ("🤤","客人 饿 了","Customer is hungry","你 是 厨师 — 客人 进 餐厅, 你 怎么 招呼 + 给 他 吃 的?"),
+    ("🥲","食物 掉 地上 了","Food fell down","你 是 厨师 — 你 端 菜 不小心 摔 了, 你 怎么 办?"),
+    ("🥵","客人 说 太 辣","Too spicy!","你 是 厨师 — 客人 说 你 做 的 菜 太 辣, 你 怎么 办?"),
+    ("🍴","餐厅 太 忙","Restaurant too busy","你 是 厨师 — 一下 来 好多 客人, 你 怎么 不 慌?"),
+]
+for i,(em,cn,en,desc) in enumerate(chef_cards):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.50+row*1.65
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.55))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=CHEF; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.12),Inches(y+0.12),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=CHEF; nb.line.fill.background()
+    tb(s,x+0.12,y+0.16,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.62,y+0.18,1.20,1.05,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+1.90,y+0.18,2.55,0.36,cn,sz=14,b=True,c=CHEF)
+    tb(s,x+1.90,y+0.55,2.55,0.25,en,sz=9,c=GRAY)
+    tb(s,x+1.90,y+0.82,2.55,0.65,desc,sz=10,b=True,c=DARK)
+rn=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.95),Inches(9.2),Inches(0.50))
+rn.fill.solid(); rn.fill.fore_color.rgb=CHEF; rn.line.color.rgb=IDEA; rn.line.width=Pt(1.5)
+tb(s,0.55,5.00,9.0,0.30,"👥 分角色: 1-2 人 演 厨师 · 1-2 人 演 客人 (其他 是 观众)",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🎴 厨师 情景卡 · 1 分钟:\n• 道具 建议: 玩具 厨师 帽 / 围裙 / 假 食物 / 菜单 (打印)\n• 每组 抽 一张 — 用 动作 + 对话 演 出来\n• 客人 也 要 演 — 装 饿 / 装 觉得 太 辣 / 装 不 耐烦\n\n📘 专业 处理 方式 (老师 参考 — 每个 情景 演 完 后 引导):\n1️⃣ 客人 饿 了:\n  • 微笑 + 立即 招呼\n  • 介绍 菜单 / 推荐\n  • 快 但 不 慌\n2️⃣ 食物 掉 地上 了:\n  • 不 慌 — 道歉\n  • 重 做 一份 — 不 给 客人 吃 掉下 去 的\n  • 学习: 下次 拿 稳\n3️⃣ 客人 说 太 辣:\n  • 不 争 — 接受 意见\n  • 给 一杯 凉水 / 牛奶\n  • 重做 不 辣 的\n4️⃣ 餐厅 太 忙:\n  • 深 呼吸 — 不 慌\n  • 跟 团队 一起 — 分工\n  • 客人 等 — 道歉 + 谢谢 耐心")
+
+# 6-2. 小观察员任务 (includes audience guess + kind-audience rules)
+s=ns(); bg(s,CREAM); hb(s,"👀 观众 任务  Audience Job",PH_PLAY)
+tb(s,0.4,0.85,9.2,0.32,"不 上台 的 同学 — 你 也 有 重要 任务!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Audience members — you have an important job too!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+# 4 observer task cards (compact row)
 obs=[
-    ("👂","用 耳朵 听","Listen with ears","他们 说 什么?",NAVY),
-    ("👀","用 眼睛 看","Watch with eyes","他们 怎么 做?",HELP),
-    ("💭","用 脑子 想","Think with brain","换 你 — 你 怎么 做?",PURPLE),
-    ("👏","用 手 鼓掌","Hands clap","小帮手 — 你 真棒!",GOLD),
+    ("👂","用 耳朵 听","Listen","他们 说 什么?",NAVY),
+    ("👀","用 眼睛 看","Watch","他们 怎么 做?",HELP),
+    ("💭","用 脑子 想","Think","他 是 什么 职业?",PURPLE),
+    ("👏","用 手 鼓掌","Clap","表演 完 给 掌声!",GOLD),
 ]
 for i,(em,cn,en,detail,cl) in enumerate(obs):
-    x=0.4+i*2.32
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y:=1.65),Inches(2.22),Inches(2.90))
+    x=0.4+i*2.32; y=1.50
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.22),Inches(1.95))
     sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
-    tb(s,x+0.05,y+0.15,2.12,0.85,em,sz=50,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,y+1.05,2.12,0.40,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,y+1.45,2.12,0.28,en,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
-    tb(s,x+0.10,y+1.80,2.02,1.0,detail,sz=11,c=DARK,a=PP_ALIGN.CENTER)
-sentence_frame_bar(s,4.78,"我 看到 ___ 在 ___ 。 我 觉得 ___ 。","I saw ___ doing ___. I think ___.",accent=PH_PLAY)
+    tb(s,x+0.05,y+0.10,2.12,0.65,em,sz=42,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,y+0.78,2.12,0.34,cn,sz=14,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,y+1.10,2.12,0.22,en,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.10,y+1.36,2.02,0.55,detail,sz=10,c=DARK,a=PP_ALIGN.CENTER)
+# Guess prompt — sentence frame
+guess=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.60),Inches(9.2),Inches(0.95))
+guess.fill.solid(); guess.fill.fore_color.rgb=WARM; guess.line.color.rgb=PH_PLAY; guess.line.width=Pt(2.5)
+tb(s,0.55,3.68,9.0,0.32,"🙋 表演 结束 后, 举手 猜:",sz=13,b=True,c=PH_PLAY,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.00,9.0,0.34,"💬 「我 觉得 你 是 ______, 因为 ______ 。」",sz=15,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.36,9.0,0.20,"I think you are ___ because ___ .",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+# Kind audience strip
+kind=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.65),Inches(9.2),Inches(0.85))
+kind.fill.solid(); kind.fill.fore_color.rgb=PURPLE; kind.line.color.rgb=IDEA; kind.line.width=Pt(2)
+tb(s,0.55,4.72,9.0,0.30,"👏 做 友善 观众  Be a Kind Audience",sz=13,b=True,c=IDEA,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.04,9.0,0.30,"❌ 不 打断   ❌ 不 嘲笑   ✅ 给 掌声!",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.32,9.0,0.18,"No interrupting · No laughing · Give applause!",sz=8,c=WARM,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
-notes(s,"👀 Observer · 1 分钟:\n• 强调: 「不 上台 也 是 重要 工作!」\n• 4 个 任务 — 耳朵 / 眼睛 / 脑子 / 手\n• 老师 每个 scenario 后 — 抽 1-2 个 观察员 分享 「我 看到 ___」\n• 让 全班 都 投入 — 没 人 闲着")
+notes(s,"👀 Audience · 1-2 分钟:\n• 强调: 「不 上台 也 是 重要 工作!」\n• 4 个 任务 — 耳朵 听 / 眼睛 看 / 脑子 想 / 手 鼓掌\n• 表演 完 — 老师 问: 「猜猜 他 是 什么 职业?」 — 学生 举手 用 句型 回答:\n  - 「我 觉得 你 是 ___, 因为 ___」\n• 友善 观众 三 原则: 不 打断 · 不 嘲笑 · 给 掌声!\n  - 老师 提前 演示 — 比 一比 「友善 鼓掌」 vs 「嘲笑」 的 差别\n• 让 全班 都 投入 — 没 人 闲着")
 
 # ============================================================
 # 7. STATION A — 👩‍🏫 一日小老师
