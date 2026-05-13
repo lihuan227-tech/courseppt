@@ -200,6 +200,60 @@ tb(s,0.4,5.10,9.2,0.30,"📕 完成 → 老师 装订 → 这 是 你们 的 班
 n+=1; pn(s,n)
 notes(s,"3 分钟 — 介绍 共创 绘本:\n• 老师 准备: 4 页 模板 (每人 1 套)\n• 完成 后 装订 — 这 是 班级 永久 礼物\n• 鼓励: 「这 是 我们 一起 做 的 大 书!」")
 
+# ============================================================
+# Week TPR review · Act out moments
+# ============================================================
+s=ns(); bg(s,NIGHT); hb(s,"🎭 一周 表 演!  Act Out the Week!",STAR)
+tb(s,0.4,0.85,9.2,0.34,"全班 起 立! 用 身体 演 这 一周 学到 的!",sz=14,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Everyone stand! Use your body to act out the week!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+acts=[
+    ("Day 1","☀️","绕 太阳 转 — 你 是 行星!","Be a planet orbiting the sun!",GOLD),
+    ("Day 2","🐦","喜鹊 搭 桥 — 牛郎 织女 见面!","Magpie bridge for Cowherd & Weaver!",PINK),
+    ("Day 3","🦘","月球 上 跳 — 高 6 倍!","Moon jump — 6× higher!",NEBULA),
+    ("Day 4","👽","你 是 Zorp — 打 招呼!","You are Zorp — say hi!",STAR),
+]
+for i,(day,em,cn,en,cl) in enumerate(acts):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.55+row*1.65
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.50))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.10,y+0.10,1.05,0.40,day,sz=14,b=True,c=cl)
+    tb(s,x+0.10,y+0.55,1.15,0.90,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+1.40,y+0.20,3.10,0.42,cn,sz=14,b=True,c=cl)
+    tb(s,x+1.40,y+0.62,3.10,0.30,en,sz=10,c=GRAY)
+    tb(s,x+1.40,y+1.00,3.10,0.40,"⏱ 10 秒 + 全班 一起",sz=10,b=True,c=DARK)
+tb(s,0.4,4.95,9.2,0.30,"💡 演 完 一个 — 大声 喊 「Day ___! 我 学过!」",sz=11,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🎭 TPR · 5-6 分钟 — 一周 回顾:\n• 全班 起立\n• 老师 喊 Day 1 → 全班 演 行星 转\n• 老师 喊 Day 2-4 — 全班 演\n• 玩 2 轮 — 第二 轮 老师 随机 喊\n• 出汗 + 笑 + 巩固 一周 学习!")
+
+# ============================================================
+# Brainstorm inspirations · think bubbles
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"💭 找 灵感!  Find Your Inspiration!",NEBULA)
+tb(s,0.4,0.85,9.2,0.34,"想 一 想: 这 一 周 — 什么 最 让 你 心动?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Think: what moved YOU most this week?",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+qs=[
+    ("🪐","你 最 喜欢 的 行星?","Favorite planet?"),
+    ("⭐","你 最 想 看 的 星座?","Constellation you want to see?"),
+    ("🚀","你 想 去 哪 颗 星 旅行?","Where would you travel?"),
+    ("👽","你 想 跟 哪 种 外星人 做 朋友?","Which alien for a friend?"),
+    ("🧪","你 想 在 太空 做 什么 实验?","What experiment in space?"),
+    ("🌍","你 长大 想 帮 地球 做 什么?","How will you help Earth?"),
+]
+for i,(em,cn,en) in enumerate(qs):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.45+row*1.80
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.65))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=NEBULA; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=NEBULA; nb.line.fill.background()
+    tb(s,x+0.10,y+0.14,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.60,y+0.05,0.55,0.50,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,y+0.60,2.70,0.65,cn,sz=11,b=True,c=DARK)
+    tb(s,x+0.15,y+1.25,2.70,0.32,en,sz=8,c=GRAY)
+n+=1; pn(s,n)
+notes(s,"💭 BRAINSTORM · 4-5 分钟:\n• 1 分钟 — 老师 念 6 个 问题\n• 2 分钟 — 学生 心里 想 (默想)\n• 2 分钟 — 抽 3-4 个 学生 分享\n• 这些 → 灵感 来源 写 进 共创 绘本!")
+
 # Session 1 wrap — quick share
 s=ns(); bg(s,CREAM); hb(s,"🎤 跟 同桌 分享  Share with Partner",PINK)
 tb(s,0.4,0.85,9.2,0.32,"先 跟 同桌 说 — 等下 上台 时 就 不 紧张!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)

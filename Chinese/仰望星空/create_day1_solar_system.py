@@ -198,6 +198,89 @@ n+=1; pn(s,n)
 notes(s,"3-4 分钟 — 介绍绘本:\n• 展示 绘本 封面 — 让 学生 猜 这 是 一辆 什么样 的 校车?\n• 介绍 Ms. Frizzle (老师) 和 学生\n• 引导: 「他们 要 去 太阳系 旅行 — 我们 一起 跟着 看!」")
 
 # ============================================================
+# 5b. 绘本前 · Pre-reading predictions  (Think-Pair-Share)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"🔮 翻 开 之前 — 想 一 想!  Before We Read",COSMIC)
+tb(s,0.4,0.85,9.2,0.34,"光 看 封面 — 你 能 猜 到 什么?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Just from the cover — what can you guess?",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+preds=[
+    ("🚌","校车 真的 会 飞 吗?","Can a bus really fly?",COSMIC),
+    ("🪐","第 一站 去 哪个 行星?","Which planet first?",STAR),
+    ("😱","如果 「迷路」 — 怎么办?","What if they get LOST?",MARS),
+]
+for i,(em,q,en,cl) in enumerate(preds):
+    x=0.4+i*3.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.55),Inches(2.95),Inches(2.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.05,1.70,2.85,1.0,em,sz=66,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.85,0.50,q,sz=14,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.30,2.85,0.40,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.10,3.80,2.75,0.55,"💡 没有 标准 答案 — 大胆 猜!",sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tps=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.55),Inches(9.2),Inches(0.95))
+tps.fill.solid(); tps.fill.fore_color.rgb=NIGHT; tps.line.color.rgb=STAR; tps.line.width=Pt(2.5)
+tb(s,0.55,4.62,9.0,0.30,"👥 Think-Pair-Share: 跟 同桌 说 你 的 猜 想 (1 分钟)",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.95,9.0,0.26,"Turn to a partner — share your guess!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.22,9.0,0.24,"💬 「我 猜 ___ 因为 ___」",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🔮 PRE-READING · 3 分钟:\n• 让 学生 先 猜 — 激发 好奇 心\n• 没有 对错 — 收集 想法\n• 写 1-2 个 在 黑板 上 — 读完 验证\n• K-1 也能 说 — 「我 猜 太阳!」 就够")
+
+# ============================================================
+# 5c. 听 绘本 时 · During-reading observation checklist
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"👀 听 故事 时 — 你 的 任务!  While You Listen",STAR)
+tb(s,0.4,0.85,9.2,0.34,"3 个 任务 — 一边 听 一边 留心!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"3 missions — listen + observe at the same time!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+obs=[
+    ("1","🪐","他们 去 了 哪些 行星?","Which planets did they visit?",NEBULA),
+    ("2","😱","哪个 行星 最 让 他们 害怕?","Which planet scared them most?",MARS),
+    ("3","💡","他们 怎么 回到 地球?","How did they get back to Earth?",EARTH),
+]
+for i,(num,em,cn,en,cl) in enumerate(obs):
+    y=1.55+i*1.05
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.95))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.55),Inches(y+0.20),Inches(0.55),Inches(0.55))
+    nb.fill.solid(); nb.fill.fore_color.rgb=cl; nb.line.fill.background()
+    tb(s,0.55,y+0.27,0.55,0.40,num,sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.30,y+0.18,0.80,0.55,em,sz=32,a=PP_ALIGN.CENTER)
+    tb(s,2.30,y+0.14,7.0,0.40,cn,sz=15,b=True,c=cl)
+    tb(s,2.30,y+0.54,7.0,0.30,en,sz=10,c=GRAY)
+tip=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.60))
+tip.fill.solid(); tip.fill.fore_color.rgb=STAR; tip.line.fill.background()
+tb(s,0.55,4.93,9.0,0.30,"👂 用 心 听! 念 完 之后 — 我们 一起 讨论",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.23,9.0,0.22,"Listen well — we'll discuss after the story.",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"👀 DURING-READING · 1 分钟 setup + 8-10 分钟 念书:\n• 念 3 个 任务 — 学生 知道 听 什么\n• 老师 加 手势 (耳朵=听, 眼睛=看, 脑子=想)\n• 然后 念 绘本 (选 重点 段落)\n• 念 完 → 下一页 讨论")
+
+# ============================================================
+# 5d. 绘本 后 · Post-reading discussion (6 Qs)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"💭 听 完 故事 — 一起 讨论!  After We Read",COSMIC)
+tb(s,0.4,0.85,9.2,0.30,"选 1-2 个 问题 — 全班 / 小组 / Think-Pair-Share",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Pick 1-2 questions — class / group / Think-Pair-Share",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+qs=[
+    ("🚌","校车 飞 上 太空 — 神奇 吗?","Was the flying bus magical?"),
+    ("🪐","哪个 行星 最 危险? 为什么?","Most dangerous planet? Why?"),
+    ("🦸","如果 你 在 校车 上 — 你 会 怎么 帮?","If YOU were there — how would you help?"),
+    ("😨","学生 们 害怕 吗? 你 害怕 吗?","Were they scared? Would you be?"),
+    ("👩‍🏫","Ms. Frizzle 厉害 在 哪里?","What makes Ms. Frizzle awesome?"),
+    ("❓","看完 后 — 你 还 想 知道 什么?","After reading — what do YOU wonder?"),
+]
+for i,(em,cn,en) in enumerate(qs):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.45+row*1.80
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.65))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=COSMIC; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=COSMIC; nb.line.fill.background()
+    tb(s,x+0.10,y+0.14,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.60,y+0.05,0.55,0.50,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,y+0.60,2.70,0.65,cn,sz=11,b=True,c=DARK)
+    tb(s,x+0.15,y+1.25,2.70,0.32,en,sz=8,c=GRAY)
+n+=1; pn(s,n)
+notes(s,"💭 POST-READING · 5-7 分钟:\n• 选 2-3 题 — 全班 / Think-Pair-Share\n• Q3 + Q6 最 启发 想象力\n• 答错 没关系 — 收集 想法, 不给 标准答案\n• 高年级 完整 句子 / 低年级 几个 字 也行")
+
+# ============================================================
 # 6. SOLAR SYSTEM OVERVIEW — 8 planets
 # ============================================================
 s=ns(); bg(s,NIGHT); hb(s,"🌌 太阳系 · 我们 的 家  Our Solar System",STAR,t=0.15)
@@ -250,6 +333,62 @@ for i,(em,cn,en,winner,fact,cl) in enumerate(cmps):
     tb(s,x+1.10,y+1.15,3.35,0.55,fact,sz=10,c=DARK)
 n+=1; pn(s,n)
 notes(s,"4 分钟 — 行星 比较:\n• 一对 一对 念 — 让 学生 张大 眼睛 「哇!」\n• 重点: 地球 是 唯一 有 生命 的 — 因为 有 水 + 空气 + 合适 的 温度\n• 引导: 「所以 我们 要 保护 地球!」")
+
+# ============================================================
+# 7b. TPR 行星 表演 · Be a Planet (whole-class movement)
+# ============================================================
+s=ns(); bg(s,NIGHT); hb(s,"🎭 我 是 行星! 来 演 一下!  Be a Planet!",STAR)
+tb(s,0.4,0.85,9.2,0.34,"全班 起 立! 老师 是 太阳, 你们 是 行星!",sz=14,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Everyone stand up! Teacher = Sun, you = Planets!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+actions=[
+    ("☀️","太阳","Sun","站 中间 不动 — 双手 「发光」",SUN),
+    ("☿","水星","Mercury","跑 最 快 — 围 老师 转 小圈",LGRAY),
+    ("🌍","地球","Earth","稳稳 走 + 一边 自转",EARTH),
+    ("🪐","木星","Jupiter","巨大 步伐 — 大 大 + 慢",NEBULA),
+    ("💍","土星","Saturn","张 开 双手 (大 环!) 转",STAR),
+    ("🔷","海王星","Neptune","慢 慢 转 大 圈 — 远 远",SKY),
+]
+for i,(em,cn,en,action,cl) in enumerate(actions):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.55+row*1.55
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.40))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.10,y+0.10,0.80,0.85,em,sz=34,a=PP_ALIGN.CENTER)
+    tb(s,x+1.00,y+0.10,1.85,0.36,cn,sz=14,b=True,c=cl)
+    tb(s,x+1.00,y+0.46,1.85,0.26,en,sz=9,c=GRAY)
+    tb(s,x+0.12,y+0.85,2.75,0.50,action,sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.78,9.2,0.30,"🎵 升级 玩法: 老师 喊 「水金地火 木土天海」 — 学生 顺序 转!",sz=11,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,5.10,9.2,0.24,"Bonus: teacher chants the order — students rotate in sequence!",sz=8,c=LGRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🎭 TPR · 5-6 分钟 — 行星 表演:\n• 全班 起立 — 站 大 圆 圈\n• 老师 站 中间 当 太阳 — 双手 张开 「发光」\n• 老师 喊 一个 行星 — 学生 全部 演 那个 动作 (10 秒)\n• 玩 2 轮 — 第二 轮 加 顺序 挑战\n• 出汗 + 笑 = 学进 大脑! K-5 都 喜欢\n• 课堂管理: 提前 划 圈, 不撞人")
+
+# ============================================================
+# 7c. 快问快答 · Rapid Fire Quiz (team buzz)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"🚀 快 问 快 答!  Rapid Fire Quiz!",MARS)
+tb(s,0.4,0.85,9.2,0.34,"4 队 抢答 — 答 对 加 1 分! 答 错 不 扣 分!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"4 teams buzz in — correct = +1 · wrong = no penalty",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+quiz=[
+    ("1","🌍","哪 个 是 我们 的 家?","→ 地球",EARTH),
+    ("2","🔷","最 远 的 行星?","→ 海王星",SKY),
+    ("3","♀","最 热 是 哪 个?","→ 金星 (460°C)",MARS),
+    ("4","🪐","最 大 的 行星?","→ 木星",NEBULA),
+    ("5","💍","哪 颗 有 大 环?","→ 土星",STAR),
+    ("6","☀️","太阳 是 行星 吗?","→ 不是! 是 恒星",SUN),
+]
+for i,(num,em,q,ans,cl) in enumerate(quiz):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.55+row*1.70
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.55))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=cl; nb.line.fill.background()
+    tb(s,x+0.10,y+0.14,0.42,0.34,num,sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.60,y+0.08,0.65,0.45,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,y+0.58,2.70,0.40,q,sz=13,b=True,c=DARK)
+    tb(s,x+0.15,y+1.05,2.70,0.40,ans,sz=12,b=True,c=cl)
+n+=1; pn(s,n)
+notes(s,"🚀 QUIZ · 4-5 分钟:\n• 4 队 — 举手 / 拍 桌子 抢答\n• 老师 念 题 — 第一个 抢到 的 答\n• 答 错 — 下一队 接\n• 留 时间 强调 Q6: 「太阳 不是 行星 — 是 恒星! 自己 会 发光」")
 
 # ============================================================
 # 8. SESSION 1 SHARE / WRAP
@@ -326,6 +465,55 @@ for i,(em,cn,py,en,cl) in enumerate(words):
 tb(s,0.4,5.10,9.2,0.30,"💬 「我 认识 ___」  · I know the word ___",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
 notes(s,"5-6 分钟 — 我会认:\n• 5 个 词 — 全班 跟读 3 遍 (慢 → 快 → 大声)\n• 玩 闪卡 游戏: 老师 出 词 — 学生 抢答\n• 团队 加分: 答对 加 1 分")
+
+# ============================================================
+# 11b. 词汇 闪卡 抢答 · Flash Card Challenge
+# ============================================================
+s=ns(); bg(s,NIGHT); hb(s,"⚡ 词汇 闪卡 抢答!  Flash Card Challenge!",STAR)
+tb(s,0.4,0.85,9.2,0.34,"老师 出 词 — 哪 队 第一 大声 读 + 翻译?",sz=14,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Teacher flashes a word — first team to read + translate wins!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+rules=[
+    ("1️⃣","老师 举 一张 闪卡","Teacher holds up a card"),
+    ("2️⃣","第一 队 抢答 — 读 + 翻译","First team — read + translate"),
+    ("3️⃣","对 = +1 分, 错 = 下 一队","Right = +1, wrong = next team"),
+    ("4️⃣","用 这个 词 造一 句 = +2 分","Make a sentence = +2 bonus"),
+]
+for i,(num,cn,en) in enumerate(rules):
+    y=1.55+i*0.80
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.70))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=STAR; sh.line.width=Pt(2)
+    tb(s,0.55,y+0.14,0.6,0.42,num,sz=18,b=True,c=STAR)
+    tb(s,1.25,y+0.08,4.7,0.32,cn,sz=14,b=True,c=DARK)
+    tb(s,1.25,y+0.42,4.7,0.24,en,sz=9,c=GRAY)
+    tb(s,5.95,y+0.20,3.5,0.32,"⚡ 抢 答!",sz=14,b=True,c=MARS,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.95,9.2,0.30,"🏆 总冠军 队 — Hi-five + 团队 欢呼!",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"⚡ FLASH CARD · 5-6 分钟:\n• 用 我会认 5 张 卡 (太阳/月亮/地球/星球/宇宙)\n• 玩 2 轮 — 第二 轮 更 快\n• 鼓励 K-1 用 一 个 词, 高年级 完整 翻译\n• 总冠军 — Hi-five + 集体 欢呼")
+
+# ============================================================
+# 11c. 造 句 大作战 · Sentence Building (Think-Pair-Share)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"💬 造 句 大作战!  Build a Sentence!",NEBULA)
+tb(s,0.4,0.85,9.2,0.34,"用 句型 + 词 — 自己 造 一 句 太空 话!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Use a frame + word — make YOUR space sentence!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+frames=[
+    ("🚀","我 想 去 ___ 行星 — 因为 ___","I want to visit ___ planet — because ___"),
+    ("📏","___ 离 太阳 最 远","___ is farthest from the sun"),
+    ("🏠","___ 是 我们 的 家","___ is our home"),
+]
+for i,(em,cn,en) in enumerate(frames):
+    y=1.55+i*1.05
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.95))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=NEBULA; sh.line.width=Pt(2.5)
+    tb(s,0.55,y+0.18,0.80,0.60,em,sz=30,a=PP_ALIGN.CENTER)
+    tb(s,1.50,y+0.12,8.0,0.40,cn,sz=17,b=True,c=NEBULA)
+    tb(s,1.50,y+0.55,8.0,0.30,en,sz=10,c=GRAY)
+bottom=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.65))
+bottom.fill.solid(); bottom.fill.fore_color.rgb=NEBULA; bottom.line.fill.background()
+tb(s,0.55,4.92,9.0,0.30,"👥 Think-Pair-Share — 同桌 互 说 + 抽 3-4 个 上 台 分享",sz=12,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.22,9.0,0.22,"Think — Pair — Share — then a few share with the class!",sz=9,c=WARM,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"💬 SENTENCE BUILDING · 6 分钟:\n• 1 分钟 — 念 3 个 句型\n• 2 分钟 — Turn & Talk (同桌)\n• 3 分钟 — 抽 3-4 个 学生 上 台 — 大声 说\n• 老师 写 在 黑板 上 — 鼓掌\n• 高年级 编 完整 句子, 低年级 填 1-2 个 词 就行")
 
 # ============================================================
 # 12-14. 我会写 — 太阳 (2 chars), 地球 (2 chars), 宇宙 (2 chars)

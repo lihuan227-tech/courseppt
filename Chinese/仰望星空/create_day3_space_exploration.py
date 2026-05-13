@@ -182,6 +182,114 @@ for i,line in enumerate(parts):
 n+=1; pn(s,n)
 notes(s,"5-6 分钟 — 讲 月球 之 旅:\n• 念 故事 — 强调 真实 数字 让 学生 「哇!」\n• 互动: 「跳 6 倍 高 — 演 一下!」")
 
+# ============================================================
+# Picture book — 5b. 绘本 前 · Pre-reading predictions
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"🔮 翻 开 之前 — 想 一 想!  Before We Read",MOON_C)
+tb(s,0.4,0.85,9.2,0.34,"光 看 题目 — 你 觉得 去 月球 要 注意 什么?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"From the title — what should you watch out for on the Moon?",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+preds=[
+    ("🎒","你 会 带 什么?","What would YOU pack?",MARS),
+    ("⏱️","去 月球 要 几 天?","How long to get there?",MOON_C),
+    ("😱","月球 上 最 难 的 是 什么?","What's the hardest thing?",NEBULA),
+]
+for i,(em,q,en,cl) in enumerate(preds):
+    x=0.4+i*3.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.55),Inches(2.95),Inches(2.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.05,1.70,2.85,1.0,em,sz=66,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.85,0.50,q,sz=14,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.30,2.85,0.40,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.10,3.80,2.75,0.55,"💡 大胆 猜! 没 标准 答案",sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tps=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.55),Inches(9.2),Inches(0.95))
+tps.fill.solid(); tps.fill.fore_color.rgb=NIGHT; tps.line.color.rgb=STAR; tps.line.width=Pt(2.5)
+tb(s,0.55,4.62,9.0,0.30,"👥 Think-Pair-Share: 跟 同桌 说 (1 分钟)",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.95,9.0,0.26,"Turn to a partner — share your prediction!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.22,9.0,0.24,"💬 「我 觉得 ___ 因为 ___」",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🔮 PRE-READING · 3 分钟:\n• 学生 先 猜 — 激发 想象\n• 收集 想法 — 引出 「我们 看 故事 怎么 说!」")
+
+# ============================================================
+# 5c. 听 绘本 时 · During-reading
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"👀 听 故事 时 — 你 的 任务!  While You Listen",STAR)
+tb(s,0.4,0.85,9.2,0.34,"3 个 任务 — 一边 听 一边 留心!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"3 missions — listen + observe!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+obs=[
+    ("1","🚀","坐 什么 去 月球?","What do you take to get there?",MARS),
+    ("2","🦘","月球 上 走路 / 跳 跟 地球 一样 吗?","Does walking/jumping feel different?",MOON_C),
+    ("3","🌡️","月球 是 很 热 还是 很 冷?","Is the Moon hot or cold?",NEBULA),
+]
+for i,(num,em,cn,en,cl) in enumerate(obs):
+    y=1.55+i*1.05
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.95))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.55),Inches(y+0.20),Inches(0.55),Inches(0.55))
+    nb.fill.solid(); nb.fill.fore_color.rgb=cl; nb.line.fill.background()
+    tb(s,0.55,y+0.27,0.55,0.40,num,sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.30,y+0.18,0.80,0.55,em,sz=32,a=PP_ALIGN.CENTER)
+    tb(s,2.30,y+0.14,7.0,0.40,cn,sz=15,b=True,c=cl)
+    tb(s,2.30,y+0.54,7.0,0.30,en,sz=10,c=GRAY)
+tip=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.60))
+tip.fill.solid(); tip.fill.fore_color.rgb=STAR; tip.line.fill.background()
+tb(s,0.55,4.93,9.0,0.30,"👂 用 心 听! 念 完 — 我们 一起 讨论",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.23,9.0,0.22,"Listen well — we'll discuss after.",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"👀 DURING-READING · 1 分钟 setup + 8 分钟 念书:\n• 念 3 个 任务\n• 老师 念 故事 — 戏剧 化 + 真实 数字\n• 念 完 → 下页 讨论")
+
+# ============================================================
+# 5d. 故事 后 · Post-reading discussion (6 Qs)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"💭 听 完 故事 — 一起 讨论!  After We Read",NEBULA)
+tb(s,0.4,0.85,9.2,0.30,"选 1-2 个 — 全班 / Think-Pair-Share",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Pick 1-2 — class / Think-Pair-Share",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+qs=[
+    ("🦘","月球 上 跳 6 倍 高 — 好玩 吗?","Jumping 6× higher — fun?"),
+    ("🥶","-150°C 你 怎么 办?","-150°C — what do you do?"),
+    ("🌍","从 月球 看 地球 — 是 什么 感觉?","Seeing Earth from Moon — how would it feel?"),
+    ("🍱","在 月球 上 吃 什么? 怎么 上 厕所?","What do you eat? How do you use the bathroom?"),
+    ("👨‍🚀","你 想 当 宇航员 吗? 为什么?","Want to be an astronaut? Why?"),
+    ("❓","你 还 想 知道 月球 什么?","What else do you wonder about the Moon?"),
+]
+for i,(em,cn,en) in enumerate(qs):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.45+row*1.80
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.65))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=NEBULA; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=NEBULA; nb.line.fill.background()
+    tb(s,x+0.10,y+0.14,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.60,y+0.05,0.55,0.50,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,y+0.60,2.70,0.65,cn,sz=11,b=True,c=DARK)
+    tb(s,x+0.15,y+1.25,2.70,0.32,en,sz=8,c=GRAY)
+n+=1; pn(s,n)
+notes(s,"💭 POST-READING · 5-7 分钟:\n• 选 2-3 题 — Think-Pair-Share 或 全班\n• Q4 (吃 + 厕所) — K-5 笑 翻\n• Q6 — 收集 学生 好奇心\n• 高年级 给 完整 答案, 低年级 一两个 词")
+
+# ============================================================
+# 5e. 月球 体能 挑战 · Moon Gym TPR
+# ============================================================
+s=ns(); bg(s,NIGHT); hb(s,"🦘 月球 体能 挑战!  Moon Gym!",STAR)
+tb(s,0.4,0.85,9.2,0.34,"全班 起 立! 假装 我们 在 月球 — 重力 只 有 1/6!",sz=14,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Everyone stand! Gravity is 1/6 — let's move like astronauts!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+moves=[
+    ("🦘","跳 — 高 6 倍!","Jump — 6× higher!",MOON_C),
+    ("🐢","走 — 慢 慢 飘","Walk — float slowly",NEBULA),
+    ("🪨","捡 月球 石头","Pick up moon rocks",MARS),
+    ("📸","拍 一张 太空 照","Take a space selfie",STAR),
+]
+for i,(em,cn,en,cl) in enumerate(moves):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.55+row*1.65
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.50))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.10,y+0.20,1.00,1.10,em,sz=48,a=PP_ALIGN.CENTER)
+    tb(s,x+1.20,y+0.20,3.25,0.45,cn,sz=16,b=True,c=cl)
+    tb(s,x+1.20,y+0.70,3.25,0.30,en,sz=10,c=GRAY)
+    tb(s,x+1.20,y+1.05,3.25,0.30,"⏱ 10 秒",sz=10,b=True,c=DARK)
+tb(s,0.4,4.95,9.2,0.30,"🎵 老师 喊 一个 — 全班 演 10 秒 — 笑 出 来 = 太空 健身 成功!",sz=11,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🦘 TPR · 5 分钟 — 月球 体能:\n• 全班 起 立 — 站 圆圈\n• 老师 喊 一个 动作 — 全班 演 10 秒\n• 玩 2 轮 — 第 二 轮 老师 加 速 喊\n• 引出 概念: 月球 重力 = 地球 1/6 — 所以 跳 高 6 倍!")
+
 # Why explore space?
 s=ns(); bg(s,NIGHT); hb(s,"💡 为 什么 要 探索 太空?  Why Explore?",STAR)
 tb(s,0.4,0.85,9.2,0.30,"人类 为什么 想 去 月球 + 火星?",sz=13,b=True,c=STAR,a=PP_ALIGN.CENTER)

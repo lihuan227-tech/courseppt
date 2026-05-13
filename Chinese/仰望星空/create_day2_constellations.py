@@ -180,6 +180,89 @@ for i,line in enumerate(parts):
 n+=1; pn(s,n)
 notes(s,"5-6 分钟 — 讲故事:\n• 老师 用 戏剧 语气 讲 牛郎织女\n• 强调: 「夏天 晚上 抬头 — 你 真的 能 看到 牛郎星 和 织女星!」\n• 中间 隔着 银河 (Milky Way)\n• 文化 链接: 七夕 = 中国 情人节")
 
+# ============================================================
+# 5b. 绘本 前 · Pre-reading predictions
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"🔮 翻 开 之前 — 想 一 想!  Before We Read",PINK)
+tb(s,0.4,0.85,9.2,0.34,"光 看 题目 「牛郎 织女」 — 你 能 猜 到 什么?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"From the title 'Cowherd & Weaver' — what can you guess?",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+preds=[
+    ("👦","「牛郎」 是 做 什么 的?","What does 'Cowherd' do?",PINK),
+    ("👧","「织女」 是 做 什么 的?","What does 'Weaver Girl' do?",NEBULA),
+    ("🌌","为什么 是 一个 星空 故事?","Why is this a sky story?",STAR),
+]
+for i,(em,q,en,cl) in enumerate(preds):
+    x=0.4+i*3.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.55),Inches(2.95),Inches(2.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.05,1.70,2.85,1.0,em,sz=66,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.85,0.50,q,sz=14,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.30,2.85,0.40,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.10,3.80,2.75,0.55,"💡 大胆 猜! 没 标准 答案",sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tps=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.55),Inches(9.2),Inches(0.95))
+tps.fill.solid(); tps.fill.fore_color.rgb=NIGHT; tps.line.color.rgb=STAR; tps.line.width=Pt(2.5)
+tb(s,0.55,4.62,9.0,0.30,"👥 Think-Pair-Share: 跟 同桌 说 你 的 猜 想 (1 分钟)",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.95,9.0,0.26,"Turn to a partner — share your guess!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.22,9.0,0.24,"💬 「我 猜 ___ 因为 ___」",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🔮 PRE-READING · 3 分钟:\n• 让 学生 先 猜\n• 收集 想法 — 写 1-2 个 在 黑板\n• 引出 故事 — 「我们 来 看 真正 的 故事!」")
+
+# ============================================================
+# 5c. 听 故事 时 · During-reading
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"👀 听 故事 时 — 你 的 任务!  While You Listen",STAR)
+tb(s,0.4,0.85,9.2,0.34,"3 个 任务 — 一边 听 一边 留心!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"3 missions — listen + observe!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+obs=[
+    ("1","💕","牛郎 和 织女 怎么 认识 的?","How did they meet?",PINK),
+    ("2","😢","为什么 王母 把 他们 分开?","Why did Queen Mother separate them?",NEBULA),
+    ("3","🐦","喜鹊 怎么 帮助 他们?","How did the magpies help?",STAR),
+]
+for i,(num,em,cn,en,cl) in enumerate(obs):
+    y=1.55+i*1.05
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.95))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.55),Inches(y+0.20),Inches(0.55),Inches(0.55))
+    nb.fill.solid(); nb.fill.fore_color.rgb=cl; nb.line.fill.background()
+    tb(s,0.55,y+0.27,0.55,0.40,num,sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.30,y+0.18,0.80,0.55,em,sz=32,a=PP_ALIGN.CENTER)
+    tb(s,2.30,y+0.14,7.0,0.40,cn,sz=15,b=True,c=cl)
+    tb(s,2.30,y+0.54,7.0,0.30,en,sz=10,c=GRAY)
+tip=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.60))
+tip.fill.solid(); tip.fill.fore_color.rgb=STAR; tip.line.fill.background()
+tb(s,0.55,4.93,9.0,0.30,"👂 用 心 听! 念 完 — 我们 一起 讨论",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.23,9.0,0.22,"Listen well — we'll discuss after.",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"👀 DURING-READING · setup 1 分钟 + 念 8 分钟:\n• 念 3 个 任务\n• 老师 讲 故事 (戏剧 化, 加 手势)\n• 念 完后 → 下一页 讨论")
+
+# ============================================================
+# 5d. 故事 后 · Post-reading discussion (6 Qs)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"💭 听 完 故事 — 一起 讨论!  After We Read",COSMIC)
+tb(s,0.4,0.85,9.2,0.30,"选 1-2 个 问题 — 全班 / Think-Pair-Share",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Pick 1-2 questions — class / Think-Pair-Share",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+qs=[
+    ("💕","牛郎 织女 相 爱 — 但 不能 见面, 你 觉得?","Love but apart — how do YOU feel?"),
+    ("👑","王母 太 严厉 了 吗?","Was Queen Mother too strict?"),
+    ("🐦","喜鹊 真好! 它们 为什么 帮 忙?","Why did magpies help?"),
+    ("📅","一年 只 见 一次 — 够 吗?","One meeting a year — enough?"),
+    ("🌌","西方 看 同一片 星空 是 大熊座 — 神奇 吗?","Same sky, different story — wow?"),
+    ("✨","你 自己 想 给 这 几颗 星 起 什么 名字?","What names would YOU give those stars?"),
+]
+for i,(em,cn,en) in enumerate(qs):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.45+row*1.80
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.65))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=COSMIC; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=COSMIC; nb.line.fill.background()
+    tb(s,x+0.10,y+0.14,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.60,y+0.05,0.55,0.50,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,y+0.60,2.70,0.65,cn,sz=11,b=True,c=DARK)
+    tb(s,x+0.15,y+1.25,2.70,0.32,en,sz=8,c=GRAY)
+n+=1; pn(s,n)
+notes(s,"💭 POST-READING · 5-7 分钟:\n• 选 2-3 题 — 全班 / Think-Pair-Share\n• Q5 + Q6 启发 文化 + 想象\n• 鼓励 文化 比较 — 同一片 天 多个 故事")
+
 # 6. 银河 + 牛郎星 + 织女星 visualization
 s=ns(); bg(s,NIGHT); hb(s,"💫 银河 · 牛郎星 · 织女星  Milky Way",COSMIC)
 tb(s,0.4,0.85,9.2,0.30,"夏天 晚上, 抬头 — 你 真的 能 看到 这 3 颗星!",sz=13,b=True,c=STAR,a=PP_ALIGN.CENTER)
@@ -204,6 +287,32 @@ bottom.fill.solid(); bottom.fill.fore_color.rgb=COSMIC; bottom.line.color.rgb=ST
 tb(s,0.55,5.02,9.0,0.32,"🌌 星空 = 科学 + 故事 + 想象!",sz=14,b=True,c=STAR,a=PP_ALIGN.CENTER)
 n+=1; pn(s,n)
 notes(s,"3-4 分钟 — 银河 + 两颗 星:\n• 中间 一条 白带 = 银河 (Milky Way)\n• 织女星 (Vega) 在 银河 一边\n• 牛郎星 (Altair) 在 另一边\n• 7 月 7 日 — 喜鹊 帮 他们 搭 桥 见面\n• 提示: 「今晚 抬头 — 找 银河!」")
+
+# ============================================================
+# 6b. 星座 演 一 演 · Constellation Charades (TPR)
+# ============================================================
+s=ns(); bg(s,NIGHT); hb(s,"🎭 星座 演 一 演!  Constellation Charades!",STAR)
+tb(s,0.4,0.85,9.2,0.34,"全班 起立! 用 身体 摆 出 一个 星座!",sz=14,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Everyone stand! Use your body to make a constellation!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+acts=[
+    ("🐻","大熊座","Big Dipper","4 人 排成 一个 大 勺子",NEBULA),
+    ("🦁","狮子座","Leo","站 起来 像 狮子 — 「吼!」",STAR),
+    ("👦","牛郎 + 织女","Cowherd + Weaver","2 人 站 远 — 中间 隔 银河",PINK),
+    ("✨","自己 编 一个!","Make your own!","队 4 人 — 创 一个 新 星座!",SKY),
+]
+for i,(em,cn,en,action,cl) in enumerate(acts):
+    col=i%2; row=i//2
+    x=0.4+col*4.65; y=1.55+row*1.65
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.50))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.10,y+0.15,0.95,1.10,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,x+1.20,y+0.10,3.30,0.40,cn,sz=15,b=True,c=cl)
+    tb(s,x+1.20,y+0.50,3.30,0.26,en,sz=9,c=GRAY)
+    tb(s,x+1.20,y+0.85,3.30,0.55,action,sz=11,b=True,c=DARK)
+tb(s,0.4,4.95,9.2,0.30,"💡 让 同学 猜 — 这 是 什么 星座!",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.4,5.25,9.2,0.22,"Let others guess — what constellation is it?",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🎭 TPR · 6-7 分钟:\n• 4 队 — 每队 4-5 人\n• 1 分钟 — 商量 一个 星座 + 怎么 摆\n• 3 分钟 — 4 队 轮流 上台 — 摆 出 来\n• 同学 猜 (10 秒)\n• 让 K-5 都 动 — 加 想象 + 团队")
 
 # 7. Session 1 wrap — discussion
 s=ns(); bg(s,CREAM); hb(s,"🎤 一起 想 一 想  Discuss Together",COSMIC)

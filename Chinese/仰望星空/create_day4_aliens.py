@@ -170,6 +170,89 @@ for i,l in enumerate(lines):
 n+=1; pn(s,n)
 notes(s,"5-7 分钟 — 读 火星 来信:\n• 老师 用 神秘 的 语气 读\n• 中间 停 一下 — 让 学生 反应\n• 提问: 「Zorp 觉得 外星人 存在 吗?」 → 存在!\n• 引导: 「我们 还 没 找到 — 但 也许 有 一 天 ……」")
 
+# ============================================================
+# Letter — pre-reading predictions
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"🔮 拆 信 之前 — 想 一 想!  Before We Read",ALIEN)
+tb(s,0.4,0.85,9.2,0.34,"信 封 写 着 「来自 火星」 — 你 猜 信 里 说 什么?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"Envelope says 'From Mars' — what's in the letter?",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+preds=[
+    ("👽","写 信 的 人 长 什么 样?","What do they look like?",ALIEN),
+    ("💬","他们 说 什么 语言?","What language do they speak?",NEBULA),
+    ("❓","他们 想 跟 我们 说 什么?","What do they want to tell us?",MARS),
+]
+for i,(em,q,en,cl) in enumerate(preds):
+    x=0.4+i*3.10
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.55),Inches(2.95),Inches(2.85))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    tb(s,x+0.05,1.70,2.85,1.0,em,sz=66,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.85,0.50,q,sz=14,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.30,2.85,0.40,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,x+0.10,3.80,2.75,0.55,"💡 大胆 猜!",sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tps=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.55),Inches(9.2),Inches(0.95))
+tps.fill.solid(); tps.fill.fore_color.rgb=NIGHT; tps.line.color.rgb=STAR; tps.line.width=Pt(2.5)
+tb(s,0.55,4.62,9.0,0.30,"👥 Think-Pair-Share: 跟 同桌 猜 (1 分钟)",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+tb(s,0.55,4.95,9.0,0.26,"Turn to a partner — guess what's inside!",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.22,9.0,0.24,"💬 「信 里 也许 说 ___」",sz=12,b=True,c=STAR,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"🔮 PRE-READING · 3 分钟:\n• 戏剧化: 「老师 收到 一封 信 — 来自 火星!」\n• 让 学生 猜 — 不评判\n• 收集 想法 — 然后 「我们 来 拆 信!」")
+
+# ============================================================
+# Listening missions during letter
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"👀 拆 信 时 — 你 的 任务!  While You Listen",STAR)
+tb(s,0.4,0.85,9.2,0.34,"3 个 任务 — 一边 听 一边 留心!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.18,9.2,0.22,"3 missions — listen + observe!",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+obs=[
+    ("1","🛸","Zorp 是 谁? 多 大 年纪?","Who is Zorp? How old?",ALIEN),
+    ("2","🌍","他 对 地球 说 了 什么?","What did he say about Earth?",EARTH),
+    ("3","💌","他 提了 几 个 问题?","How many questions did he ask?",NEBULA),
+]
+for i,(num,em,cn,en,cl) in enumerate(obs):
+    y=1.55+i*1.05
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.95))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.55),Inches(y+0.20),Inches(0.55),Inches(0.55))
+    nb.fill.solid(); nb.fill.fore_color.rgb=cl; nb.line.fill.background()
+    tb(s,0.55,y+0.27,0.55,0.40,num,sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.30,y+0.18,0.80,0.55,em,sz=32,a=PP_ALIGN.CENTER)
+    tb(s,2.30,y+0.14,7.0,0.40,cn,sz=15,b=True,c=cl)
+    tb(s,2.30,y+0.54,7.0,0.30,en,sz=10,c=GRAY)
+tip=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.85),Inches(9.2),Inches(0.60))
+tip.fill.solid(); tip.fill.fore_color.rgb=STAR; tip.line.fill.background()
+tb(s,0.55,4.93,9.0,0.30,"👂 用 心 听! 念 完 — 我们 一起 讨论 + 回信",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.55,5.23,9.0,0.22,"Listen well — we'll discuss + reply after.",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+n+=1; pn(s,n)
+notes(s,"👀 DURING-READING · 1 分钟 setup + 5 分钟 念信:\n• 念 3 个 任务\n• 老师 念 信 (神秘 语气)\n• 念 完 → 下页 讨论")
+
+# ============================================================
+# Post-letter discussion (6 Qs)
+# ============================================================
+s=ns(); bg(s,CREAM); hb(s,"💭 拆 信 后 — 一起 讨论!  After Reading",ALIEN)
+tb(s,0.4,0.85,9.2,0.30,"选 1-2 个 问题 — 全班 / Think-Pair-Share",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+tb(s,0.4,1.15,9.2,0.22,"Pick 1-2 — class / Think-Pair-Share",sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+qs=[
+    ("👽","你 觉得 Zorp 长 什么 样?","What does Zorp look like?"),
+    ("💌","他 说 「保护 地球」 — 为什么?","Why did he say 'protect Earth'?"),
+    ("🤝","如果 你 见到 Zorp — 你 说 什么?","If you met Zorp — what would you say?"),
+    ("🌍","信 是 真的 还是 假的? 怎么 知道?","Real or fake letter? How do we know?"),
+    ("🛸","为什么 我们 还 没 找到 外星人?","Why haven't we found aliens yet?"),
+    ("💭","你 想 给 Zorp 回 什么 信?","What letter would YOU write back?"),
+]
+for i,(em,cn,en) in enumerate(qs):
+    col=i%3; row=i//3
+    x=0.4+col*3.10; y=1.45+row*1.80
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.95),Inches(1.65))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=ALIEN; sh.line.width=Pt(2.5)
+    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.10),Inches(y+0.10),Inches(0.42),Inches(0.42))
+    nb.fill.solid(); nb.fill.fore_color.rgb=ALIEN; nb.line.fill.background()
+    tb(s,x+0.10,y+0.14,0.42,0.34,str(i+1),sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.60,y+0.05,0.55,0.50,em,sz=24,a=PP_ALIGN.CENTER)
+    tb(s,x+0.15,y+0.60,2.70,0.65,cn,sz=11,b=True,c=DARK)
+    tb(s,x+0.15,y+1.25,2.70,0.32,en,sz=8,c=GRAY)
+n+=1; pn(s,n)
+notes(s,"💭 POST-LETTER · 5-7 分钟:\n• 选 2-3 题\n• Q3 + Q6 启发 想象\n• Q4 — 科学 思维 (real vs imagination)\n• 鼓励 各种 答案 — 没 标准")
+
 # Fact vs Imagination
 s=ns(); bg(s,CREAM); hb(s,"🧠 事实 vs 想象  Fact vs Imagination",NEBULA)
 tb(s,0.4,0.85,9.2,0.32,"哪些 是 真的? 哪些 是 想 出来 的?",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
