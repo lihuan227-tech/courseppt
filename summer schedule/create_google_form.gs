@@ -14,7 +14,7 @@
 function createRegistrationForm() {
   var form = FormApp.create('谷雨暑期选修课报名 GR EDU Summer Electives Registration');
   form.setDescription(
-    '2025 Summer · Chinese · English · Math\n' +
+    '2025 Summer · Chinese · Math\n' +
     '请填写以下信息完成报名。Please fill out the form below to register.\n' +
     '如需报名多个学生，请为每位学生分别提交一份表格。Submit one form per student.'
   );
@@ -101,18 +101,6 @@ function createRegistrationForm() {
     ])
     .setRequired(true);
 
-  // English
-  form.addMultipleChoiceItem()
-    .setTitle('英语级别 English Level')
-    .setChoiceValues([
-      '不选英语 N/A',
-      'English LK — Mon/Wed 4:00–5:00 — Grade: K',
-      'English L1 — Mon/Wed 5:00–6:00 — Grade: 1st',
-      'English L2 & 3 — Tue/Thu 4:00–5:00 — Grade: 2nd–3rd',
-      'English L4 & 5 — Tue/Thu 5:00–6:00 — Grade: 3rd–5th'
-    ])
-    .setRequired(true);
-
   // Math
   form.addMultipleChoiceItem()
     .setTitle('数学级别 Math Level')
@@ -133,7 +121,6 @@ function createRegistrationForm() {
     .setHelpText(
       '学费标准 Tuition per session (2 weeks):\n' +
       '• 中文 Chinese: $120/session ($60/week)\n' +
-      '• 英语 English: $160/session ($80/week)\n' +
       '• 数学 Math: $160/session ($80/week)\n\n' +
       '学费 = 所选科目单价 × 报名 Session 数\n' +
       'Total = per-session price × number of sessions\n\n' +
@@ -232,7 +219,6 @@ function onFormSubmit(e) {
   var campus = '';
   var sessionCount = 0;
   var chineseLevel = '';
-  var englishLevel = '';
   var mathLevel = '';
   var email = response.getRespondentEmail();
 
@@ -250,17 +236,14 @@ function onFormSubmit(e) {
       sessionCount = Array.isArray(answer) ? answer.length : 1;
     }
     if (title.indexOf('中文级别') >= 0) chineseLevel = answer;
-    if (title.indexOf('英语级别') >= 0) englishLevel = answer;
     if (title.indexOf('数学级别') >= 0) mathLevel = answer;
   }
 
   // Calculate tuition
   var chinesePerSession = 120;  // $60/week × 2 weeks
-  var englishPerSession = 160;  // $80/week × 2 weeks
   var mathPerSession = 160;     // $80/week × 2 weeks
 
   var hasChinese = chineseLevel && chineseLevel.indexOf('N/A') < 0;
-  var hasEnglish = englishLevel && englishLevel.indexOf('N/A') < 0;
   var hasMath = mathLevel && mathLevel.indexOf('N/A') < 0;
 
   var perSessionTotal = 0;
@@ -269,10 +252,6 @@ function onFormSubmit(e) {
   if (hasChinese) {
     perSessionTotal += chinesePerSession;
     breakdown.push('中文 Chinese: $' + chinesePerSession + '/session');
-  }
-  if (hasEnglish) {
-    perSessionTotal += englishPerSession;
-    breakdown.push('英语 English: $' + englishPerSession + '/session');
   }
   if (hasMath) {
     perSessionTotal += mathPerSession;
@@ -328,7 +307,6 @@ function onFormSubmit(e) {
       '选课 Courses:\n';
 
     if (hasChinese) body += '  • ' + chineseLevel + '\n';
-    if (hasEnglish) body += '  • ' + englishLevel + '\n';
     if (hasMath) body += '  • ' + mathLevel + '\n';
 
     body += '\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +

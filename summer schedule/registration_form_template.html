@@ -126,7 +126,7 @@
   <div class="form-header">
     <div class="form-title">谷雨暑期选修课报名 GR EDU Summer Electives Registration</div>
     <div class="form-desc">
-      2025 Summer · Chinese · English · Math<br>
+      2025 Summer · Chinese · Math<br>
       请填写以下信息完成报名。Please fill out the form below to register.<br>
       如需报名多个学生，请为每位学生分别提交一份表格。<br>
       Submit one form per student.
@@ -226,19 +226,6 @@
       <div class="section-note">* 中文课按实际中文水平分级，非按学校年级分班。L1 无需测评，L2–L5 建议完成入学测评后选择。</div>
     </div>
 
-    <!-- English -->
-    <div class="section-divider">英语 English</div>
-    <div class="field">
-      <div class="field-label">英语级别 English Level</div>
-      <div class="option-group">
-        <label class="option-item english"><input type="radio" name="english" value="none" checked><div class="option-text"><div class="option-main">不选英语 N/A</div></div></label>
-        <label class="option-item english"><input type="radio" name="english" value="enk"><div class="option-text"><div class="option-main">English LK</div><div class="option-sub">Mon / Wed 4:00–5:00 · Phonics, Sight Words, Read Aloud · Grade: K</div></div></label>
-        <label class="option-item english"><input type="radio" name="english" value="en1"><div class="option-text"><div class="option-main">English L1</div><div class="option-sub">Mon / Wed 5:00–6:00 · Creative Writing (WQED KIDS) · Grade: 1st</div></div></label>
-        <label class="option-item english"><input type="radio" name="english" value="en23"><div class="option-text"><div class="option-main">English L2 & 3</div><div class="option-sub">Tue / Thu 4:00–5:00 · Creative Writing (Storyworks) · Grade: 2nd–3rd</div></div></label>
-        <label class="option-item english"><input type="radio" name="english" value="en45"><div class="option-text"><div class="option-main">English L4 & 5</div><div class="option-sub">Tue / Thu 5:00–6:00 · Creative Writing (Storyworks) · Grade: 3rd–5th</div></div></label>
-      </div>
-    </div>
-
     <!-- Math -->
     <div class="section-divider">数学 Math</div>
     <div class="field">
@@ -275,11 +262,6 @@
           <td style="padding:8px 12px; text-align:center; border-bottom:1px solid #eee; font-weight:700;">$120</td>
         </tr>
         <tr>
-          <td style="padding:8px 12px; border-bottom:1px solid #eee;"><strong style="color:#1565c0;">英语 English</strong></td>
-          <td style="padding:8px 12px; text-align:center; border-bottom:1px solid #eee;">$80/week</td>
-          <td style="padding:8px 12px; text-align:center; border-bottom:1px solid #eee; font-weight:700;">$160</td>
-        </tr>
-        <tr>
           <td style="padding:8px 12px;"><strong style="color:#2e7d32;">数学 Math</strong></td>
           <td style="padding:8px 12px; text-align:center;">$80/week</td>
           <td style="padding:8px 12px; text-align:center; font-weight:700;">$160</td>
@@ -289,7 +271,7 @@
 
     <div class="section-note">
       * 每个 Session 共 4 节课（每周 2 次 × 2 周）。<br>
-      * 学费 = 所选科目单价 × 报名 Session 数。例：报名 2 个 Session 的中文 + 英语 = ($120 + $160) × 2 = $560
+      * 学费 = 所选科目单价 × 报名 Session 数。例：报名 2 个 Session 的中文 + 数学 = ($120 + $160) × 2 = $560
     </div>
 
   </div>
@@ -379,10 +361,6 @@
     ch3: { name:'Chinese L3', days:[0,2], time:'5:00–6:00', subject:'chinese' },
     ch4: { name:'Chinese L4', days:[4],   time:'4:00–6:00', subject:'chinese' },
     ch5: { name:'Chinese L5', days:[1,3], time:'4:00–5:00', subject:'chinese' },
-    enk: { name:'English LK', days:[0,2], time:'4:00–5:00', subject:'english' },
-    en1: { name:'English L1', days:[0,2], time:'5:00–6:00', subject:'english' },
-    en23:{ name:'English L2&3',days:[1,3],time:'4:00–5:00', subject:'english' },
-    en45:{ name:'English L4&5',days:[1,3],time:'5:00–6:00', subject:'english' },
     ma1: { name:'Math L1', days:[1,3], time:'4:00–5:00', subject:'math' },
     ma2: { name:'Math L2', days:[1,3], time:'5:00–6:00', subject:'math' },
     ma3: { name:'Math L3', days:[0,2], time:'4:00–5:00', subject:'math' },
@@ -417,7 +395,7 @@
       if (cbs[i].checked) sessions.push(i + 1);
     }
     var courses = [];
-    var subjects = ['chinese','english','math'];
+    var subjects = ['chinese','math'];
     for (var j = 0; j < subjects.length; j++) {
       var sel = document.querySelector('input[name="' + subjects[j] + '"]:checked');
       if (sel && sel.value !== 'none') {
@@ -518,8 +496,8 @@
     // Legend
     var usedSubjects = {};
     for (var li = 0; li < courses.length; li++) usedSubjects[courses[li].subject] = true;
-    var subjectLabels = { chinese:'中文 Chinese', english:'英语 English', math:'数学 Math' };
-    var subjectColors = { chinese:'#fff3e0', english:'#e3f2fd', math:'#e8f5e9' };
+    var subjectLabels = { chinese:'中文 Chinese', math:'数学 Math' };
+    var subjectColors = { chinese:'#fff3e0', math:'#e8f5e9' };
     html += '<div class="cal-legend">';
     var skeys = ['chinese','english','math'];
     for (var si2 = 0; si2 < skeys.length; si2++) {
@@ -552,7 +530,7 @@
     3. <strong>Section 1</strong>: Short Answer × 4（姓名、email、电话、学生姓名）+ Multiple Choice（年级）→ 全部 Required<br>
     4. <strong>Section 2</strong>: "Add section" → Multiple Choice（校区）→ Required<br>
     5. <strong>Section 3</strong>: 新分区 → <code>Checkboxes</code>（可多选 Session）→ Required<br>
-    6. <strong>Section 4</strong>: 新分区 → 三个 Multiple Choice（中文/英语/数学），每个包含 "不选 N/A"<br>
+    6. <strong>Section 4</strong>: 新分区 → 两个 Multiple Choice（中文/数学），每个包含 "不选 N/A"<br>
     7. <strong>Section 5</strong>: 新分区 → 学费参考表（用 Description 文本展示）+ Short Answer "确认应付总额"<br>
     8. <strong>Section 6</strong>: 新分区 → 退费政策（用 Description 文本展示退费条款）+ Required Multiple Choice "是否同意"<br>
     9. <strong>Section 7</strong>: 课表日历（仅在网页版模板中展示，Google Form 无法嵌入交互日历，可用 Description 提示家长参考网站课表）<br>

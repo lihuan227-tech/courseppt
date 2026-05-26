@@ -202,12 +202,6 @@
       <div class="level-note">* 中文课按实际中文水平分级，非按学校年级分班。建议完成<a href="https://www.mygredu.com/summer-camp/summer-electives/summer-chinese-course" target="_blank">入学测评</a>后选择最适合的级别。</div>
       <div class="deselect-btn" onclick="deselect('chinese')">&#10005; 不选中文</div>
     </div>
-    <!-- English -->
-    <div class="selector-card english">
-      <div class="selector-label english"><span class="dot english"></span>英语 English</div>
-      <div class="course-options" id="englishOptions"></div>
-      <div class="deselect-btn" onclick="deselect('english')">&#10005; 不选英语</div>
-    </div>
     <!-- Math -->
     <div class="selector-card math">
       <div class="selector-label math"><span class="dot math"></span>数学 Math</div>
@@ -245,12 +239,6 @@ const COURSES = {
     { id: 'ch4', name: 'Chinese L4', desc: '部编版语文二年级上册', days: ['Fri'], start: 16, end: 18, grade: '3rd–5th' },
     { id: 'ch5', name: 'Chinese L5', desc: '部编版语文二年级下册', days: ['Tue','Thu'], start: 16, end: 17, grade: '4th+' },
   ],
-  english: [
-    { id: 'en0', name: 'English LK', desc: 'Phonics, Sight Words, Read Aloud', days: ['Mon','Wed'], start: 16, end: 17, grade: 'K' },
-    { id: 'en1', name: 'English L1', desc: 'Creative Writing (WQED KIDS)', days: ['Mon','Wed'], start: 17, end: 18, grade: '1st' },
-    { id: 'en23', name: 'English L2 & 3', desc: 'Creative Writing (Storyworks)', days: ['Tue','Thu'], start: 16, end: 17, grade: '2nd / 3rd' },
-    { id: 'en45', name: 'English L4 & 5', desc: 'Creative Writing (Storyworks)', days: ['Tue','Thu'], start: 17, end: 18, grade: '3rd / 4th–5th' },
-  ],
   math: [
     { id: 'ma1', name: 'Math L1', desc: '加减法、应用题、图形', days: ['Tue','Thu'], start: 16, end: 17, grade: '1st' },
     { id: 'ma2', name: 'Math L2', desc: '奇偶数、乘法、括号运算', days: ['Tue','Thu'], start: 17, end: 18, grade: '2nd / 3rd' },
@@ -267,7 +255,7 @@ const TIME_SLOTS = [
   { start: 17, end: 18, label: '5:00–6:00' },
 ];
 
-let selected = { chinese: null, english: null, math: null };
+let selected = { chinese: null, math: null };
 
 function formatTime(h) { return (h > 12 ? h - 12 : h) + ':00'; }
 function formatRange(s, e) { return formatTime(s) + '–' + formatTime(e); }
@@ -449,8 +437,8 @@ function update() {
     registerCta.classList.remove('show');
   } else {
     let totalHours = 0;
-    const colors = { chinese: '#FF8C00', english: '#1976d2', math: '#388e3c' };
-    const subjectNames = { chinese: '中文', english: '英语', math: '数学' };
+    const colors = { chinese: '#FF8C00', math: '#388e3c' };
+    const subjectNames = { chinese: '中文', math: '数学' };
     const items = courses.map(c => {
       const weeklyHours = c.days.length * (c.end - c.start);
       totalHours += weeklyHours;
