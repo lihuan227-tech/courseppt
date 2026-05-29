@@ -75,7 +75,6 @@ def notes(s,text):
         p=nf.add_paragraph();p.text=line
 GALLERY_NOTES={
     1:"老师备课 (来自《少年艺术课》达利篇):\n• 达利是西班牙画家, 「怪人中的怪人」\n• 趣闻: 留两撇上翘小胡子, 牵着食蚁兽坐巴黎地铁, 拿超长法棍说要做巨大三明治!\n• 画里有 4 块表 — 3 块显示不同时间, 都软软的像融化的薄饼\n• 还有蚂蚁, 苍蝇, 一颗变形的脸 (其实是达利自己)\n• 「记忆的永恒」= 时间在心里是变形的, 不是钟表上的死时间\n• 这种画法叫「超现实主义 Surrealism」— 像做梦的世界\n• 追问: 「时间会融化吗？」「你做梦时, 时间快还是慢？」",
-    2:"老师备课 (来自《少年艺术课》形象的叛逆篇):\n• 比利时画家马格利特, 原本是画广告画的\n• 法语原文: Ceci n'est pas une pipe = 「这不是一支烟斗」\n• 真正的标题: La trahison des images =「图像的背叛」\n• 画家想说: 这不是真的烟斗, 这只是「烟斗的图像」, 一堆颜料\n• 趣闻: 像方便面包装上「图片仅供参考」— 画 ≠ 真实物体\n• 追问: 「这画里能拿出来抽吗？为什么？」「图像和真实有什么不一样？」",
     3:"老师备课:\n• 草间弥生 Yayoi Kusama, 日本艺术家 (1929-至今, 90 多岁还在创作!)\n• 趣闻: 她从小就有「圆点幻觉」— 看世界都是圆点\n• 把圆点画在画上, 让她不害怕\n• 现在她的圆点南瓜, 圆点房间, 全世界都喜欢\n• 重复 + 规律 = 神奇的视觉效果\n• 追问: 「如果你的房间全是圆点, 你会怎样？」「你能数清楚有多少个吗？」",
     4:"老师备课:\n• Bridget Riley, 英国艺术家, 视错觉艺术 (Op-Art) 代表\n• 只用黑白线条, 但盯着看会「晃眼」, 像在动\n• 这叫「视错觉」— 眼睛被欺骗了, 但其实画没动\n• 数学 + 艺术的结合 — 线条间的距离要精确计算\n• 追问: 「盯着看 — 它在动吗？」「为什么我们觉得它动？」",
     5:"老师备课 (来自《少年艺术课》杜尚篇):\n• 杜尚 Marcel Duchamp, 法国艺术家, 当代艺术的「祖师爷」\n• 第一个把日常物品放进美术馆 — 叫「现成品 readymade」\n• 著名作品《泉》(1917): 一个小便池, 签了名 R.Mutt 就成了艺术\n• 自行车轮 + 板凳 (1913) — 第一件「现成品」雕塑\n• 他改变了艺术的定义: 艺术不一定要会画/会刻, 只要有「想法」\n• 后来安迪·沃霍尔的 32 罐金宝汤罐头, 都是这个思路\n• 趣闻: 沃霍尔每天中午吃金宝汤, 吃了 20 年, 才把它做成艺术\n• 追问: 「你身边的什么东西也能变成艺术？」「想法重要还是手艺重要？」",
@@ -138,6 +137,49 @@ def example_slide_generic(cat_emoji, cat_cn, name_cn, name_en, sub_label, fact, 
     tb(s,0.7,4.6,4.5,0.4,name_en,sz=15,b=True,c=color)
     tb(s,0.7,4.95,4.5,0.3,sub_label,sz=11,c=GRAY)
     tb(s,5.3,4.62,4.2,0.75,fact,sz=12,c=DARK)
+    return s
+
+def painting_appreciate_slide(header, img_lb, color, observations, teachings,
+                               artist_caption=None, url=None, key=None):
+    """Painting appreciation slide — image LEFT, observation Qs + teaching bullets RIGHT.
+    Modeled on Day 2 reference. Use for any painting you want students to study deeply.
+    - header: title bar text (e.g., "再来欣赏 — 🕰️ 《永恒的记忆》达利")
+    - observations: 3-5 short student-facing questions for "你看到什么?"
+    - teachings: 4-7 short teacher-narrated bullet points (will appear on slide as ● bullets)
+    """
+    s=ns();bg(s,CREAM)
+    hb(s,header,color)
+    # LEFT: image (4.40 wide × 4.30 tall)
+    ib(s,0.30,0.95,4.40,4.30,img_lb,url=url,key=key)
+    if artist_caption:
+        tb(s,0.30,5.27,4.40,0.22,artist_caption,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
+    # RIGHT TOP: 你看到什么? panel (dark)
+    obs_x=4.85; obs_w=4.85
+    obs_top=0.95
+    n_obs=len(observations)
+    obs_h=0.55 + 0.34*n_obs
+    if obs_h > 2.30: obs_h = 2.30
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                          Inches(obs_x),Inches(obs_top),Inches(obs_w),Inches(obs_h))
+    sh.fill.solid();sh.fill.fore_color.rgb=JET
+    sh.line.color.rgb=color;sh.line.width=Pt(2.5)
+    tb(s,obs_x+0.10,obs_top+0.06,obs_w-0.20,0.32,
+       "🤔 你看到什么?  What Do You See?",
+       sz=13,b=True,c=SNOW)
+    for i,q in enumerate(observations[:5]):
+        tb(s,obs_x+0.15,obs_top+0.45+i*0.32,obs_w-0.30,0.30,
+           f"❓ {q}",sz=11,b=True,c=SNOW)
+    # RIGHT BOTTOM: teacher bullet points (white card)
+    bot_top=obs_top+obs_h+0.12
+    bot_h=5.40-bot_top-0.05
+    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                            Inches(obs_x),Inches(bot_top),Inches(obs_w),Inches(bot_h))
+    sh2.fill.solid();sh2.fill.fore_color.rgb=WHITE
+    sh2.line.color.rgb=color;sh2.line.width=Pt(2)
+    tf=tb(s,obs_x+0.15,bot_top+0.10,obs_w-0.30,0.30,f"●  {teachings[0]}",sz=11,c=DARK)
+    for bul in teachings[1:]:
+        ap(tf,"",sz=4)
+        ap(tf,f"●  {bul}",sz=11,c=DARK)
     return s
 
 def type_overview_slide(emoji, name_cn, name_en, color, hint, subtypes):
@@ -258,11 +300,11 @@ n+=1
 s=ns();n+=1;bg(s,CREAM);hb(s,"🖼️ 看一看  Look at These Artworks",HOT_PINK)
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(1.0),Inches(8.0),Inches(1.5))
 sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
-tb(s,1.2,1.15,7.6,0.55,"接下来，我们一起看 6 幅画",sz=24,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,1.2,1.7,7.6,0.4,"Next, we'll look at 6 artworks together",sz=14,c=LIME,a=PP_ALIGN.CENTER)
+tb(s,1.2,1.15,7.6,0.55,"接下来，我们一起看 5 幅画",sz=24,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,1.2,1.7,7.6,0.4,"Next, we'll look at 5 artworks together",sz=14,c=LIME,a=PP_ALIGN.CENTER)
 tb(s,1.2,2.1,7.6,0.4,"它们都是「当代艺术」 — 你能发现什么共同点？",sz=14,c=YELLOW,a=PP_ALIGN.CENTER)
-# 6 small thumbnails preview (2 rows × 3)
-items=[("🕰️","融化的钟"),("🚭","这不是烟斗"),("🎃","圆点南瓜"),
+# 5 small thumbnails preview
+items=[("🕰️","融化的钟"),("🎃","圆点南瓜"),
        ("👁️","视错觉"),("🚲","自行车轮"),("🦋","黑白对称")]
 for i,(em,t) in enumerate(items):
     col=i%3;row=i//3
@@ -280,31 +322,124 @@ pn(s,n)
 # ============================================================
 # 5a-5f  ONE ARTWORK PER SLIDE (big image, no features revealed)
 # ============================================================
-gallery=[
-    ("📷 达利《永恒的记忆》(融化的钟)  Dalí: The Persistence of Memory","《永恒的记忆》(融化的钟) · Salvador Dalí","🕰️",1,"en.wikipedia.org/wiki/The_Persistence_of_Memory","dali_clocks"),
-    ("📷 马格利特《这不是烟斗》  Magritte: The Treachery of Images","《这不是烟斗》· René Magritte","🚭",2,"en.wikipedia.org/wiki/The_Treachery_of_Images","magritte_pipe"),
-    ("📷 草间弥生 圆点南瓜  Yayoi Kusama: Pumpkin (黄底黑点)","圆点南瓜 · 草间弥生 Yayoi Kusama","🎃",3,"搜「Kusama Pumpkin」/en.wikipedia.org/wiki/Yayoi_Kusama","kusama"),
-    ("📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines","视错觉条纹 · Bridget Riley","👁️",4,"搜「Bridget Riley Op art」","riley"),
-    ("📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)","现成品 — 自行车轮 · Marcel Duchamp","🚲",5,"en.wikipedia.org/wiki/Bicycle_Wheel","bicycle_wheel"),
-    ("📷 黑白对称图案  Symmetric paper-cut pattern","黑白对称图案 · Symmetry","🦋",6,"搜「symmetric pattern」",None),
+# 6 gallery paintings — each now a full appreciation slide
+gallery_paintings = [
+    {
+        "header": "🖼️ 第 1 幅  ·  🕰️ 《永恒的记忆》达利",
+        "img_lb": "📷 达利《永恒的记忆》(融化的钟)  Dalí: The Persistence of Memory",
+        "url": "en.wikipedia.org/wiki/The_Persistence_of_Memory", "key": "dali_clocks",
+        "artist_caption": "Salvador Dalí · 1931 · 西班牙超现实主义",
+        "observations": [
+            "数一数 — 有几块表? 它们什么样?",
+            "钟是软的还是硬的? 像什么?",
+            "中间软软的「脸」是谁?",
+            "你最长的「一分钟」是什么时候?",
+        ],
+        "teachings": [
+            "达利是西班牙画家, 被称为「怪人中的怪人」。",
+            "他留着两撇上翘的小胡子, 还牵着食蚁兽坐过巴黎地铁。",
+            "画里一共有 4 块表, 其中 3 块软软的, 像融化的薄饼一样。",
+            "中间那张软软的「脸」其实是达利自己变形的样子。",
+            "他想告诉我们: 时间在心里是变形的, 不是钟表上的死时间。",
+            "他的画派叫「超现实主义」, 是像做梦一样的世界。",
+        ],
+        "color": PURPLE,
+    },
+    {
+        "header": "🖼️ 第 2 幅  ·  🎃 圆点南瓜 · 草间弥生",
+        "img_lb": "📷 草间弥生 圆点南瓜  Yayoi Kusama: Pumpkin (黄底黑点)",
+        "url": "搜「Kusama Pumpkin」/en.wikipedia.org/wiki/Yayoi_Kusama", "key": "kusama",
+        "artist_caption": "草间弥生 Yayoi Kusama · 日本 · 1929-至今",
+        "observations": [
+            "数一数 — 有多少个圆点? 数得清吗?",
+            "为什么是黄色 + 黑点? 换颜色行吗?",
+            "重复看一个东西是什么感觉?",
+            "如果你的房间全是圆点 — 你会怎样?",
+        ],
+        "teachings": [
+            "草间弥生是日本艺术家, 1929 年出生, 90 多岁了还在每天画画。",
+            "她小时候有「圆点幻觉」, 看到的世界全是圆点。",
+            "她说: 「我把圆点画下来, 它们就不再吓我了。」",
+            "这个南瓜雕塑是 1994 年的作品, 站在日本直岛海边, 有 2 米高。",
+            "南瓜让她想到童年, 圆点让她感到安心又有节奏。",
+            "她的圆点房间叫 Infinity Room, 全世界的人都排队去拍照。",
+        ],
+        "color": DOT_RED,
+    },
+    {
+        "header": "🖼️ 第 3 幅  ·  👁️ 视错觉条纹 · Bridget Riley",
+        "img_lb": "📷 Bridget Riley 黑白条纹 (视错觉)  Op-Art lines",
+        "url": "搜「Bridget Riley Op art」", "key": "riley",
+        "artist_caption": "Bridget Riley · 英国 · 视错觉艺术 (Op-Art)",
+        "observations": [
+            "盯着看 — 它在动吗?",
+            "为什么我们觉得它动? 它真的动了吗?",
+            "只用了几种颜色? (黑 + 白)",
+            "感觉头晕吗?",
+        ],
+        "teachings": [
+            "Bridget Riley 是英国艺术家, 也是视错觉艺术 (Op-Art) 的代表人物。",
+            "她只用黑白线条画画, 但盯着看会让人觉得「晃眼」。",
+            "这种现象叫「视错觉」— 我们的眼睛被欺骗了, 画其实并没有动。",
+            "她把数学和艺术结合在一起, 线条之间的距离都要精确计算。",
+            "这证明了: 艺术家也可以是「视觉科学家」。",
+        ],
+        "color": JET,
+    },
+    {
+        "header": "🖼️ 第 4 幅  ·  🚲 现成品 — 自行车轮 · 杜尚",
+        "img_lb": "📷 杜尚 自行车轮  Duchamp: Bicycle Wheel (现成品)",
+        "url": "en.wikipedia.org/wiki/Bicycle_Wheel", "key": "bicycle_wheel",
+        "artist_caption": "Marcel Duchamp · 1913 · 当代艺术「祖师爷」",
+        "observations": [
+            "这是什么? 一个轮子 + 一个板凳!",
+            "这算「艺术」吗? 为什么?",
+            "画家做了什么? (没画 — 只是摆放!)",
+            "你身边什么东西也能变艺术?",
+        ],
+        "teachings": [
+            "杜尚是法国艺术家, 被称为当代艺术的「祖师爷」。",
+            "他是第一个把日常物品放进美术馆的人。",
+            "这种艺术形式叫「现成品 readymade」, 艺术家不动手做, 只是「选」一个物品。",
+            "1913 年, 他把一个自行车轮装在板凳上, 这是世界上第一件现成品。",
+            "他问了一个大问题: 艺术一定要会画、会刻吗? 想法算不算?",
+            "他改变了艺术的定义: 想法加选择, 就可以成为艺术。",
+        ],
+        "color": ELECTRIC_BLUE,
+    },
+    {
+        "header": "🖼️ 第 5 幅  ·  🦋 黑白对称图案",
+        "img_lb": "📷 黑白对称图案  Symmetric paper-cut pattern",
+        "url": "搜「symmetric pattern」", "key": None,
+        "artist_caption": "Symmetric Pattern · 对称图案 (民间剪纸 + 现代设计)",
+        "observations": [
+            "左边和右边一样吗? (找对称轴!)",
+            "你身上哪里是对称的? (脸/手/眼)",
+            "大自然里哪里有对称? (蝴蝶/雪花/树叶)",
+            "对称的图案让你想到什么?",
+        ],
+        "teachings": [
+            "对称的意思是: 一边和另一边完全一样。",
+            "大自然里到处都是对称: 蝴蝶、雪花、树叶, 还有我们的脸。",
+            "中国剪纸艺术就用了对称: 先折一折, 再剪一剪, 打开就是漂亮图案!",
+            "黑白对称加上重复, 能制造很强烈的视觉冲击。",
+            "对称是数学和艺术的结合, 也是所有设计的核心规律。",
+        ],
+        "color": HOT_PINK,
+    },
 ]
-for img_lb,title,em,idx,url,key in gallery:
-    s=ns();n+=1;bg(s,CREAM);hb(s,f"🖼️ 看 — 第 {idx} 幅 / {len(gallery)}  Look · {idx}/{len(gallery)}",HOT_PINK)
-    ib(s,0.5,1.0,9.0,3.5,img_lb,url=url,key=key)
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(4.6),Inches(9.0),Inches(0.45))
-    sh.fill.solid();sh.fill.fore_color.rgb=HOT_PINK;sh.line.fill.background()
-    tb(s,0.6,4.65,1.0,0.35,em,sz=22,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,1.6,4.68,7.8,0.35,title,sz=14,b=True,c=WHITE)
-    tb(s,0.5,5.15,9.0,0.35,"👀 像不像真的？奇怪吗？— 你看到了什么？",sz=12,c=HOT_PINK,a=PP_ALIGN.CENTER)
-    pn(s,n)
-    if idx in GALLERY_NOTES:
-        notes(s,GALLERY_NOTES[idx])
+for p in gallery_paintings:
+    s = painting_appreciate_slide(
+        header=p["header"], img_lb=p["img_lb"], color=p["color"],
+        observations=p["observations"], teachings=p["teachings"],
+        artist_caption=p["artist_caption"], url=p["url"], key=p["key"])
+    n += 1; pn(s, n)
 
 # ============================================================
 # 6 INQUIRY — what do you see? (Student observation, no answers)
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"🤔 你看到什么？  What Did You See?",HOT_PINK)
-tb(s,0.4,0.9,9.2,0.35,"看完 6 张画，一起想一想 / After looking, let's think together",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,0.9,9.2,0.35,"看完 5 张画，一起想一想 / After looking, let's think together",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
 # LEFT: 5 observation questions
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.35),Inches(5.3),Inches(3.7))
 sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=HOT_PINK;sh.line.width=Pt(2.5)
@@ -445,31 +580,29 @@ tb(s,0.6,4.95,9.0,0.35,"If you painted a weird picture, what would you paint?",s
 pn(s,n)
 
 # ============================================================
-# 10 超现实 example — Magritte 这不是烟斗
+# 11 超现实 — 再看 Dalí《永恒的记忆》(深度欣赏)
 # ============================================================
-s=example_slide("🐟","超现实","这不是烟斗","The Treachery of Images",
-    "马格利特 René Magritte · 比利时 · 1929",
-    "明明是烟斗，他说不是 — 你觉得呢？\nIt looks like a pipe… but is it?",
-    "📷 马格利特 这不是烟斗",PURPLE,
-    url="en.wikipedia.org/wiki/The_Treachery_of_Images",key="magritte_pipe");n+=1;pn(s,n)
-notes(s,GALLERY_NOTES[2]+"\n\n额外: 真正标题是「图像的背叛」(La trahison des images)\n• 这幅画解除了「图像 = 真实物体」的幻觉\n• 提问: 「你能从画里把烟斗拿出来吗？」「写「苹果」两个字 ≠ 真的苹果」\n• 这是「概念艺术」的开端 — 用画问问题, 不只是给答案")
-
-# 10b Magritte spotlight — life connection
-s=spotlight_slide("🚭","这不是烟斗",PURPLE,
-    "「图像 ≠ 真实物体」— 就像方便面包装上的「图片仅供参考, 以实物为准」!",
-    [("🍜","方便面包装"),("📸","广告图片"),("🛒","商品照片"),("📺","电视广告")],
-    "你看过「图片仅供参考」吗？画里的烟斗 — 能拿出来吗？")
-n+=1;pn(s,n)
-
-# ============================================================
-# 11 超现实 example — Dalí 永恒的记忆
-# ============================================================
-s=example_slide("🐟","超现实","永恒的记忆","The Persistence of Memory",
-    "达利 Salvador Dalí · 西班牙 · 1931",
-    "钟会化掉？时间在融化。\nClocks melting — time is melting too!",
-    "📷 达利 融化的钟",PURPLE,
-    url="en.wikipedia.org/wiki/The_Persistence_of_Memory",key="dali_clocks");n+=1;pn(s,n)
-notes(s,GALLERY_NOTES[1]+"\n\n额外细节:\n• 画里那个软软的「脸」其实是达利自己变形\n• 旁边有一只蚂蚁 + 一只苍蝇 — 象征腐烂、时间流逝\n• 远处的山是达利家乡西班牙加泰罗尼亚\n• 提问: 「你最长的「一分钟」是什么时候？最短的呢？」(等公交 vs 玩游戏)")
+s = painting_appreciate_slide(
+    header="🐟 再看 — 🕰️ 《永恒的记忆》达利",
+    img_lb="📷 达利 融化的钟",
+    color=PURPLE,
+    artist_caption="Salvador Dalí · 西班牙 · 1931 · 超现实主义",
+    observations=[
+        "数一数 — 有几块钟? 它们是软的还是硬的?",
+        "中间那张软软的「脸」 — 是谁?",
+        "找一找蚂蚁 / 苍蝇! 它们在哪?",
+        "你最长的「一分钟」是什么时候?",
+    ],
+    teachings=[
+        "达利是西班牙画家, 被称为「怪人中的怪人」。",
+        "他留着两撇上翘的小胡子, 还牵着食蚁兽坐过巴黎地铁。",
+        "画里那张软软的「脸」其实是达利自己变形的样子。",
+        "画里还有一只蚂蚁和一只苍蝇, 象征着时间的流逝和腐烂。",
+        "远处的山是达利的家乡 — 西班牙加泰罗尼亚地区。",
+        "他想告诉我们: 时间在心里是变形的, 不是钟表上的死时间。",
+    ],
+    url="en.wikipedia.org/wiki/The_Persistence_of_Memory", key="dali_clocks")
+n += 1; pn(s, n)
 
 # 11b Dalí spotlight — eccentric life + merch
 s=spotlight_slide("🕰️","永恒的记忆",PURPLE,
@@ -542,14 +675,29 @@ pn(s,n)
 notes(s,"老师备课:\n• 草间弥生 Yayoi Kusama, 日本松本市出生 (1929)\n• 童年时有「圆点幻觉」— 看世界都是圆点\n• 她说: 「我把圆点画下来, 它们就不会吓我了」\n• 1957 年去纽约学艺术, 跟波普艺术 (Pop Art) 同时期发展\n• 现在 90 多岁, 自愿住在精神病院, 每天去工作室画画\n• 她的圆点房间 (Infinity Room) 全世界排队拍照\n• 追问: 「你害怕的东西, 你会怎么画下来？」「重复画一个东西是什么感觉？」")
 
 # ============================================================
-# 15 草间弥生 example — 南瓜雕塑
+# 15 草间弥生 — 再看《南瓜》(直岛海边雕塑, 深度欣赏)
 # ============================================================
-s=example_slide("🎃","草间弥生","南瓜","Pumpkin",
-    "草间弥生 Yayoi Kusama · 1994 · 日本直岛",
-    "黄底黑点的南瓜 · 她从小就看到圆点 · 圆点让她安心。\nYellow + black dots — dots make her feel safe.",
-    "📷 草间弥生 南瓜雕塑 (黄+黑点)",DOT_RED,
-    url="搜「Kusama Pumpkin Naoshima」",key="kusama");n+=1;pn(s,n)
-notes(s,"老师备课:\n• 1994 年作品, 在日本直岛 (Naoshima 艺术岛) 海边\n• 黄南瓜 + 黑色圆点, 高 2 米, 现在是直岛地标\n• 草间弥生说: 「南瓜让我想到童年, 它的形状很谦虚, 圆圆滚滚的」\n• 这种重复的圆点叫「无限网 Infinity Net」\n• 数一数 — 圆点有大有小, 不规则但有节奏\n• 追问: 「为什么是黄色？为什么是黑点？换颜色行不行？」")
+s = painting_appreciate_slide(
+    header="🎃 再看 — 《南瓜》草间弥生 (日本直岛)",
+    img_lb="📷 草间弥生 南瓜雕塑 (黄+黑点)",
+    color=DOT_RED,
+    artist_caption="Yayoi Kusama · 1994 · 日本直岛 Naoshima",
+    observations=[
+        "为什么是黄色 + 黑点? 换颜色行不行?",
+        "圆点有大有小 — 像什么? (规律? 随意?)",
+        "南瓜的形状 — 圆圆的, 让你想到什么?",
+        "如果你做这种雕塑, 你会选什么形状?",
+    ],
+    teachings=[
+        "这是 1994 年的作品, 站在日本直岛 (艺术岛) 海边。",
+        "南瓜是黄色的, 上面有黑色圆点, 有 2 米高, 现在是直岛的地标。",
+        "草间弥生说: 「南瓜让我想到童年, 它的形状很谦虚。」",
+        "南瓜圆圆滚滚的, 让人感到安心。",
+        "这种重复的圆点叫做「无限网 Infinity Net」。",
+        "数一数你会发现, 圆点有大有小, 看起来不规则但很有节奏。",
+    ],
+    url="搜「Kusama Pumpkin Naoshima」", key="kusama")
+n += 1; pn(s, n)
 
 # 15b Kusama Pumpkin spotlight — fashion + life connection
 s=spotlight_slide("🎃","圆点南瓜",DOT_RED,
@@ -612,20 +760,51 @@ ap(tf,"🤔 盯着看 — 它在动吗？",sz=14,b=True,c=DOT_RED)
 pn(s,n)
 
 # ============================================================
-# 19 视错觉 example — Bridget Riley
+# 19 视错觉 — Bridget Riley《黑白线》(深度欣赏)
 # ============================================================
-s=example_slide_generic("👁️","视错觉","Bridget Riley · 黑白线","Black & White Lines",
-    "英国艺术家 British · 1931 - 至今",
-    "黑白线条让眼睛「晃」 — 盯着看，它在动吗？\nLook hard — does it move?",
-    "📷 Bridget Riley 黑白波纹",JET);n+=1;pn(s,n)
+s = painting_appreciate_slide(
+    header="👁️ 视错觉  ·  Bridget Riley《黑白波纹》",
+    img_lb="📷 Bridget Riley 黑白波纹",
+    color=JET,
+    artist_caption="Bridget Riley · 英国 · 1931 - 至今 · Op-Art 视错觉",
+    observations=[
+        "盯着看 30 秒 — 它在动吗?",
+        "你头晕吗?",
+        "只用了几种颜色? (黑 + 白!)",
+        "为什么这些线让眼睛「晃」?",
+    ],
+    teachings=[
+        "Bridget Riley 是英国艺术家, 也是 Op-Art 视错觉艺术的代表人物。",
+        "她只用黑白线条画画, 但盯着看会让人觉得晃眼。",
+        "这种现象叫「视错觉」— 我们的眼睛被骗了, 画其实并没有动。",
+        "她把数学和艺术结合在一起, 线条之间的距离都要精确计算。",
+        "这证明了: 艺术家也可以是「视觉科学家」。",
+        "Op-Art 的全名是 Optical Art, 中文叫「视觉艺术」。",
+    ])
+n += 1; pn(s, n)
 
 # ============================================================
-# 20 视错觉 example — Vasarely
+# 20 视错觉 — Vasarely《彩色方块》(深度欣赏)
 # ============================================================
-s=example_slide_generic("👁️","视错觉","Vasarely · 彩色方块","Colored Squares",
-    "维克托·瓦萨雷利 Hungary/France · 1906-1997",
-    "彩色方块 · 看起来鼓起来 — 中间是凹下去还是凸起来？\nDoes the center push out or sink in?",
-    "📷 Vasarely 彩色立体方块",ELECTRIC_BLUE);n+=1;pn(s,n)
+s = painting_appreciate_slide(
+    header="👁️ 视错觉  ·  Vasarely《彩色方块》",
+    img_lb="📷 Vasarely 彩色立体方块",
+    color=ELECTRIC_BLUE,
+    artist_caption="Victor Vasarely · 匈牙利/法国 · 1906-1997",
+    observations=[
+        "中间是「凸出来」还是「凹下去」?",
+        "为什么 2D 的画看起来「立体」?",
+        "数一数 — 用了几种颜色?",
+        "盯着看, 哪个方块感觉「跳出来」?",
+    ],
+    teachings=[
+        "Victor Vasarely 被称为 Op-Art 视错觉艺术的「父亲」。",
+        "他用彩色方块创造出立体的视觉错觉。",
+        "他的诀窍是: 颜色深的看起来「凹下去」, 颜色浅的看起来「凸出来」。",
+        "数学规律加上颜色变化, 就像视觉魔术一样。",
+        "他的画启发了今天的很多现代设计, 比如 LOGO、海报和服装。",
+    ])
+n += 1; pn(s, n)
 
 # ============================================================
 # 21 黑白对称 intro
@@ -953,5 +1132,6 @@ ap(tf,"",sz=10)
 ap(tf,"明天见，小艺术家！",sz=15,b=True,c=LIME,a=PP_ALIGN.CENTER)
 pn(s,n)
 
-OUT='/Users/Huan/projects/summercourse/Chinese/小小艺术家little_artist_pbl/day4_contemporary.pptx'
+import os
+OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),'day4_contemporary.pptx')
 prs.save(OUT);print(f"Created {n} slides → {OUT}")
