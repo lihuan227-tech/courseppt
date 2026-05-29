@@ -640,6 +640,10 @@ notes(s, "5 分钟 比较 + 反思:\n• 老师 念 5 个 对比 点\n• 让 �
 s = div(prs, "Session 3", "🎨 下午 3:00–4:30  ·  古代 + 未来 制造 工厂!", DAY, "🛠️")
 n += 1; pn(s, n)
 
+# Complete today's booklet — before project starts
+s = booklet_slide(prs, day_num=2, day_topic_cn="活字 印刷 + 3D 打印", day_color=DAY)
+n += 1; pn(s, n)
+
 # ============================================================
 # 25 · 2 Projects overview
 # ============================================================

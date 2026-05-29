@@ -352,26 +352,47 @@ for i,(em,cn,en,d,cl) in enumerate(items):
     tb(s,x+1.20,y+0.92,3.25,0.70,d,sz=11,b=True,c=DARK)
 n+=1; pn(s,n)
 
-# 我会认 5 words
-s=ns(); bg(s,CREAM); hb(s,"📖 我会认  I Can Read",STAR)
-tb(s,0.4,0.85,9.2,0.32,"5 个 太空 词 — 一起 读!",sz=14,b=True,c=DARK,a=PP_ALIGN.CENTER)
-words=[
-    ("👨‍🚀","宇航员","yǔ háng yuán","astronaut",MOON_C),
-    ("🚀","火箭","huǒ jiàn","rocket",MARS),
-    ("🌕","月球","yuè qiú","moon",STAR),
-    ("🔴","火星","huǒ xīng","Mars",MARS),
-    ("🛰️","太空 站","tài kōng zhàn","space station",SKY),
+# 我会认 — 5 vocabulary words (one per slide, matching Day 1 / Day 2 format)
+read_words=[
+    ("👨‍🚀","宇航员","yǔ háng yuán","Astronaut",MOON_C,
+        "宇航员 坐 火箭 去 太空。",
+        "📷 宇航员 / 宇航服 / 头盔"),
+    ("🚀","火箭","huǒ jiàn","Rocket",MARS,
+        "火箭 一飞冲天 — 真 厉害!",
+        "📷 火箭 发射 / 烟火 / 升空"),
+    ("🌕","月球","yuè qiú","Moon",STAR,
+        "月球 上 没有 空气 也 没有 水。",
+        "📷 月球 / 月面 / 陨石坑"),
+    ("🔴","火星","huǒ xīng","Mars",MARS,
+        "火星 是 一颗 红色 的 行星。",
+        "📷 火星 / 红色 表面 / 火星车"),
+    ("🛰️","太空 站","tài kōng zhàn","Space Station",SKY,
+        "宇航员 在 太空站 里 工作 和 生活。",
+        "📷 太空站 / 国际 空间站"),
 ]
-for i,(em,cn,py,en,cl) in enumerate(words):
-    x=0.4+i*1.88
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.55),Inches(1.78),Inches(3.45))
-    sh.fill.solid(); sh.fill.fore_color.rgb=WHITE; sh.line.color.rgb=cl; sh.line.width=Pt(3)
-    tb(s,x+0.05,1.70,1.70,0.90,em,sz=52,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.65,1.70,0.55,cn,sz=20,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.25,1.70,0.35,py,sz=10,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.62,1.70,0.30,en,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
-    tb(s,x+0.10,4.05,1.60,0.85,"跟读\n3 遍",sz=11,b=True,c=cl,a=PP_ALIGN.CENTER)
-n+=1; pn(s,n)
+for em,cn,py,en,c,sent,img_label in read_words:
+    s=ns(); bg(s,CREAM); hb(s,f"👀 我会认 · {cn}  I Can Read",c)
+    # Left: big character card
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(4.5),Inches(2.6))
+    sh.fill.solid(); sh.fill.fore_color.rgb=WARM; sh.line.fill.background()
+    tb(s,0.5,1.05,4.3,0.7,em,sz=44,a=PP_ALIGN.CENTER)
+    tb(s,0.5,1.75,4.3,1.0,cn,sz=58 if len(cn)>=3 else 66,b=True,c=c,a=PP_ALIGN.CENTER)
+    tb(s,0.5,2.85,4.3,0.4,f"{py}  ·  {en}",sz=18,c=GRAY,a=PP_ALIGN.CENTER)
+    tb(s,0.5,3.25,4.3,0.34,"👉 跟我读!  Read after me!",sz=13,b=True,c=c,a=PP_ALIGN.CENTER)
+    # Right: image placeholder
+    ib_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.3),Inches(1.0),Inches(4.4),Inches(2.6))
+    ib_box.fill.solid(); ib_box.fill.fore_color.rgb=IMGBG; ib_box.line.color.rgb=c; ib_box.line.width=Pt(2)
+    tb(s,5.3,1.80,4.4,0.6,"🖼️",sz=44,a=PP_ALIGN.CENTER)
+    tb(s,5.3,2.50,4.4,0.4,img_label,sz=12,c=LGRAY,a=PP_ALIGN.CENTER)
+    tb(s,5.3,2.95,4.4,0.30,"图片 位置 · Image placeholder",sz=9,c=LGRAY,a=PP_ALIGN.CENTER)
+    # Bottom: example sentence
+    sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(3.85),Inches(9.2),Inches(1.30))
+    sh2.fill.solid(); sh2.fill.fore_color.rgb=WHITE; sh2.line.color.rgb=c; sh2.line.width=Pt(2.5)
+    tb(s,0.6,3.95,2.0,0.40,"📌 例句  Example",sz=14,b=True,c=c)
+    tb(s,0.6,4.40,8.8,0.55,sent,sz=22,b=True,c=DARK)
+    tb(s,0.4,5.25,9.2,0.28,"💬 「我 认识 ___」  · I know the word ___",sz=11,b=True,c=c,a=PP_ALIGN.CENTER)
+    n+=1; pn(s,n)
+    notes(s,f"3 分钟 — {cn}:\n• 老师 指 字, 全班 齐读 3 遍 (慢 → 快 → 大声)\n• 看 图: 「这 是 ___, 你 见过 吗?」\n• 读 例句, 学生 跟读\n• 抽 1-2 个 学生 用「{cn}」造 一 个 新 句子\n• 写 到 黑板 上 — 让 学生 在 空中 跟着 写 一遍")
 
 # 我会写 — 3 words
 def write_slide(emoji,word_cn,word_en,chars,color):

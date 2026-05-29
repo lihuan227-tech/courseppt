@@ -66,14 +66,9 @@ def tb(s, l, t, w, h, txt, sz=18, b=False, c=DARK, a=None):
     return tf
 
 
-def bg(s, c, prs):
-    sh = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height)
-    sh.fill.solid()
-    sh.fill.fore_color.rgb = c
-    sh.line.fill.background()
-    sp = sh._element
-    sp.getparent().remove(sp)
-    s.shapes._spTree.insert(2, sp)
+def bg(s, c, prs=None):
+    s.background.fill.solid()
+    s.background.fill.fore_color.rgb = c
 
 
 def hb(s, txt, c=INK, t=0.15):
@@ -357,3 +352,54 @@ def activity_box(s, l, t, w, h, prompt_cn, prompt_en, gesture_hint="", color=Non
         tb(s, l + 0.15, t + 0.52, w - 0.30, 0.22, prompt_en,
            sz=8, c=WARM)
     return box
+
+
+def booklet_slide(prs, day_num, day_topic_cn, day_color, page_count=4):
+    """Reusable 'Complete today's booklet' slide — inserted at start of Session 3.
+    Reminds students to finish the day's 4-section booklet before the hands-on project."""
+    s = ns(prs)
+    bg(s, CREAM, prs)
+    hb(s, "📒 完 成 今 天 的 Booklet · Complete Today's Booklet", day_color)
+
+    tb(s, 0.4, 0.85, 9.2, 0.30, f"动 手 项目 前 — 先 完 成 你 的 Day {day_num} 小 册 子!",
+       sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
+    tb(s, 0.4, 1.18, 9.2, 0.26, f"Before the hands-on project — finish your Day {day_num} booklet!",
+       sz=10, c=GRAY, a=PP_ALIGN.CENTER)
+
+    # LEFT: big booklet visual
+    panel(s, 0.40, 1.55, 4.45, 3.55, day_color, fill=WHITE, lw=3)
+    tb(s, 0.40, 1.85, 4.45, 1.50, "📒",
+       sz=130, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 3.45, 4.45, 0.45, f"Day {day_num} 小 册 子",
+       sz=20, b=True, c=day_color, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 3.95, 4.45, 0.30, day_topic_cn,
+       sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
+    # Page badge
+    pb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.20), Inches(4.45), Inches(2.85), Inches(0.50))
+    pb.fill.solid(); pb.fill.fore_color.rgb = STAR; pb.line.fill.background()
+    tb(s, 1.30, 4.50, 2.65, 0.42, f"📑 {page_count} 页 · {page_count} pages",
+       sz=13, b=True, c=INK, a=PP_ALIGN.CENTER)
+
+    # RIGHT: checklist of booklet sections
+    panel(s, 5.05, 1.55, 4.55, 3.55, ORANGE, fill=WHITE, lw=3)
+    panel_head(s, 5.05, 1.55, 4.55, ORANGE, "✏️ 完 成 这 4 部 分", sz=12)
+
+    sections = [
+        ("☐", "①", "题 库 — 8 个 小 问题"),
+        ("☐", "②", "动 脑 / 写 一 写"),
+        ("☐", "③", "连 一 连 — 词 汇"),
+        ("☐", "④", "描 一 描, 写 一 写"),
+    ]
+    for i, (check, num, txt) in enumerate(sections):
+        y = 2.15 + i*0.62
+        tb(s, 5.20, y, 0.45, 0.45, check, sz=22, b=True, c=ORANGE, a=PP_ALIGN.LEFT)
+        tb(s, 5.70, y+0.02, 0.45, 0.40, num, sz=18, b=True, c=ORANGE, a=PP_ALIGN.LEFT)
+        tb(s, 6.20, y+0.05, 3.25, 0.40, txt, sz=13, b=True, c=DARK, a=PP_ALIGN.LEFT)
+
+    # Bottom prompt
+    tip = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.40), Inches(5.20), Inches(9.20), Inches(0.30))
+    tip.fill.solid(); tip.fill.fore_color.rgb = day_color; tip.line.fill.background()
+    tb(s, 0.55, 5.22, 9.0, 0.25, "✏️ 完 成 后 — 老 师 检 查, 然后 开 始 项目!",
+       sz=11, b=True, c=STAR, a=PP_ALIGN.CENTER)
+    notes(s, f"5-10 分钟 完 成 booklet:\n• 学 生 拿 出 自 己 的 Day {day_num} 小 册 子\n• 老 师 走 动 帮 忙\n• 完 成 后 给 「检 查 ✓」\n• 没 完 成 的 学 生 可 以 在 项目 间 隙 补 — 不 拖 项目 时 间\n• 重 点: 巩 固 今天 学 的 内容 + 让 booklet 真 正 用 起 来")
+    return s

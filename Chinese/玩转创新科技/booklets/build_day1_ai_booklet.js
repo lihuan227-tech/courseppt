@@ -382,10 +382,6 @@ const matchRows = matchWords.map((w, i) => {
             alignment: AlignmentType.CENTER,
             children: [new TextRun({ text: w.char, bold: true, size: 40, color: DARK })],
           }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.py, size: 20, color: GRAY, italics: true })],
-          }),
         ],
       }),
       new TableCell({

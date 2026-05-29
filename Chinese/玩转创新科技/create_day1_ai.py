@@ -983,6 +983,10 @@ n += 1; pn(s, n)
 s = div(prs, "Session 3", "🎨 下午 3:00–4:30  ·  AI 故事书 + 创意设计", DAY, "🚀")
 n += 1; pn(s, n)
 
+# Complete today's booklet — before project starts
+s = booklet_slide(prs, day_num=1, day_topic_cn="认识 AI · 做 聪明 的 AI 主人", day_color=DAY)
+n += 1; pn(s, n)
+
 # ============================================================
 # 主项目 · 分组用 AI 写故事 + AI 配图  (4 slides)
 # ============================================================
