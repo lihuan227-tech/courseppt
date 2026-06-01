@@ -30,6 +30,8 @@ SKY          = RGBColor(0x42,0xA5,0xF5)
 GOLD_MEDAL   = RGBColor(0xFF,0xC1,0x07)
 SILVER_MEDAL = RGBColor(0xB0,0xB0,0xB0)
 BRONZE_MEDAL = RGBColor(0xCD,0x7F,0x32)
+OK           = RGBColor(0x2E,0x7D,0x32)   # ✅ green
+ALERT        = RGBColor(0xC8,0x25,0x3E)   # ❌ red
 
 
 def make_presentation():
@@ -295,4 +297,242 @@ def share_close(prs, day_color, frames_cn, frames_en, next_day_cn, next_day_en, 
     tb(s, 0.55, 4.30, 9.00, 0.30, next_day_en, sz=11, c=GRAY, a=PP_ALIGN.CENTER)
     tb(s, 0.55, 4.75, 9.00, 0.32, "👋 想 一 想: 你 今 天 最 喜 欢 的 是 什 么?",
        sz=12, b=True, c=day_color, a=PP_ALIGN.CENTER)
+    return s
+
+
+# ===== Camp-style helpers ported from create_day2_camp.py =====
+import os as _os
+
+
+def sentence_frame_bar(s, t, frame_cn, frame_en, color=None):
+    """Recurring banner with target sentence frames. Placed at vertical t."""
+    if color is None:
+        color = EARTH_GREEN
+    sh = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.30), Inches(t), Inches(9.40), Inches(0.55))
+    sh.fill.solid(); sh.fill.fore_color.rgb = INK
+    sh.line.color.rgb = STAR; sh.line.width = Pt(2)
+    tb(s, 0.40, t+0.05, 9.20, 0.28, f"💬 句 型: {frame_cn}",
+       sz=12, b=True, c=STAR, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, t+0.33, 9.20, 0.22, frame_en,
+       sz=9, c=WARM, a=PP_ALIGN.CENTER)
+
+
+def answer_panels_slide(prs, header_text, color, panels, img_label="📷 真 实 照 片",
+                        img_path=None,
+                        subtitle="想 一 想 → 看 答 案 — Now check the answer!",
+                        frame_cn=None, frame_en=None):
+    """Image-format answer slide: photo LEFT, ✅/❌ panels RIGHT.
+    - panels: list of dicts {"q": "...", "mark": "✅"|"❌", "lines": [...]}
+    """
+    s = ns(prs); bg(s, CREAM); hb(s, header_text, color)
+    tb(s, 0.4, 0.74, 9.2, 0.26, subtitle, sz=11, b=True, c=DARK, a=PP_ALIGN.CENTER)
+    # LEFT — image area
+    img_top = 1.04
+    img_h_total = 4.30 if not (frame_cn or frame_en) else 3.55
+    img_box = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(0.30), Inches(img_top), Inches(4.30), Inches(img_h_total))
+    img_box.fill.solid(); img_box.fill.fore_color.rgb = IMGBG
+    img_box.line.color.rgb = color; img_box.line.width = Pt(2)
+    if img_path and _os.path.exists(img_path):
+        s.shapes.add_picture(img_path, Inches(0.40), Inches(img_top+0.10),
+            Inches(4.10), Inches(img_h_total-0.20))
+    else:
+        tb(s, 0.30, img_top+img_h_total/2-0.20, 4.30, 0.40,
+           img_label, sz=13, b=True, c=color, a=PP_ALIGN.CENTER)
+    # RIGHT — answer panels (same vertical bounds as image)
+    px = 4.80; pw = 4.90
+    n_panels = len(panels)
+    gap = 0.10
+    each_h = (img_h_total - gap*(n_panels-1)) / n_panels
+    y = img_top
+    for p in panels:
+        mark = p["mark"]; lines = p["lines"]; q = p.get("q")
+        mark_color = OK if mark == "✅" else ALERT
+        pb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+            Inches(px), Inches(y), Inches(pw), Inches(each_h))
+        pb.fill.solid(); pb.fill.fore_color.rgb = WHITE
+        pb.line.color.rgb = mark_color; pb.line.width = Pt(2.5)
+        tb(s, px+0.08, y+each_h/2-0.25, 0.55, 0.50,
+           mark, sz=22, b=True, c=mark_color, a=PP_ALIGN.CENTER)
+        text_x = px + 0.72; text_w = pw - 0.82
+        bx = s.shapes.add_textbox(Inches(text_x), Inches(y+0.07),
+            Inches(text_w), Inches(each_h-0.14))
+        tf = bx.text_frame; tf.word_wrap = True
+        tf.margin_top = Pt(0); tf.margin_bottom = Pt(0)
+        tf.margin_left = Pt(0); tf.margin_right = Pt(0)
+        para_idx = 0
+        if q:
+            para = tf.paragraphs[0]
+            para.alignment = PP_ALIGN.LEFT
+            try:
+                para.space_before = Pt(0); para.space_after = Pt(1); para.line_spacing = 1.0
+            except Exception:
+                pass
+            r = para.add_run(); r.text = f"❓ {q}"
+            r.font.size = Pt(11); r.font.bold = True
+            r.font.color.rgb = mark_color; r.font.name = 'KaiTi'
+            para_idx = 1
+        for i, ln in enumerate(lines):
+            para = tf.paragraphs[0] if (i == 0 and para_idx == 0) else tf.add_paragraph()
+            para.alignment = PP_ALIGN.LEFT
+            try:
+                para.space_before = Pt(1); para.space_after = Pt(1); para.line_spacing = 1.0
+            except Exception:
+                pass
+            r = para.add_run(); r.text = ln
+            r.font.size = Pt(10); r.font.bold = True
+            r.font.color.rgb = DARK; r.font.name = 'KaiTi'
+        y += each_h + gap
+    if frame_cn:
+        sentence_frame_bar(s, 4.70, frame_cn, frame_en or "", color)
+    return s
+
+
+def zone_slide(prs, emoji, name_cn, name_en, color, rules, frame_cn, frame_en,
+               img_label="📷 真 实 照 片"):
+    """Category intro slide — emoji + big name on LEFT, rules list RIGHT, sentence frame bar."""
+    s = ns(prs); bg(s, CREAM); hb(s, f"{emoji}  {name_cn}  ·  {name_en}", color)
+    # LEFT — big category card (shorter so frame bar has room)
+    panel(s, 0.40, 0.95, 4.30, 3.35, color, fill=WARM, lw=3)
+    tb(s, 0.40, 1.10, 4.30, 1.25, emoji, sz=110, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 2.45, 4.30, 0.55, name_cn, sz=30, b=True, c=color, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 3.05, 4.30, 0.25, name_en, sz=12, c=DARK, a=PP_ALIGN.CENTER)
+    # RIGHT — rules / examples list (shorter to match)
+    panel(s, 5.00, 0.95, 4.70, 3.35, color, fill=WHITE, lw=2.5)
+    panel_head(s, 5.00, 0.95, 4.70, color, "✦ 例 子 + 提 醒  Examples + Tips", sz=12)
+    for i, (mark, cn_text, en_text) in enumerate(rules[:5]):
+        y = 1.55 + i * 0.54
+        tb(s, 5.15, y, 0.45, 0.45,
+           mark, sz=18, b=True, c=color, a=PP_ALIGN.LEFT)
+        tb(s, 5.65, y, 4.00, 0.28,
+           cn_text, sz=11, b=True, c=DARK, a=PP_ALIGN.LEFT)
+        tb(s, 5.65, y+0.26, 4.00, 0.22,
+           en_text, sz=9, c=GRAY, a=PP_ALIGN.LEFT)
+    sentence_frame_bar(s, 4.55, frame_cn, frame_en, color)
+    return s
+
+
+def ab3_slide(prs, title_cn, title_en, question_cn, question_en,
+              options, color=None):
+    """A/B/C choice slide — 3 options across, big card each.
+    options: list of 3 tuples (letter, emoji, label_cn, label_en, color_for_card)
+    """
+    if color is None:
+        color = EARTH_GREEN
+    s = ns(prs); bg(s, CREAM); hb(s, f"🎯 {title_cn}  ·  {title_en}", color)
+    tb(s, 0.4, 0.85, 9.2, 0.35, question_cn, sz=18, b=True, c=DARK, a=PP_ALIGN.CENTER)
+    tb(s, 0.4, 1.22, 9.2, 0.28, question_en, sz=11, c=GRAY, a=PP_ALIGN.CENTER)
+    ow = 2.85; ogap = 0.20
+    ototal = 3*ow + 2*ogap; ostart = (10 - ototal) / 2
+    for i, (letter, em, cn, en, cl) in enumerate(options):
+        x = ostart + i * (ow + ogap)
+        panel(s, x, 1.65, ow, 3.20, cl, fill=WHITE, lw=3)
+        # Letter badge
+        bd = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(x+0.18), Inches(1.80),
+            Inches(0.50), Inches(0.50))
+        bd.fill.solid(); bd.fill.fore_color.rgb = cl
+        bd.line.color.rgb = STAR; bd.line.width = Pt(2)
+        tb(s, x+0.18, 1.83, 0.50, 0.45, letter,
+           sz=18, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+        # Big emoji
+        tb(s, x, 1.85, ow, 1.05, em, sz=66, a=PP_ALIGN.CENTER)
+        # Title
+        tb(s, x, 3.00, ow, 0.50, cn, sz=20, b=True, c=cl, a=PP_ALIGN.CENTER)
+        tb(s, x+0.10, 3.55, ow-0.20, 0.30, en, sz=11, c=GRAY, a=PP_ALIGN.CENTER)
+    # Vote prompt
+    vb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(0.40), Inches(5.05), Inches(9.20), Inches(0.40))
+    vb.fill.solid(); vb.fill.fore_color.rgb = color; vb.line.fill.background()
+    tb(s, 0.55, 5.10, 9.0, 0.30,
+       "🙋 大 声 喊 出 你 的 选 择: A、B 还 是 C?",
+       sz=13, b=True, c=STAR, a=PP_ALIGN.CENTER)
+    return s
+
+
+def video_slide(prs, title_cn, title_en, before_task, after_action,
+                video_url, color=None):
+    """Video link slide — book/clip embed with pre-watch task."""
+    if color is None:
+        color = EARTH_GREEN
+    s = ns(prs); bg(s, CREAM); hb(s, f"📺 {title_cn}  ·  {title_en}", color)
+    # LEFT — video card with clickable play button
+    panel(s, 0.40, 0.95, 4.40, 3.95, color, fill=INK, lw=3)
+    tb(s, 0.40, 1.20, 4.40, 1.10, "📺", sz=80, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 2.40, 4.40, 0.45, title_cn, sz=18, b=True, c=STAR, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 2.88, 4.40, 0.30, title_en, sz=11, c=WARM, a=PP_ALIGN.CENTER)
+    # Play button (clickable)
+    pb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(1.20), Inches(3.50), Inches(2.80), Inches(0.60))
+    pb.fill.solid(); pb.fill.fore_color.rgb = FIRE_ORANGE; pb.line.fill.background()
+    tb(s, 1.20, 3.60, 2.80, 0.42, "▶️  点 击 播 放  Click to Play",
+       sz=14, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+    pb.click_action.hyperlink.address = video_url
+    tb(s, 0.40, 4.30, 4.40, 0.28, video_url, sz=9, c=LGRAY, a=PP_ALIGN.CENTER)
+    # RIGHT — pre-watch task
+    panel(s, 5.10, 0.95, 4.50, 3.95, FIRE_ORANGE, fill=WHITE, lw=3)
+    panel_head(s, 5.10, 0.95, 4.50, FIRE_ORANGE, "🎬 看 之 前 — 想 一 想", sz=13)
+    for i, (em, cn, en) in enumerate(before_task[:3]):
+        y = 1.60 + i * 1.00
+        tb(s, 5.25, y, 0.55, 0.55, em, sz=28, a=PP_ALIGN.LEFT)
+        tb(s, 5.85, y+0.08, 3.60, 0.38, cn, sz=13, b=True, c=DARK, a=PP_ALIGN.LEFT)
+        tb(s, 5.85, y+0.48, 3.60, 0.30, en, sz=9, c=GRAY, a=PP_ALIGN.LEFT)
+    # Bottom — after-watch action
+    ab = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(0.40), Inches(5.00), Inches(9.20), Inches(0.45))
+    ab.fill.solid(); ab.fill.fore_color.rgb = color; ab.line.fill.background()
+    tb(s, 0.55, 5.07, 9.0, 0.32, after_action, sz=11, b=True, c=STAR, a=PP_ALIGN.CENTER)
+    return s
+
+
+def compare_slide(prs, header_text, left, right, frame_cn=None, frame_en=None):
+    """Two-column 用得完 vs 用不完 contrast.
+    - left / right: dicts with keys
+        "tag_cn", "tag_en"   — column tag (e.g. "用 得 完" / "Runs Out")
+        "badge"              — short badge text shown in the corner ("✗ 会 用 完" / "✓ 用 不 完")
+        "color"              — column accent color
+        "emoji"              — emoji row string (e.g. "🛢️ ⛏️" or "☀️ 💨 💧")
+        "title_cn","title_en"— column heading (e.g. "化 石 能 源")
+        "bullets"            — list of (mark, cn, en) rows
+    LEFT uses a dark (INK) header to read as "the old way"; RIGHT uses its own
+    color. Conventions match zone_slide / answer_panels_slide (rounded panels,
+    panel_head, STAR accents).
+    """
+    s = ns(prs); bg(s, CREAM); hb(s, header_text, EARTH_GREEN)
+    body_top = 1.00
+    body_h = 3.55 if (frame_cn or frame_en) else 4.30
+    cols = [(0.30, left, INK), (5.05, right, right.get("color", MOSS))]
+    for cx, col, head_c in cols:
+        cw = 4.65
+        panel(s, cx, body_top, cw, body_h, head_c, fill=WHITE, lw=2.5)
+        panel_head(s, cx, body_top, cw, head_c,
+                   f"{col['tag_cn']}  {col['tag_en']}", sz=13)
+        # badge (corner)
+        bd = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+            Inches(cx + cw - 1.95), Inches(body_top + 0.07),
+            Inches(1.80), Inches(0.36))
+        bd.fill.solid(); bd.fill.fore_color.rgb = STAR; bd.line.fill.background()
+        tb(s, cx + cw - 1.95, body_top + 0.10, 1.80, 0.30,
+           col["badge"], sz=11, b=True, c=INK, a=PP_ALIGN.CENTER)
+        # emoji row
+        tb(s, cx, body_top + 0.62, cw, 0.85, col["emoji"], sz=52, a=PP_ALIGN.CENTER)
+        # column title
+        tb(s, cx, body_top + 1.50, cw, 0.45, col["title_cn"],
+           sz=22, b=True, c=head_c, a=PP_ALIGN.CENTER)
+        tb(s, cx, body_top + 1.95, cw, 0.28, col["title_en"],
+           sz=11, c=GRAY, a=PP_ALIGN.CENTER)
+        # bullets
+        for i, (mark, cn, en) in enumerate(col["bullets"][:3]):
+            y = body_top + 2.32 + i * 0.42
+            tb(s, cx + 0.20, y, 0.40, 0.36, mark, sz=15, b=True, c=head_c)
+            tb(s, cx + 0.62, y, cw - 0.80, 0.28, cn, sz=11, b=True, c=DARK)
+    # center "VS" badge
+    vs = s.shapes.add_shape(MSO_SHAPE.OVAL,
+        Inches(4.66), Inches(body_top + body_h/2 - 0.32),
+        Inches(0.66), Inches(0.66))
+    vs.fill.solid(); vs.fill.fore_color.rgb = FIRE_ORANGE
+    vs.line.color.rgb = WHITE; vs.line.width = Pt(2.5)
+    tb(s, 4.66, body_top + body_h/2 - 0.22, 0.66, 0.45,
+       "VS", sz=16, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+    if frame_cn:
+        sentence_frame_bar(s, 4.70, frame_cn, frame_en or "", EARTH_GREEN)
     return s
