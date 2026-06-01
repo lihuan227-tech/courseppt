@@ -882,6 +882,32 @@ notes(s, "Bamboozle 8-10 分 钟\n💡 CSV 在 同 一 文 件 夹: bamboozle_da
 
 
 # ============================================================
+# 35b · REVIEW: BAMBOOZLE (separate review page, blank link)
+# ============================================================
+s = ns(prs); bg(s, CREAM); hb(s, "🎮 复 习 · Bamboozle 大 复 习  ·  Review", DAY)
+tb(s, 0.4, 0.85, 9.2, 0.30, "复 习 游 戏 — 分 组 抢 答!",
+   sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
+panel(s, 0.40, 1.25, 4.40, 3.55, DAY, fill=INK, lw=3)
+tb(s, 0.40, 1.55, 4.40, 1.05, "🎮", sz=76, a=PP_ALIGN.CENTER)
+pb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+    Inches(1.05), Inches(2.85), Inches(2.30), Inches(0.60))
+pb.fill.solid(); pb.fill.fore_color.rgb = FIRE_ORANGE; pb.line.fill.background()
+tb(s, 1.05, 2.95, 2.30, 0.42, "▶️  开 始 复 习", sz=14, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+lk = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+    Inches(0.70), Inches(3.95), Inches(3.80), Inches(0.55))
+lk.fill.solid(); lk.fill.fore_color.rgb = WHITE; lk.line.color.rgb = STAR; lk.line.width = Pt(1.5)
+tb(s, 0.85, 4.05, 3.55, 0.38, "🔗 链 接: ______________  (老 师 粘 贴)",
+   sz=11, b=True, c=GRAY, a=PP_ALIGN.LEFT)
+panel(s, 5.10, 1.25, 4.50, 3.55, FIRE_ORANGE, fill=WHITE, lw=3)
+panel_head(s, 5.10, 1.25, 4.50, FIRE_ORANGE, "📋 怎 么 玩  How to Play", sz=13)
+for i, t in enumerate(["1. 老 师 点 开 上 面 的 链 接", "2. 全 班 分 2-3 组",
+                       "3. 轮 流 抢 答, 答 对 加 分", "4. 复 习 今 天: 能 源 + 节 约"]):
+    tb(s, 5.25, 1.95 + i*0.62, 4.25, 0.50, t, sz=13, b=True, c=DARK, a=PP_ALIGN.LEFT)
+n += 1; pn(s, n)
+notes(s, "复 习 游 戏 — 链 接 留 空, 老 师 课 前 粘 贴 Bamboozle 链 接")
+
+
+# ============================================================
 # 36 · CLOSING REFLECTION (Session 2)
 # ============================================================
 s = ns(prs); bg(s, CREAM); hb(s, "💭 今 天 我 学 会 了 ...  Today I Learned ...", DAY)
@@ -919,6 +945,33 @@ notes(s, "反 思 3-4 分 钟\n💡 每 个 学 生 说 一 句, 老 师 不 评
 s = div(prs, "Session 3",
         "🔧 下 午  ·  我 是 小 小 能 源 工 程 师!",
         DAY, "🔧"); n += 1; pn(s, n)
+
+
+# ============================================================
+# 37b · COMPLETE BOOKLET (before projects)
+# ============================================================
+s = ns(prs); bg(s, CREAM); hb(s, "📓 先 完 成 练 习 册!  ·  Booklet First", DAY)
+tb(s, 0.4, 0.85, 9.2, 0.30, "做 手 工 之 前, 先 完 成 练 习 册!",
+   sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
+books = [("Day 1", "垃 圾 分 类", EARTH_GREEN), ("Day 2", "可 再 生 能 源", DAY)]
+bw = 3.6; bgap = 0.5; bstart = (10 - 2*bw - bgap)/2
+for i, (lab, zh, cl) in enumerate(books):
+    x = bstart + i*(bw + bgap)
+    panel(s, x, 1.35, bw, 3.30, cl, fill=WHITE, lw=2.5)
+    tb(s, x, 1.65, bw, 0.95, "📓", sz=54, a=PP_ALIGN.CENTER)
+    tb(s, x, 2.70, bw, 0.50, f"{lab} 练 习 册", sz=20, b=True, c=cl, a=PP_ALIGN.CENTER)
+    tb(s, x, 3.20, bw, 0.35, zh, sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
+    cb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(x+bw/2-1.1), Inches(3.85), Inches(2.2), Inches(0.5))
+    cb.fill.solid(); cb.fill.fore_color.rgb = WARM; cb.line.color.rgb = cl; cb.line.width = Pt(1.5)
+    tb(s, x+bw/2-1.1, 3.93, 2.2, 0.36, "✅ 完 成 → 打 勾", sz=12, b=True, c=OK, a=PP_ALIGN.CENTER)
+tbar = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+    Inches(0.6), Inches(4.95), Inches(8.8), Inches(0.45))
+tbar.fill.solid(); tbar.fill.fore_color.rgb = WARM; tbar.line.color.rgb = STAR; tbar.line.width = Pt(1.5)
+tb(s, 0.75, 5.02, 8.5, 0.32, "👩‍🏫 先 看 → 一 起 读 → 自 己 写 → 同 桌 检 查",
+   sz=11, b=True, c=DARK, a=PP_ALIGN.CENTER)
+n += 1; pn(s, n)
+notes(s, "做 手 工 之 前 先 完 成 练 习 册 (Day 1 + Day 2)")
 
 
 # ============================================================

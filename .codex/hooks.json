@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/Huan/projects/summercourse && if [ -n \"$(git status --porcelain)\" ]; then git add -A && git commit -m \"Auto-commit: $(date '+%Y-%m-%d %H:%M')\" 2>&1 || true; fi",
+            "statusMessage": "Auto-committing changes..."
+          }
+        ]
+      }
+    ]
+  }
+}

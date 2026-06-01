@@ -52,22 +52,21 @@ function shadedBar(text, colorHex, size = 22) {
   });
 }
 
-function photoBox(label, height = 1800, colorHex = LGRAY) {
-  const b = border(colorHex, 8);
+function photoBox(label, height = 1800, colorHex = 'BBBBBB') {
+  // Transparent — light gray border only, no background fill.
   return new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [CW],
-    borders: allBorders(b),
+    borders: allBorders({ style: BorderStyle.SINGLE, size: 6, color: colorHex }),
     rows: [new TableRow({
       height: { value: height, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'F8F8F8', type: ShadingType.CLEAR },
         margins: { top: 200, bottom: 200, left: 160, right: 160 },
         verticalAlign: 'center',
         children: [new Paragraph({
           alignment: AlignmentType.CENTER,
-          children: [new TextRun({ text: `📷  ${label}`, color: GRAY, italics: true, size: 22 })],
+          children: [new TextRun({ text: `📷  ${label}`, color: GRAY, italics: true, size: 18 })],
         })],
       })],
     })],
@@ -154,31 +153,72 @@ const mcQuestions = [
 ];
 
 function mcQuestion(num, q) {
-  const blocks = [];
-  blocks.push(new Paragraph({
-    spacing: { before: 80, after: 40 },
-    children: [new TextRun({ text: `第 ${num} 题 / Q ${num}`, bold: true, size: 20, color: ACCENT })],
-  }));
-  blocks.push(photoBox(q.img, 1100, ACCENT));
-  blocks.push(new Paragraph({
-    spacing: { before: 60, after: 20 },
-    children: [new TextRun({ text: q.q, bold: true, size: 20 })],
-  }));
-  blocks.push(new Paragraph({
-    spacing: { before: 0, after: 60 },
-    indent: { left: 200 },
+  // Two-column layout: LEFT = question + A/B/C; RIGHT = transparent photo box.
+  const leftW  = Math.floor(CW * 0.55);
+  const rightW = CW - leftW;
+  const lightBorder = { style: BorderStyle.SINGLE, size: 6, color: 'BBBBBB' };
+
+  const leftCell = new TableCell({
+    width: { size: leftW, type: WidthType.DXA },
+    borders: allBorders(noBorder()),
+    margins: { top: 200, bottom: 200, left: 100, right: 240 },
+    verticalAlign: 'center',
     children: [
-      new TextRun({ text: '☐  A.  ', size: 20, bold: true, color: DARK }),
-      new TextRun({ text: q.options[0], size: 18 }),
-      new TextRun({ text: '     ', size: 18 }),
-      new TextRun({ text: '☐  B.  ', size: 20, bold: true, color: DARK }),
-      new TextRun({ text: q.options[1], size: 18 }),
-      new TextRun({ text: '     ', size: 18 }),
-      new TextRun({ text: '☐  C.  ', size: 20, bold: true, color: DARK }),
-      new TextRun({ text: q.options[2], size: 18 }),
+      new Paragraph({
+        spacing: { before: 0, after: 40 },
+        children: [
+          new TextRun({ text: `${num}.  `, bold: true, size: 26, color: DARK }),
+          new TextRun({ text: q.q, bold: true, size: 22, color: DARK }),
+        ],
+      }),
+      new Paragraph({
+        spacing: { before: 100, after: 0 },
+        indent: { left: 200 },
+        children: [
+          new TextRun({ text: '☐  A.  ', bold: true, size: 20, color: DARK }),
+          new TextRun({ text: q.options[0], size: 20, color: DARK }),
+        ],
+      }),
+      new Paragraph({
+        spacing: { before: 60, after: 0 },
+        indent: { left: 200 },
+        children: [
+          new TextRun({ text: '☐  B.  ', bold: true, size: 20, color: DARK }),
+          new TextRun({ text: q.options[1], size: 20, color: DARK }),
+        ],
+      }),
+      new Paragraph({
+        spacing: { before: 60, after: 0 },
+        indent: { left: 200 },
+        children: [
+          new TextRun({ text: '☐  C.  ', bold: true, size: 20, color: DARK }),
+          new TextRun({ text: q.options[2], size: 20, color: DARK }),
+        ],
+      }),
     ],
-  }));
-  return blocks;
+  });
+
+  const rightCell = new TableCell({
+    width: { size: rightW, type: WidthType.DXA },
+    borders: allBorders(lightBorder),
+    margins: { top: 200, bottom: 200, left: 160, right: 160 },
+    verticalAlign: 'center',
+    children: [new Paragraph({
+      alignment: AlignmentType.CENTER,
+      children: [new TextRun({ text: `📷  ${q.img}`, color: GRAY, italics: true, size: 16 })],
+    })],
+  });
+
+  return new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: [leftW, rightW],
+    borders: allBorders(noBorder()),
+    rows: [new TableRow({
+      cantSplit: true,
+      height: { value: 2000, rule: 'atLeast' },
+      children: [leftCell, rightCell],
+    })],
+  });
 }
 
 const section1Children = [
@@ -192,7 +232,10 @@ const section1Children = [
     })],
   }),
 ];
-mcQuestions.forEach((q, i) => mcQuestion(i + 1, q).forEach(b => section1Children.push(b)));
+mcQuestions.forEach((q, i) => {
+  section1Children.push(mcQuestion(i + 1, q));
+  section1Children.push(new Paragraph({ spacing: { before: 120, after: 0 }, children: [new TextRun({ text: '' })] }));
+});
 
 // ===== §2 我最喜欢的产品 — favorite product + write + draw =====
 const favOptions = [
@@ -284,7 +327,7 @@ const section2Children = [
   }),
   writeLine('🌟 我 最喜欢的 产品 是:', ACCENT),
   writeLine('❤️ 因为:', CORAL),
-  // 画一画 — draw box
+  // 画一画 — big draw box (fills most of page 2)
   new Paragraph({
     spacing: { before: 160, after: 80 },
     children: [
@@ -295,12 +338,11 @@ const section2Children = [
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [CW],
-    borders: allBorders(border(SKY, 12)),
+    borders: allBorders({ style: BorderStyle.SINGLE, size: 6, color: 'BBBBBB' }),
     rows: [new TableRow({
-      height: { value: 2400, rule: 'atLeast' },
+      height: { value: 5400, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
         margins: { top: 80, bottom: 80, left: 120, right: 120 },
         verticalAlign: 'center',
         children: [new Paragraph({
@@ -309,6 +351,35 @@ const section2Children = [
         })],
       })],
     })],
+  }),
+  // 写字横线 — 4 ruled lines below the box
+  new Paragraph({
+    spacing: { before: 200, after: 60 },
+    children: [
+      new TextRun({ text: '✏️ 写几句话  Write a few sentences', size: 18, bold: true, color: SKY }),
+    ],
+  }),
+  new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: [CW],
+    borders: {
+      top: noBorder(), left: noBorder(), right: noBorder(),
+      bottom: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+      insideHorizontal: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+      insideVertical: noBorder(),
+    },
+    rows: [1, 2, 3, 4].map(() => new TableRow({
+      height: { value: 560, rule: 'atLeast' },
+      children: [new TableCell({
+        width: { size: CW, type: WidthType.DXA },
+        borders: {
+          top: noBorder(), left: noBorder(), right: noBorder(),
+          bottom: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+        },
+        margins: { top: 60, bottom: 60, left: 0, right: 0 },
+        children: [new Paragraph({ children: [new TextRun({ text: '', size: 22 })] })],
+      })],
+    })),
   }),
 ];
 
@@ -330,23 +401,19 @@ const matchRows = matchWords.map((w, i) => {
     children: [
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(CORAL, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
           new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.char, bold: true, size: 52, color: DARK })],
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.py, size: 22, color: GRAY, italics: true })],
+            children: [new TextRun({ text: w.char, bold: true, size: 48, color: DARK })],
           }),
         ],
       }),
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(SKY, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
@@ -368,18 +435,8 @@ const section3Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
   shadedBar('三、连一连 / Match  (用线连起来)', CORAL, 24),
   new Paragraph({
-    spacing: { before: 200, after: 200 },
-    children: [new TextRun({
-      text: '👉 把中文词语和正确的英文/表情用一根线连起来。',
-      size: 22, italics: true, color: GRAY,
-    })],
-  }),
-  new Paragraph({
-    spacing: { before: 80, after: 200 },
-    children: [new TextRun({
-      text: 'Draw a line from each Chinese word to its matching emoji + English.',
-      size: 20, italics: true, color: GRAY,
-    })],
+    spacing: { before: 300, after: 0 },
+    children: [new TextRun({ text: '' })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },

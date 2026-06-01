@@ -1,6 +1,5 @@
-// Build day4_booklet.docx — 我的职业梦想 Unit · Day 4: 社区小帮手 / Community Helpers
-// Based on day4_helpers- final.pptx (manually revised)
-// Modeled on build_day1/2/3_booklet.js (same 4-section unit structure)
+// Build day4_booklet.docx — 我的职业梦想 Unit · Day 4: 社区小帮手 (Community Helpers)
+// Structure mirrors build_day2_booklet.js — light gray borders, B&W-print friendly.
 // Run: node build_day4_booklet.js
 
 const fs = require('fs');
@@ -12,25 +11,19 @@ const {
 
 const OUT = path.join(__dirname, 'day4_booklet.docx');
 
-// ===== Palette (Day 4 — Community Helpers) =====
-const ACCENT = '2E7D32';   // community green — primary
-const SKY    = '4A90E2';   // light blue
-const CORAL  = 'FF8F00';   // chef amber (matches slide CHEF)
+// ===== Palette (Day 4 — Community Helpers: warm orange + helper red) =====
+const ACCENT = 'D84315';   // helper-red — primary
+const SKY    = 'FB8C00';   // warm orange
+const CORAL  = 'C62828';   // emergency red
 const PURPLE = '6A1B9A';
-const TEACH  = '43A047';   // teacher green
-const DOC    = 'C8253E';   // doctor wine red
-const FIRE   = 'D31818';   // firefighter red
-const HEART  = 'E53E5E';   // warm pink-red
-const YELLOW = 'F5C242';
-const RED    = 'C5283C';
 const DARK   = '2C2C2C';
 const GRAY   = '888888';
 const LGRAY  = 'D8D8D8';
 
 // ===== Page geometry =====
 const PAGE = {
-  size: { width: 12240, height: 15840 },                         // US Letter
-  margin: { top: 1080, right: 1080, bottom: 1080, left: 1080 },  // 0.75"
+  size: { width: 12240, height: 15840 },
+  margin: { top: 1080, right: 1080, bottom: 1080, left: 1080 },
 };
 const CW = 12240 - 1080 - 1080;
 
@@ -62,7 +55,7 @@ const coverChildren = [
   new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 1200, after: 200 },
-    children: [new TextRun({ text: '🏘️', size: 120 })],
+    children: [new TextRun({ text: '🚒', size: 120 })],
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
@@ -82,12 +75,13 @@ const coverChildren = [
   new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 100, after: 200 },
-    children: [new TextRun({ text: 'Community Helpers', italics: true, size: 28, color: GRAY })],
+    children: [new TextRun({ text: 'Community Helpers in Our Neighborhood',
+      italics: true, size: 26, color: GRAY })],
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 100, after: 800 },
-    children: [new TextRun({ text: '👨‍🏫 👩‍⚕️ 👨‍🍳 🚒 👮', size: 30, color: CORAL })],
+    children: [new TextRun({ text: '👮  🚒  🩺  📚  📮', size: 30, color: CORAL })],
   }),
   new Paragraph({
     spacing: { before: 1000, after: 200 },
@@ -112,85 +106,158 @@ const coverChildren = [
   }),
 ];
 
-// ===== §1 题库 · 8 个 小帮手 问题 / Question Bank — circle the right answer =====
-const qbCardColors = [TEACH, DOC, CORAL, FIRE, ACCENT, PURPLE, SKY, HEART];
-
+// ===== §1 选择题 / Multiple Choice =====
 const qbQuestions = [
-  { em: '📚',  cn: '谁 在 学校 教 学生?',           en: 'Who teaches at school?',                       a: '厨师 Chef',          b: '老师 Teacher' },
-  { em: '🩺',  cn: '谁 在 医院 帮 病人?',           en: 'Who helps patients at the hospital?',          a: '医生 Doctor',        b: '消防员 Firefighter' },
-  { em: '👨‍🍳', cn: '谁 做 好吃 的 饭?',             en: 'Who cooks delicious food?',                    a: '厨师 Chef',          b: '警察 Police' },
-  { em: '🚒',  cn: '谁 救火 + 救 人?',              en: 'Who puts out fires + rescues people?',         a: '老师 Teacher',       b: '消防员 Firefighter' },
-  { em: '🏫',  cn: '学校 里 主要 有 什么?',         en: 'What do you find at school?',                  a: '教室 + 学生 Class',  b: '病床 + 病人 Beds' },
-  { em: '🏥',  cn: '医院 里 主要 有 什么?',         en: 'What do you find at the hospital?',            a: '医生 + 病人 Doc',    b: '警察 + 罪犯 Police' },
-  { em: '🎩',  cn: '谁 戴 厨师 帽?',                 en: 'Who wears a chef hat?',                        a: '消防员 Fire',        b: '厨师 Chef' },
-  { em: '🚨',  cn: '谁 开 救火车?',                  en: 'Who drives the fire truck?',                   a: '消防员 Fire',        b: '医生 Doctor' },
+  {
+    em: '💡',
+    cn: '学 校 突 然 停 电 了, 你 最 希 望 谁 来 帮 忙?',
+    en: 'The school suddenly lost power. Who would you call?',
+    opts: [
+      { cn: '电 工', en: 'Electrician' },
+      { cn: '厨 师', en: 'Chef' },
+      { cn: '兽 医', en: 'Veterinarian' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '💧',
+    cn: '你 家 水 管 一 直 漏 水, 谁 最 能 帮 你?',
+    en: 'Your sink is leaking. Who can help?',
+    opts: [
+      { cn: '水 管 工', en: 'Plumber' },
+      { cn: '消 防 员', en: 'Firefighter' },
+      { cn: '老 师', en: 'Teacher' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '👮',
+    cn: '你 在 公 园 里 迷 路 了, 应 该 找 谁 帮 忙?',
+    en: 'You are lost in a park. Who should you ask for help?',
+    opts: [
+      { cn: '警 察', en: 'Police Officer' },
+      { cn: '厨 师', en: 'Chef' },
+      { cn: '农 夫', en: 'Farmer' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🍽️',
+    cn: '餐 厅 来 了 很 多 客 人, 谁 最 忙?',
+    en: 'A restaurant is full of customers. Who is probably the busiest?',
+    opts: [
+      { cn: '厨 师', en: 'Chef' },
+      { cn: '飞 行 员', en: 'Pilot' },
+      { cn: '邮 递 员', en: 'Mail Carrier' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🚒',
+    cn: '学 校 附 近 着 了 小 火, 谁 会 最 先 赶 来 帮 大 家?',
+    en: 'A small fire starts near the school. Who will arrive to help first?',
+    opts: [
+      { cn: '消 防 员', en: 'Firefighter' },
+      { cn: '医 生', en: 'Doctor' },
+      { cn: '图 书 管 理 员', en: 'Librarian' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '😴',
+    cn: '要 是 有 一 天, 所 有 社 区 工 作 者 都 放 假 了, 会 怎 么 样?',
+    en: 'If all community helpers took a day off, what might happen?',
+    opts: [
+      { cn: '社 区 会 出 很 多 问 题', en: 'The community would face many problems.' },
+      { cn: '什 么 都 不 会 变', en: 'Nothing would change.' },
+      { cn: '大 家 都 会 变 成 老 师', en: 'Everyone would become a teacher.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🌟',
+    cn: '社 区 工 作 者 为 什 么 都 很 重 要?',
+    en: 'Why are all community helpers important?',
+    opts: [
+      { cn: '因 为 他 们 都 帮 助 社 区 变 得 更 好',
+        en: 'Because they all help make the community better.' },
+      { cn: '因 为 他 们 都 穿 制 服',
+        en: 'Because they all wear uniforms.' },
+      { cn: '因 为 他 们 都 开 汽 车',
+        en: 'Because they all drive cars.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '💌',
+    cn: '你 想 感 谢 社 区 工 作 者, 可 以 说 什 么?',
+    en: 'What can you say to thank a community helper?',
+    opts: [
+      { cn: '「谢 谢 你 帮 助 大 家!」', en: '"Thank you for helping everyone!"' },
+      { cn: '「我 不 需 要 帮 助。」', en: "\"I don't need help.\"" },
+      { cn: '「快 点 工 作 吧。」', en: '"Hurry up and work."' },
+    ],
+    correct: 0,
+  },
 ];
 
-function qbCell(num, q, color) {
+function qbCell(num, q) {
+  const optionParas = q.opts.map((opt, idx) => {
+    const letter = String.fromCharCode(65 + idx);
+    return new Paragraph({
+      spacing: { before: 60, after: 0 },
+      indent: { left: 600 },
+      children: [
+        new TextRun({ text: '☐  ', bold: true, size: 20, color: DARK }),
+        new TextRun({ text: `${letter}.  `, bold: true, size: 20, color: DARK }),
+        new TextRun({ text: opt.cn, size: 20, color: DARK }),
+        new TextRun({ text: `  ·  ${opt.en}`, italics: true, size: 15, color: GRAY }),
+      ],
+    });
+  });
+  const lightBorder = { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' };
   return new TableCell({
-    width: { size: Math.floor(CW / 2), type: WidthType.DXA },
-    borders: allBorders(border(color, 10)),
-    shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
-    margins: { top: 140, bottom: 140, left: 200, right: 200 },
+    width: { size: CW, type: WidthType.DXA },
+    borders: allBorders(lightBorder),
+    margins: { top: 200, bottom: 200, left: 240, right: 240 },
     verticalAlign: 'center',
     children: [
       new Paragraph({
         spacing: { before: 0, after: 40 },
         children: [
-          new TextRun({ text: `${num}  `, bold: true, size: 28, color }),
+          new TextRun({ text: `${num}.  `, bold: true, size: 26, color: DARK }),
           new TextRun({ text: `${q.em}  `, size: 26 }),
-          new TextRun({ text: q.cn, bold: true, size: 19, color: DARK }),
+          new TextRun({ text: q.cn, bold: true, size: 22, color: DARK }),
         ],
       }),
       new Paragraph({
-        spacing: { before: 0, after: 100 },
+        spacing: { before: 0, after: 120 },
         indent: { left: 600 },
-        children: [new TextRun({ text: q.en, italics: true, size: 14, color: GRAY })],
+        children: [new TextRun({ text: q.en, italics: true, size: 16, color: GRAY })],
       }),
-      new Paragraph({
-        spacing: { before: 0, after: 60 },
-        indent: { left: 600 },
-        children: [
-          new TextRun({ text: '☐  A.  ', bold: true, size: 18, color: DARK }),
-          new TextRun({ text: q.a, size: 18, color: DARK }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { before: 0, after: 0 },
-        indent: { left: 600 },
-        children: [
-          new TextRun({ text: '☐  B.  ', bold: true, size: 18, color: DARK }),
-          new TextRun({ text: q.b, size: 18, color: DARK }),
-        ],
-      }),
+      ...optionParas,
     ],
   });
 }
 
-const qbRows = [];
-for (let row = 0; row < 4; row++) {
-  qbRows.push(new TableRow({
-    height: { value: 1600, rule: 'atLeast' },
-    children: [
-      qbCell(row * 2 + 1, qbQuestions[row * 2],     qbCardColors[row * 2]),
-      qbCell(row * 2 + 2, qbQuestions[row * 2 + 1], qbCardColors[row * 2 + 1]),
-    ],
-  }));
-}
+const qbRows = qbQuestions.map((q, i) => new TableRow({
+  cantSplit: true,
+  children: [qbCell(i + 1, q)],
+}));
 
 const section1Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('一、题库 · 8 个 小帮手 问题 / Question Bank · 8 Helper Questions  (圈出正确答案)', ACCENT, 24),
+  shadedBar('一、选 择 题 / Multiple Choice  (圈 出 正 确 答 案)', ACCENT, 24),
   new Paragraph({
     spacing: { before: 160, after: 160 },
     children: [new TextRun({
-      text: '👉 看 描述, 圈出 对的 答案。/ Read the description and circle the right answer.',
+      text: '👉 读 一 读, 圈 出 对 的 答 案。/ Read each question and circle the right answer.',
       size: 22, italics: true, color: GRAY,
     })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
-    columnWidths: [Math.floor(CW / 2), Math.floor(CW / 2)],
+    columnWidths: [CW],
     borders: allBorders(noBorder()),
     rows: qbRows,
   }),
@@ -199,23 +266,26 @@ const section1Children = [
     alignment: AlignmentType.CENTER,
     children: [
       new TextRun({ text: '🏆 ', size: 22 }),
-      new TextRun({ text: '答对 8 题 = 「社区小英雄」徽章! ', bold: true, size: 20, color: ACCENT }),
-      new TextRun({ text: 'All 8 right = Community Hero badge!', italics: true, size: 16, color: GRAY }),
+      new TextRun({ text: '答 对 8 题 = 「社 区 小 帮 手」 徽 章! ',
+        bold: true, size: 20, color: ACCENT }),
+      new TextRun({ text: 'All 8 right = Community Helper badge!',
+        italics: true, size: 16, color: GRAY }),
     ],
   }),
 ];
 
-// ===== §2 我想当的小帮手 — pick favorite helper + draw + write =====
-const favOptions = [
-  { em: '👨‍🏫', cn: '老师',   en: 'Teacher' },
-  { em: '👩‍⚕️', cn: '医生',   en: 'Doctor' },
-  { em: '👨‍🍳', cn: '厨师',   en: 'Chef' },
-  { em: '🚒',  cn: '消防员', en: 'Firefighter' },
-  { em: '👮',  cn: '警察',   en: 'Police' },
-  { em: '📮',  cn: '邮递员', en: 'Mail Carrier' },
+// ===== §2 问答题 · 感谢社区小帮手 / Thank a Community Helper =====
+const helperOptions = [
+  { em: '👮',  cn: '警 察',     en: 'Police Officer' },
+  { em: '🚒',  cn: '消 防 员', en: 'Firefighter' },
+  { em: '🩺',  cn: '医 生',     en: 'Doctor' },
+  { em: '📚',  cn: '老 师',     en: 'Teacher' },
+  { em: '👨‍🍳', cn: '厨 师',    en: 'Chef' },
+  { em: '📮',  cn: '邮 递 员', en: 'Mail Carrier' },
+  { em: '🧹',  cn: '清 洁 工', en: 'Cleaner' },
 ];
 
-function favCell(opt) {
+function helperCheckCell(opt) {
   return new TableCell({
     width: { size: Math.floor(CW / 2), type: WidthType.DXA },
     borders: allBorders(noBorder()),
@@ -225,102 +295,154 @@ function favCell(opt) {
         new TextRun({ text: '☐  ', size: 24, bold: true }),
         new TextRun({ text: `${opt.em}  `, size: 22 }),
         new TextRun({ text: `${opt.cn}  `, size: 22, bold: true, color: DARK }),
-        new TextRun({ text: opt.en, size: 18, color: GRAY }),
+        new TextRun({ text: opt.en, size: 16, color: GRAY }),
       ],
     })],
   });
 }
 
+function answerLinesTable(rowCount) {
+  return new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: [CW],
+    borders: {
+      top: noBorder(), left: noBorder(), right: noBorder(),
+      bottom: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+      insideHorizontal: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+      insideVertical: noBorder(),
+    },
+    rows: Array.from({ length: rowCount }, () => new TableRow({
+      height: { value: 560, rule: 'atLeast' },
+      children: [new TableCell({
+        width: { size: CW, type: WidthType.DXA },
+        borders: {
+          top: noBorder(), left: noBorder(), right: noBorder(),
+          bottom: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+        },
+        margins: { top: 60, bottom: 60, left: 0, right: 0 },
+        children: [new Paragraph({ children: [new TextRun({ text: '', size: 22 })] })],
+      })],
+    })),
+  });
+}
+
+const otherCell = new TableCell({
+  width: { size: Math.floor(CW / 2), type: WidthType.DXA },
+  borders: allBorders(noBorder()),
+  margins: { top: 40, bottom: 40, left: 200, right: 100 },
+  children: [new Paragraph({
+    children: [
+      new TextRun({ text: '☐  ', size: 24, bold: true }),
+      new TextRun({ text: '💫  ', size: 22 }),
+      new TextRun({ text: '其 他  ', size: 22, bold: true, color: DARK }),
+      new TextRun({ text: 'Other: ', size: 16, color: GRAY }),
+      new TextRun({ text: '__________________', size: 20, color: GRAY }),
+    ],
+  })],
+});
+
 const section2Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('二、我想当的小帮手 / The Helper I Want to Be', SKY, 22),
+  shadedBar('二、💌 感 谢 社 区 小 帮 手 / Thank a Community Helper', SKY, 22),
+
+  // --- Pick a helper ---
   new Paragraph({
-    spacing: { before: 100, after: 80 },
-    children: [new TextRun({ text: '👉 你长大想当哪种小帮手? (圈一个)', size: 24, bold: true, color: DARK })],
+    spacing: { before: 240, after: 60 },
+    children: [
+      new TextRun({ text: '👉 你 最 想 感 谢 哪 一 位 社 区 工 作 者?', bold: true, size: 22, color: DARK }),
+    ],
   }),
   new Paragraph({
-    spacing: { before: 40, after: 100 },
-    children: [new TextRun({ text: 'Which kind of helper do you want to be when you grow up? (Pick one)', size: 18, italics: true, color: GRAY })],
+    spacing: { before: 0, after: 160 },
+    children: [
+      new TextRun({ text: 'Which community helper would you like to thank?',
+        italics: true, size: 16, color: GRAY }),
+    ],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [Math.floor(CW / 2), Math.floor(CW / 2)],
     borders: allBorders(noBorder()),
     rows: [
-      new TableRow({ children: [favCell(favOptions[0]), favCell(favOptions[1])] }),
-      new TableRow({ children: [favCell(favOptions[2]), favCell(favOptions[3])] }),
-      new TableRow({ children: [favCell(favOptions[4]), favCell(favOptions[5])] }),
+      new TableRow({ children: [helperCheckCell(helperOptions[0]), helperCheckCell(helperOptions[1])] }),
+      new TableRow({ children: [helperCheckCell(helperOptions[2]), helperCheckCell(helperOptions[3])] }),
+      new TableRow({ children: [helperCheckCell(helperOptions[4]), helperCheckCell(helperOptions[5])] }),
+      new TableRow({ children: [helperCheckCell(helperOptions[6]), otherCell] }),
+    ],
+  }),
+
+  // --- Drawing: express your thanks ---
+  new Paragraph({
+    spacing: { before: 320, after: 60 },
+    children: [
+      new TextRun({ text: '🎨 画 一 张 图 片, 表 示 你 的 感 谢',
+        bold: true, size: 22, color: ACCENT }),
     ],
   }),
   new Paragraph({
-    spacing: { before: 200, after: 40 },
+    spacing: { before: 0, after: 160 },
     children: [
-      new TextRun({ text: '🎨 画一画  Draw it', size: 22, bold: true, color: SKY }),
-    ],
-  }),
-  new Paragraph({
-    spacing: { before: 0, after: 80 },
-    children: [
-      new TextRun({ text: '画 工作 中 的 你 (制服 / 工具 / 帮 谁)', size: 14, color: GRAY }),
-      new TextRun({ text: '  ·  ', size: 14, color: LGRAY }),
-      new TextRun({ text: 'Draw yourself at work (uniform / tools / who you help)', size: 14, italics: true, color: GRAY }),
+      new TextRun({ text: 'Draw a picture to show your thanks.',
+        italics: true, size: 16, color: GRAY }),
     ],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [CW],
-    borders: allBorders(border(SKY, 12)),
+    borders: allBorders({ style: BorderStyle.SINGLE, size: 6, color: 'BBBBBB' }),
     rows: [new TableRow({
-      height: { value: 3200, rule: 'atLeast' },
+      height: { value: 3600, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
         margins: { top: 80, bottom: 80, left: 120, right: 120 },
         verticalAlign: 'center',
         children: [new Paragraph({
           alignment: AlignmentType.CENTER,
-          children: [new TextRun({ text: '✏️  在这里画 / Draw here', italics: true, color: LGRAY, size: 18 })],
+          children: [new TextRun({ text: '✏️  在 这 里 画 / Draw here', italics: true, color: LGRAY, size: 18 })],
         })],
       })],
     })],
   }),
+
+  // --- Thank-you message ---
   new Paragraph({
-    spacing: { before: 200, after: 40 },
+    spacing: { before: 320, after: 60 },
     children: [
-      new TextRun({ text: '✏️ 写一写  Write it', size: 22, bold: true, color: SKY }),
+      new TextRun({ text: '✏️ 写 几 句 感 谢 的 话:', bold: true, size: 22, color: ACCENT }),
     ],
   }),
   new Paragraph({
-    spacing: { before: 100, after: 60 },
+    spacing: { before: 0, after: 160 },
     children: [
-      new TextRun({ text: '我 想 当 ', size: 24, bold: true, color: DARK }),
-      new TextRun({ text: '________________', size: 24, color: GRAY }),
-      new TextRun({ text: ', 因为 ', size: 24, bold: true, color: DARK }),
-      new TextRun({ text: '____________________ 。', size: 24, color: GRAY }),
+      new TextRun({ text: 'Write a few sentences of thanks.',
+        italics: true, size: 16, color: GRAY }),
     ],
   }),
+  answerLinesTable(4),
+
   new Paragraph({
-    spacing: { before: 0, after: 0 },
+    spacing: { before: 360, after: 0 },
+    alignment: AlignmentType.CENTER,
     children: [
-      new TextRun({ text: 'I want to be a ', size: 16, italics: true, color: GRAY }),
-      new TextRun({ text: '_____________', size: 16, color: GRAY }),
-      new TextRun({ text: ' because ', size: 16, italics: true, color: GRAY }),
-      new TextRun({ text: '_______________________ .', size: 16, color: GRAY }),
+      new TextRun({ text: '⭐ ', size: 24 }),
+      new TextRun({ text: '谢 谢 所 有 帮 助 我 们 的 人!  ',
+        bold: true, size: 22, color: CORAL }),
+      new TextRun({ text: 'Thank You, Community Helpers!  🌟',
+        italics: true, size: 16, color: GRAY }),
     ],
   }),
 ];
 
-// ===== §3 连一连 / Match — 我会认: 老师 学校 医院 消防员 厨师 =====
+// ===== §3 连一连 / Match — no borders =====
 const matchWords = [
-  { char: '老师',   py: 'lǎo shī',          en: 'teacher',     em: '👨‍🏫' },
-  { char: '学校',   py: 'xué xiào',         en: 'school',      em: '🏫' },
-  { char: '医院',   py: 'yī yuàn',          en: 'hospital',    em: '🏥' },
-  { char: '消防员', py: 'xiāo fáng yuán',   en: 'firefighter', em: '🚒' },
-  { char: '厨师',   py: 'chú shī',          en: 'chef',        em: '👨‍🍳' },
+  { char: '老 师',    em: '📚',  en: 'teacher' },
+  { char: '学 校',    em: '🏫',  en: 'school' },
+  { char: '医 院',    em: '🏥',  en: 'hospital' },
+  { char: '消 防 员', em: '🚒',  en: 'firefighter' },
+  { char: '厨 师',    em: '👨‍🍳', en: 'chef' },
 ];
 
-// Shuffle so left-right indices don't match
-const matchShuffled = [matchWords[3], matchWords[0], matchWords[4], matchWords[1], matchWords[2]];
+const matchShuffled = [matchWords[2], matchWords[0], matchWords[4], matchWords[1], matchWords[3]];
 const matchRows = matchWords.map((w, i) => {
   const right = matchShuffled[i];
   const colW = Math.floor(CW / 2);
@@ -329,23 +451,19 @@ const matchRows = matchWords.map((w, i) => {
     children: [
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(CORAL, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
           new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.char, bold: true, size: 52, color: DARK })],
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.py, size: 22, color: GRAY, italics: true })],
+            children: [new TextRun({ text: w.char, bold: true, size: 48, color: DARK })],
           }),
         ],
       }),
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(SKY, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
@@ -367,18 +485,8 @@ const section3Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
   shadedBar('三、连一连 / Match  (用线连起来)', CORAL, 24),
   new Paragraph({
-    spacing: { before: 200, after: 200 },
-    children: [new TextRun({
-      text: '👉 把中文词语和正确的英文/表情用一根线连起来。',
-      size: 22, italics: true, color: GRAY,
-    })],
-  }),
-  new Paragraph({
-    spacing: { before: 80, after: 200 },
-    children: [new TextRun({
-      text: 'Draw a line from each Chinese word to its matching emoji + English.',
-      size: 20, italics: true, color: GRAY,
-    })],
+    spacing: { before: 300, after: 0 },
+    children: [new TextRun({ text: '' })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
@@ -388,39 +496,38 @@ const section3Children = [
   }),
 ];
 
-// ===== §4 描一描, 写一写 — 老师 · 学校 =====
+// ===== §4 描一描, 写一写 =====
 const section4Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('四、描一描, 写一写 / Trace and Write  (老师 · 学校)', PURPLE, 24),
+  shadedBar('四、描一描, 写一写 / Trace and Write  (学 校 · 医 院)', PURPLE, 24),
   new Paragraph({
     spacing: { before: 200, after: 100 },
     children: [new TextRun({
-      text: '👉 在下面贴上田字格写字纸, 写一写今天学到的字: 老师 · 学校。',
+      text: '👉 在 下 面 贴 上 写 字 纸, 写 一 写 今 天 学 到 的 字: 学 校 · 医 院。',
       size: 22, italics: true, color: GRAY,
     })],
   }),
   new Paragraph({
     spacing: { before: 60, after: 200 },
     children: [new TextRun({
-      text: 'Insert your grid paper below and practice today’s characters: 老师 · 学校.',
+      text: "Insert your writing paper below and practice today's characters: 学 校 · 医 院.",
       size: 20, italics: true, color: GRAY,
     })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [CW],
-    borders: allBorders(border(PURPLE, 12)),
+    borders: allBorders({ style: BorderStyle.SINGLE, size: 6, color: 'BBBBBB' }),
     rows: [new TableRow({
       height: { value: 11000, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
         margins: { top: 200, bottom: 200, left: 200, right: 200 },
         verticalAlign: 'center',
         children: [new Paragraph({
           alignment: AlignmentType.CENTER,
           children: [new TextRun({
-            text: '📄  在这里贴上田字格写字纸 / Insert your grid paper here',
+            text: '📄  在 这 里 贴 上 写 字 纸 / Insert your writing paper here',
             italics: true, color: LGRAY, size: 22,
           })],
         })],

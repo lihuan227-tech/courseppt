@@ -246,35 +246,43 @@ def vocab_recognize(prs, header_color, big_emoji, cn, pinyin, en, example_cn, ex
 
 
 def vocab_write(prs, header_color, cn_phrase, en_word, chars):
-    """我会写 slide. chars is list of (char, pinyin, stroke_count_note, mnemonic)."""
+    """我会写 slide — day4_emergency format: big-char card + 3 步练习 + 田字格 + teacher/student bar.
+    chars is list of (char, pinyin, stroke_count_note, mnemonic)."""
+    import re
     s = ns(prs); bg(s, CREAM)
     hb(s, f"✏️ 我 会 写 · {cn_phrase}  I Can Write · {en_word}", header_color)
-    tb(s, 0.4, 0.85, 9.2, 0.32, f"一 起 来 写 「{cn_phrase}」!  Practice writing {cn_phrase} ({en_word})",
-       sz=12, b=True, c=DARK, a=PP_ALIGN.CENTER)
-    # Tian-zi-ge cells on the left half
-    nch = len(chars)
-    cell_size = 1.30
-    gap_cells = 0.10
-    total_w = nch * cell_size + (nch - 1) * gap_cells
-    start_x = 0.50 + (5.50 - total_w) / 2  # center within left 5.5"
-    for i, (ch, py, _stroke, _mn) in enumerate(chars):
-        x = start_x + i * (cell_size + gap_cells)
-        tianzi_box(s, x, 1.40, cell_size, ch, header_color, pinyin=py, char_sz=72)
-    # Right side: instruction panel
-    panel(s, 6.20, 1.40, 3.40, 3.30, header_color)
-    panel_head(s, 6.20, 1.40, 3.40, header_color, "✏️ 怎 么 写  How to Write", sz=13)
-    for i, (ch, py, stroke, mn) in enumerate(chars):
-        y = 2.05 + i * 0.85
-        tb(s, 6.35, y, 3.10, 0.30, f"📝 「{ch}」 — {py}",
-           sz=12, b=True, c=DARK)
-        tb(s, 6.35, y + 0.30, 3.10, 0.50, f"{stroke}\n{mn}",
-           sz=9, c=GRAY)
-    # Bottom prompt
-    tip = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.40), Inches(4.85), Inches(9.20), Inches(0.42))
-    tip.fill.solid(); tip.fill.fore_color.rgb = header_color
-    tip.line.fill.background()
-    tb(s, 0.55, 4.91, 9.00, 0.32, f"📓 在 田 字 格 里 写 3 遍  ·  「我 会 写 {cn_phrase}!」",
-       sz=12, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+    py = '  '.join(c[1] for c in chars)
+    tot = sum(int(re.search(r'\d+', c[2]).group()) for c in chars if re.search(r'\d+', c[2]))
+    # LEFT — big-character card
+    sh = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.4), Inches(1.0), Inches(4.4), Inches(3.4))
+    sh.fill.solid(); sh.fill.fore_color.rgb = WARM; sh.line.color.rgb = header_color; sh.line.width = Pt(2.5)
+    csz = 150 if len(cn_phrase) == 1 else 96
+    tb(s, 0.5, 1.15, 4.2, 1.95, cn_phrase, sz=csz, b=True, c=header_color, a=PP_ALIGN.CENTER)
+    tb(s, 0.5, 3.05, 4.2, 0.45, f"{py}  ·  {en_word}", sz=20, b=True, c=GRAY, a=PP_ALIGN.CENTER)
+    if tot:
+        tb(s, 0.5, 3.55, 4.2, 0.4, f"{tot} 笔 / {tot} strokes", sz=16, b=True, c=header_color, a=PP_ALIGN.CENTER)
+    # RIGHT — 3-step panel
+    sh2 = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(5.0), Inches(1.0), Inches(4.6), Inches(1.6))
+    sh2.fill.solid(); sh2.fill.fore_color.rgb = WHITE; sh2.line.color.rgb = header_color; sh2.line.width = Pt(2)
+    tb(s, 5.15, 1.1, 4.4, 0.4, "✏️ 3 步练习  3 Steps", sz=16, b=True, c=header_color)
+    tb(s, 5.15, 1.55, 4.4, 0.35, "1️⃣ 看老师写  Watch teacher", sz=13, c=DARK)
+    tb(s, 5.15, 1.90, 4.4, 0.35, "2️⃣ 用手指空中写  Air-write", sz=13, c=DARK)
+    tb(s, 5.15, 2.25, 4.4, 0.35, "3️⃣ 在田字格写 3 次", sz=13, c=DARK)
+    # RIGHT — 4 田字格 cells
+    for i in range(4):
+        x = 5.0 + i * 1.15
+        sq = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(x), Inches(2.85), Inches(1.05), Inches(1.05))
+        sq.fill.solid(); sq.fill.fore_color.rgb = WHITE; sq.line.color.rgb = header_color; sq.line.width = Pt(1.5)
+        ln1 = s.shapes.add_connector(1, Inches(x), Inches(3.375), Inches(x + 1.05), Inches(3.375)); ln1.line.color.rgb = LGRAY; ln1.line.width = Pt(0.5); ln1.line.dash_style = 2
+        ln2 = s.shapes.add_connector(1, Inches(x + 0.525), Inches(2.85), Inches(x + 0.525), Inches(3.9)); ln2.line.color.rgb = LGRAY; ln2.line.width = Pt(0.5); ln2.line.dash_style = 2
+    tb(s, 5.0, 3.95, 4.6, 0.3, "在 田 字 格 里 写 3 次 ↓", sz=11, c=GRAY, a=PP_ALIGN.CENTER)
+    # BOTTOM — teacher asks / student does
+    bar = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.4), Inches(4.5), Inches(9.2), Inches(0.62))
+    bar.fill.solid(); bar.fill.fore_color.rgb = WARM; bar.line.color.rgb = header_color; bar.line.width = Pt(1.5)
+    tb(s, 0.55, 4.55, 4.4, 0.24, "👩‍🏫 老师问 Teacher asks:", sz=10, b=True, c=header_color)
+    tb(s, 0.55, 4.80, 4.4, 0.26, f"和 我 一 起 写 「{cn_phrase}」", sz=12, b=True, c=DARK)
+    tb(s, 5.05, 4.55, 4.5, 0.24, "🧒 学生 Student does:", sz=10, b=True, c=header_color)
+    tb(s, 5.05, 4.80, 4.5, 0.26, "看 → 空中写 → 田字格写 3 次", sz=12, b=True, c=DARK)
     return s
 
 
