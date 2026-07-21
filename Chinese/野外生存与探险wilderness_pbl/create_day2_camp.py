@@ -6,6 +6,7 @@
 Each section = a task: pack, build, choose location, protect.
 Reuses Day 1 palette + helper conventions.
 """
+import os
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.enum.text import PP_ALIGN
@@ -128,6 +129,85 @@ def zone_q_slide(emoji,zone_cn,zone_en,color,questions,frame_cn,frame_en,img_lab
         tb(s,5.60,y+0.12,4.05,0.40,q_cn,sz=14,b=True,c=DARK)
         tb(s,5.60,y+0.52,4.05,0.32,q_en,sz=9,c=GRAY)
     sentence_frame_bar(s,4.55,frame_cn,frame_en)
+    return s
+
+def answer_panels_slide(header_text, color, panels, img_label="📷 营区图片", img_path=None, subtitle="揭晓答案 — 看图记住!  Now the tips — see the picture, remember!"):
+    """Image-format answer slide: photo LEFT, ✅/❌ panels with mixed CN+EN text RIGHT.
+    - header_text: full header (e.g. "🏕️ 帐篷区 · 💡 露营小贴士 Pro Tips")
+    - panels: list of dicts {"q": "Question?", "mark": "✅" or "❌", "lines": [mixed CN+EN strings]}
+      "q" is optional — if present, shown as panel-color question header above the bullets.
+    - img_path: optional real image path; if missing, uses placeholder
+    """
+    s=ns();bg(s,CREAM);hb(s,header_text,color)
+    tb(s,0.4,0.74,9.2,0.26,subtitle,sz=11,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    # LEFT — image area
+    img_top=1.04; img_h=4.30
+    img_box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.30),Inches(img_top),Inches(4.30),Inches(img_h))
+    img_box.fill.solid();img_box.fill.fore_color.rgb=IMGBG;img_box.line.color.rgb=color;img_box.line.width=Pt(2)
+    if img_path and os.path.exists(img_path):
+        s.shapes.add_picture(img_path,Inches(0.40),Inches(img_top+0.10),Inches(4.10),Inches(img_h-0.20))
+    else:
+        tb(s,0.30,img_top+img_h/2-0.20,4.30,0.40,img_label,sz=12,b=True,c=LGRAY,a=PP_ALIGN.CENTER)
+    # RIGHT — answer panels (same vertical bounds as image)
+    px=4.80; pw=4.90
+    n_panels=len(panels)
+    total_avail=img_h
+    gap=0.10
+    each_h=(total_avail - gap*(n_panels-1))/n_panels
+    y=img_top
+    for p in panels:
+        mark=p["mark"]; lines=p["lines"]; q=p.get("q")
+        mark_color = OK if mark=="✅" else ALERT
+        # Panel box
+        pb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(px),Inches(y),Inches(pw),Inches(each_h))
+        pb.fill.solid();pb.fill.fore_color.rgb=WHITE
+        pb.line.color.rgb=mark_color;pb.line.width=Pt(2.5)
+        # Mark on left (centered vertically)
+        tb(s,px+0.08,y+each_h/2-0.25,0.55,0.50,mark,sz=22,b=True,c=mark_color,a=PP_ALIGN.CENTER)
+        # Text area: question header (panel-color) + answer bullets (DARK)
+        text_x=px+0.72; text_w=pw-0.82
+        line_y=y+0.07
+        bx=s.shapes.add_textbox(Inches(text_x),Inches(line_y),Inches(text_w),Inches(each_h-0.14))
+        tf=bx.text_frame; tf.word_wrap=True
+        tf.margin_top=Pt(0); tf.margin_bottom=Pt(0)
+        tf.margin_left=Pt(0); tf.margin_right=Pt(0)
+        para_idx=0
+        if q:
+            # Question header
+            para = tf.paragraphs[0]
+            para.alignment = PP_ALIGN.LEFT
+            try:
+                para.space_before = Pt(0)
+                para.space_after = Pt(1)
+                para.line_spacing = 1.0
+            except Exception:
+                pass
+            r = para.add_run()
+            r.text = f"❓ {q}"
+            r.font.size = Pt(11)
+            r.font.bold = True
+            r.font.color.rgb = mark_color
+            r.font.name = 'KaiTi'
+            para_idx = 1
+        for i,ln in enumerate(lines):
+            if i==0 and para_idx==0:
+                para = tf.paragraphs[0]
+            else:
+                para = tf.add_paragraph()
+            para.alignment = PP_ALIGN.LEFT
+            try:
+                para.space_before = Pt(1)
+                para.space_after = Pt(1)
+                para.line_spacing = 1.0
+            except Exception:
+                pass
+            r = para.add_run()
+            r.text = ln
+            r.font.size = Pt(10)
+            r.font.bold = True
+            r.font.color.rgb = DARK
+            r.font.name = 'KaiTi'
+        y += each_h + gap
     return s
 
 def zone_tips_slide(emoji,zone_cn,zone_en,color,tips,frame_cn,frame_en,img_label="📷 营区图片"):
@@ -527,250 +607,261 @@ notes(s,
 "• K 句型: 「这是 ___」 + 指。\n"
 "• G1-3 句型: 「___ 放在 ___ 区, 因为 ___ 。」")
 
-# ===== 5 ZONE DEEP-DIVES (Q → Tips per zone) =====
+# ===== 5 ZONE ANSWER SLIDES (direct answer with rich CN+EN bullets) =====
+# Each slide auto-uses zone_*.png from pics/ if it exists (drop AI-generated images there)
+_PICS = "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics"
 
-# Zone 1: 帐篷区 — Q + Tips
-n+=1;s=zone_q_slide("⛺","帐篷区","Tent Zone",TENTCL,
-    [("帐篷应该搭在什么样的地方?",        "Where to set up?"),
-     ("下雨天搭帐篷, 要小心什么?",        "Rainy day — careful of?"),
-     ("可以搭在大树正下方吗?",           "Right under a big tree — OK?")],
-    "我觉得帐篷应该 ___ 。",
-    "I think the tent should ___.",
-    img_label="📷 帐篷搭在哪里 (好/坏)")
+# Zone 1: 帐篷区
+n+=1;s=answer_panels_slide(
+    "⛺ 帐篷区 · 💡 露营小贴士 Pro Tips",
+    TENTCL,
+    [
+        {"q":"帐篷应该搭在什么样的地方?","mark":"✅","lines":[
+            "帐篷应该搭在平坦、干燥、安全的地方 Flat, dry, safe ground",
+            "离河边不要太近 Not too close to the river",
+            "没有大石头和树枝 No big rocks or branches",
+        ]},
+        {"q":"下雨、起风时, 要注意什么?","mark":"✅","lines":[
+            "下雨天小心水会流进帐篷 Rain may flow into tent",
+            "地面太湿会积水 Wet ground may flood",
+            "风大要把帐篷固定好 Strong wind — secure it well",
+        ]},
+        {"q":"可以搭在大树正下方吗?","mark":"❌","lines":[
+            "树枝可能掉下来 Branches may fall",
+            "打雷时不安全 Not safe during storms",
+            "下雨时会一直滴水 Rain keeps dripping",
+        ]},
+    ],
+    img_label="📷 平整干净的好地点",
+    img_path=os.path.join(_PICS,"zone_tent.png"))
 pn(s,n)
-notes(s,"3-4 分钟 — 让学生先讨论. 不给答案!\n• 引导: 「地面要怎么样? 上面要怎么样?」\n• 老师可在此页贴一张实景照片 (好/坏对比), 帮学生「直观理解」。\n• 翻到下一页揭晓 ✓")
 
-n+=1;s=zone_tips_slide("⛺","帐篷区","Tent Zone",TENTCL,
-    [("✅","平整地面",          "Flat ground"),
-     ("✅","干净 — 清除石头树枝", "Remove rocks/sticks"),
-     ("❌","不在大树正下方",      "Not under big trees"),
-     ("❌","不在低洼处",          "Not in low spots")],
-    "帐篷要搭在 ___ 的地方。",
-    "Tent goes on ___ ground.",
-    img_label="📷 平整干净的好地点")
+# Zone 2: 用火就餐区
+n+=1;s=answer_panels_slide(
+    "🔥 用火就餐区 · 💡 露营小贴士 Pro Tips",
+    FIRECL,
+    [
+        {"q":"火堆应该在哪里, 怎么搭?","mark":"✅","lines":[
+            "火堆离帐篷至少 4 米远 Fire pit 4m+ from tents",
+            "用石头围起来 + 准备水或沙 Stones around + water/sand ready",
+            "大人陪同才能用火 Adult must be there",
+        ]},
+        {"q":"吃完饭、走之前要做什么?","mark":"✅","lines":[
+            "食物垃圾装袋带走 Pack food trash in a bag",
+            "锅碗洗干净, 不留食物味 Wash cookware",
+            "用水或沙完全压灭火 Fully extinguish",
+        ]},
+        {"q":"哪些事情绝对不能做?","mark":"❌","lines":[
+            "不能一个人离开火堆 Never leave fire alone",
+            "食物垃圾不能扔地上 — 熊会来 No scraps on ground (bears!)",
+            "不烧塑料 — 有毒 + 会爆炸 No plastic in fire",
+        ]},
+    ],
+    img_label="📷 用石头围起来的火堆",
+    img_path=os.path.join(_PICS,"zone_fire.png"))
 pn(s,n)
-notes(s,"揭晓答案 (2-3 分钟):\n• 重点: 大树正下方危险 — 枯枝会掉 (widowmaker)。\n• 低洼处下雨会积水。\n• 老师贴实景照: 平整营地 / 树下危险对比。")
 
-# Zone 2: 用火就餐区 — Q + Tips
-n+=1;s=zone_q_slide("🔥","用火就餐区","Fire & Eat Zone",FIRECL,
-    [("火堆离帐篷应该多远?",      "How far from tents?"),
-     ("火堆旁边要准备什么?",      "What MUST be nearby?"),
-     ("吃完饭, 食物垃圾怎么办?",  "Food scraps — where?")],
-    "我觉得火堆应该 ___ 。",
-    "I think the fire should ___.",
-    img_label="📷 营地火堆 (石头围起来)")
+# Zone 3: 公共娱乐区
+n+=1;s=answer_panels_slide(
+    "⚽ 公共娱乐区 · 💡 露营小贴士 Pro Tips",
+    PLAYCL,
+    [
+        {"q":"玩游戏在哪里玩才安全?","mark":"✅","lines":[
+            "玩游戏要离火堆和帐篷远 Far from fire and tents",
+            "在大人能看到的地方玩 Where adults can see",
+            "走小路, 不踩花草 Stay on the trail",
+        ]},
+        {"q":"玩耍时还要注意什么?","mark":"✅","lines":[
+            "天黑前回到营地 Back to camp before dark",
+            "声音小一点, 不打扰别人 Keep voice down",
+            "和小伙伴一起玩 Buddy up — never alone",
+        ]},
+        {"q":"哪些事情不能做?","mark":"❌","lines":[
+            "天黑不乱跑 — 看不到地面 No running after dark",
+            "不爬树, 不摘花 No climbing / picking",
+            "不打扰野生动物 Don't disturb wildlife",
+        ]},
+    ],
+    img_label="📷 安全玩耍的地方",
+    img_path=os.path.join(_PICS,"zone_recreation.png"))
 pn(s,n)
-notes(s,"3-4 分钟 — 让学生想:\n• 距离: 火星、风会让帐篷着火吗?\n• 准备: 要灭火的东西?\n• 垃圾: 留在地上动物会来怎么办?\n• 老师贴一张安全火堆照片帮助理解。")
 
-n+=1;s=zone_tips_slide("🔥","用火就餐区","Fire & Eat Zone",FIRECL,
-    [("✅","离帐篷至少 4 米",       "4m+ from tents"),
-     ("✅","旁边有水或沙子",         "Water/sand nearby"),
-     ("❌","不能一个人离开火堆",     "Never leave alone"),
-     ("❌","食物垃圾不能扔地上",     "No food scraps on ground")],
-    "在火区, 我应该 ___ 。",
-    "At fire zone, I should ___.",
-    img_label="📷 用石头围起来的火堆")
+# Zone 4: 取水用水区
+n+=1;s=answer_panels_slide(
+    "💧 取水用水区 · 💡 露营小贴士 Pro Tips",
+    SAFCL,
+    [
+        {"q":"喝水之前要怎么做?","mark":"✅","lines":[
+            "水从干净的水源取 Take from clean source",
+            "喝水前要烧开或过滤 Boil OR filter first",
+            "每人都有自己的水壶 Each person has own bottle",
+        ]},
+        {"q":"洗碗、用水要注意什么?","mark":"✅","lines":[
+            "洗碗在水区, 不在帐篷旁 Wash dishes here, not at tent",
+            "水区要远离厕所 Far from the toilet zone",
+            "用桶装脏水 Use bucket for wastewater",
+        ]},
+        {"q":"哪些事情绝对不能做?","mark":"❌","lines":[
+            "不能直接喝生水 — 有寄生虫 Never drink raw water!",
+            "不在水边打闹 — 容易滑倒 No play at water",
+            "不在河里用肥皂 — 污染水源 No soap in the river",
+        ]},
+    ],
+    img_label="📷 滤水器/烧水的水壶",
+    img_path=os.path.join(_PICS,"zone_water.png"))
 pn(s,n)
-notes(s,"揭晓:\n• 食物垃圾装袋带走 — 否则熊和动物会来!\n• 离开前用水或沙完全压灭。\n• 大人在场才能用火。")
 
-# Zone 3: 公共娱乐区 — Q + Tips
-n+=1;s=zone_q_slide("⚽","公共娱乐区","Recreation Area",PLAYCL,
-    [("玩游戏要离哪里远?",        "Stay far from what?"),
-     ("天黑了还可以乱跑吗?",      "Run around in the dark?"),
-     ("可以爬树、摘花吗?",        "Climb trees or pick flowers?")],
-    "玩的时候我应该 ___ 。",
-    "While playing, I should ___.",
-    img_label="📷 营地里玩游戏")
+# Zone 5: 卫生区
+n+=1;s=answer_panels_slide(
+    "🚿 卫生区 · 💡 露营小贴士 Pro Tips",
+    PINE,
+    [
+        {"q":"厕所应该在哪里? 怎么洗手?","mark":"✅","lines":[
+            "厕所离帐篷和水源都 60 米以上 Toilet 60m+ from tents/water",
+            "用免洗洗手液 + 湿纸巾 Hand sanitizer + wet wipes",
+            "吃饭前洗手 Wash hands before meals",
+        ]},
+        {"q":"垃圾、人体垃圾怎么处理?","mark":"✅","lines":[
+            "上厕所挖小坑 (约 15 厘米深) 埋好 Dig hole ~6 inches and bury",
+            "湿纸巾、垃圾全部装袋带走 Pack out ALL wipes and trash",
+            "营地保持干净 — 像没人来过 Leave No Trace",
+        ]},
+        {"q":"哪些事情绝对不能做?","mark":"❌","lines":[
+            "不留下任何垃圾 No trace left behind",
+            "不在水源附近上厕所 Never near water source",
+            "不在帐篷里穿外面的鞋 No outdoor shoes inside tent",
+        ]},
+    ],
+    img_label="📷 露营厕所/Leave No Trace",
+    img_path=os.path.join(_PICS,"zone_sanitation.png"))
 pn(s,n)
-notes(s,"3-4 分钟:\n• 引导思考火、水、黑夜的危险。\n• 爬树/摘花: 引导环保 — 露营爱护自然。\n• 老师贴一张孩子在营地玩的照片。")
 
-n+=1;s=zone_tips_slide("⚽","公共娱乐区","Recreation Area",PLAYCL,
-    [("✅","离火堆和帐篷远",          "Far from fire/tents"),
-     ("✅","在大人能看到的地方",      "Where adults can see"),
-     ("❌","天黑不乱跑",              "Don't run after dark"),
-     ("❌","不爬树、不摘花",          "Don't climb/pick")],
-    "我可以玩 ___, 不可以 ___ 。",
-    "I can ___, but cannot ___.",
-    img_label="📷 安全玩耍的地方")
+# ===== 5 "Can we camp HERE?" SCENARIOS — direct-answer format =====
+
+# 1. 大石头 / 悬崖
+n+=1;s=answer_panels_slide(
+    "🔍 这里能搭营吗？  Can we camp HERE? — 大石头",
+    ALERT,
+    [
+        {"q":"为什么这里不安全?","mark":"❌","lines":[
+            "上面有悬崖, 石头可能掉下来 Rocks may fall",
+            "风吹、雨水会让石头松动 Wind/rain loosen rocks",
+            "帐篷会被砸破, 人会受伤 Tent + people get hurt",
+        ]},
+        {"q":"还有什么麻烦?","mark":"❌","lines":[
+            "晚上看不见石头, 容易摔倒 Hard to see at night",
+            "石头会反射热量 / 寒气 Rocks reflect heat/cold",
+        ]},
+        {"q":"那应该选什么样的地方?","mark":"✅","lines":[
+            "应该选远离悬崖的平地 Flat ground, far from cliffs",
+            "上面没有掉落物 No falling hazards overhead",
+            "至少离大石头 30 米 At least 30m from big rocks",
+        ]},
+    ],
+    img_label="📷 camp_rocks_scenario.png",
+    img_path=os.path.join(_PICS,"camp_rocks_scenario.png"),
+    subtitle="揭晓答案 — 这里不安全! Look at the picture — it's NOT safe.")
 pn(s,n)
-notes(s,"重点: 「Leave No Trace」 — 营地要和来时一样!\n• 玩在大人视线内是安全关键。")
 
-# Zone 4: 取水用水区 — Q + Tips
-n+=1;s=zone_q_slide("💧","取水用水区","Water Zone",SAFCL,
-    [("营地的水从哪里来?",         "Where's water from?"),
-     ("河水可以直接喝吗?",         "Drink river water directly?"),
-     ("洗碗的脏水倒在哪里?",       "Wastewater — where?")],
-    "我觉得水应该 ___ 。",
-    "I think water should ___.",
-    img_label="📷 营地水源 (溪水/水壶)")
+# 2. 草地 / 虫子
+n+=1;s=answer_panels_slide(
+    "🔍 这里能搭营吗？(2)  Can we camp HERE? — 草地",
+    ALERT,
+    [
+        {"q":"草丛里有什么不好?","mark":"❌","lines":[
+            "草丛里有虫子 (蚂蚁、蚊子、蜘蛛) Bugs in the grass",
+            "虫子会爬进帐篷, 咬人 Bugs may crawl into tent",
+            "高草看不到地面石头 Tall grass hides hazards",
+        ]},
+        {"q":"下雨、早上又会怎样?","mark":"❌","lines":[
+            "早上有露水, 帐篷底潮湿 Dew makes tent floor wet",
+            "下雨后泥泞难走 Muddy after rain",
+        ]},
+        {"q":"那应该选什么样的地方?","mark":"✅","lines":[
+            "应该选短草 / 干泥土 / 沙地 Short grass / dirt / sand",
+            "搭帐篷前先清扫地面 Sweep area first",
+            "检查有没有蚂蚁洞 Check for ant nests",
+        ]},
+    ],
+    img_label="📷 camp grass scenario.png",
+    img_path=os.path.join(_PICS,"camp grass scenario.png"),
+    subtitle="揭晓答案 — 这里不舒服! Look at the picture — it's NOT comfortable.")
 pn(s,n)
-notes(s,"3-4 分钟 — 让学生猜:\n• 水源: 河、湖、自己带、井? 不同营地不同。\n• 直接喝: 水里看不到的东西?\n• 老师贴一张水源 / 滤水器照片。")
 
-n+=1;s=zone_tips_slide("💧","取水用水区","Water Zone",SAFCL,
-    [("✅","喝水前烧开或过滤",      "Boil or filter first"),
-     ("✅","离卫生区远 (防污染)",   "Far from toilet"),
-     ("❌","不在水边打闹",          "No play at water"),
-     ("❌","不喝生水",              "Never drink raw water")],
-    "水可以 ___, 不可以 ___ 。",
-    "Water — yes ___, no ___.",
-    img_label="📷 滤水器/烧水的水壶")
+# 3. 大树正下方
+n+=1;s=answer_panels_slide(
+    "🔍 这里能搭营吗？(3)  Can we camp HERE? — 大树下",
+    ALERT,
+    [
+        {"q":"为什么这里不安全?","mark":"❌","lines":[
+            "枯枝可能掉下来 Dead branches may fall",
+            "打雷时大树有危险 — 不要躲下面 Lightning danger",
+            "下雨时树叶会一直滴水 Rain keeps dripping",
+        ]},
+        {"q":"还有什么不舒服?","mark":"❌","lines":[
+            "树根让地面不平 Tree roots make ground uneven",
+            "动物会掉下东西 Animals drop things",
+        ]},
+        {"q":"那应该选什么样的地方?","mark":"✅","lines":[
+            "应该在开阔地搭营 (大树附近不在下方) Near trees, not under",
+            "用大树挡风, 但帐篷在旁边 Tree as windbreak, beside it",
+            "看头顶是否有枯枝 Check overhead for dead branches",
+        ]},
+    ],
+    img_label="📷 camp tree scenario.png",
+    img_path=os.path.join(_PICS,"camp tree scenario.png"),
+    subtitle="揭晓答案 — 这里不安全! Look at the picture — it's NOT safe.")
 pn(s,n)
-notes(s,"揭晓:\n• 河水可能有寄生虫 — 看起来干净也不行!\n• 烧开 1 分钟+ 或用滤水器。\n• 脏水有食物味, 会引来动物。")
 
-# Zone 5: 卫生区 — Q + Tips
-n+=1;s=zone_q_slide("🚿","卫生区","Sanitation Zone",PINE,
-    [("上厕所应该离帐篷多远?",       "How far from tents?"),
-     ("没有水龙头, 怎么洗手?",       "No faucet — how to wash?"),
-     ("湿纸巾、垃圾放哪里?",         "Wipes/trash — where?")],
-    "我觉得卫生区应该 ___ 。",
-    "Sanitation zone should ___.",
-    img_label="📷 露营卫生区 (洗手)")
+# 4. 海边 / 水边
+n+=1;s=answer_panels_slide(
+    "🔍 这里能搭营吗？(4)  Can we camp HERE? — 水边",
+    ALERT,
+    [
+        {"q":"为什么这里不安全?","mark":"❌","lines":[
+            "涨潮、大浪会冲走帐篷 Tide/waves can wash tent away",
+            "半夜涨潮人睡着, 很危险 Tide at night = danger",
+            "河水暴涨速度很快 Flash floods rise fast",
+        ]},
+        {"q":"还有什么麻烦?","mark":"❌","lines":[
+            "沙地下雨会塌陷 Wet sand collapses",
+            "水边蚊子多 Many mosquitoes near water",
+        ]},
+        {"q":"那应该选什么样的地方?","mark":"✅","lines":[
+            "应该离水至少 30 米 At least 30m from water",
+            "选高一点的地方 Choose higher ground",
+            "看看「最高水位线」标志 Look for high-water marks",
+        ]},
+    ],
+    img_label="📷 camp water scenario.png",
+    img_path=os.path.join(_PICS,"camp water scenario.png"),
+    subtitle="揭晓答案 — 这里不安全! Look at the picture — it's NOT safe.")
 pn(s,n)
-notes(s,"3-4 分钟:\n• 厕所太近 → 味道、虫子。太远 → 半夜不方便。\n• 没水龙头: 露营带什么洗手?\n• 垃圾: 留在野外? 烧掉?")
 
-n+=1;s=zone_tips_slide("🚿","卫生区","Sanitation Zone",PINE,
-    [("✅","厕所离帐篷至少 60 米",  "Toilet 60m+ from tents"),
-     ("✅","离水源也至少 60 米",    "60m+ from water"),
-     ("✅","用免洗洗手液",          "Use hand sanitizer"),
-     ("❌","不留下垃圾",            "No trace left behind")],
-    "在卫生区, 我会 ___ 。",
-    "At sanitation zone, I will ___.",
-    img_label="📷 露营厕所/Leave No Trace")
+# 5. 低洼地
+n+=1;s=answer_panels_slide(
+    "🔍 这里能搭营吗？(5)  Can we camp HERE? — 低洼地",
+    ALERT,
+    [
+        {"q":"下雨时会发生什么?","mark":"❌","lines":[
+            "雨水从四面流进来 Rain flows in from all sides",
+            "帐篷底泡水, 睡袋会湿 Tent floor floods",
+            "湿了会冷, 容易生病 Wet = cold = sick",
+        ]},
+        {"q":"还有什么不舒服?","mark":"❌","lines":[
+            "潮湿地方蚊子很多 Damp = mosquitoes",
+            "地面软, 帐篷桩固定不牢 Soft ground — stakes loose",
+        ]},
+        {"q":"那应该选什么样的地方?","mark":"✅","lines":[
+            "应该选高地 high ground Higher, flat ground",
+            "稍微有斜坡可以排水 Slight slope helps drainage",
+            "土要干、要硬 Soil should be dry and firm",
+        ]},
+    ],
+    img_label="📷 low or wet place scenario.png",
+    img_path=os.path.join(_PICS,"low or wet place scenario.png"),
+    subtitle="揭晓答案 — 这里不舒服! Look at the picture — it's NOT good.")
 pn(s,n)
-notes(s,"揭晓:\n• 60 米 ≈ 200 步 — 防止污染。\n• Leave No Trace 原则 — 垃圾全带走!\n• 营地像没人来过, 这才是好露营者。")
-
-# 13. WRONG CAMP — single scenario (rocks/cliff) — students think first
-s=ns();bg(s,CREAM);hb(s,"🔍 这里能搭营吗？  Can we camp HERE?",ALERT)
-tb(s,0.4,0.85,9.2,0.4,"看一看 — 这个地方搭营好不好？为什么？",sz=18,b=True,c=ALERT,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.22,9.2,0.3,"Look — is this a good spot? Why or why not?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# Cropped scenario image: tent next to big rocks/cliff (305x160 ~ 1.9:1)
-import os
-_img_path="/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp_rocks_scenario.png"
-# Frame the image
-frame=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(5.4),Inches(2.95))
-frame.fill.solid();frame.fill.fore_color.rgb=WHITE;frame.line.color.rgb=ALERT;frame.line.width=Pt(2.5)
-if os.path.exists(_img_path):
-    # Image aspect ~1.9:1 — fit width 4.9, height 2.58 inside the frame
-    s.shapes.add_picture(_img_path,Inches(0.65),Inches(1.85),Inches(4.9),Inches(2.58))
-else:
-    ib(s,0.65,1.85,4.9,2.58,"📷 camp_rocks_scenario.png")
-tb(s,0.4,4.30,5.4,0.30,"🏕️ 帐篷 + 大石头 + ❗",sz=11,b=True,c=GRAY,a=PP_ALIGN.CENTER)
-# Right: thinking prompts
-panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.0),Inches(1.65),Inches(3.7),Inches(2.95))
-panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=ALERT;panel.line.width=Pt(2.5)
-head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.0),Inches(1.65),Inches(3.7),Inches(0.50))
-head.fill.solid();head.fill.fore_color.rgb=ALERT;head.line.fill.background()
-tb(s,6.15,1.72,3.5,0.4,"🤔 想一想 Think First",sz=14,b=True,c=WHITE)
-tf=tb(s,6.15,2.30,3.5,0.35,"❓ 这里搭帐篷, 安全吗?",sz=13,b=True,c=DARK)
-ap(tf," ",sz=7)
-ap(tf,"   Is it safe to camp here?",sz=9,c=GRAY)
-ap(tf," ",sz=8)
-ap(tf,"❓ 上面会有什么?",sz=13,b=True,c=DARK)
-ap(tf,"   What's above the tent?",sz=9,c=GRAY)
-ap(tf," ",sz=8)
-ap(tf,"❓ 大石头会怎样?",sz=13,b=True,c=DARK)
-ap(tf,"   What might rocks do?",sz=9,c=GRAY)
-sentence_frame_bar(s,4.70,
-    "这里 ___ 安全, 因为 ___ 。",
-    "This place is (not) safe, because ___.")
-n+=1;pn(s,n)
-notes(s,"先讨论, 不给答案 (4-5 分钟):\n• 「这是一张露营图 — 你觉得这里搭营好不好?」\n• 让学生 30 秒自己看, 找问题。\n• 老师追问: 「上面是什么? 大石头会怎么样? 风吹一下呢?」\n• 让 2-3 个学生说: 「这里 ___ 安全, 因为 ___ 。」\n• 不要直接给答案 — 让学生自己想!\n• 关键引导:\n  - 上面是悬崖、大石头\n  - 石头可能掉下来 (rockfall)\n  - 帐篷会被砸破, 人会受伤\n  - 风吹、雨水都可能让石头松动\n• 翻完看下一个场景 (草地)。")
-
-# 13b. WRONG CAMP — scenario 2: grass / bugs (think first)
-s=ns();bg(s,CREAM);hb(s,"🔍 这里能搭营吗？(2)  Can we camp HERE? (2)",ALERT)
-tb(s,0.4,0.85,9.2,0.4,"看一看 — 这个地方搭营好不好？为什么？",sz=18,b=True,c=ALERT,a=PP_ALIGN.CENTER)
-tb(s,0.4,1.22,9.2,0.3,"Look — is this a good spot? Why or why not?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-# Cropped scenario image: tent on grass with bugs
-_img_path2="/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp grass scenario.png"
-frame=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(5.4),Inches(2.95))
-frame.fill.solid();frame.fill.fore_color.rgb=WHITE;frame.line.color.rgb=ALERT;frame.line.width=Pt(2.5)
-if os.path.exists(_img_path2):
-    s.shapes.add_picture(_img_path2,Inches(0.65),Inches(1.85),Inches(4.9),Inches(2.58))
-else:
-    ib(s,0.65,1.85,4.9,2.58,"📷 camp grass scenario.png")
-tb(s,0.4,4.30,5.4,0.30,"🏕️ 帐篷 + 草地 + 🐛",sz=11,b=True,c=GRAY,a=PP_ALIGN.CENTER)
-# Right: thinking prompts
-panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.0),Inches(1.65),Inches(3.7),Inches(2.95))
-panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=ALERT;panel.line.width=Pt(2.5)
-head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.0),Inches(1.65),Inches(3.7),Inches(0.50))
-head.fill.solid();head.fill.fore_color.rgb=ALERT;head.line.fill.background()
-tb(s,6.15,1.72,3.5,0.4,"🤔 想一想 Think First",sz=14,b=True,c=WHITE)
-tf=tb(s,6.15,2.30,3.5,0.35,"❓ 这里搭帐篷, 舒服吗?",sz=13,b=True,c=DARK)
-ap(tf," ",sz=7)
-ap(tf,"   Is it comfortable to camp here?",sz=9,c=GRAY)
-ap(tf," ",sz=8)
-ap(tf,"❓ 草地里有什么?",sz=13,b=True,c=DARK)
-ap(tf,"   What's in the grass?",sz=9,c=GRAY)
-ap(tf," ",sz=8)
-ap(tf,"❓ 下雨会怎样?",sz=13,b=True,c=DARK)
-ap(tf,"   What happens when it rains?",sz=9,c=GRAY)
-sentence_frame_bar(s,4.70,
-    "这里 ___ 好, 因为 ___ 。",
-    "This place is (not) good, because ___.")
-n+=1;pn(s,n)
-notes(s,"先讨论, 不给答案 (4-5 分钟):\n• 「再看一张图 — 这里搭营好不好?」\n• 让学生 30 秒自己看, 找问题。\n• 老师追问: 「草丛里有什么? 蚊子、虫子怎么办? 早上草上湿不湿?」\n• 让 2-3 个学生说: 「这里 ___ 好, 因为 ___ 。」\n• 关键引导:\n  - 草丛里有虫子 (蚂蚁、蚊子、蜘蛛) — 会爬进帐篷\n  - 草地早上有露水, 帐篷底会潮湿\n  - 下雨后泥泞, 不容易干\n  - 草高视线不好, 看不到地面石头\n• 比较: 干的泥土 / 沙地比草地更好 — 平、干、虫少。\n• 翻到下一页: 看下一个场景 (大树下)。")
-
-# Helper: builds one "Can we camp HERE?" scenario slide
-def wrong_camp_scenario(num,img_path,caption_short,questions,frame_cn,frame_en,notes_text):
-    s=ns();bg(s,CREAM);hb(s,f"🔍 这里能搭营吗？({num})  Can we camp HERE? ({num})",ALERT)
-    tb(s,0.4,0.85,9.2,0.4,"看一看 — 这个地方搭营好不好？为什么？",sz=18,b=True,c=ALERT,a=PP_ALIGN.CENTER)
-    tb(s,0.4,1.22,9.2,0.3,"Look — is this a good spot? Why or why not?",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-    frame=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.65),Inches(5.4),Inches(2.95))
-    frame.fill.solid();frame.fill.fore_color.rgb=WHITE;frame.line.color.rgb=ALERT;frame.line.width=Pt(2.5)
-    if os.path.exists(img_path):
-        s.shapes.add_picture(img_path,Inches(0.65),Inches(1.85),Inches(4.9),Inches(2.58))
-    else:
-        ib(s,0.65,1.85,4.9,2.58,f"📷 {os.path.basename(img_path)}")
-    tb(s,0.4,4.30,5.4,0.30,caption_short,sz=11,b=True,c=GRAY,a=PP_ALIGN.CENTER)
-    panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.0),Inches(1.65),Inches(3.7),Inches(2.95))
-    panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=ALERT;panel.line.width=Pt(2.5)
-    head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(6.0),Inches(1.65),Inches(3.7),Inches(0.50))
-    head.fill.solid();head.fill.fore_color.rgb=ALERT;head.line.fill.background()
-    tb(s,6.15,1.72,3.5,0.4,"🤔 想一想 Think First",sz=14,b=True,c=WHITE)
-    tf=tb(s,6.15,2.30,3.5,0.35,questions[0][0],sz=13,b=True,c=DARK)
-    ap(tf," ",sz=7);ap(tf,f"   {questions[0][1]}",sz=9,c=GRAY);ap(tf," ",sz=8)
-    ap(tf,questions[1][0],sz=13,b=True,c=DARK)
-    ap(tf,f"   {questions[1][1]}",sz=9,c=GRAY);ap(tf," ",sz=8)
-    ap(tf,questions[2][0],sz=13,b=True,c=DARK)
-    ap(tf,f"   {questions[2][1]}",sz=9,c=GRAY)
-    sentence_frame_bar(s,4.70,frame_cn,frame_en)
-    return s,notes_text
-
-# 13c. WRONG CAMP — scenario 3: under big tree (think first)
-s,nt=wrong_camp_scenario(3,
-    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp tree scenario.png",
-    "🏕️ 帐篷 + 大树 + ❗",
-    [("❓ 这里搭帐篷, 安全吗?",      "Is it safe to camp here?"),
-     ("❓ 上面有什么?",              "What's above the tent?"),
-     ("❓ 树枝会怎样?",              "What might branches do?")],
-    "这里 ___ 安全, 因为 ___ 。",
-    "This place is (not) safe, because ___.",
-    "先讨论 (4-5 分钟):\n• 「这次帐篷搭在大树下 — 你觉得好不好?」\n• 老师追问: 「上面是什么? 树枝会怎样? 风一吹呢? 下雨呢?」\n• 让 2-3 个学生说: 「这里 ___ 安全, 因为 ___ 。」\n• 关键引导:\n  - 大树下面会有枯枝 (widowmaker) — 可能掉下来砸到帐篷\n  - 风大或下雨, 树枝更容易断\n  - 闪电时 — 大树是危险的, 不要躲在树下\n  - 树根可能不平, 帐篷底凹凸不舒服\n• 翻到下一页: 看下一个场景 (海边)。")
-n+=1;pn(s,n);notes(s,nt)
-
-# 13d. WRONG CAMP — scenario 4: too close to water/wave (think first)
-s,nt=wrong_camp_scenario(4,
-    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/camp water scenario.png",
-    "🏕️ 帐篷 + 海边 + 🌊",
-    [("❓ 这里搭帐篷, 安全吗?",      "Is it safe to camp here?"),
-     ("❓ 旁边是什么?",              "What's right next to the tent?"),
-     ("❓ 大浪来了会怎样?",           "What if a big wave comes?")],
-    "这里 ___ 安全, 因为 ___ 。",
-    "This place is (not) safe, because ___.",
-    "先讨论 (4-5 分钟):\n• 「这次帐篷搭在海边 — 你觉得好不好?」\n• 老师追问: 「旁边是什么? 浪会怎样? 涨潮的时候呢?」\n• 让 2-3 个学生说: 「这里 ___ 安全, 因为 ___ 。」\n• 关键引导:\n  - 海边、河边: 涨潮、大浪可能把帐篷冲走\n  - 半夜涨潮 — 人睡着了不知道, 很危险\n  - 沙地下雨会塌陷\n  - 离水至少 30 米 (about 100 feet) 才安全\n• 翻到下一页: 看下一个场景 (低洼地)。")
-n+=1;pn(s,n);notes(s,nt)
-
-# 13e. WRONG CAMP — scenario 5: low/wet ground (think first)
-s,nt=wrong_camp_scenario(5,
-    "/Users/Huan/0 projects/summercourse/Chinese/野外生存与探险wilderness_pbl/pics/low or wet place scenario.png",
-    "🏕️ 帐篷 + 低洼地 + 🌧️",
-    [("❓ 这里搭帐篷, 舒服吗?",      "Is it comfortable to camp here?"),
-     ("❓ 地面怎么样?",              "What's the ground like?"),
-     ("❓ 下雨会怎样?",              "What happens when it rains?")],
-    "这里 ___ 好, 因为 ___ 。",
-    "This place is (not) good, because ___.",
-    "先讨论 (4-5 分钟):\n• 「这次帐篷搭在低洼地 — 你觉得好不好?」\n• 老师追问: 「地面湿不湿? 下大雨水会去哪里? 帐篷会怎样?」\n• 让 2-3 个学生说: 「这里 ___ 好, 因为 ___ 。」\n• 关键引导:\n  - 低洼地下雨水会聚集 — 帐篷会被泡湿\n  - 半夜下雨睡袋会湿, 人会冷会生病\n  - 潮湿地面会有蚊子、虫子\n  - 选 high ground (高一点的平地) 才好\n• 翻到下一页: 总结答案 (5 个错误地点都看完了)。")
-n+=1;pn(s,n);notes(s,nt)
 
 # 16. BACKPACK — INQUIRY: brainstorm before reveal
 s=ns();bg(s,CREAM);hb(s,"🤔 露营要带什么？ What to Pack?",SUN)

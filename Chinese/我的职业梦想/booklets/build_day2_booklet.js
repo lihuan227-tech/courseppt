@@ -1,5 +1,6 @@
-// Build day2_booklet.docx — 我的职业梦想 Unit · Day 2: Problem Solver Day (科学家 + 工程师)
-// Modeled on 小小艺术家/booklets/build_day1_booklet.js
+// Build day2_booklet.docx — 我的职业梦想 Unit · Day 2: Problem Solver Day
+// (科学家 + 工程师 + 发明家)
+// Structure mirrors build_day1_booklet.js — light gray borders, B&W-print friendly.
 // Run: node build_day2_booklet.js
 
 const fs = require('fs');
@@ -11,13 +12,11 @@ const {
 
 const OUT = path.join(__dirname, 'day2_booklet.docx');
 
-// ===== Palette (Day 2 — Problem Solver: science blue + engineering red) =====
+// ===== Palette (Day 2 — Science/Engineer: navy + sky) =====
 const ACCENT = '1565C0';   // science blue — primary
 const SKY    = '42A5F5';   // light blue
 const CORAL  = 'E53935';   // engineering red
 const PURPLE = '6A1B9A';
-const YELLOW = 'F9A825';
-const GREEN  = '43A047';
 const DARK   = '2C2C2C';
 const GRAY   = '888888';
 const LGRAY  = 'D8D8D8';
@@ -52,28 +51,6 @@ function shadedBar(text, colorHex, size = 22) {
   });
 }
 
-function photoBox(label, height = 1800, colorHex = LGRAY) {
-  const b = border(colorHex, 8);
-  return new Table({
-    width: { size: CW, type: WidthType.DXA },
-    columnWidths: [CW],
-    borders: allBorders(b),
-    rows: [new TableRow({
-      height: { value: height, rule: 'atLeast' },
-      children: [new TableCell({
-        width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'F8F8F8', type: ShadingType.CLEAR },
-        margins: { top: 200, bottom: 200, left: 160, right: 160 },
-        verticalAlign: 'center',
-        children: [new Paragraph({
-          alignment: AlignmentType.CENTER,
-          children: [new TextRun({ text: `📷  ${label}`, color: GRAY, italics: true, size: 22 })],
-        })],
-      })],
-    })],
-  });
-}
-
 // ===== Cover =====
 const coverChildren = [
   new Paragraph({
@@ -94,17 +71,18 @@ const coverChildren = [
   new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 200, after: 100 },
-    children: [new TextRun({ text: 'Day 2 · Problem Solver Day', bold: true, size: 44, color: DARK })],
+    children: [new TextRun({ text: 'Day 2 · 小小问题解决家', bold: true, size: 44, color: DARK })],
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 100, after: 200 },
-    children: [new TextRun({ text: '小小科学家 + 工程师', italics: true, size: 28, color: GRAY })],
+    children: [new TextRun({ text: 'Problem-Solver Day · Scientists, Engineers, Inventors',
+      italics: true, size: 26, color: GRAY })],
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 100, after: 800 },
-    children: [new TextRun({ text: '🔬 为什么? · 🛠️ 怎么办?', size: 26, color: CORAL })],
+    children: [new TextRun({ text: '🔬  👷  💡  🧪  🏗️', size: 30, color: CORAL })],
   }),
   new Paragraph({
     spacing: { before: 1000, after: 200 },
@@ -129,188 +107,449 @@ const coverChildren = [
   }),
 ];
 
-// ===== §1 看图选择 / MC — 科学家 vs 工程师 by problem type =====
-const mcQuestions = [
+// ===== §1 题库 · 8 道选择题 / Question Bank =====
+const qbQuestions = [
   {
-    img: '一杯脏水, 想知道为什么会脏  A glass of dirty water — why is it dirty?',
-    q: '这个问题 — 谁来研究？  Who studies this question?',
-    options: ['科学家 Scientist', '工程师 Engineer', '医生 Doctor'],
+    em: '🔬',
+    cn: '科 学 家 最 喜 欢 问 什 么?',
+    en: 'What do scientists like to ask?',
+    opts: [
+      { cn: '多 少 钱?', en: 'How much does it cost?' },
+      { cn: '为 什 么?', en: 'Why?' },
+      { cn: '几 点 了?', en: 'What time is it?' },
+    ],
+    correct: 1,
   },
   {
-    img: '河的两边, 要造一座桥  Two riverbanks — needs a bridge',
-    q: '这个问题 — 谁来解决？  Who solves this problem?',
-    options: ['科学家 Scientist', '老师 Teacher', '工程师 Engineer'],
+    em: '👷',
+    cn: '工 程 师 最 喜 欢 想 什 么?',
+    en: 'What do engineers like to think about?',
+    opts: [
+      { cn: '怎 么 做?', en: 'How can we do it?' },
+      { cn: '今 天 吃 什 么?', en: 'What should we eat today?' },
+      { cn: '谁 跑 得 快?', en: 'Who can run faster?' },
+    ],
+    correct: 0,
   },
   {
-    img: '一个 小朋友 睡着了, 上面 一个 梦境 泡泡  A child asleep with a dream bubble above',
-    q: '为什么 我们 会 做梦? — 这个问题 谁 来 研究?  Why do we dream? — Who studies this?',
-    options: ['老师 Teacher', '科学家 Scientist', '厨师 Chef'],
+    em: '💡',
+    cn: '哪 一 位 发 明 家 发 明 了 实 用 电 灯?',
+    en: 'Which inventor created the practical light bulb?',
+    opts: [
+      { cn: '贝 尔', en: 'Bell' },
+      { cn: '爱 迪 生', en: 'Edison' },
+      { cn: '牛 顿', en: 'Newton' },
+    ],
+    correct: 1,
   },
   {
-    img: '大太阳 + 暖暖的 阳光 + 笑脸  Big sun + warm sunshine + smiling face',
-    q: '太阳 怎么 给 我们 温暖? — 谁 来 研究?  How does the sun warm us? — Who studies this?',
-    options: ['工程师 Engineer (⚠️ trick)', '科学家 Scientist', '警察 Police'],
+    em: '☎️',
+    cn: '贝 尔 最 有 名 的 发 明 是 什 么?',
+    en: "What is Bell's most famous invention?",
+    opts: [
+      { cn: '飞 机', en: 'Airplane' },
+      { cn: '电 话', en: 'Telephone' },
+      { cn: '火 车', en: 'Train' },
+    ],
+    correct: 1,
+  },
+  {
+    em: '🤔',
+    cn: '科 学 家 和 工 程 师 都 有 的 特 点 是 什 么?',
+    en: 'What trait do scientists and engineers share?',
+    opts: [
+      { cn: '爱 睡 觉', en: 'They like sleeping.' },
+      { cn: '爱 玩 游 戏', en: 'They like playing games.' },
+      { cn: '好 奇、爱 问 问 题', en: 'They are curious and ask questions.' },
+    ],
+    correct: 2,
+  },
+  {
+    em: '🥤',
+    cn: '做 纸 杯 电 话 的 时 候, 线 应 该 是 什 么 样?',
+    en: 'What should the string be like when using a cup telephone?',
+    opts: [
+      { cn: '松 松 的', en: 'Loose.' },
+      { cn: '拉 直 拉 紧', en: 'Straight and tight.' },
+      { cn: '打 结', en: 'Tied in knots.' },
+    ],
+    correct: 1,
+  },
+  {
+    em: '🃏',
+    cn: '为 什 么 纸 牌 可 以 搭 成 「房 子」?',
+    en: 'Why can cards be used to build a "house"?',
+    opts: [
+      { cn: '因 为 纸 牌 会 发 光', en: 'Because the cards glow.' },
+      { cn: '因 为 折 起 来 以 后 更 稳, 更 能 撑 住',
+        en: 'Because folded cards are stronger and more stable.' },
+      { cn: '因 为 纸 牌 会 自 己 站 起 来', en: 'Because the cards stand up by themselves.' },
+    ],
+    correct: 1,
+  },
+  {
+    em: '🧪',
+    cn: '如 果 实 验 失 败 了, 应 该 怎 么 办?',
+    en: 'What should you do if an experiment fails?',
+    opts: [
+      { cn: '马 上 放 弃', en: 'Give up right away.' },
+      { cn: '再 试 一 次, 一 直 改 进', en: 'Try again and keep improving.' },
+      { cn: '把 材 料 全 扔 掉', en: 'Throw the materials away.' },
+    ],
+    correct: 1,
   },
 ];
 
-function mcQuestion(num, q) {
-  const blocks = [];
-  blocks.push(new Paragraph({
-    spacing: { before: 80, after: 40 },
-    children: [new TextRun({ text: `第 ${num} 题 / Q ${num}`, bold: true, size: 20, color: ACCENT })],
-  }));
-  blocks.push(photoBox(q.img, 1100, ACCENT));
-  blocks.push(new Paragraph({
-    spacing: { before: 60, after: 20 },
-    children: [new TextRun({ text: q.q, bold: true, size: 20 })],
-  }));
-  blocks.push(new Paragraph({
-    spacing: { before: 0, after: 60 },
-    indent: { left: 200 },
+function qbCell(num, q) {
+  const optionParas = q.opts.map((opt, idx) => {
+    const letter = String.fromCharCode(65 + idx);
+    return new Paragraph({
+      spacing: { before: 60, after: 0 },
+      indent: { left: 600 },
+      children: [
+        new TextRun({ text: '☐  ', bold: true, size: 20, color: DARK }),
+        new TextRun({ text: `${letter}.  `, bold: true, size: 20, color: DARK }),
+        new TextRun({ text: opt.cn, size: 20, color: DARK }),
+        new TextRun({ text: `  ·  ${opt.en}`, italics: true, size: 15, color: GRAY }),
+      ],
+    });
+  });
+  const lightBorder = { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' };
+  return new TableCell({
+    width: { size: CW, type: WidthType.DXA },
+    borders: allBorders(lightBorder),
+    margins: { top: 200, bottom: 200, left: 240, right: 240 },
+    verticalAlign: 'center',
     children: [
-      new TextRun({ text: '☐  A.  ', size: 20, bold: true, color: DARK }),
-      new TextRun({ text: q.options[0], size: 18 }),
-      new TextRun({ text: '     ', size: 18 }),
-      new TextRun({ text: '☐  B.  ', size: 20, bold: true, color: DARK }),
-      new TextRun({ text: q.options[1], size: 18 }),
-      new TextRun({ text: '     ', size: 18 }),
-      new TextRun({ text: '☐  C.  ', size: 20, bold: true, color: DARK }),
-      new TextRun({ text: q.options[2], size: 18 }),
+      new Paragraph({
+        spacing: { before: 0, after: 40 },
+        children: [
+          new TextRun({ text: `${num}.  `, bold: true, size: 26, color: DARK }),
+          new TextRun({ text: `${q.em}  `, size: 26 }),
+          new TextRun({ text: q.cn, bold: true, size: 22, color: DARK }),
+        ],
+      }),
+      new Paragraph({
+        spacing: { before: 0, after: 120 },
+        indent: { left: 600 },
+        children: [new TextRun({ text: q.en, italics: true, size: 16, color: GRAY })],
+      }),
+      ...optionParas,
     ],
-  }));
-  return blocks;
+  });
 }
+
+const qbRows = qbQuestions.map((q, i) => new TableRow({
+  cantSplit: true,
+  children: [qbCell(i + 1, q)],
+}));
 
 const section1Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('一、看图选择 / Multiple Choice  (圈出正确答案)', ACCENT, 24),
+  shadedBar('一、选 择 题 / Multiple Choice  (圈 出 正 确 答 案)', ACCENT, 24),
   new Paragraph({
-    spacing: { before: 200, after: 200 },
+    spacing: { before: 160, after: 160 },
     children: [new TextRun({
-      text: '看一看 — 科学家(为什么?) 还是 工程师(怎么办?)？/ Scientist (WHY) or Engineer (HOW)?',
+      text: '👉 读 一 读, 圈 出 对 的 答 案。/ Read each question and circle the right answer.',
       size: 22, italics: true, color: GRAY,
     })],
   }),
+  new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: [CW],
+    borders: allBorders(noBorder()),
+    rows: qbRows,
+  }),
+  new Paragraph({
+    spacing: { before: 240, after: 0 },
+    alignment: AlignmentType.CENTER,
+    children: [
+      new TextRun({ text: '🏆 ', size: 22 }),
+      new TextRun({ text: '答 对 8 题 = 「小 小 科 学 家」 徽 章! ',
+        bold: true, size: 20, color: ACCENT }),
+      new TextRun({ text: 'All 8 right = Junior Scientist badge!',
+        italics: true, size: 16, color: GRAY }),
+    ],
+  }),
 ];
-mcQuestions.forEach((q, i) => mcQuestion(i + 1, q).forEach(b => section1Children.push(b)));
 
-// ===== §2 我喜欢的科学家 — favorite scientist + write + draw =====
-const favOptions = [
-  { em: '💡',  cn: '爱迪生',     en: 'Edison · 电灯' },
-  { em: '✈️',  cn: '莱特兄弟',   en: 'Wright Brothers · 飞机' },
+// ===== §2 纸桥挑战实验记录 / Paper Bridge Challenge =====
+const lightCellBorder = { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' };
+
+// 2x2 grid of 4 bridge shape options with checkbox + photo placeholder
+const bridgeShapes = [
+  { em: '📦', cn: '中 空 形',     en: 'Hollow Shape' },
+  { em: '〰️', cn: 'W 形',        en: 'W Shape' },
+  { em: '⊓',  cn: '凹 凸 形',     en: 'Corrugated Shape' },
+  { em: '━',  cn: '平 面 纸 桥',  en: 'Flat Paper Bridge' },
 ];
 
-function favCell(opt) {
+function bridgePredictionCell(s) {
   return new TableCell({
     width: { size: Math.floor(CW / 2), type: WidthType.DXA },
-    borders: allBorders(noBorder()),
-    margins: { top: 40, bottom: 40, left: 200, right: 100 },
-    children: [new Paragraph({
-      children: [
-        new TextRun({ text: '☐  ', size: 24, bold: true }),
-        new TextRun({ text: `${opt.em}  `, size: 22 }),
-        new TextRun({ text: `${opt.cn}  `, size: 22, bold: true, color: DARK }),
-        new TextRun({ text: opt.en, size: 16, color: GRAY }),
-      ],
-    })],
-  });
-}
-
-function otherCell() {
-  return new TableCell({
-    width: { size: CW, type: WidthType.DXA },
-    columnSpan: 2,
-    borders: allBorders(noBorder()),
-    margins: { top: 60, bottom: 40, left: 200, right: 100 },
-    children: [new Paragraph({
-      children: [
-        new TextRun({ text: '☐  ', size: 24, bold: true }),
-        new TextRun({ text: '🤔  ', size: 22 }),
-        new TextRun({ text: '其他  ', size: 22, bold: true, color: DARK }),
-        new TextRun({ text: 'Other: ', size: 16, color: GRAY }),
-        new TextRun({ text: '_______________________________________________', size: 22, color: GRAY }),
-      ],
-    })],
-  });
-}
-
-function writeLine(label, color) {
-  return new Paragraph({
-    spacing: { before: 80, after: 40 },
+    borders: allBorders(lightCellBorder),
+    margins: { top: 180, bottom: 180, left: 240, right: 240 },
+    verticalAlign: 'center',
     children: [
-      new TextRun({ text: label, bold: true, size: 22, color }),
-      new TextRun({ text: '  _________________________________________________________', size: 22, color: GRAY }),
+      new Paragraph({
+        spacing: { before: 0, after: 60 },
+        children: [
+          new TextRun({ text: '☐  ', bold: true, size: 26, color: DARK }),
+          new TextRun({ text: `${s.em}  `, size: 24 }),
+          new TextRun({ text: s.cn, bold: true, size: 22, color: DARK }),
+        ],
+      }),
+      new Paragraph({
+        spacing: { before: 0, after: 100 },
+        indent: { left: 600 },
+        children: [new TextRun({ text: s.en, italics: true, size: 15, color: GRAY })],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 80, after: 0 },
+        children: [new TextRun({ text: '🖼️  插 入 照 片 / Insert photo', size: 14, italics: true, color: LGRAY })],
+      }),
     ],
+  });
+}
+
+// Experiment record table (4 rows × 2 cols)
+const recordRows = [
+  new TableRow({
+    children: [
+      new TableCell({
+        width: { size: Math.floor(CW * 0.55), type: WidthType.DXA },
+        borders: allBorders(lightCellBorder),
+        shading: { fill: 'F0F0F0', type: ShadingType.CLEAR },
+        margins: { top: 120, bottom: 120, left: 240, right: 240 },
+        children: [new Paragraph({
+          children: [new TextRun({ text: '形 状  Shape', bold: true, size: 22, color: DARK })],
+        })],
+      }),
+      new TableCell({
+        width: { size: Math.floor(CW * 0.45), type: WidthType.DXA },
+        borders: allBorders(lightCellBorder),
+        shading: { fill: 'F0F0F0', type: ShadingType.CLEAR },
+        margins: { top: 120, bottom: 120, left: 240, right: 240 },
+        children: [new Paragraph({
+          alignment: AlignmentType.CENTER,
+          children: [new TextRun({ text: '承 载 硬 币 数  # of Coins', bold: true, size: 22, color: DARK })],
+        })],
+      }),
+    ],
+  }),
+  ...bridgeShapes.map(s => new TableRow({
+    height: { value: 700, rule: 'atLeast' },
+    children: [
+      new TableCell({
+        width: { size: Math.floor(CW * 0.55), type: WidthType.DXA },
+        borders: allBorders(lightCellBorder),
+        margins: { top: 140, bottom: 140, left: 240, right: 240 },
+        verticalAlign: 'center',
+        children: [new Paragraph({
+          children: [
+            new TextRun({ text: `${s.em}  `, size: 22 }),
+            new TextRun({ text: s.cn, bold: true, size: 22, color: DARK }),
+            new TextRun({ text: `  ·  ${s.en}`, italics: true, size: 14, color: GRAY }),
+          ],
+        })],
+      }),
+      new TableCell({
+        width: { size: Math.floor(CW * 0.45), type: WidthType.DXA },
+        borders: allBorders(lightCellBorder),
+        margins: { top: 140, bottom: 140, left: 240, right: 240 },
+        verticalAlign: 'center',
+        children: [new Paragraph({
+          alignment: AlignmentType.CENTER,
+          children: [new TextRun({ text: '_____________', size: 22, color: GRAY })],
+        })],
+      }),
+    ],
+  })),
+];
+
+// "Why stronger" checkboxes
+const whyOptions = [
+  { cn: '更 厚', en: 'Thicker' },
+  { cn: '有 更 多 支 撑', en: 'More Support' },
+  { cn: '不 容 易 弯', en: 'Harder to Bend' },
+];
+
+function answerLine() {
+  return new Paragraph({
+    spacing: { before: 200, after: 0 },
+    border: { bottom: { color: '888888', size: 8, space: 1, style: BorderStyle.SINGLE } },
+    children: [new TextRun({ text: '', size: 22 })],
   });
 }
 
 const section2Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('二、我喜欢的 科学家 / My Favorite Scientist', SKY, 22),
+  shadedBar('二、🏗️ 纸 桥 挑 战 实 验 记 录 表 / Paper Bridge Challenge', SKY, 22),
+
+  // --- 1. Prediction ---
   new Paragraph({
-    spacing: { before: 120, after: 60 },
-    children: [new TextRun({ text: '👉 你 喜欢的 科学家 是谁? 他们 做了 什么? 为什么 你 喜欢?', size: 22, bold: true, color: DARK })],
+    spacing: { before: 200, after: 60 },
+    children: [
+      new TextRun({ text: '1.  我 的 预 测  My Prediction', bold: true, size: 24, color: ACCENT }),
+    ],
   }),
   new Paragraph({
-    spacing: { before: 0, after: 100 },
-    children: [new TextRun({ text: 'Who is your favorite scientist? What did they do? Why do you like them?', size: 16, italics: true, color: GRAY })],
+    spacing: { before: 0, after: 40 },
+    children: [
+      new TextRun({ text: '👉 你 觉 得 哪 一 种 桥 最 坚 固?', bold: true, size: 22, color: DARK }),
+    ],
   }),
-  // Example pills — Edison + Wright Brothers + write-in 其他
+  new Paragraph({
+    spacing: { before: 0, after: 160 },
+    children: [
+      new TextRun({ text: 'Which bridge do you think will be the strongest?',
+        italics: true, size: 16, color: GRAY }),
+    ],
+  }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [Math.floor(CW / 2), Math.floor(CW / 2)],
     borders: allBorders(noBorder()),
     rows: [
-      new TableRow({ children: [favCell(favOptions[0]), favCell(favOptions[1])] }),
-      new TableRow({ children: [otherCell()] }),
+      new TableRow({ children: [bridgePredictionCell(bridgeShapes[0]), bridgePredictionCell(bridgeShapes[1])] }),
+      new TableRow({ children: [bridgePredictionCell(bridgeShapes[2]), bridgePredictionCell(bridgeShapes[3])] }),
     ],
   }),
-  // 写一写 — 3 fill-in lines
   new Paragraph({
-    spacing: { before: 200, after: 60 },
+    spacing: { before: 240, after: 60 },
     children: [
-      new TextRun({ text: '✏️ 写一写  Write ', size: 22, bold: true, color: SKY }),
-      new TextRun({ text: '— 把你的 答案 写在 横线上', size: 16, italics: true, color: GRAY }),
+      new TextRun({ text: '为 什 么?  Why?', bold: true, size: 20, color: ACCENT }),
     ],
   }),
-  writeLine('🌟 我 喜欢的 科学家 是:', SKY),
-  writeLine('🛠️ 他 / 他们 做了:', GREEN),
-  writeLine('❤️ 因为:', CORAL),
-  // 画一画 — draw box
+  answerLine(),
+  answerLine(),
+  answerLine(),
+
+  // --- 2. Experiment Record ---
   new Paragraph({
-    spacing: { before: 160, after: 80 },
+    spacing: { before: 320, after: 60 },
     children: [
-      new TextRun({ text: '🎨 画一画  Draw ', size: 22, bold: true, color: SKY }),
-      new TextRun({ text: '— 画 ta / ta 的 发明 / ta 的 实验', size: 16, italics: true, color: GRAY }),
+      new TextRun({ text: '2.  实 验 记 录  Experiment Results', bold: true, size: 24, color: ACCENT }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 40 },
+    children: [
+      new TextRun({ text: '👉 试 一 试 — 每 一 种 桥 最 多 能 压 上 几 个 硬 币?',
+        bold: true, size: 22, color: DARK }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 160 },
+    children: [
+      new TextRun({ text: 'Test how many coins each bridge can hold.',
+        italics: true, size: 16, color: GRAY }),
     ],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
-    columnWidths: [CW],
-    borders: allBorders(border(SKY, 12)),
-    rows: [new TableRow({
-      height: { value: 2400, rule: 'atLeast' },
-      children: [new TableCell({
-        width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
-        margins: { top: 80, bottom: 80, left: 120, right: 120 },
-        verticalAlign: 'center',
-        children: [new Paragraph({
-          alignment: AlignmentType.CENTER,
-          children: [new TextRun({ text: '✏️  在这里画 / Draw here', italics: true, color: LGRAY, size: 18 })],
-        })],
-      })],
-    })],
+    columnWidths: [Math.floor(CW * 0.55), Math.floor(CW * 0.45)],
+    borders: allBorders(lightCellBorder),
+    rows: recordRows,
+  }),
+
+  // --- 3. Result ---
+  new Paragraph({
+    spacing: { before: 320, after: 60 },
+    children: [
+      new TextRun({ text: '3.  实 验 结 果  Results', bold: true, size: 24, color: ACCENT }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 60 },
+    children: [
+      new TextRun({ text: '👉 哪 一 种 桥 最 坚 固?', bold: true, size: 22, color: DARK }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 120 },
+    children: [
+      new TextRun({ text: 'Which bridge was the strongest?', italics: true, size: 16, color: GRAY }),
+    ],
+  }),
+  ...bridgeShapes.map(s => new Paragraph({
+    spacing: { before: 50, after: 0 },
+    indent: { left: 600 },
+    children: [
+      new TextRun({ text: '☐  ', bold: true, size: 22, color: DARK }),
+      new TextRun({ text: `${s.em}  `, size: 20 }),
+      new TextRun({ text: s.cn, bold: true, size: 20, color: DARK }),
+      new TextRun({ text: `  ·  ${s.en}`, italics: true, size: 14, color: GRAY }),
+    ],
+  })),
+  new Paragraph({
+    spacing: { before: 200, after: 40 },
+    children: [
+      new TextRun({ text: '它 一 共 压 了 ', size: 22, color: DARK }),
+      new TextRun({ text: '______', bold: true, size: 24, color: ACCENT }),
+      new TextRun({ text: ' 个 硬 币。', size: 22, color: DARK }),
+      new TextRun({ text: '  ·  It held ______ coins.', italics: true, size: 14, color: GRAY }),
+    ],
+  }),
+
+  // --- 4. My Discovery ---
+  new Paragraph({
+    spacing: { before: 320, after: 60 },
+    children: [
+      new TextRun({ text: '4.  我 的 发 现  My Discovery', bold: true, size: 24, color: ACCENT }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 60 },
+    children: [
+      new TextRun({ text: '👉 它 为 什 么 更 坚 固?', bold: true, size: 22, color: DARK }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 120 },
+    children: [
+      new TextRun({ text: 'Why was this bridge stronger?', italics: true, size: 16, color: GRAY }),
+    ],
+  }),
+  ...whyOptions.map(o => new Paragraph({
+    spacing: { before: 50, after: 0 },
+    indent: { left: 600 },
+    children: [
+      new TextRun({ text: '☐  ', bold: true, size: 22, color: DARK }),
+      new TextRun({ text: o.cn, bold: true, size: 20, color: DARK }),
+      new TextRun({ text: `  ·  ${o.en}`, italics: true, size: 14, color: GRAY }),
+    ],
+  })),
+  new Paragraph({
+    spacing: { before: 50, after: 0 },
+    indent: { left: 600 },
+    children: [
+      new TextRun({ text: '☐  ', bold: true, size: 22, color: DARK }),
+      new TextRun({ text: '其 他  Other: ', bold: true, size: 20, color: DARK }),
+      new TextRun({ text: '______________________________', size: 20, color: GRAY }),
+    ],
+  }),
+
+  // Final badge
+  new Paragraph({
+    spacing: { before: 320, after: 0 },
+    alignment: AlignmentType.CENTER,
+    children: [
+      new TextRun({ text: '⭐ ', size: 24 }),
+      new TextRun({ text: '我 是 小 小 工 程 师!  ', bold: true, size: 22, color: CORAL }),
+      new TextRun({ text: "I Am a Young Engineer!", italics: true, size: 16, color: GRAY }),
+    ],
   }),
 ];
 
-// ===== §3 连一连 / Match — 我会认: 科学家 工程师 实验 发明 观察 =====
+// ===== §3 连一连 / Match — no borders =====
 const matchWords = [
-  { char: '科学家', py: 'kē xué jiā',       en: 'scientist',  em: '👩‍🔬' },
-  { char: '工程师', py: 'gōng chéng shī',   en: 'engineer',   em: '👷‍♂️' },
-  { char: '实验',   py: 'shí yàn',          en: 'experiment', em: '🧪' },
-  { char: '发明',   py: 'fā míng',          en: 'invention',  em: '💡' },
-  { char: '观察',   py: 'guān chá',         en: 'observe',    em: '👀' },
+  { char: '科 学 家', em: '🔬', en: 'scientist' },
+  { char: '工 程 师', em: '👷', en: 'engineer' },
+  { char: '发 明 家', em: '💡', en: 'inventor' },
+  { char: '电 话',    em: '☎️', en: 'telephone' },
+  { char: '实 验',    em: '🧪', en: 'experiment' },
 ];
 
 const matchShuffled = [matchWords[2], matchWords[0], matchWords[4], matchWords[1], matchWords[3]];
@@ -322,23 +561,19 @@ const matchRows = matchWords.map((w, i) => {
     children: [
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(CORAL, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
           new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.char, bold: true, size: 52, color: DARK })],
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.py, size: 22, color: GRAY, italics: true })],
+            children: [new TextRun({ text: w.char, bold: true, size: 48, color: DARK })],
           }),
         ],
       }),
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(SKY, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
@@ -360,18 +595,8 @@ const section3Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
   shadedBar('三、连一连 / Match  (用线连起来)', CORAL, 24),
   new Paragraph({
-    spacing: { before: 200, after: 200 },
-    children: [new TextRun({
-      text: '👉 把中文词语和正确的英文/表情用一根线连起来。',
-      size: 22, italics: true, color: GRAY,
-    })],
-  }),
-  new Paragraph({
-    spacing: { before: 80, after: 200 },
-    children: [new TextRun({
-      text: 'Draw a line from each Chinese word to its matching emoji + English.',
-      size: 20, italics: true, color: GRAY,
-    })],
+    spacing: { before: 300, after: 0 },
+    children: [new TextRun({ text: '' })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
@@ -381,39 +606,38 @@ const section3Children = [
   }),
 ];
 
-// ===== §4 描一描, 写一写 (blank) =====
+// ===== §4 描一描, 写一写 =====
 const section4Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('四、描一描, 写一写 / Trace and Write  (实验 · 发明 · 观察)', PURPLE, 24),
+  shadedBar('四、描一描, 写一写 / Trace and Write  (科 学 · 实 验)', PURPLE, 24),
   new Paragraph({
     spacing: { before: 200, after: 100 },
     children: [new TextRun({
-      text: '👉 在下面贴上写字纸, 写一写今天学到的字: 实验 · 发明 · 观察。',
+      text: '👉 在 下 面 贴 上 写 字 纸, 写 一 写 今 天 学 到 的 字: 科 学 · 实 验。',
       size: 22, italics: true, color: GRAY,
     })],
   }),
   new Paragraph({
     spacing: { before: 60, after: 200 },
     children: [new TextRun({
-      text: 'Insert your writing paper below and practice today’s characters: 实验 · 发明 · 观察.',
+      text: "Insert your writing paper below and practice today's characters: 科 学 · 实 验.",
       size: 20, italics: true, color: GRAY,
     })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [CW],
-    borders: allBorders(border(PURPLE, 12)),
+    borders: allBorders({ style: BorderStyle.SINGLE, size: 6, color: 'BBBBBB' }),
     rows: [new TableRow({
       height: { value: 11000, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
         margins: { top: 200, bottom: 200, left: 200, right: 200 },
         verticalAlign: 'center',
         children: [new Paragraph({
           alignment: AlignmentType.CENTER,
           children: [new TextRun({
-            text: '📄  在这里贴上写字纸 / Insert your writing paper here',
+            text: '📄  在 这 里 贴 上 写 字 纸 / Insert your writing paper here',
             italics: true, color: LGRAY, size: 22,
           })],
         })],

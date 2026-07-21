@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>太阳能小风扇 · Solar Mini Fan Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#19324a;
+  --muted:#617184;
+  --paper:#fffaf0;
+  --sky:#dff3ff;
+  --sun:#ffb627;
+  --orange:#ff8c00;
+  --green:#43a047;
+  --teal:#00897b;
+  --blue:#1976d2;
+  --red:#c62828;
+  --line:#d8ccb6;
+  --soft:#f6f0df;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Noto Sans SC','Kaiti SC','KaiTi',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,182,39,.26), transparent 26rem),
+    radial-gradient(circle at 100% 12%, rgba(0,137,123,.16), transparent 24rem),
+    linear-gradient(180deg,#fffaf0 0%,#edf8f4 100%);
+  line-height:1.65;
+}
+.page{max-width:1100px;margin:0 auto;padding:24px 18px 58px}
+.hero{
+  min-height:74vh;
+  display:grid;
+  grid-template-columns:1fr .95fr;
+  gap:30px;
+  align-items:center;
+  padding:22px 0 18px;
+}
+.eyebrow{
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+  border:2px solid rgba(255,140,0,.22);
+  background:#fff;
+  color:#c76600;
+  border-radius:999px;
+  padding:7px 14px;
+  font-weight:900;
+  font-size:14px;
+}
+h1{
+  margin:18px 0 10px;
+  color:#1f5d54;
+  font-size:clamp(38px,6vw,72px);
+  line-height:1.05;
+}
+.subtitle{font-size:20px;color:var(--muted);max-width:60ch;margin:0 0 20px}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.fact{
+  min-width:138px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:10px 12px;
+  font-weight:900;
+}
+.fact small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+.hero-art,.panel,.step,.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  box-shadow:0 16px 44px -30px rgba(25,50,74,.42);
+}
+.hero-art{overflow:hidden;border-width:2px}
+.hero-art svg,.diagram svg{display:block;width:100%;height:auto}
+.toc{
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding:10px 0;
+  background:rgba(255,250,240,.9);
+  backdrop-filter:blur(8px);
+}
+.toc a{
+  flex:none;
+  text-decoration:none;
+  color:var(--ink);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:14px;
+  font-weight:800;
+}
+section{margin-top:28px}
+.section-title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:16px;
+  border-bottom:3px solid rgba(0,137,123,.22);
+  padding-bottom:10px;
+  margin-bottom:16px;
+}
+h2{margin:0;color:#1f5d54;font-size:30px;line-height:1.2}
+.en{display:block;color:var(--muted);font-size:13px;font-weight:500;margin-top:2px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.panel,.card{padding:18px}
+.panel h3,.card h3{margin:0 0 10px;color:#1f5d54;font-size:22px}
+ul,ol{padding-left:1.2em;margin:8px 0 0}
+li{margin:6px 0}
+.materials{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mat{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px;
+  min-height:122px;
+}
+.mat .ico{font-size:34px;line-height:1}
+.mat b{display:block;margin-top:8px;color:#1f5d54}
+.mat span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.steps{display:grid;gap:18px}
+.step{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:18px;
+  padding:16px;
+}
+.step-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px}
+.num{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:var(--orange);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  font-weight:900;
+  flex:none;
+}
+.step h3{margin:0;color:#1f5d54;font-size:24px;line-height:1.25}
+.tip,.warn{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:0 8px 8px 0;
+  font-weight:800;
+}
+.tip{border-left:5px solid var(--sun);background:#fff8dc;color:#66500b}
+.warn{border-left:5px solid var(--red);background:#fff0f0;color:#7d1515}
+.diagram{
+  background:linear-gradient(180deg,#f7fcff,#fff);
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+}
+.test-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden}
+.test-table th,.test-table td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.test-table th{background:#e9f7f3;color:#1f5d54}
+.rubric{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.rubric .card{min-height:172px}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:74px;
+  border-radius:999px;
+  background:#e9f7f3;
+  color:#1f5d54;
+  padding:4px 10px;
+  font-weight:900;
+  font-size:13px;
+}
+.teacher-note{
+  background:#19324a;
+  color:#fff;
+  border-radius:8px;
+  padding:18px;
+}
+.teacher-note h3{color:#fff}
+.teacher-note .en{color:#d4e4f1}
+.print-btn{
+  appearance:none;
+  border:0;
+  background:var(--teal);
+  color:#fff;
+  border-radius:999px;
+  padding:10px 16px;
+  font:inherit;
+  font-weight:900;
+  cursor:pointer;
+}
+@media (max-width:860px){
+  .hero,.step,.grid-2{grid-template-columns:1fr}
+  .materials,.rubric,.grid-3{grid-template-columns:1fr 1fr}
+  h1{font-size:42px}
+}
+@media (max-width:560px){
+  .materials,.rubric,.grid-3{grid-template-columns:1fr}
+  .section-title{display:block}
+}
+@media print{
+  body{background:#fff}
+  .page{max-width:none;padding:0}
+  .toc,.print-btn{display:none}
+  .hero{min-height:auto;page-break-after:always}
+  section{break-inside:avoid}
+  .step{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="hero" id="top">
+    <div>
+      <div class="eyebrow">新能源 STEM 项目 · Renewable Energy Project</div>
+      <h1>太阳能小风扇</h1>
+      <p class="subtitle">学生用太阳能板、导线、小马达和扇叶制作一个不用电池的小风扇，观察光能如何转化成电能，再转化成动能。</p>
+      <div class="facts">
+        <div class="fact">45-60 分钟<small>建议课堂时长</small></div>
+        <div class="fact">2-3 人一组<small>合作搭建</small></div>
+        <div class="fact">K-5 可调整<small>适合分层提问</small></div>
+        <div class="fact">可带回家<small>展示型作品</small></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="太阳能小风扇示意图">
+      <svg viewBox="0 0 760 580" role="img">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#dff3ff"/>
+            <stop offset="1" stop-color="#fff7df"/>
+          </linearGradient>
+          <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#224a79"/>
+            <stop offset="1" stop-color="#10243d"/>
+          </linearGradient>
+        </defs>
+        <rect width="760" height="580" fill="url(#sky)"/>
+        <circle cx="118" cy="112" r="58" fill="#ffb627"/>
+        <g stroke="#ffcc61" stroke-width="8" stroke-linecap="round">
+          <line x1="118" y1="20" x2="118" y2="54"/><line x1="118" y1="170" x2="118" y2="205"/>
+          <line x1="27" y1="112" x2="62" y2="112"/><line x1="174" y1="112" x2="210" y2="112"/>
+          <line x1="54" y1="48" x2="78" y2="72"/><line x1="158" y1="152" x2="184" y2="178"/>
+          <line x1="52" y1="176" x2="78" y2="150"/><line x1="158" y1="72" x2="183" y2="47"/>
+        </g>
+        <g transform="translate(90 335) rotate(-9)">
+          <rect x="0" y="0" width="270" height="145" rx="10" fill="url(#panel)" stroke="#17345b" stroke-width="6"/>
+          <g stroke="#6eb7ff" stroke-width="3">
+            <line x1="45" y1="0" x2="45" y2="145"/><line x1="90" y1="0" x2="90" y2="145"/><line x1="135" y1="0" x2="135" y2="145"/><line x1="180" y1="0" x2="180" y2="145"/><line x1="225" y1="0" x2="225" y2="145"/>
+            <line x1="0" y1="48" x2="270" y2="48"/><line x1="0" y1="96" x2="270" y2="96"/>
+          </g>
+          <rect x="18" y="20" width="234" height="105" rx="6" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="5"/>
+        </g>
+        <path d="M352 389 C430 349 475 302 535 256" fill="none" stroke="#d94830" stroke-width="8"/>
+        <path d="M347 414 C426 398 495 365 551 310" fill="none" stroke="#24455f" stroke-width="8"/>
+        <g transform="translate(492 170)">
+          <rect x="80" y="219" width="34" height="95" rx="10" fill="#64748b"/>
+          <rect x="24" y="304" width="146" height="32" rx="16" fill="#1f5d54"/>
+          <circle cx="98" cy="108" r="66" fill="#eef7fb" stroke="#1f5d54" stroke-width="8"/>
+          <circle cx="98" cy="108" r="18" fill="#ff8c00"/>
+          <path d="M99 109 C121 37 175 39 176 74 C177 105 134 117 99 109Z" fill="#43a047"/>
+          <path d="M99 109 C32 78 40 27 74 22 C105 18 117 74 99 109Z" fill="#1976d2"/>
+          <path d="M99 109 C75 177 21 176 20 140 C19 109 63 98 99 109Z" fill="#ffb627"/>
+          <path d="M99 109 C166 141 156 193 122 195 C91 197 81 143 99 109Z" fill="#ff8c00"/>
+          <circle cx="98" cy="108" r="8" fill="#fff"/>
+        </g>
+        <g fill="#1f5d54" font-family="Noto Sans SC, sans-serif" font-weight="900">
+          <text x="115" y="530" font-size="26">太阳能板 Solar Panel</text>
+          <text x="560" y="530" font-size="26">马达 + 扇叶</text>
+          <text x="392" y="292" font-size="22">光能 → 电能 → 动能</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <nav class="toc" aria-label="页面导航">
+    <a href="#goals">学习目标</a>
+    <a href="#materials">材料</a>
+    <a href="#science">科学原理</a>
+    <a href="#steps">制作步骤</a>
+    <a href="#testing">测试挑战</a>
+    <a href="#rubric">评价</a>
+    <a href="#teacher">教师备注</a>
+  </nav>
+
+  <section id="goals">
+    <div class="section-title">
+      <h2>学习目标<span class="en">Learning Goals</span></h2>
+      <button class="print-btn" onclick="window.print()">打印 / Print</button>
+    </div>
+    <div class="grid-3">
+      <div class="card"><span class="badge">Science</span><h3>理解能量转换</h3><p>说出太阳光如何让太阳能板产生电流，并驱动小马达转动。</p></div>
+      <div class="card"><span class="badge">Engineering</span><h3>搭建并改进结构</h3><p>选择合适角度、连接方式和底座，让风扇更稳定、转得更快。</p></div>
+      <div class="card"><span class="badge">Language</span><h3>用中文解释作品</h3><p>练习关键词：太阳能板、导线、马达、扇叶、电路、能量转换。</p></div>
+    </div>
+  </section>
+
+  <section id="materials">
+    <div class="section-title">
+      <h2>材料准备<span class="en">Materials</span></h2>
+    </div>
+    <div class="materials">
+      <div class="mat"><div class="ico">☀</div><b>太阳能板</b><span>Solar panel, 1 piece</span></div>
+      <div class="mat"><div class="ico">⚙</div><b>小马达</b><span>Mini DC motor, 1 piece</span></div>
+      <div class="mat"><div class="ico">✦</div><b>塑料扇叶</b><span>Fan blade / propeller</span></div>
+      <div class="mat"><div class="ico">〰</div><b>红黑导线</b><span>Wires or alligator clips</span></div>
+      <div class="mat"><div class="ico">▣</div><b>硬纸板底座</b><span>Cardboard base</span></div>
+      <div class="mat"><div class="ico">▥</div><b>支架材料</b><span>Straws, craft sticks, tape</span></div>
+      <div class="mat"><div class="ico">◎</div><b>胶带 / 胶点</b><span>Tape or glue dots</span></div>
+      <div class="mat"><div class="ico">✎</div><b>记录表</b><span>Test sheet and pencil</span></div>
+    </div>
+    <div class="warn">安全提醒：扇叶转动时不要用手指触碰；不要把导线两端长时间直接接在一起；测试时从弱光到强光逐步尝试。</div>
+  </section>
+
+  <section id="science">
+    <div class="section-title">
+      <h2>科学原理<span class="en">How It Works</span></h2>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <h3>能量旅行路线</h3>
+        <ol>
+          <li>太阳光照到太阳能板。</li>
+          <li>太阳能板把光能转成电能。</li>
+          <li>电流沿着导线流向小马达。</li>
+          <li>马达转动，带动扇叶，产生风。</li>
+        </ol>
+        <div class="tip">句型：我发现光越强，风扇转得越 ____，因为 ____。</div>
+      </div>
+      <div class="diagram">
+        <svg viewBox="0 0 560 360" role="img" aria-label="太阳能风扇电路图">
+          <rect width="560" height="360" fill="#f7fcff"/>
+          <circle cx="66" cy="72" r="38" fill="#ffb627"/>
+          <g stroke="#ffd46f" stroke-width="6" stroke-linecap="round">
+            <line x1="66" y1="15" x2="66" y2="35"/><line x1="66" y1="109" x2="66" y2="132"/><line x1="9" y1="72" x2="30" y2="72"/><line x1="102" y1="72" x2="126" y2="72"/>
+          </g>
+          <rect x="72" y="178" width="160" height="90" rx="8" fill="#18314f"/>
+          <g stroke="#78b9ff" stroke-width="2"><line x1="112" y1="178" x2="112" y2="268"/><line x1="152" y1="178" x2="152" y2="268"/><line x1="192" y1="178" x2="192" y2="268"/><line x1="72" y1="208" x2="232" y2="208"/><line x1="72" y1="238" x2="232" y2="238"/></g>
+          <path d="M232 203 C315 170 360 154 424 139" fill="none" stroke="#d94830" stroke-width="6"/>
+          <path d="M232 246 C310 270 362 247 424 198" fill="none" stroke="#24455f" stroke-width="6"/>
+          <circle cx="442" cy="168" r="52" fill="#fff" stroke="#1f5d54" stroke-width="6"/>
+          <circle cx="442" cy="168" r="13" fill="#ff8c00"/>
+          <path d="M442 168 C456 112 497 118 497 144 C497 167 469 174 442 168Z" fill="#43a047"/>
+          <path d="M442 168 C387 153 396 113 421 111 C444 109 450 140 442 168Z" fill="#1976d2"/>
+          <path d="M442 168 C429 224 388 218 388 192 C388 170 416 162 442 168Z" fill="#ffb627"/>
+          <path d="M442 168 C497 184 488 225 463 226 C440 227 434 196 442 168Z" fill="#ff8c00"/>
+          <text x="68" y="312" fill="#19324a" font-size="22" font-weight="900">太阳能板</text>
+          <text x="404" y="252" fill="#19324a" font-size="22" font-weight="900">小马达</text>
+          <text x="268" y="92" fill="#1f5d54" font-size="24" font-weight="900">闭合电路 = 风扇转起来</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="section-title">
+      <h2>制作步骤<span class="en">Build Steps</span></h2>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <div>
+          <div class="step-head"><div class="num">1</div><h3>认识零件，预测风从哪里来</h3></div>
+          <ul><li>观察太阳能板、小马达、扇叶和导线。</li><li>猜一猜：没有电池，风扇为什么还能转？</li></ul>
+          <div class="tip">提问：太阳能板需要什么条件才会工作？</div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 520 300"><rect width="520" height="300" fill="#fffaf0"/><text x="42" y="58" font-size="24" fill="#1f5d54" font-weight="900">零件盘点 Parts Check</text><rect x="48" y="92" width="130" height="82" rx="8" fill="#18314f"/><circle cx="260" cy="130" r="38" fill="#fff" stroke="#1976d2" stroke-width="6"/><rect x="350" y="101" width="94" height="58" rx="16" fill="#43a047"/><path d="M88 215 C160 180 230 210 302 185 S415 182 462 145" fill="none" stroke="#d94830" stroke-width="7"/><text x="55" y="248" font-size="18" fill="#617184">panel</text><text x="238" y="190" font-size="18" fill="#617184">motor</text><text x="355" y="188" font-size="18" fill="#617184">blade</text></svg>
+        </div>
+      </article>
+      <article class="step">
+        <div>
+          <div class="step-head"><div class="num">2</div><h3>连接电路，先让马达转起来</h3></div>
+          <ol><li>红线连接太阳能板正极和马达一端。</li><li>黑线连接另一端。</li><li>用手电筒或阳光照射太阳能板。</li></ol>
+          <div class="warn">如果马达不转，先检查导线是否夹稳，再调整太阳能板角度。</div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 520 300"><rect width="520" height="300" fill="#f7fcff"/><rect x="50" y="108" width="150" height="90" rx="8" fill="#18314f"/><g stroke="#78b9ff" stroke-width="2"><line x1="88" y1="108" x2="88" y2="198"/><line x1="126" y1="108" x2="126" y2="198"/><line x1="164" y1="108" x2="164" y2="198"/><line x1="50" y1="138" x2="200" y2="138"/><line x1="50" y1="168" x2="200" y2="168"/></g><circle cx="394" cy="151" r="43" fill="#fff" stroke="#1f5d54" stroke-width="7"/><circle cx="394" cy="151" r="12" fill="#ff8c00"/><path d="M201 125 C282 80 329 93 394 112" fill="none" stroke="#d94830" stroke-width="8"/><path d="M201 177 C272 222 335 207 394 190" fill="none" stroke="#24455f" stroke-width="8"/><text x="224" y="91" font-size="18" fill="#c62828" font-weight="900">红线 +</text><text x="228" y="230" font-size="18" fill="#24455f" font-weight="900">黑线 -</text></svg>
+        </div>
+      </article>
+      <article class="step">
+        <div>
+          <div class="step-head"><div class="num">3</div><h3>安装扇叶，固定底座</h3></div>
+          <ul><li>把扇叶轻轻压在马达轴上。</li><li>用吸管、雪糕棒或纸板做支架。</li><li>把马达固定在底座上，保持扇叶不碰桌面。</li></ul>
+          <div class="tip">工程师习惯：先临时固定，测试成功后再加固。</div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 520 300"><rect width="520" height="300" fill="#fffaf0"/><rect x="172" y="228" width="190" height="30" rx="15" fill="#1f5d54"/><rect x="252" y="152" width="26" height="80" rx="8" fill="#64748b"/><circle cx="266" cy="121" r="60" fill="#fff" stroke="#1f5d54" stroke-width="7"/><circle cx="266" cy="121" r="14" fill="#ff8c00"/><path d="M266 121 C282 61 326 67 327 95 C328 119 295 128 266 121Z" fill="#43a047"/><path d="M266 121 C207 104 214 61 242 60 C266 59 274 92 266 121Z" fill="#1976d2"/><path d="M266 121 C249 180 205 174 204 147 C203 122 237 114 266 121Z" fill="#ffb627"/><path d="M266 121 C326 138 318 182 290 183 C266 184 258 150 266 121Z" fill="#ff8c00"/><text x="96" y="68" font-size="22" fill="#1f5d54" font-weight="900">保持平衡 Stable base</text></svg>
+        </div>
+      </article>
+      <article class="step">
+        <div>
+          <div class="step-head"><div class="num">4</div><h3>调整角度，完成测试</h3></div>
+          <ol><li>让太阳能板分别面对强光、侧光、阴影。</li><li>记录风扇是否启动、转得快还是慢。</li><li>尝试改变角度，找到最佳位置。</li></ol>
+          <div class="tip">挑战：怎样让风扇在 5 秒内启动？</div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 520 300"><rect width="520" height="300" fill="#f7fcff"/><circle cx="84" cy="76" r="36" fill="#ffb627"/><g stroke="#ffd46f" stroke-width="6" stroke-linecap="round"><line x1="132" y1="98" x2="194" y2="128"/><line x1="127" y1="55" x2="208" y2="62"/><line x1="94" y1="127" x2="132" y2="190"/></g><g transform="translate(180 158) rotate(-15)"><rect x="0" y="0" width="150" height="82" rx="8" fill="#18314f"/><g stroke="#78b9ff" stroke-width="2"><line x1="38" y1="0" x2="38" y2="82"/><line x1="75" y1="0" x2="75" y2="82"/><line x1="112" y1="0" x2="112" y2="82"/><line x1="0" y1="41" x2="150" y2="41"/></g></g><path d="M340 180 C378 152 402 144 434 136" fill="none" stroke="#d94830" stroke-width="6"/><circle cx="438" cy="132" r="34" fill="#fff" stroke="#1f5d54" stroke-width="6"/><text x="48" y="258" font-size="22" fill="#1f5d54" font-weight="900">角度越合适，电流越强</text></svg>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="testing">
+    <div class="section-title">
+      <h2>测试挑战<span class="en">Testing Challenge</span></h2>
+    </div>
+    <table class="test-table">
+      <thead><tr><th>测试条件</th><th>我的预测</th><th>实际结果</th><th>我想改进</th></tr></thead>
+      <tbody>
+        <tr><td>太阳能板正对强光</td><td></td><td></td><td></td></tr>
+        <tr><td>太阳能板斜着对光</td><td></td><td></td><td></td></tr>
+        <tr><td>太阳能板在阴影里</td><td></td><td></td><td></td></tr>
+        <tr><td>改变扇叶方向或支架高度</td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="rubric">
+    <div class="section-title">
+      <h2>展示评价<span class="en">Project Rubric</span></h2>
+    </div>
+    <div class="rubric">
+      <div class="card"><h3>结构</h3><ul><li>底座稳定</li><li>导线固定</li><li>扇叶不碰撞</li></ul></div>
+      <div class="card"><h3>功能</h3><ul><li>光照下能启动</li><li>能说明快慢变化</li><li>尝试过改进</li></ul></div>
+      <div class="card"><h3>科学解释</h3><ul><li>使用关键词</li><li>解释能量转换</li><li>能回答同学问题</li></ul></div>
+      <div class="card"><h3>合作展示</h3><ul><li>分工清楚</li><li>记录完整</li><li>展示有礼貌</li></ul></div>
+    </div>
+  </section>
+
+  <section id="teacher">
+    <div class="section-title">
+      <h2>教师备注<span class="en">Teacher Notes</span></h2>
+    </div>
+    <div class="teacher-note">
+      <h3>课堂流程建议</h3>
+      <p>5 分钟导入新能源；10 分钟认识零件和电路；20-25 分钟搭建；10 分钟测试记录；10 分钟小组展示。</p>
+      <p>低年级可提前准备好支架和导线夹；高年级可增加变量实验，例如光照角度、距离、扇叶大小、串联/并联讨论。</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

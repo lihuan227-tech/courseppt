@@ -130,86 +130,167 @@ const coverChildren = [
   }),
 ];
 
-// ===== §1 题库 · 8 个职业 / Question Bank — 8 career-identification cards =====
-// Layout mirrors the in-class "题库 · 8 个问题" slide: 4 rows × 2 cols of colored cards.
+// ===== §1 题库 · 8 个职业思考题 / Question Bank =====
+// Single-column full-width cards with 3 options (A/B/C) each.
 const qbCardColors = ['1565C0', '6A1B9A', '558B2F', 'F57C00', 'C5283C', '00897B', '7B5E3F', 'D81B60'];
 
 const qbQuestions = [
-  { em: '🩺',  cn: '在 医院 帮 病人',          en: 'Helps patients at the hospital',      a: '医生 Doctor',       b: '老师 Teacher' },
-  { em: '📚',  cn: '在 学校 教 我们',          en: 'Teaches us at school',                a: '厨师 Chef',         b: '老师 Teacher' },
-  { em: '👮',  cn: '抓 坏人 + 让 大家 安全',   en: 'Catches bad guys, keeps us safe',     a: '警察 Police',       b: '工程师 Engineer' },
-  { em: '👨‍🍳', cn: '在 厨房 做 好吃的饭',     en: 'Cooks delicious food in the kitchen', a: '厨师 Chef',         b: '警察 Police' },
-  { em: '👷',  cn: '设计 桥 和 楼 房',         en: 'Designs bridges and buildings',       a: '老师 Teacher',      b: '工程师 Engineer' },
-  { em: '🚒',  cn: '灭火 + 救 人',             en: 'Puts out fires + rescues people',     a: '厨师 Chef',         b: '消防员 Firefighter' },
-  { em: '✈️',  cn: '在 天上 飞 飞机',          en: 'Flies airplanes in the sky',          a: '飞行员 Pilot',      b: '医生 Doctor' },
-  { em: '🎨',  cn: '画画 + 设计 漂亮 东西',    en: 'Draws + designs beautiful things',    a: '设计师 Designer',   b: '警察 Police' },
+  {
+    em: '🌱',
+    cn: '你 长 大 想 做 什 么 工 作? 怎 么 想, 才 能 想 对?',
+    en: 'How can we figure out what job we want when we grow up?',
+    opts: [
+      { cn: '想 一 想 自 己 喜 欢 什 么、会 什 么、想 帮 谁',
+        en: 'Think about what you like, what you can do, and who you want to help.' },
+      { cn: '只 挑 最 能 赚 钱 的 工 作',
+        en: 'Just pick the job that pays the most.' },
+      { cn: '看 别 人 选 什 么, 自 己 也 跟 着 选',
+        en: 'Pick whatever everyone else picks.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🐶',
+    cn: '你 很 喜 欢 动 物, 还 想 照 顾 生 病 的 小 动 物 — 你 可 以 当 什 么?',
+    en: 'You love animals and want to help sick ones — what could you be?',
+    opts: [
+      { cn: '兽 医', en: 'Vet' },
+      { cn: '飞 行 员', en: 'Pilot' },
+      { cn: '厨 师', en: 'Chef' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '👷',
+    cn: '工 程 师 平 时 主 要 在 做 什 么?',
+    en: 'What does an engineer mostly do?',
+    opts: [
+      { cn: '动 脑 筋 想 办 法, 把 问 题 解 决',
+        en: 'Use their brain to solve problems.' },
+      { cn: '只 在 工 地 搬 东 西',
+        en: 'Just carry things at the construction site.' },
+      { cn: '天 天 修 同 一 个 东 西',
+        en: 'Fix the same thing every day.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '💡',
+    cn: '一 个 爱 好, 以 后 可 以 做 出 多 少 种 工 作?',
+    en: 'One interest — how many jobs can it lead to?',
+    opts: [
+      { cn: '好 多 种, 都 不 一 样', en: 'Many different careers.' },
+      { cn: '只 能 做 一 种', en: 'Only one career.' },
+      { cn: '什 么 工 作 都 做 不 了', en: 'Cannot become a career.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🛠️',
+    cn: '工 程 师 看 到 问 题 以 后, 接 下 来 会 做 什 么?',
+    en: 'After an engineer spots a problem, what comes next?',
+    opts: [
+      { cn: '动 脑 筋, 想 办 法', en: 'Think of a way to fix it.' },
+      { cn: '马 上 放 弃, 不 做 了', en: 'Give up right away.' },
+      { cn: '不 再 试 了', en: 'Stop trying.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🌉',
+    cn: '桥 和 大 楼, 一 般 是 谁 设 计 的?',
+    en: 'Who usually designs bridges and big buildings?',
+    opts: [
+      { cn: '工 程 师', en: 'Engineer' },
+      { cn: '兽 医', en: 'Vet' },
+      { cn: '魔 术 师', en: 'Magician' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '🎮',
+    cn: '游 戏 设 计 师 除 了 会 玩 游 戏, 还 要 会 些 什 么?',
+    en: 'Besides playing games, what else does a game designer need to know?',
+    opts: [
+      { cn: '会 编 程, 会 画 画, 还 会 讲 故 事',
+        en: 'Coding, drawing, and storytelling.' },
+      { cn: '会 跑 得 很 快', en: 'Running fast.' },
+      { cn: '会 做 很 多 种 菜', en: 'Cooking many dishes.' },
+    ],
+    correct: 0,
+  },
+  {
+    em: '📚',
+    cn: '要 是 一 个 老 师 都 没 有, 大 家 会 怎 么 样?',
+    en: 'What if there were no teachers at all?',
+    opts: [
+      { cn: '很 多 人 想 学 东 西, 都 会 很 难',
+        en: 'A lot of people would have trouble learning.' },
+      { cn: '大 家 都 学 会 开 飞 机', en: 'Everyone would learn to fly planes.' },
+      { cn: '学 校 全 变 成 餐 厅', en: 'Schools would all turn into restaurants.' },
+    ],
+    correct: 0,
+  },
 ];
 
 function qbCell(num, q, color) {
+  const optionParas = q.opts.map((opt, idx) => {
+    const letter = String.fromCharCode(65 + idx);  // A, B, C
+    return new Paragraph({
+      spacing: { before: 60, after: 0 },
+      indent: { left: 600 },
+      children: [
+        new TextRun({ text: '☐  ', bold: true, size: 20, color: DARK }),
+        new TextRun({ text: `${letter}.  `, bold: true, size: 20, color: DARK }),
+        new TextRun({ text: opt.cn, size: 20, color: DARK }),
+        new TextRun({ text: `  ·  ${opt.en}`, italics: true, size: 15, color: GRAY }),
+      ],
+    });
+  });
+  // Light gray thin border on all sides — B&W-print friendly. No background fill.
+  const lightBorder = { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' };
   return new TableCell({
-    width: { size: Math.floor(CW / 2), type: WidthType.DXA },
-    borders: allBorders(border(color, 10)),
-    shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
-    margins: { top: 140, bottom: 140, left: 200, right: 200 },
+    width: { size: CW, type: WidthType.DXA },
+    borders: allBorders(lightBorder),
+    margins: { top: 200, bottom: 200, left: 240, right: 240 },
     verticalAlign: 'center',
     children: [
       new Paragraph({
         spacing: { before: 0, after: 40 },
         children: [
-          new TextRun({ text: `${num}  `, bold: true, size: 28, color }),
+          new TextRun({ text: `${num}.  `, bold: true, size: 26, color: DARK }),
           new TextRun({ text: `${q.em}  `, size: 26 }),
-          new TextRun({ text: q.cn, bold: true, size: 19, color: DARK }),
+          new TextRun({ text: q.cn, bold: true, size: 22, color: DARK }),
         ],
       }),
       new Paragraph({
-        spacing: { before: 0, after: 100 },
+        spacing: { before: 0, after: 120 },
         indent: { left: 600 },
-        children: [new TextRun({ text: q.en, italics: true, size: 14, color: GRAY })],
+        children: [new TextRun({ text: q.en, italics: true, size: 16, color: GRAY })],
       }),
-      new Paragraph({
-        spacing: { before: 0, after: 60 },
-        indent: { left: 600 },
-        children: [
-          new TextRun({ text: '☐  A.  ', bold: true, size: 18, color: DARK }),
-          new TextRun({ text: q.a, size: 18, color: DARK }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { before: 0, after: 0 },
-        indent: { left: 600 },
-        children: [
-          new TextRun({ text: '☐  B.  ', bold: true, size: 18, color: DARK }),
-          new TextRun({ text: q.b, size: 18, color: DARK }),
-        ],
-      }),
+      ...optionParas,
     ],
   });
 }
 
-const qbRows = [];
-for (let row = 0; row < 4; row++) {
-  qbRows.push(new TableRow({
-    height: { value: 1600, rule: 'atLeast' },
-    children: [
-      qbCell(row * 2 + 1, qbQuestions[row * 2],     qbCardColors[row * 2]),
-      qbCell(row * 2 + 2, qbQuestions[row * 2 + 1], qbCardColors[row * 2 + 1]),
-    ],
-  }));
-}
+const qbRows = qbQuestions.map((q, i) => new TableRow({
+  cantSplit: true,
+  children: [qbCell(i + 1, q, qbCardColors[i])],
+}));
 
 const section1Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
-  shadedBar('一、题库 · 8 个职业 / Question Bank · 8 Careers  (圈出正确答案)', ACCENT, 24),
+  shadedBar('一、题库 · 8 个思考题 / Question Bank · 8 Reflection Questions  (圈出正确答案)', ACCENT, 24),
   new Paragraph({
     spacing: { before: 160, after: 160 },
     children: [new TextRun({
-      text: '👉 看 描述, 圈出 对的 职业。/ Read the description and circle the right career.',
+      text: '👉 读 一 读, 圈 出 对 的 答案。/ Read each question and circle the right answer.',
       size: 22, italics: true, color: GRAY,
     })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
-    columnWidths: [Math.floor(CW / 2), Math.floor(CW / 2)],
+    columnWidths: [CW],
     borders: allBorders(noBorder()),
     rows: qbRows,
   }),
@@ -218,7 +299,7 @@ const section1Children = [
     alignment: AlignmentType.CENTER,
     children: [
       new TextRun({ text: '🏆 ', size: 22 }),
-      new TextRun({ text: '答对 8 题 = 「小小职业人」徽章! ', bold: true, size: 20, color: ACCENT }),
+      new TextRun({ text: '答 对 8 题 = 「小 小 职 业 人」 徽 章! ', bold: true, size: 20, color: ACCENT }),
       new TextRun({ text: 'All 8 right = Future Career Hero badge!', italics: true, size: 16, color: GRAY }),
     ],
   }),
@@ -274,27 +355,70 @@ const section2Children = [
   new Paragraph({
     spacing: { before: 200, after: 80 },
     children: [
-      new TextRun({ text: '🎨 画一画  Draw yourself doing your dream job ', size: 22, bold: true, color: SKY }),
-      new TextRun({ text: '— 画工作的你 (工具 / 制服 / 工作的地方)', size: 16, italics: true, color: GRAY }),
+      new TextRun({ text: '🎨 画 一 画  Draw yourself doing your dream job ', size: 22, bold: true, color: SKY }),
+      new TextRun({ text: '— 画 工 作 的 你 (工 具 / 制 服 / 工 作 的 地 方)', size: 16, italics: true, color: GRAY }),
     ],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
     columnWidths: [CW],
-    borders: allBorders(border(SKY, 12)),
+    borders: allBorders({ style: BorderStyle.SINGLE, size: 6, color: 'BBBBBB' }),
     rows: [new TableRow({
       height: { value: 3200, rule: 'atLeast' },
       children: [new TableCell({
         width: { size: CW, type: WidthType.DXA },
-        shading: { fill: 'FFFFFF', type: ShadingType.CLEAR },
         margins: { top: 80, bottom: 80, left: 120, right: 120 },
         verticalAlign: 'center',
         children: [new Paragraph({
           alignment: AlignmentType.CENTER,
-          children: [new TextRun({ text: '✏️  在这里画 / Draw here', italics: true, color: LGRAY, size: 18 })],
+          children: [new TextRun({ text: '✏️  在 这 里 画 / Draw here', italics: true, color: LGRAY, size: 18 })],
         })],
       })],
     })],
+  }),
+  // "Write your answer" label
+  new Paragraph({
+    spacing: { before: 160, after: 60 },
+    children: [
+      new TextRun({ text: '✏️ 写 一 写 / Write your answer:', size: 16, bold: true, color: SKY }),
+    ],
+  }),
+  // Sentence frame — placed UNDER 写一写
+  new Paragraph({
+    spacing: { before: 0, after: 40 },
+    children: [
+      new TextRun({ text: '💬 提 示  Sentence frame: ', size: 16, bold: true, color: SKY }),
+      new TextRun({ text: '「我 长 大 了 想 当 ______, 因 为 ______。」', size: 18, bold: true, color: DARK }),
+    ],
+  }),
+  new Paragraph({
+    spacing: { before: 0, after: 100 },
+    children: [
+      new TextRun({ text: '"When I grow up, I want to be ___, because ___."',
+        size: 13, italics: true, color: GRAY }),
+    ],
+  }),
+  new Table({
+    width: { size: CW, type: WidthType.DXA },
+    columnWidths: [CW],
+    borders: {
+      top: noBorder(), left: noBorder(), right: noBorder(),
+      bottom: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+      insideHorizontal: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+      insideVertical: noBorder(),
+    },
+    rows: [1, 2, 3, 4].map(() => new TableRow({
+      height: { value: 560, rule: 'atLeast' },
+      children: [new TableCell({
+        width: { size: CW, type: WidthType.DXA },
+        borders: {
+          top: noBorder(), left: noBorder(), right: noBorder(),
+          bottom: { style: BorderStyle.SINGLE, size: 8, color: '666666' },
+        },
+        margins: { top: 60, bottom: 60, left: 0, right: 0 },
+        children: [new Paragraph({ children: [new TextRun({ text: '', size: 22 })] })],
+      })],
+    })),
   }),
 ];
 
@@ -317,7 +441,7 @@ const matchRows = matchWords.map((w, i) => {
     children: [
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(CORAL, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
@@ -325,15 +449,11 @@ const matchRows = matchWords.map((w, i) => {
             alignment: AlignmentType.CENTER,
             children: [new TextRun({ text: w.char, bold: true, size: 52, color: DARK })],
           }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: w.py, size: 22, color: GRAY, italics: true })],
-          }),
         ],
       }),
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: allBorders(border(SKY, 8)),
+        borders: allBorders(noBorder()),
         margins: { top: 200, bottom: 200, left: 240, right: 240 },
         verticalAlign: 'center',
         children: [
@@ -355,18 +475,8 @@ const section3Children = [
   new Paragraph({ pageBreakBefore: true, spacing: { before: 0, after: 0 }, children: [new TextRun({ text: '' })] }),
   shadedBar('三、连一连 / Match  (用线连起来)', CORAL, 24),
   new Paragraph({
-    spacing: { before: 200, after: 200 },
-    children: [new TextRun({
-      text: '👉 把中文词语和正确的英文/表情用一根线连起来。',
-      size: 22, italics: true, color: GRAY,
-    })],
-  }),
-  new Paragraph({
-    spacing: { before: 80, after: 200 },
-    children: [new TextRun({
-      text: 'Draw a line from each Chinese word to its matching emoji + English.',
-      size: 20, italics: true, color: GRAY,
-    })],
+    spacing: { before: 300, after: 0 },
+    children: [new TextRun({ text: '' })],
   }),
   new Table({
     width: { size: CW, type: WidthType.DXA },
