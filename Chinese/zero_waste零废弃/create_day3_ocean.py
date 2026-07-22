@@ -82,7 +82,7 @@ VOCAB_RECOGNIZE = [
 VOCAB_WRITE = [
   ("水", [("水", "shuǐ", "4 笔", "三 点 加 一 竖 钩")], "water"),
   ("保 护", [("保", "bǎo", "9 笔", "亻 加 呆"), ("护", "hù", "7 笔", "扌 加 户")], "protect"),
-  ("塑 料", [("塑", "sù", "13 笔", "朔 加 土"), ("料", "liào", "10 笔", "米 加 斗")], "plastic"),
+  ("节 约", [("节", "jié", "5 笔", "艹 加 卩"), ("约", "yuē", "6 笔", "纟 加 勺")], "save"),
 ]
 
 
@@ -123,15 +123,8 @@ def build():
         [(it["em"], it["short"], it["en"]) for it in ITEMS],
         "我 是 海 洋 小 卫 士, 我 要 减 少 ______。", "I'm an Ocean Guardian. I'll cut down on ___."))
 
-    page(video_slide(prs, "一 滴 水 的 旅 行", "A Water Drop's Journey",
-        [("👂", "水 从 哪 里 来?", "Where is water from?"),
-         ("👀", "水 去 了 哪 里?", "Where does it go?"),
-         ("🤔", "我 们 用 水 做 什 么?", "What do we use water for?")],
-        "🌊 看 完 说 一 说: 我 们 为 什 么 需 要 水?",
-        "https://www.youtube.com/results?search_query=水循环+儿童+动画", OCEAN))
-
-    s = page(ns(prs)); bg(s, CREAM); hb(s, "💬 故 事 讨 论  Let's Talk", OCEAN)
-    for i, (q, en) in enumerate([("水 去 了 哪 里? (云 → 雨 → 河 → 海)", "Where did the water go?"),
+    s = page(ns(prs)); bg(s, CREAM); hb(s, "💬 说 一 说 · 水  Let's Talk About Water", OCEAN)
+    for i, (q, en) in enumerate([("你 在 哪 里 见 过 水? (河、海、雨、水 龙 头)", "Where have you seen water?"),
                                  ("我 们 为 什 么 需 要 水?", "Why do we need water?")]):
         y = 1.0 + i*1.0; panel(s, 0.5, y, 9.0, 0.85, OCEAN, fill=WHITE, lw=2.5)
         tb(s, 0.7, y+0.14, 8.6, 0.4, f"{i+1}. {q}", sz=15, b=True, c=DARK)
@@ -157,12 +150,64 @@ def build():
                                   ("♻️", "洗 菜 水 浇 花"), ("🚿", "洗 澡 快 一 点")]):
         y = 1.65 + i*0.63; tb(s, 5.25, y, 0.5, 0.5, em, sz=22); tb(s, 5.85, y+0.06, 3.6, 0.4, cn, sz=13, b=True, c=DARK)
 
-    page(video_slide(prs, "海 洋 告 急!", "Where does plastic go?",
-        [("🌊", "塑 料 去 了 海 里", "Plastic reaches the sea"),
-         ("🐢", "海 龟 会 怎 样?", "What happens to turtles?"),
-         ("😢", "你 有 什 么 感 觉?", "How do you feel?")],
-        "看 完 说: 塑 料 让 ______ 受 伤。",
-        "https://www.youtube.com/results?search_query=ocean+plastic+sea+turtle+kids", CORAL))
+    # ---- 绘本 Somebody Swallowed Stanley: 塑料袋 → 海洋 → 动物 → 我们 ----
+    s = page(ns(prs)); bg(s, CREAM)
+    hb(s, "📖 绘 本 时 间 · 谁 吞 掉 了 斯 坦 利?  Storybook Time", OCEAN)
+    panel(s, 0.40, 0.95, 4.40, 3.95, OCEAN, fill=INK, lw=3)
+    tb(s, 0.40, 1.15, 4.40, 1.05, "🛍️", sz=78, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 2.28, 4.40, 0.45, "谁 吞 掉 了 斯 坦 利?", sz=20, b=True, c=STAR, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 2.75, 4.40, 0.30, "Somebody Swallowed Stanley", sz=12, c=WARM, a=PP_ALIGN.CENTER)
+    tb(s, 0.40, 3.05, 4.40, 0.26, "中 文 绘 本 · 拯 救 海 洋", sz=10, c=LGRAY, a=PP_ALIGN.CENTER)
+    pb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(1.20), Inches(3.50), Inches(2.80), Inches(0.60))
+    pb.fill.solid(); pb.fill.fore_color.rgb = FIRE_ORANGE; pb.line.fill.background()
+    tb(s, 1.20, 3.60, 2.80, 0.42, "▶️  读 绘 本  Read Aloud", sz=14, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+    _url = "https://www.youtube.com/watch?v=LHY2XcCiBSw"
+    pb.click_action.hyperlink.address = _url
+    tb(s, 0.40, 4.32, 4.40, 0.28, "🛍️ 斯 坦 利 是 一 个 塑 料 袋", sz=10, c=STAR, a=PP_ALIGN.CENTER)
+    panel(s, 5.10, 0.95, 4.50, 3.95, FIRE_ORANGE, fill=WHITE, lw=3)
+    panel_head(s, 5.10, 0.95, 4.50, FIRE_ORANGE, "🎬 读 之 前 — 想 一 想", sz=13)
+    for i, (em, cn, en) in enumerate([
+            ("🛍️", "斯 坦 利 是 什 么?", "What is Stanley?"),
+            ("🌊", "它 掉 进 海 里 会 怎 样?", "What happens in the sea?"),
+            ("🐢", "谁 会 把 它 当 成 食 物?", "Who thinks it's food?")]):
+        y = 1.60 + i*1.00
+        tb(s, 5.25, y, 0.55, 0.55, em, sz=28)
+        tb(s, 5.85, y+0.08, 3.60, 0.38, cn, sz=13, b=True, c=DARK)
+        tb(s, 5.85, y+0.48, 3.60, 0.30, en, sz=9, c=GRAY)
+    ab = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(0.40), Inches(5.00), Inches(9.20), Inches(0.45))
+    ab.fill.solid(); ab.fill.fore_color.rgb = OCEAN; ab.line.fill.background()
+    tb(s, 0.55, 5.07, 9.0, 0.32, "📖 一 边 读, 一 边 想: 塑 料 袋 给 海 洋 带 来 什 么 麻 烦?",
+       sz=11, b=True, c=STAR, a=PP_ALIGN.CENTER)
+
+    # ---- 绘本讨论 + 对人的危害 (food chain: plastic → fish → us) ----
+    s = page(ns(prs)); bg(s, CREAM)
+    hb(s, "💬 绘 本 讨 论 · 塑 料 也 会 伤 害 我 们  Let's Talk", CORAL)
+    panel(s, 0.40, 1.00, 4.45, 3.05, OCEAN, fill=WHITE, lw=2.5)
+    panel_head(s, 0.40, 1.00, 4.45, OCEAN, "🤔 想 一 想 · 绘 本 里", sz=13)
+    for i, (em, q) in enumerate([
+            ("🐢", "斯 坦 利 让 哪 些 动 物 受 伤?"),
+            ("🌊", "海 龟 为 什 么 会 吃 塑 料 袋?"),
+            ("😊", "最 后 谁 救 了 海 龟?")]):
+        y = 1.62 + i*0.76
+        tb(s, 0.58, y, 0.55, 0.5, em, sz=22)
+        tb(s, 1.15, y+0.06, 3.55, 0.5, q, sz=13, b=True, c=DARK)
+    panel(s, 5.10, 1.00, 4.50, 3.05, CORAL, fill=WARM, lw=2.5)
+    panel_head(s, 5.10, 1.00, 4.50, CORAL, "🍽️ 塑 料 会 回 到 我 们 身 上!", sz=12)
+    for i, (em, cn) in enumerate([
+            ("🥤", "塑 料 碎 成 小 片"), ("🐟", "小 鱼 吃 塑 料"),
+            ("🐠", "大 鱼 吃 小 鱼"), ("🧑", "我 们 吃 鱼")]):
+        y = 1.55 + i*0.52
+        tb(s, 5.30, y, 0.55, 0.45, em, sz=20)
+        tb(s, 5.92, y+0.04, 3.4, 0.4, cn, sz=13, b=True, c=DARK)
+    tb(s, 5.25, 3.66, 4.20, 0.32, "→ 海 洋 垃 圾 也 伤 害 人!", sz=12, b=True, c=CORAL, a=PP_ALIGN.CENTER)
+    sentence_frame_bar(s, 4.25, "塑 料 伤 害 ______, 也 伤 害 我 们。", "Plastic hurts ___ and us too.", OCEAN)
+    nb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(0.30), Inches(4.92), Inches(9.40), Inches(0.48))
+    nb.fill.solid(); nb.fill.fore_color.rgb = WARM; nb.line.color.rgb = CORAL; nb.line.width = Pt(1.5)
+    tb(s, 0.45, 5.00, 9.10, 0.32, "👩‍🏫 先 读 绘 本, 再 讨 论 — 强 调: 塑 料 → 鱼 → 我 们  (⏱️ 8 分)",
+       sz=11, b=True, c=DARK, a=PP_ALIGN.CENTER)
 
     s = page(ns(prs)); bg(s, CREAM); hb(s, "🥤 什 么 是 一 次 性 塑 料?  Single-Use Plastic", OCEAN)
     tb(s, 0.4, 0.88, 9.2, 0.5, "用 一 次 就 扔 掉 的 塑 料 = 一 次 性 塑 料", sz=20, b=True, c=CORAL, a=PP_ALIGN.CENTER)
@@ -197,14 +242,14 @@ def build():
     rows_data = [("塑 料", [it["em"] for it in ITEMS]),
                  ("动 物", [it["victim"] for it in ITEMS]),
                  ("换 成", swaps)]
-    ty = 1.35
+    ty = 1.55
     for ri, (lab, vals) in enumerate(rows_data):
-        y = ty + ri*1.05
-        p = panel(s, 0.35, y, 1.15, 0.95, OCEAN, fill=OCEAN, lw=0); p.line.fill.background()
-        tb(s, 0.35, y+0.30, 1.15, 0.4, lab, sz=13, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+        y = ty + ri*1.25
+        p = panel(s, 0.35, y, 1.15, 1.05, OCEAN, fill=OCEAN, lw=0); p.line.fill.background()
+        tb(s, 0.35, y+0.34, 1.15, 0.4, lab, sz=13, b=True, c=WHITE, a=PP_ALIGN.CENTER)
         for ci, v in enumerate(vals):
-            x = 1.60 + ci*1.33; panel(s, x, y, 1.25, 0.95, OCEAN, fill=WHITE, lw=1.5)
-            tb(s, x, y+0.24, 1.25, 0.6, v, sz=26, a=PP_ALIGN.CENTER)
+            x = 1.60 + ci*1.33; panel(s, x, y, 1.25, 1.05, OCEAN, fill=WHITE, lw=1.5)
+            tb(s, x, y+0.30, 1.25, 0.6, v, sz=26, a=PP_ALIGN.CENTER)
 
     # 32-33 action game
     game = [("🛍️", "买 东 西 不 用 塑 料 袋"), ("🥤", "喝 水 用 自 己 的 水 壶"), ("🐢", "塑 料 扔 进 海 里"),
@@ -263,9 +308,9 @@ def build():
     s = page(ns(prs)); bg(s, CREAM); hb(s, "📓 完 成 「海 洋 小 卫 士」练 习 册  Day 3 Booklet", EARTH_BROWN)
     for i, (t, d) in enumerate([("① 圈 污 染", "哪 些 是 一 次 性 塑 料?"), ("② 连 一 连", "塑 料 → 换 成 什 么"),
                                 ("③ 我 的 承 诺", "我 是 海 洋 小 卫 士, 我 可 以 ___"), ("④ 描 一 描", "水 · 保 护 · 塑 料")]):
-        r, c = divmod(i, 2); x = 0.6 + c*4.5; y = 1.1 + r*1.7
-        panel(s, x, y, 4.2, 1.5, AQUA, fill=WHITE, lw=2.5); tb(s, x+0.2, y+0.2, 3.8, 0.5, t, sz=17, b=True, c=AQUA)
-        tb(s, x+0.2, y+0.78, 3.8, 0.6, d, sz=12, b=True, c=DARK)
+        r, c = divmod(i, 2); x = 0.6 + c*4.5; y = 1.22 + r*1.98
+        panel(s, x, y, 4.2, 1.70, AQUA, fill=WHITE, lw=2.5); tb(s, x+0.25, y+0.30, 3.7, 0.5, t, sz=17, b=True, c=AQUA)
+        tb(s, x+0.25, y+0.95, 3.7, 0.6, d, sz=12, b=True, c=DARK)
 
     s = page(ns(prs)); bg(s, CREAM); hb(s, "🎨 动 手 时 间!  Hands-On — 2 个 活 动", AQUA)
     for i, (t, d, cl, em) in enumerate([("PROJECT 1 · 海 洋 拼 贴 画", "用 回 收 材 料 拼 一 片 干 净 的 海 洋", OCEAN, "🖼️"),
@@ -286,8 +331,8 @@ def build():
 
     s = page(ns(prs)); bg(s, CREAM); hb(s, "🖼️ Project 1 · 参 考 作 品  Examples", OCEAN)
     for i in range(6):
-        r, c = divmod(i, 3); x = 0.4 + c*3.15; y = 1.05 + r*1.75
-        photo_slot(s, x, y, 2.95, 1.6, "海 洋 拼 贴 参 考", "collage example", OCEAN)
+        r, c = divmod(i, 3); x = 0.45 + c*3.13; y = 0.98 + r*2.20
+        photo_slot(s, x, y, 2.83, 1.90, "海 洋 拼 贴 参 考", "collage example", OCEAN)
 
     s = page(ns(prs)); bg(s, CREAM); hb(s, "🛍️ Project 2: 装 饰 环 保 袋 + 承 诺", AQUA)
     panel_head(s, 0.4, 0.95, 4.5, AQUA, "🧺 材 料 + 做 法  Materials + Steps")

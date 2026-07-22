@@ -206,7 +206,7 @@ def teacher_box(s, l, t, w, say_cn, do_cn, mins, color=None):
     # Tags
     tb(s, l + 0.15, t + 0.06, 1.40, 0.22, "👩‍🏫 老师 说",
        sz=9, b=True, c=color)
-    tb(s, l + 0.15, t + 0.28, w - 0.30, 0.30, say_cn,
+    tb(s, l + 0.15, t + 0.28, w - 1.15, 0.30, say_cn,
        sz=11, b=True, c=DARK)
     tb(s, l + 0.15, t + 0.58, 1.40, 0.22, "👧 学生 做",
        sz=9, b=True, c=color)
@@ -256,7 +256,7 @@ def vocab_write(prs, header_color, cn_phrase, en_word, chars):
     # LEFT — big-character card
     sh = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.4), Inches(1.0), Inches(4.4), Inches(3.4))
     sh.fill.solid(); sh.fill.fore_color.rgb = WARM; sh.line.color.rgb = header_color; sh.line.width = Pt(2.5)
-    csz = 120 if len(cn_phrase) == 1 else 96
+    csz = 120 if len(cn_phrase) == 1 else 88
     tb(s, 0.5, 1.15, 4.2, 1.95, cn_phrase, sz=csz, b=True, c=header_color, a=PP_ALIGN.CENTER)
     tb(s, 0.5, 3.05, 4.2, 0.45, f"{py}  ·  {en_word}", sz=20, b=True, c=GRAY, a=PP_ALIGN.CENTER)
     if tot:
@@ -548,7 +548,7 @@ def compare_slide(prs, header_text, left, right, frame_cn=None, frame_en=None):
 
 # ===== Day 3 (海洋小卫士) reference-structure helpers =====
 OCEAN_TINTS = [RGBColor(0x1B,0x6F,0xBA), RGBColor(0x00,0x69,0x70), RGBColor(0x2A,0x9D,0x8F),
-               RGBColor(0x3A,0x7C,0xA5), RGBColor(0xE6,0x85,0x3A), RGBColor(0xC8,0x25,0x3E)]
+               RGBColor(0x3A,0x7C,0xA5), RGBColor(0xC0,0x5A,0x17), RGBColor(0xC8,0x25,0x3E)]
 
 
 def mission_intro_slide(prs, color, header, cards, frame_cn, frame_en,
@@ -578,36 +578,36 @@ def observe_think_slide(prs, color, header, photo_cn, photo_en, senses, dangers,
     """看+想 station slide: photo LEFT, sensory prompts RIGHT, danger cards bottom.
     senses: list of (emoji, cn) up to 3.  dangers: list of (emoji, cn) up to 4."""
     s = ns(prs); bg(s, CREAM); hb(s, header, color)
-    photo_slot(s, 0.30, 0.95, 4.35, 3.30, photo_cn, photo_en, color)
-    panel(s, 4.80, 0.95, 4.90, 3.30, color, fill=WHITE, lw=2.5)
+    photo_slot(s, 0.30, 0.95, 4.35, 3.05, photo_cn, photo_en, color)
+    panel(s, 4.80, 0.95, 4.90, 3.05, color, fill=WHITE, lw=2.5)
     panel_head(s, 4.80, 0.95, 4.90, color, "1️⃣ 👀 看 — 你 看 到 / 想 到 什 么?", sz=12)
     for i, (em, cn) in enumerate(senses[:3]):
-        y = 1.55 + i*0.68
+        y = 1.50 + i*0.62
         tb(s, 4.95, y, 0.55, 0.55, em, sz=24, a=PP_ALIGN.LEFT)
         tb(s, 5.55, y+0.06, 3.95, 0.55, cn, sz=13, b=True, c=DARK, a=PP_ALIGN.LEFT)
     if media_cn and media_url:
-        link = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.90), Inches(3.55), Inches(4.70), Inches(0.60))
+        link = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(4.90), Inches(3.32), Inches(4.70), Inches(0.55))
         link.fill.solid(); link.fill.fore_color.rgb = INK; link.line.color.rgb = STAR; link.line.width = Pt(1.5)
-        tb(s, 4.95, 3.60, 4.6, 0.26, f"▶️ {media_cn}", sz=11, b=True, c=STAR, a=PP_ALIGN.CENTER)
-        tb(s, 4.95, 3.86, 4.6, 0.24, media_url, sz=7.5, c=LGRAY, a=PP_ALIGN.CENTER)
+        tb(s, 4.95, 3.36, 4.6, 0.24, f"▶️ {media_cn}", sz=11, b=True, c=STAR, a=PP_ALIGN.CENTER)
+        tb(s, 4.95, 3.60, 4.6, 0.22, media_url, sz=7.5, c=LGRAY, a=PP_ALIGN.CENTER)
         link.click_action.hyperlink.address = media_url
-    dh = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.30), Inches(4.38), Inches(9.40), Inches(0.42))
+    dh = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.30), Inches(4.12), Inches(9.40), Inches(0.38))
     dh.fill.solid(); dh.fill.fore_color.rgb = ALERT; dh.line.fill.background()
-    tb(s, 0.4, 4.44, 9.2, 0.32, "2️⃣ 🤔 想 — 它 到 了 海 里, 会 伤 害 谁?  我 觉 得……",
+    tb(s, 0.4, 4.17, 9.2, 0.30, "2️⃣ 🤔 想 — 它 到 了 海 里, 会 伤 害 谁?  我 觉 得……",
        sz=12, b=True, c=STAR, a=PP_ALIGN.CENTER)
     dw, dgap = 2.28, 0.10; dx0 = (10 - (4*dw+3*dgap))/2
     for i, (em, cn) in enumerate(dangers[:4]):
         x = dx0 + i*(dw+dgap)
-        panel(s, x, 4.86, dw, 0.62, color, fill=WHITE, lw=2)
-        tb(s, x+0.10, 4.96, 0.5, 0.42, em, sz=20, a=PP_ALIGN.LEFT)
-        tb(s, x+0.62, 4.98, dw-0.7, 0.40, cn, sz=12, b=True, c=DARK, a=PP_ALIGN.LEFT)
+        panel(s, x, 4.60, dw, 0.60, color, fill=WHITE, lw=2)
+        tb(s, x+0.10, 4.69, 0.5, 0.42, em, sz=20, a=PP_ALIGN.LEFT)
+        tb(s, x+0.62, 4.71, dw-0.7, 0.40, cn, sz=12, b=True, c=DARK, a=PP_ALIGN.LEFT)
     return s
 
 
-def _ab_rows(s, color, rows, reveal=False):
+def _ab_rows(s, color, rows, reveal=False, top=1.35):
     """3 scenario rows; each: number badge + scenario + A box (left) + B box (right).
     rows: list of (scenario_cn, a_cn, b_cn, correct)  correct in {'A','B'}."""
-    top = 1.72; rh = 0.85
+    rh = 0.85
     for i, (sc, a_cn, b_cn, correct) in enumerate(rows[:3]):
         y = top + i*rh
         panel(s, 0.35, y, 9.30, rh-0.13, color, fill=WHITE, lw=2)
@@ -620,7 +620,7 @@ def _ab_rows(s, color, rows, reveal=False):
             oc = OK if good else color
             fillc = RGBColor(0xEF,0xF7,0xEE) if good else WHITE
             panel(s, bx, y+0.13, 2.65, rh-0.39, oc, fill=fillc, lw=(3 if good else 1.5))
-            tb(s, bx+0.10, y+0.20, 0.55, 0.35, ("✓"+label if good else label), sz=12, b=True, c=oc, a=PP_ALIGN.LEFT)
+            tb(s, bx+0.10, y+0.20, 0.60, 0.35, ("✓ "+label if good else label), sz=12, b=True, c=oc, a=PP_ALIGN.LEFT)
             tb(s, bx+0.68, y+0.20, 1.90, 0.35, txt, sz=12, b=True, c=DARK, a=PP_ALIGN.LEFT)
 
 
@@ -630,11 +630,11 @@ def judge_ab_slide(prs, color, header, rows, frame_cn, frame_en):
     tb(s, 0.4, 0.78, 9.2, 0.30, "⚖️ 判 — 你 觉 得 呢? A 还 是 B?  (先 选, 再 看!)",
        sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
     _ab_rows(s, color, rows, reveal=False)
-    vb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.40), Inches(4.38), Inches(9.20), Inches(0.40))
+    vb = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.40), Inches(3.98), Inches(9.20), Inches(0.40))
     vb.fill.solid(); vb.fill.fore_color.rgb = color; vb.line.fill.background()
-    tb(s, 0.5, 4.43, 9.0, 0.30, "👉 A → 举 左 手 · B → 举 右 手   🤔 3… 2… 1…",
+    tb(s, 0.5, 4.03, 9.0, 0.30, "👉 A → 举 左 手 · B → 举 右 手   🤔 3… 2… 1…",
        sz=12, b=True, c=STAR, a=PP_ALIGN.CENTER)
-    sentence_frame_bar(s, 4.90, frame_cn, frame_en, color)
+    sentence_frame_bar(s, 4.58, frame_cn, frame_en, color)
     return s
 
 
@@ -644,10 +644,10 @@ def reveal_ab_slide(prs, color, header, rows, do_action, frame_cn, frame_en):
     tb(s, 0.4, 0.78, 9.2, 0.30, "💡 答 案 揭 晓!  绿 色 ✓ = 保 护 海 洋 的 选 择",
        sz=13, b=True, c=DARK, a=PP_ALIGN.CENTER)
     _ab_rows(s, color, rows, reveal=True)
-    ab = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.40), Inches(4.38), Inches(9.20), Inches(0.40))
+    ab = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.40), Inches(3.98), Inches(9.20), Inches(0.40))
     ab.fill.solid(); ab.fill.fore_color.rgb = OK; ab.line.fill.background()
-    tb(s, 0.5, 4.43, 9.0, 0.30, f"🙆 做: {do_action}", sz=12, b=True, c=STAR, a=PP_ALIGN.CENTER)
-    sentence_frame_bar(s, 4.90, frame_cn, frame_en, color)
+    tb(s, 0.5, 4.02, 9.0, 0.32, f"🙆 做: {do_action}", sz=12, b=True, c=WHITE, a=PP_ALIGN.CENTER)
+    sentence_frame_bar(s, 4.58, frame_cn, frame_en, color)
     return s
 
 
@@ -655,8 +655,8 @@ def cardgrid_slide(prs, color, header, subtitle, items):
     """6-card overview grid (3 cols × 2 rows). items: list of (emoji, cn, en)."""
     s = ns(prs); bg(s, CREAM); hb(s, header, color)
     tb(s, 0.4, 0.78, 9.2, 0.30, subtitle, sz=13, b=True, c=GRAY, a=PP_ALIGN.CENTER)
-    cw, ch, gx, gy = 2.95, 1.75, 0.20, 0.18
-    x0 = (10 - (3*cw + 2*gx))/2; y0 = 1.22
+    cw, ch, gx, gy = 2.90, 1.75, 0.22, 0.18
+    x0 = (10 - (3*cw + 2*gx))/2; y0 = 1.28
     for i, (em, cn, en) in enumerate(items[:6]):
         r, c = divmod(i, 3)
         x = x0 + c*(cw+gx); y = y0 + r*(ch+gy)
@@ -671,8 +671,8 @@ def guess_slide(prs, color, header, subtitle, cards, frame_cn, frame_en):
     """我演你猜 — teacher acts a clue, students guess. cards: (emoji, prompt_cn) up to 6."""
     s = ns(prs); bg(s, CREAM); hb(s, header, color)
     tb(s, 0.4, 0.78, 9.2, 0.28, subtitle, sz=12, b=True, c=GRAY, a=PP_ALIGN.CENTER)
-    cw, ch, gx, gy = 2.95, 1.35, 0.20, 0.18
-    x0 = (10 - (3*cw + 2*gx))/2; y0 = 1.22
+    cw, ch, gx, gy = 2.90, 1.45, 0.22, 0.22
+    x0 = (10 - (3*cw + 2*gx))/2; y0 = 1.35
     for i, (em, cn) in enumerate(cards[:6]):
         r, c = divmod(i, 3)
         x = x0 + c*(cw+gx); y = y0 + r*(ch+gy)
