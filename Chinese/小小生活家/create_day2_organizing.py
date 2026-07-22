@@ -312,7 +312,7 @@ order=["1️⃣ 先放最大的书和文件夹","2️⃣ 再放较薄的练习�
 tf=tb(s,0.5,1.68,4.3,3.0,order[0],sz=13,b=True,c=DARK)
 for o in order[1:]:ap(tf,"",sz=5);ap(tf,o,sz=13,b=True,c=DARK)
 rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.05),Inches(4.6),Inches(3.75))
-rp.fill.solid();rp.fill.fore_color.rgb=WARM;rp.line.color.rgb=NAVY;rp.line.width=Pt(2.5)
+rp.fill.solid();rp.fill.fore_color.rgb=WHITE;rp.line.color.rgb=NAVY;rp.line.width=Pt(2.5)
 rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.05),Inches(4.6),Inches(0.5))
 rh.fill.solid();rh.fill.fore_color.rgb=NAVY;rh.line.fill.background()
 tb(s,5.25,1.12,4.4,0.4,"🔑 整理原则  Rules",sz=14,b=True,c=WHITE)
@@ -408,7 +408,7 @@ tool_card("🛍️","真空压缩袋","Vacuum Storage Bag",C_VAC,
     "抽走空气，让厚衣服和被子占用更少的空间。",
     "东西没有减少，但占用的空间变小了。",demo=True,fit="厚外套 · 被子 · 枕头 · 换季衣服")
 tool_card("🔄","旋转收纳盘","Lazy Susan Turntable",C_LAZY,
-    "在托盘上放小瓶子、画笔或调味料，轻轻转动托盘。",
+    "在托盘上放小瓶子、画笔或调味料，先不要转；再轻轻转动托盘，让学生看到变化。",
     ["它为什么是圆形的?","怎样拿到放在后面的物品?","它可以放在哪里?"],
     "一转，后面的东西转到前面，不用把其他东西全搬开。",
     "让后面的物品转到前面，更容易拿到。",demo=True,fit="厨房柜 · 冰箱 · 浴室 · 美术区")
@@ -483,6 +483,9 @@ for i,(num,cn,d,cl) in enumerate(steps):
     tb(s,0.6,y+0.16,0.52,0.44,num,sz=17,b=True,c=WHITE,a=PP_ALIGN.CENTER)
     tb(s,1.35,y+0.09,2.6,0.4,cn,sz=16,b=True,c=cl)
     tb(s,3.95,y+0.22,5.6,0.4,d,sz=12,c=DARK)
+foot=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(4.9),Inches(9.2),Inches(0.5))
+foot.fill.solid();foot.fill.fore_color.rgb=NAVY;foot.line.fill.background()
+tb(s,0.5,4.97,9.0,0.38,"🎬 视频重点：省空间叠衣法 — 衣服卷起来，占的地方小一半!",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
 notes(s,"整理行李箱基本步骤(5分钟，根据视频)：1先列清单(带需要的)；2分类(上衣/裤子/内衣袜子/鞋/洗漱/学习/娱乐)；3摆放位置(重的靠轮子、衣服折或卷、鞋装袋、洗漱防水袋、小物小袋、常用易拿)；4最后检查(漏带/带太多/液体密封/关得上/会滚动)。")
 pn(s,n)
 
@@ -565,7 +568,8 @@ pn(s,n)
 # ============================================================
 s=ns();n+=1;bg(s,NAVY)
 tb(s,0.5,0.55,9,0.7,"📣 下午任务预告  This Afternoon",sz=30,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,0.6,1.35,8.8,0.7,"「上午我们学了整理书包、选收纳工具、整理行李箱。\n下午，你们将成为真正的收纳设计师!」",sz=16,b=True,c=SUNNY,a=PP_ALIGN.CENTER)
+tfq=tb(s,0.6,1.35,8.8,0.4,"「上午我们学了整理书包、选收纳工具、整理行李箱。",sz=16,b=True,c=SUNNY,a=PP_ALIGN.CENTER)
+ap(tfq,"下午，你们将成为真正的收纳设计师!」",sz=16,b=True,c=SUNNY,a=PP_ALIGN.CENTER)
 box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(2.75),Inches(8.0),Inches(1.2))
 box.fill.solid();box.fill.fore_color.rgb=WHITE;box.line.color.rgb=CORAL;box.line.width=Pt(2.5)
 tb(s,1.2,2.85,7.6,0.4,"👀 上午请特别观察:",sz=14,b=True,c=CORAL)
