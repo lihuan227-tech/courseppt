@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """
 小小生活家 Little Homemaker — Day 2: 整理和收纳达人 Organizing & Storage Master
-Same structure/design system as Day 1 (厨房小帮手), adapted for organizing & storage.
-Palette: Fresh Organizing (teal + coral) — distinct from Day 1 breakfast green/orange.
-The Day 1 "6 danger cards" become the "7 storage-tool cards" (guess -> reveal).
+Rebuilt to the detailed lesson plan:
+  Part 1 老师的混乱书包 (hook)
+  Part 2 怎样收拾书包 — 五步整理法 + 检查表
+  Part 3 认识收纳好帮手 — 4 工具 (猜->演示->概念) + 配对游戏
+  Part 4-5 学习整理行李箱 + 省空间叠衣法 (T恤/裤子) + 摆放挑战
+  Part 6 下午任务预告
+  语言目标 我会认(5)/我会写(3)/我会说 (kept)
+  下午 小组收纳设计挑战
+Palette: Fresh Organizing (teal + coral).
 """
 from pptx import Presentation
 from pptx.util import Inches, Pt
@@ -16,31 +22,30 @@ prs.slide_width = Inches(10)
 prs.slide_height = Inches(5.625)
 W, H = prs.slide_width, prs.slide_height
 
-# --- Palette: Fresh Organizing (清爽整理) ---
-TEAL = RGBColor(0x16,0x84,0x8A)   # primary: teal
-CORAL = RGBColor(0xEF,0x6B,0x53)  # accent: coral
-NAVY = RGBColor(0x1E,0x4B,0x54)   # deep teal-navy
-SUNNY = RGBColor(0xF4,0xC1,0x3D)  # yellow highlight
-CREAM = RGBColor(0xF8,0xF4,0xEC)  # background cream
-WARM = RGBColor(0xFD,0xEF,0xE6)   # warm light box (coral-tinted)
+# --- Palette: Fresh Organizing ---
+TEAL = RGBColor(0x16,0x84,0x8A)
+CORAL = RGBColor(0xEF,0x6B,0x53)
+NAVY = RGBColor(0x1E,0x4B,0x54)
+SUNNY = RGBColor(0xF4,0xC1,0x3D)
+CREAM = RGBColor(0xF8,0xF4,0xEC)
+WARM = RGBColor(0xFD,0xEF,0xE6)
 WHITE = RGBColor(0xFF,0xFF,0xFF)
 DARK = RGBColor(0x2C,0x2C,0x2C)
 GRAY = RGBColor(0x88,0x88,0x88)
 LGRAY = RGBColor(0xBB,0xBB,0xBB)
 IMGBG = RGBColor(0xEC,0xEC,0xE6)
-SKY = RGBColor(0x19,0x76,0xD2)
-GREEN_OK = RGBColor(0x2E,0x9E,0x7A)  # correct / 合理
-RED = RGBColor(0xD8,0x45,0x3A)       # wrong / 不合理
-GOLD = RGBColor(0xD1,0x8F,0x0A)      # readable amber for text on white
+GREEN_OK = RGBColor(0x2E,0x9E,0x7A)
+RED = RGBColor(0xD8,0x45,0x3A)
+GOLD = RGBColor(0xD1,0x8F,0x0A)
+BLUE = RGBColor(0x3E,0x8E,0xC4)
+PURPLE = RGBColor(0x8A,0x6F,0xB0)
+AMBER = RGBColor(0xE8,0x9A,0x33)
+MINT = RGBColor(0xE2,0xF2,0xF1)
 
-# Per-tool colors (7)
 C_VAC = TEAL
 C_LAZY = CORAL
-C_PEG = RGBColor(0x3E,0x8E,0xC4)   # blue
-C_DOOR = RGBColor(0x8A,0x6F,0xB0)  # purple
-C_DIV = RGBColor(0x2E,0x9E,0x7A)   # green-teal
-C_MAT = RGBColor(0xE8,0x9A,0x33)   # amber
-C_SINK = RGBColor(0x4C,0x86,0x8C)  # slate-teal
+C_PEG = BLUE
+C_MAT = AMBER
 
 def ns(): return prs.slides.add_slide(prs.slide_layouts[6])
 def tb(s,l,t,w,h,txt,sz=18,b=False,c=DARK,a=None):
@@ -75,11 +80,19 @@ def div(title,sub,color,emoji=""):
     tf=tb(s,0.4,2.75,9.2,1.6,lines[0],sz=22,c=WHITE,a=PP_ALIGN.CENTER)
     for ln in lines[1:]:ap(tf,ln,sz=20,c=WHITE,a=PP_ALIGN.CENTER)
     return s
+def step_head(s,num,cn,en,color):
+    bar=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.15),Inches(9.4),Inches(0.72))
+    bar.fill.solid();bar.fill.fore_color.rgb=color;bar.line.fill.background()
+    circ=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.45),Inches(0.24),Inches(0.54),Inches(0.54))
+    circ.fill.solid();circ.fill.fore_color.rgb=WHITE;circ.line.fill.background()
+    tb(s,0.45,0.28,0.54,0.46,num,sz=20,b=True,c=color,a=PP_ALIGN.CENTER)
+    tb(s,1.2,0.19,8.2,0.42,cn,sz=21,b=True,c=WHITE)
+    tb(s,1.22,0.60,8.2,0.24,en,sz=10,c=WARM)
 
 n=0
 
 # ============================================================
-# 1 COVER — Organizer badge
+# 1 COVER
 # ============================================================
 s=ns();n+=1;bg(s,CREAM)
 tb(s,1,0.25,8,0.7,"Organizing & Storage Master",sz=30,b=True,c=TEAL,a=PP_ALIGN.CENTER)
@@ -98,17 +111,17 @@ pn(s,n)
 # ============================================================
 # 2 SCHEDULE
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"⏰ 今日时间安排  Today's Schedule")
+s=ns();n+=1;bg(s,CREAM);hb(s,"⏰ 今日安排  Today's Plan")
 for i,(nm,tm,dc,cl) in enumerate([
-    ("Session 1  上午","11:00-11:45","找橡皮 + 四步整理法 + 合理判断 + 收纳工具",TEAL),
-    ("Session 2  下午","2:00-2:45","复习 + 语言目标 (认字 + 写字)",CORAL),
-    ("Session 3  下午","3:00-4:30","小组收纳挑战 + 方案测试 + 给建议",NAVY)]):
+    ("上午 · 整理书包","Part 1–2","混乱书包 → 五步整理法 → 整理检查表",TEAL),
+    ("上午 · 工具 + 行李箱","Part 3–5","收纳好帮手 4 件 + 行李箱省空间叠衣法",CORAL),
+    ("下午 · 语言 + 挑战","Part 6","我会认/写/说 + 小组收纳设计挑战",NAVY)]):
     y=0.9+i*1.5
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.5),Inches(y),Inches(9),Inches(1.2))
     sh.fill.solid();sh.fill.fore_color.rgb=cl;sh.line.fill.background()
-    tb(s,0.7,y+0.15,4,0.4,nm,sz=20,b=True,c=WHITE)
-    tb(s,0.7,y+0.6,3,0.4,tm,sz=15,c=WARM)
-    tb(s,4.6,y+0.35,5.0,0.6,dc,sz=14,c=WHITE)
+    tb(s,0.7,y+0.15,5,0.4,nm,sz=20,b=True,c=WHITE)
+    tb(s,0.7,y+0.62,3,0.4,tm,sz=14,c=WARM)
+    tb(s,4.5,y+0.38,5.1,0.6,dc,sz=13,c=WHITE)
 pn(s,n)
 
 # ============================================================
@@ -116,243 +129,247 @@ pn(s,n)
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"🎯 教学目标  Learning Objectives")
 tb(s,0.5,0.85,9,0.5,"📦 内容目标  Content:",sz=19,b=True,c=TEAL)
-tf=tb(s,0.7,1.32,9,1.4,"1. 明白整理的意义：更快找到东西、减少丢失、节省时间",sz=14,c=DARK)
-ap(tf,"2. 学会「四步整理法」：拿出来 → 分类 → 做决定 → 放回家",sz=14,c=DARK)
-ap(tf,"3. 判断收纳是否合理：分类、固定位置、方便使用",sz=14,c=DARK)
-ap(tf,"4. 认识收纳工具，并为真实问题选择合适的工具",sz=14,c=DARK)
-tb(s,0.5,3.05,9,0.5,"🗣️ 语言目标  Language:",sz=19,b=True,c=CORAL)
-tb(s,0.7,3.5,5.0,0.9,"👀 我会认：混乱 分类 放回\n　　　　　收拾 书包 (复习 整理)",sz=14,b=True,c=DARK)
-tb(s,5.7,3.5,4.0,0.9,"✍️ 我会写：分类 书包 收拾",sz=14,b=True,c=DARK)
-tb(s,0.5,4.6,9,0.5,"🎨 实践目标：小组收纳设计挑战 + 方案测试 + 给建议",sz=14,c=NAVY)
+tf=tb(s,0.7,1.32,9,1.5,"1. 明白整理的意义：更快找到、减少丢失、节省时间",sz=14,c=DARK)
+ap(tf,"2. 学会「五步整理书包」：拿出来 → 做决定 → 分类 → 认识区域 → 放回去",sz=14,c=DARK)
+ap(tf,"3. 认识 4 种收纳工具，并为真实问题选对工具",sz=14,c=DARK)
+ap(tf,"4. 学会整理行李箱：分类 + 省空间叠衣法 + 合理摆放",sz=14,c=DARK)
+tb(s,0.5,3.15,9,0.5,"🗣️ 语言目标  Language:",sz=19,b=True,c=CORAL)
+tb(s,0.7,3.6,5.0,0.9,"👀 我会认：混乱 分类 放回\n　　　　　收拾 书包",sz=14,b=True,c=DARK)
+tb(s,5.7,3.6,4.0,0.9,"✍️ 我会写：分类 书包 收拾",sz=14,b=True,c=DARK)
+tb(s,0.5,4.7,9,0.5,"🎨 实践目标：动手整理书包 + 下午小组收纳设计挑战",sz=14,c=NAVY)
 pn(s,n)
 
 # ============================================================
 # 4 SESSION 1 DIVIDER
 # ============================================================
-div("Session 1  上午","为什么整理 + 四步整理法 + 合理判断 + 收纳好帮手\n🔎 找一找  🧺 四步法  ⚖️ 合理吗  🧰 工具",TEAL,"🧹")
+div("Part 1 · 上午","老师的混乱书包 + 五步整理法\n🎒 为什么找不到  🧺 五步整理  ✅ 检查表",TEAL,"🎒")
 n+=1
 
 # ============================================================
-# 5 MISSION intro
+# 5 情境导入 — 混乱书包 vs 整理书包 (search game)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🧑‍🔧 你是整理达人!  You're an Organizing Master!",TEAL)
-hbx=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(1.0),Inches(9.2),Inches(0.95))
-hbx.fill.solid();hbx.fill.fore_color.rgb=WARM;hbx.line.color.rgb=CORAL;hbx.line.width=Pt(2.5)
-tb(s,0.6,1.10,8.8,0.45,"🗂️ 今天你要学会整理和收纳，让东西又快又好地找到!",sz=22,b=True,c=TEAL,a=PP_ALIGN.CENTER)
-tb(s,0.6,1.55,8.8,0.35,"Today you learn to organize so everything is easy to find!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
-missions=[("🔎","为什么整理","Why organize",TEAL),
-          ("🧺","四步整理法","4-step method",CORAL),
-          ("⚖️","合理吗?","Is it smart?",C_PEG),
-          ("🧰","选对工具","Pick a tool",NAVY)]
-for i,(em,cn,en,cl) in enumerate(missions):
-    x=0.55+i*2.30;y=2.25
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.10),Inches(1.7))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,y+0.2,1.9,0.7,em,sz=34,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,y+0.95,1.9,0.4,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,y+1.32,1.9,0.3,en,sz=10,c=GRAY,a=PP_ALIGN.CENTER)
-sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.25),Inches(9.4),Inches(0.95))
-sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=CORAL;sf.line.width=Pt(2)
-tb(s,0.5,4.33,1.7,0.4,"💬 我来说",sz=14,b=True,c=CORAL)
-tb(s,2.0,4.30,7.6,0.3,"我是整理达人，我要把 ____ 送回家。",sz=15,b=True,c=DARK)
-tb(s,2.0,4.62,7.6,0.3,"I'm an organizing master. I'll give ___ a home.",sz=11,c=GRAY)
-tb(s,2.0,4.88,7.6,0.3,"举起手，我们开始! Raise your hand, let's start! 🙌",sz=12,b=True,c=TEAL)
-pn(s,n)
-
-# ============================================================
-# 6 找橡皮挑战 — hook (setup + rules)
-# ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🔎 找橡皮挑战  The Eraser Hunt",CORAL)
-tb(s,0.4,0.85,9.2,0.32,"两名同学同时找橡皮，其他人帮忙计时 — 哪个箱子更快?",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-boxes=[("📦","混乱箱  Messy Box",RED,["书、纸、玩具、铅笔、","衣服全混在一起","橡皮藏在里面"]),
-       ("🗂️","整理箱  Tidy Box",GREEN_OK,["物品已经分类","橡皮放在「文具区」","或笔袋里"])]
+s=ns();n+=1;bg(s,CREAM);hb(s,"🔎 为什么总是找不到?  Why Can't I Find It?",CORAL)
+tb(s,0.4,0.85,9.2,0.32,"两个书包，装一样的东西 — 老师各找一次，全班计时!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+boxes=[("📦","混乱书包  Messy",RED,["作业本、文件夹、铅笔盒","橡皮、水杯、外套","纸巾、小玩具、废纸","全都混在一起"]),
+       ("🎒","整理书包  Tidy",GREEN_OK,["同样的东西","已经分好类","放在固定位置","一下就找到"])]
 for i,(em,title,cl,lines) in enumerate(boxes):
     x=0.3+i*4.85
-    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.3),Inches(4.6),Inches(2.5))
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.3),Inches(4.6),Inches(2.35))
     card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=cl;card.line.width=Pt(3)
     hd=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.3),Inches(4.6),Inches(0.55))
     hd.fill.solid();hd.fill.fore_color.rgb=cl;hd.line.fill.background()
     tb(s,x+0.15,1.37,4.3,0.42,f"{em} {title}",sz=17,b=True,c=WHITE)
-    tf=tb(s,x+0.3,2.0,4.1,0.4,f"· {lines[0]}",sz=15,c=DARK)
-    for l in lines[1:]:ap(tf,f"· {l}",sz=15,c=DARK)
-rb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(9.4),Inches(1.2))
+    tf=tb(s,x+0.3,1.98,4.1,0.4,f"· {lines[0]}",sz=13,c=DARK)
+    for l in lines[1:]:ap(tf,f"· {l}",sz=13,c=DARK)
+rb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.85),Inches(9.4),Inches(1.35))
 rb.fill.solid();rb.fill.fore_color.rgb=WARM;rb.line.color.rgb=CORAL;rb.line.width=Pt(2)
-tb(s,0.5,4.08,9.0,0.35,"🎮 玩法  How to Play:",sz=14,b=True,c=CORAL)
-tb(s,0.5,4.45,9.2,0.35,"第一轮：在混乱箱里找橡皮  ·  第二轮：在整理箱里找橡皮  ·  全班计时!",sz=13,b=True,c=DARK)
-tb(s,0.5,4.80,9.2,0.35,"⏱️ 把两次时间写在白板上，让结果更直观。",sz=12,c=GRAY)
-notes(s,"准备两个箱子/书包。两名学生分别在混乱箱、整理箱里找橡皮，其他人计时。把两次时间写白板上。")
+tb(s,0.5,3.93,9.0,0.35,"🎮 玩法  How to Play:",sz=14,b=True,c=CORAL)
+tb(s,0.5,4.28,9.2,0.35,"第一次：从混乱书包找橡皮/作业本 (老师边找边说) · 第二次：从整理书包找 · 全班计时!",sz=12,b=True,c=DARK)
+tb(s,0.5,4.68,9.2,0.45,"😩 老师台词:「我的作业在哪里?」「怎么这么难找?」「这里怎么还有废纸?」「水杯怎么和作业放一起?」",sz=11,c=GRAY)
+notes(s,"准备两个书包(混乱+整理好)，装相同物品：作业本/文件夹/铅笔盒/橡皮/水杯/外套/纸巾/小玩具/废纸。老师先从混乱书包找橡皮或作业本并计时，边找边说台词；再从整理书包找同样物品并计时。把两次时间写白板。")
 pn(s,n)
 
 # ============================================================
-# 7 找橡皮 — discussion + 总结
+# 6 观察与讨论 + 教师总结
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"💡 为什么要整理?  Why Organize?",CORAL)
-qs=[("1️⃣","哪一次找得更快?为什么第二次更容易?","Which was faster? Why?",TEAL),
-    ("2️⃣","东西太乱会带来什么问题?整理只是为了漂亮吗?","What problems does mess cause?",RED)]
-for i,(num,q_cn,q_en,cl) in enumerate(qs):
-    y=1.0+i*1.1
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.95))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.6),Inches(y+0.16),Inches(0.62),Inches(0.62))
-    nb.fill.solid();nb.fill.fore_color.rgb=cl;nb.line.fill.background()
-    tb(s,0.6,y+0.20,0.62,0.52,num,sz=20,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,1.45,y+0.12,8.0,0.5,q_cn,sz=17,b=True,c=DARK)
-    tb(s,1.45,y+0.58,8.0,0.35,q_en,sz=11,c=GRAY)
-sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.35),Inches(9.4),Inches(1.85))
-sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=TEAL;sf.line.width=Pt(2.5)
-head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.35),Inches(9.4),Inches(0.5))
+s=ns();n+=1;bg(s,CREAM);hb(s,"💡 观察与讨论  Observe & Discuss",CORAL)
+tb(s,0.4,0.85,9.2,0.32,"哪一次更快?为什么?",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+qs=["🕐 哪一次找得更快?","🤔 第一个书包为什么难找?","🚫 哪些东西不该放一起?",
+    "📍 怎样整理才能很快找到作业?","⭐ 经常用的东西该放在哪里?"]
+tf=tb(s,0.5,1.25,4.5,3.3,qs[0],sz=15,b=True,c=DARK)
+for q in qs[1:]:ap(tf,"",sz=7);ap(tf,q,sz=15,b=True,c=DARK)
+panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.2),Inches(1.25),Inches(4.5),Inches(3.55))
+panel.fill.solid();panel.fill.fore_color.rgb=WARM;panel.line.color.rgb=TEAL;panel.line.width=Pt(2.5)
+head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.2),Inches(1.25),Inches(4.5),Inches(0.5))
 head.fill.solid();head.fill.fore_color.rgb=TEAL;head.line.fill.background()
-tb(s,0.5,3.42,9.0,0.4,"✨ 小结  整理的好处  Why It Helps",sz=15,b=True,c=WHITE)
-benefits=["🔎 更快找到东西","🎒 减少丢失","⏰ 节省时间","😊 心情更好"]
-for i,bft in enumerate(benefits):
-    col=i%2;row=i//2
-    x=0.65+col*4.7;y=3.95+row*0.47
-    tb(s,x,y,4.4,0.4,bft,sz=15,b=True,c=DARK)
-tb(s,0.5,4.90,9.2,0.28,"📌 整理不只是让地方漂亮 — 更是帮我们更快、更省心地生活。",sz=12,b=True,c=TEAL,a=PP_ALIGN.CENTER)
-notes(s,"总结：整理不只是好看，还能更快找到东西、减少丢失、节省时间。可对比白板上两次寻找时间。")
+tb(s,5.35,1.32,4.2,0.4,"✨ 教师总结  Summary",sz=15,b=True,c=WHITE)
+tb(s,5.35,1.9,4.2,0.4,"整理书包不是全部塞进去，而是要:",sz=13,b=True,c=TEAL)
+tf2=tb(s,5.4,2.4,4.2,2.2,"🗂️ 分好类",sz=15,b=True,c=DARK)
+for t in ["📍 放在固定位置","🔎 容易找到","✋ 容易拿出来","🏠 用完容易放回去"]:
+    ap(tf2,"",sz=6);ap(tf2,t,sz=15,b=True,c=DARK)
+notes(s,"带全班讨论5个问题，引导说出：混乱=没分类没固定位置。教师总结整理书包5个要点：分好类、固定位置、容易找到、容易拿出、容易放回。")
 pn(s,n)
 
 # ============================================================
-# 8 老师的混乱书包 — observe & diagnose
+# 7 第二部分 intro — 怎样收拾书包 (flow)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🎒 老师的混乱书包  The Messy Backpack",CORAL)
-tb(s,0.4,0.85,9.2,0.32,"老师边找边表演 — 学生观察，帮老师找出问题!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-ib(s,0.3,1.3,4.4,3.4,"📷 混乱的书包 / A messy backpack")
-panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.3),Inches(4.8),Inches(3.4))
-panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=CORAL;panel.line.width=Pt(2.5)
-head=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.3),Inches(4.8),Inches(0.5))
-head.fill.solid();head.fill.fore_color.rgb=CORAL;head.line.fill.background()
-tb(s,5.05,1.37,4.6,0.4,"🕵️ 帮老师想一想  Help the Teacher",sz=14,b=True,c=WHITE)
-tf=tb(s,5.05,1.95,4.6,0.4,"😩 「我的作业在哪里?」",sz=13,c=DARK)
-for q in ["💧 「水杯怎么漏水了?」","✏️ 「我的铅笔是不是丢了?」","🧥 「外套为什么压在书下面?」","","🤔 书包有什么问题?先做什么?"]:
-    ap(tf,"",sz=4);ap(tf,q,sz=13,c=DARK if not q.startswith("🤔") else TEAL,b=q.startswith("🤔"))
-sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.85),Inches(9.4),Inches(0.5))
-sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=TEAL;sf.line.width=Pt(2)
-tb(s,0.5,4.93,9.0,0.4,"💬 哪些东西不应该放在一起?怎样下次很快找到作业?",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
-notes(s,"老师拿混乱书包边找边演。先不给答案，让学生观察诊断问题，把建议写白板 → 引出四步整理法。")
-pn(s,n)
-
-# ============================================================
-# 9 四步整理法 — 4 steps + gestures
-# ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🧺 四步整理法  The 4-Step Method",TEAL)
-tb(s,0.4,0.82,9.2,0.32,"记住这四步，配上动作，谁都能整理好!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-steps=[("1️⃣","🙌","全部拿出来","Take everything out","动作：双手向外张开",TEAL),
-       ("2️⃣","👐","分类","Sort similar things","动作：双手分到两边",CORAL),
-       ("3️⃣","🤔","做决定","Keep / put back / recycle / donate","动作：手指放下巴思考",C_PEG),
-       ("4️⃣","🏠","放回固定位置","Give everything a home","动作：双手做屋顶形状",GREEN_OK)]
-for i,(num,em,cn,en,act,cl) in enumerate(steps):
-    x=0.3+i*2.4
-    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.25),Inches(2.25),Inches(3.35))
+s=ns();n+=1;bg(s,CREAM);hb(s,"🧺 怎样收拾书包?  How to Pack a Backpack",TEAL)
+tb(s,0.4,0.85,9.2,0.32,"先看老师做，再自己动手，最后一起点评!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+flow=[("👩‍🏫","老师示范","跟着 5 个步骤，示范整理一个书包","5 分钟",TEAL),
+      ("👧👦","小组动手","5–6 人一组，用书本/笔/水杯一起收拾一个书包","5 分钟",CORAL),
+      ("🔎","上台点评","老师拿到前面，和大家一起看哪里做得好","5 分钟",NAVY)]
+for i,(em,cn,d,tm,cl) in enumerate(flow):
+    y=1.3+i*1.15
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(1.0))
     card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=cl;card.line.width=Pt(2.5)
-    nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.85),Inches(1.4),Inches(0.55),Inches(0.55))
-    nb.fill.solid();nb.fill.fore_color.rgb=cl;nb.line.fill.background()
-    tb(s,x+0.85,1.44,0.55,0.48,num,sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.05,2.05,0.8,em,sz=40,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.95,2.15,0.45,cn,sz=16,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.08,3.4,2.1,0.5,en,sz=9,c=GRAY,a=PP_ALIGN.CENTER)
-    ab=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x+0.12),Inches(3.95),Inches(2.0),Inches(0.5))
-    ab.fill.solid();ab.fill.fore_color.rgb=WARM;ab.line.fill.background()
-    tb(s,x+0.18,4.02,1.9,0.4,act,sz=10,b=True,c=cl,a=PP_ALIGN.CENTER)
-tb(s,0.4,4.75,9.2,0.35,"👉 做决定 = 留下 / 放回 / 回收 / 捐出  Keep · Put back · Recycle · Donate",sz=12,b=True,c=TEAL,a=PP_ALIGN.CENTER)
-notes(s,"四步整理法配动作，帮低龄学生记忆：拿出来(张开)→分类(分两边)→做决定(摸下巴)→放回家(屋顶)。")
+    circ=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.6),Inches(y+0.2),Inches(0.6),Inches(0.6))
+    circ.fill.solid();circ.fill.fore_color.rgb=cl;circ.line.fill.background()
+    tb(s,0.6,y+0.24,0.6,0.5,em,sz=22,a=PP_ALIGN.CENTER)
+    tb(s,1.45,y+0.14,3.0,0.4,cn,sz=17,b=True,c=cl)
+    tb(s,1.45,y+0.56,6.4,0.4,d,sz=12,c=DARK)
+    pill=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(8.35),Inches(y+0.32),Inches(1.1),Inches(0.36))
+    pill.fill.solid();pill.fill.fore_color.rgb=WARM;pill.line.fill.background()
+    tb(s,8.35,y+0.35,1.1,0.3,tm,sz=11,b=True,c=cl,a=PP_ALIGN.CENTER)
+notes(s,"第二部分流程：(1)老师配合后面的步骤幻灯示范5分钟；(2)每5-6人一组，发书本/笔/水杯等，一起收拾一个书包5分钟；(3)老师拿到前面点评5分钟。")
 pn(s,n)
 
 # ============================================================
-# 10 三个核心概念
+# 8 第一步 全部拿出来
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🌟 整理的三个核心概念  3 Big Ideas",TEAL)
-tb(s,0.4,0.9,9.2,0.35,"这节课最重要的三件事 — 记住它们，你就是整理达人!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-ideas=[("🗂️","分类","Sort","相同用途的东西\n放在一起",TEAL),
-       ("🏠","固定位置","A home","每件东西都有\n自己的「家」",CORAL),
-       ("✅","方便使用","Easy to use","不只整齐，还要\n好找、好拿、好放回",GREEN_OK)]
-for i,(em,cn,en,d,cl) in enumerate(ideas):
-    x=0.3+i*3.2
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.4),Inches(3.0),Inches(3.3))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(3)
-    tb(s,x+0.1,1.6,2.8,0.8,em,sz=44,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,2.55,2.8,0.45,cn,sz=20,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.1,3.0,2.8,0.3,en,sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-    ls=d.split('\n')
-    tf=tb(s,x+0.15,3.5,2.7,0.5,ls[0],sz=13,c=DARK,a=PP_ALIGN.CENTER)
-    for l in ls[1:]:ap(tf,l,sz=13,c=DARK,a=PP_ALIGN.CENTER)
+s=ns();n+=1;bg(s,CREAM);step_head(s,"1","把书包里的东西全部拿出来","Take everything out",TEAL)
+ib(s,0.3,1.05,4.3,3.05,"📷 把书包倒空 / Empty the backpack")
+panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.05),Inches(4.85),Inches(3.05))
+panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=TEAL;panel.line.width=Pt(2.5)
+tb(s,5.05,1.16,4.5,0.35,"❓ 提问  Ask:",sz=14,b=True,c=TEAL)
+tf=tb(s,5.05,1.52,4.5,1.2,"· 东西还在包里，能看清有什么吗?",sz=12,c=DARK)
+ap(tf,"· 哪些是今天需要的?",sz=12,c=DARK)
+ap(tf,"· 哪些是不需要带的?",sz=12,c=DARK)
+qb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.05),Inches(2.75),Inches(4.5),Inches(1.2))
+qb.fill.solid();qb.fill.fore_color.rgb=WARM;qb.line.fill.background()
+tb(s,5.2,2.84,4.2,0.7,"🗣️ 「整理的第一步不是马上塞回去，\n　　而是先全部拿出来。」",sz=13,b=True,c=CORAL)
+gest=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.3),Inches(9.4),Inches(0.55))
+gest.fill.solid();gest.fill.fore_color.rgb=TEAL;gest.line.fill.background()
+tb(s,0.5,4.38,9.0,0.4,"🙌 全班动作：双手向外张开 —「全部拿出来!」",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+notes(s,"第一步(3分钟)：把书包物品全部放桌面。提问3个。教师语言强调先拿出来。全班做动作：双手向外张开。")
 pn(s,n)
 
 # ============================================================
-# 11-12 合理还是不合理 — two-phase judgment game
+# 9 第二步 检查和做决定 (4 categories)
 # ============================================================
-JUDGE=[
-    ("所有东西塞进一个大抽屉，桌面看起来很干净","只是把东西藏起来 — 没分类、没固定位置","❌"),
-    ("书按大小排得很整齐，但每天用的练习本在最下面","好看却不方便 — 常用的要放在好拿的地方","❌"),
-    ("水杯和作业本放在同一个袋子里","水杯可能弄湿作业 — 干和湿要分开放","❌"),
-    ("盒子很多，但每个盒子都没有标签","找起来还是慢 — 贴上标签才一目了然","❌"),
-]
-def judge_slide(reveal):
-    global n
-    s=ns();bg(s,CREAM)
-    if reveal:
-        hb(s,"⚖️ 合理还是不合理?  💡 答案揭晓 Reveal!",CORAL)
-    else:
-        hb(s,"⚖️ 合理还是不合理?  🤔 你觉得呢? Think!",TEAL)
-    rb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.9),Inches(9.4),Inches(0.5))
-    rb.fill.solid();rb.fill.fore_color.rgb=WARM;rb.line.color.rgb=CORAL;rb.line.width=Pt(1.5)
-    if reveal:
-        tb(s,0.45,0.96,9.0,0.38,"💡 这四种都「不合理」 — 看看应该怎么改!",sz=13,b=True,c=RED,a=PP_ALIGN.CENTER)
-    else:
-        tb(s,0.45,0.96,9.0,0.38,"👍 合理 = 举手V   👎 不合理 = 双手交叉X   想一想:怎么改更好?",sz=13,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    for i,(sit,fix,mark) in enumerate(JUDGE):
-        y=1.55+i*0.90
-        card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(y),Inches(9.4),Inches(0.82))
-        card.fill.solid();card.fill.fore_color.rgb=WHITE
-        card.line.color.rgb=RED if reveal else LGRAY;card.line.width=Pt(1.5)
-        nb=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.42),Inches(y+0.10),Inches(0.42),Inches(0.42))
-        nb.fill.solid();nb.fill.fore_color.rgb=CORAL if reveal else TEAL;nb.line.fill.background()
-        tb(s,0.42,y+0.13,0.42,0.36,f"{i+1}",sz=13,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-        tb(s,0.98,y+0.09,7.7,0.4,sit,sz=12,b=True,c=DARK)
-        if reveal:
-            tb(s,0.98,y+0.45,7.7,0.32,f"➡️ {fix}",sz=11,c=GREEN_OK)
-            tb(s,8.9,y+0.18,0.6,0.5,"❌",sz=22,a=PP_ALIGN.CENTER)
-        else:
-            tb(s,8.9,y+0.18,0.6,0.5,"?",sz=22,b=True,c=GRAY,a=PP_ALIGN.CENTER)
-    bs2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(5.18),Inches(9.4),Inches(0.34))
-    if reveal:
-        bs2.fill.solid();bs2.fill.fore_color.rgb=GREEN_OK;bs2.line.fill.background()
-        tb(s,0.45,5.20,9.0,0.28,"✨ 合理的整理 = 分类 + 固定位置 + 方便使用",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    else:
-        bs2.fill.solid();bs2.fill.fore_color.rgb=TEAL;bs2.line.fill.background()
-        tb(s,0.45,5.20,9.0,0.28,"👉 先判断，再想「怎么改更好」 — 3...2...1!",sz=11,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-    notes(s,"两阶段:Question页学生判断合理/不合理并想怎么改;Reveal页揭晓——四种都不合理，逐一说改法。")
-    n+=1;pn(s,n);return s
-judge_slide(False)
-judge_slide(True)
+s=ns();n+=1;bg(s,CREAM);step_head(s,"2","检查和做决定","Check & Decide",CORAL)
+cats=[("✅","今天需要带","课本·作业本·文件夹·铅笔盒·水杯",GREEN_OK),
+      ("🏠","应该放在家里","不需要的小玩具·多余的书·非今天的东西",GOLD),
+      ("🗑️","应该丢掉/回收","废纸·空包装·用过的纸巾",RED),
+      ("🙋","需要交给大人","学校通知·要签字的表格·不知是谁的东西",BLUE)]
+for i,(em,cn,d,cl) in enumerate(cats):
+    col=i%2;row=i//2
+    x=0.4+col*4.75;y=1.05+row*1.55
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(1.4))
+    card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=cl;card.line.width=Pt(2.5)
+    circ=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.18),Inches(y+0.28),Inches(0.8),Inches(0.8))
+    circ.fill.solid();circ.fill.fore_color.rgb=cl;circ.line.fill.background()
+    tb(s,x+0.18,y+0.37,0.8,0.6,em,sz=28,a=PP_ALIGN.CENTER)
+    tb(s,x+1.15,y+0.24,3.25,0.4,cn,sz=16,b=True,c=cl)
+    tb(s,x+1.15,y+0.68,3.25,0.6,d,sz=11,c=DARK)
+tb(s,0.4,4.28,9.2,0.5,"🤔 问自己：我今天需要它吗?它还能用吗?它该放哪?要交给谁?",sz=13,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+notes(s,"第二步(5分钟)：逐一检查物品，分四类——今天需要带/放家里/丢掉回收/交给大人。教师强调四个自问：需要吗、能用吗、放哪、交给谁。")
+pn(s,n)
 
 # ============================================================
-# 13 收纳好帮手 overview (7 tools grid)
+# 10 第三步 把物品分类 (4 groups)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🧰 收纳好帮手  Storage Helpers",TEAL)
-tb(s,0.4,0.88,9,0.35,"这些聪明的工具能帮我们省空间、好整理 — 我们来认识 7 样!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-tools_ov=[
-    ("🛍️","真空压缩袋",C_VAC),("🔄","旋转收纳盘",C_LAZY),("🧷","洞洞板",C_PEG),
-    ("🚪","门后挂袋",C_DOOR),("📏","抽屉分隔板",C_DIV),("🧺","玩具收纳垫",C_MAT),
-    ("🚰","水槽置物架",C_SINK),
-]
+s=ns();n+=1;bg(s,CREAM);step_head(s,"3","把物品分类","Sort into Groups",BLUE)
+groups=[("📚","书本类","课本·作业本·阅读书·文件夹",TEAL),
+        ("✏️","文具类","铅笔·橡皮·彩笔·尺子·剪刀",CORAL),
+        ("🥤","生活用品类","水杯·纸巾·小毛巾·外套",GREEN_OK),
+        ("📨","带回家的东西","作业·通知·手工作品",PURPLE)]
+for i,(em,cn,d,cl) in enumerate(groups):
+    x=0.3+i*2.4
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.05),Inches(2.25),Inches(2.75))
+    card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=cl;card.line.width=Pt(2.5)
+    tb(s,x+0.1,1.2,2.05,0.7,em,sz=36,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.0,2.15,0.4,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
+    ls=d.split("·")
+    tf=tb(s,x+0.15,2.5,1.95,1.2,ls[0],sz=11,c=DARK,a=PP_ALIGN.CENTER)
+    for l in ls[1:]:ap(tf,l,sz=11,c=DARK,a=PP_ALIGN.CENTER)
+qb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.0),Inches(9.4),Inches(0.9))
+qb.fill.solid();qb.fill.fore_color.rgb=WARM;qb.line.color.rgb=BLUE;qb.line.width=Pt(2)
+tb(s,0.5,4.06,9.0,0.35,"❓ 想一想:",sz=13,b=True,c=BLUE)
+tb(s,0.5,4.42,9.2,0.42,"铅笔和橡皮放哪?作业纸能和水杯放一起吗?小玩具属于哪类?哪些要单独放?",sz=12,b=True,c=DARK)
+notes(s,"第三步(5分钟)：把桌上物品分四组——书本类/文具类/生活用品类/带回家。提问引导：文具归铅笔盒、干湿分开、玩具归属、单独放的物品。")
+pn(s,n)
+
+# ============================================================
+# 11 第四步 认识书包区域 (zones)
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);step_head(s,"4","认识书包的不同区域","Know the Zones",PURPLE)
+ib(s,0.3,1.05,3.5,3.8,"📷 书包分区图 / Backpack zones")
+zones=[("🎒","大夹层","课本·文件夹·大作业本 (大书靠背、竖着放)",TEAL),
+       ("📓","中间夹层","小作业本·阅读书·练习册·薄文件夹",BLUE),
+       ("🧻","前面小口袋","纸巾·小卡片·学生证 (常拿的小物)",PURPLE),
+       ("🥤","侧边口袋","水杯 (盖拧紧!)·雨伞",GREEN_OK),
+       ("✏️","铅笔盒","铅笔·橡皮·尺子·彩笔 (别散在包底)",CORAL)]
+for i,(em,cn,d,cl) in enumerate(zones):
+    y=1.05+i*0.76
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(3.95),Inches(y),Inches(5.75),Inches(0.66))
+    card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=cl;card.line.width=Pt(2)
+    tb(s,4.1,y+0.12,0.55,0.45,em,sz=22,a=PP_ALIGN.CENTER)
+    tb(s,4.72,y+0.04,1.6,0.35,cn,sz=14,b=True,c=cl)
+    tb(s,4.72,y+0.36,4.85,0.28,d,sz=10,c=DARK)
+notes(s,"第四步(5分钟)：认识书包区域——大夹层(大书靠背竖放)、中间夹层(薄本子)、前小口袋(纸巾卡片)、侧袋(水杯盖拧紧、雨伞)、铅笔盒(文具别散包底)。")
+pn(s,n)
+
+# ============================================================
+# 12 第五步 按顺序放回 + 整理原则
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);step_head(s,"5","按使用顺序放回去","Put Back in Order",GREEN_OK)
+lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.05),Inches(4.6),Inches(3.75))
+lp.fill.solid();lp.fill.fore_color.rgb=WHITE;lp.line.color.rgb=GREEN_OK;lp.line.width=Pt(2.5)
+lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.05),Inches(4.6),Inches(0.5))
+lh.fill.solid();lh.fill.fore_color.rgb=GREEN_OK;lh.line.fill.background()
+tb(s,0.45,1.12,4.4,0.4,"📥 放回顺序  Order",sz=14,b=True,c=WHITE)
+order=["1️⃣ 先放最大的书和文件夹","2️⃣ 再放较薄的练习册","3️⃣ 铅笔盒放容易拿的位置","4️⃣ 纸巾、小物进小口袋","5️⃣ 水杯放侧边口袋","6️⃣ 最后检查拉链拉好"]
+tf=tb(s,0.5,1.68,4.3,3.0,order[0],sz=13,b=True,c=DARK)
+for o in order[1:]:ap(tf,"",sz=5);ap(tf,o,sz=13,b=True,c=DARK)
+rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.05),Inches(4.6),Inches(3.75))
+rp.fill.solid();rp.fill.fore_color.rgb=WARM;rp.line.color.rgb=NAVY;rp.line.width=Pt(2.5)
+rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.05),Inches(4.6),Inches(0.5))
+rh.fill.solid();rh.fill.fore_color.rgb=NAVY;rh.line.fill.background()
+tb(s,5.25,1.12,4.4,0.4,"🔑 整理原则  Rules",sz=14,b=True,c=WHITE)
+rules=["⚖️ 重的物品靠近背部","📦 大的放大夹层","🧷 小的放进小口袋","✏️ 文具放进铅笔盒","💧 水杯和书本分开","⭐ 常用的放容易拿到处"]
+tf2=tb(s,5.3,1.68,4.3,3.0,rules[0],sz=13,b=True,c=DARK)
+for r in rules[1:]:ap(tf2,"",sz=5);ap(tf2,r,sz=13,b=True,c=DARK)
+notes(s,"第五步(5分钟)：示范放回顺序6步。整理原则：重的靠背、大的放大夹层、小的进小口袋、文具进铅笔盒、水杯和书分开、常用的易拿。提问：常用书别放最下面、水杯别倒放。")
+pn(s,n)
+
+# ============================================================
+# 13 书包整理检查表 + 全班口令
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"✅ 书包整理检查表  Backpack Checklist",TEAL)
+tb(s,0.4,0.82,9.2,0.3,"和老师一起，一项一项检查:",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+checks=["☐ 没有废纸和垃圾","☐ 书本放得整齐","☐ 作业放进文件夹","☐ 文具放进铅笔盒",
+        "☐ 水杯盖紧放侧袋","☐ 每件东西有固定位置","☐ 拉链已经拉好","☐ 书包不会太重"]
+for i,ck in enumerate(checks):
+    col=i%2;row=i//2
+    x=0.4+col*4.75;y=1.2+row*0.6
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(0.5))
+    card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=TEAL;card.line.width=Pt(1.5)
+    tb(s,x+0.15,y+0.08,4.3,0.35,ck,sz=13,b=True,c=DARK)
+chant=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.75),Inches(9.4),Inches(1.1))
+chant.fill.solid();chant.fill.fore_color.rgb=CORAL;chant.line.fill.background()
+tb(s,0.5,3.82,9.0,0.35,"📣 全班口令  Class Chant",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.5,4.2,9.0,0.35,"老师:「用完东西——」 学生:「送它回家!」",sz=16,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.5,4.56,9.0,0.3,"老师:「每天放学——」 学生:「检查书包!」",sz=15,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+notes(s,"检查表(3分钟)：师生一起逐项检查8项。练习全班口令两句。")
+pn(s,n)
+
+# ============================================================
+# 14 SESSION DIVIDER — tools + suitcase
+# ============================================================
+div("Part 3–5 · 上午","收纳好帮手 + 整理行李箱\n🧰 猜工具  🧳 行李箱  👕 省空间叠衣法",CORAL,"🧰")
+n+=1
+
+# ============================================================
+# 15 猜一猜 overview — 4 tools
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"🧰 猜一猜：这是什么收纳工具?  Guess the Tool!",TEAL)
+tb(s,0.4,0.85,9.2,0.32,"先看工具，别急着说名字 — 观察 → 猜用途 → 演示 → 说它解决了什么问题",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+tools_ov=[("🛍️","真空压缩袋",C_VAC),("🔄","旋转收纳盘",C_LAZY),("🧷","洞洞板",C_PEG),("🧺","玩具收纳垫",C_MAT)]
 for i,(em,cn,cl) in enumerate(tools_ov):
-    col=i%4;row=i//4
-    x=0.3+col*2.4;y=1.4+row*1.85
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(2.25),Inches(1.65))
+    x=0.3+i*2.4
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.4),Inches(2.25),Inches(2.35))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,y+0.12,2.05,0.65,em,sz=34,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,y+0.9,2.15,0.6,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
-note=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(7.5),Inches(3.25),Inches(2.25),Inches(1.65))
-note.fill.solid();note.fill.fore_color.rgb=WARM;note.line.color.rgb=CORAL;note.line.width=Pt(2.5)
-tf=tb(s,7.6,3.42,2.05,0.4,"⭐ 课堂演示",sz=14,b=True,c=CORAL,a=PP_ALIGN.CENTER)
-ap(tf,"最推荐现场展示:",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
-ap(tf,"真空袋 · 旋转盘",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
-ap(tf,"玩具垫 · 洞洞板",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    circ=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(x+0.63),Inches(1.6),Inches(1.0),Inches(1.0))
+    circ.fill.solid();circ.fill.fore_color.rgb=cl;circ.line.fill.background()
+    tb(s,x+0.63,1.73,1.0,0.8,em,sz=40,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,2.75,2.15,0.6,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,3.3,2.15,0.3,f"第 {i+1} 个",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,0.4,4.05,9.2,0.9,"⭐ 重点展示这 4 种「变化明显、好操作」的工具 — 让学生看得见变化!",sz=14,b=True,c=CORAL,a=PP_ALIGN.CENTER)
+notes(s,"第三部分(15-20分钟)：猜一猜教学法——先展示工具不说名字，让学生观察猜用途，再现场演示，最后总结解决了什么问题。重点展示4种变化明显的工具。")
 pn(s,n)
 
 # ============================================================
-# 14-20 tool cards (guess -> reveal), one per tool
+# 16-19 tool cards (guess -> reveal)
 # ============================================================
 def tool_card(em,cn,en,color,show,guesses,reveal,concept,demo=False,fit=None):
     global n
@@ -360,15 +377,13 @@ def tool_card(em,cn,en,color,show,guesses,reveal,concept,demo=False,fit=None):
     sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.15),Inches(9.4),Inches(0.7))
     sh.fill.solid();sh.fill.fore_color.rgb=color;sh.line.fill.background()
     tb(s,0.5,0.22,1.0,0.55,em,sz=28,c=WHITE)
-    tb(s,1.5,0.20,4.0,0.5,cn,sz=25,b=True,c=WHITE)
-    tb(s,1.5,0.62,4.0,0.25,en,sz=11,c=WARM)
+    tb(s,1.5,0.20,5.0,0.5,cn,sz=25,b=True,c=WHITE)
+    tb(s,1.5,0.62,5.0,0.25,en,sz=11,c=WARM)
     if demo:
         pill=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(7.4),Inches(0.27),Inches(2.2),Inches(0.45))
         pill.fill.solid();pill.fill.fore_color.rgb=SUNNY;pill.line.color.rgb=WHITE;pill.line.width=Pt(1.5)
         tb(s,7.5,0.32,2.0,0.4,"⭐ 课堂演示 Demo",sz=12,b=True,c=DARK,a=PP_ALIGN.CENTER)
-    # Left image
     ib(s,0.3,1.05,4.3,2.5,f"📷 {cn}")
-    # Right panel — show + guess
     panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.85),Inches(1.05),Inches(4.85),Inches(2.5))
     panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=color;panel.line.width=Pt(2.5)
     tb(s,5.05,1.15,4.5,0.3,"🔎 怎么演示  How to show:",sz=13,b=True,c=color)
@@ -376,12 +391,10 @@ def tool_card(em,cn,en,color,show,guesses,reveal,concept,demo=False,fit=None):
     tb(s,5.05,2.12,4.5,0.3,"❓ 让学生猜  Ask kids:",sz=13,b=True,c=color)
     tf=tb(s,5.05,2.42,4.55,0.3,f"· {guesses[0]}",sz=11,c=DARK)
     for g in guesses[1:]:ap(tf,f"· {g}",sz=11,c=DARK)
-    # Reveal strip
     rv=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.68),Inches(9.4),Inches(0.82))
     rv.fill.solid();rv.fill.fore_color.rgb=WARM;rv.line.color.rgb=color;rv.line.width=Pt(2)
     tb(s,0.5,3.74,1.2,0.35,"💡 揭晓",sz=13,b=True,c=color)
     tb(s,1.6,3.74,8.0,0.72,reveal,sz=12,b=True,c=DARK)
-    # Key concept strip
     kc=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.6),Inches(9.4),Inches(0.55))
     kc.fill.solid();kc.fill.fore_color.rgb=color;kc.line.fill.background()
     txt=f"🔑 关键概念: {concept}"
@@ -390,200 +403,204 @@ def tool_card(em,cn,en,color,show,guesses,reveal,concept,demo=False,fit=None):
     n+=1;pn(s,n);return s
 
 tool_card("🛍️","真空压缩袋","Vacuum Storage Bag",C_VAC,
-    "透明大袋子上有一个圆形接口，先放进一件蓬松的外套或小被子，再用吸尘器/气泵抽气，袋子迅速变扁。",
-    ["圆形接口是做什么的?","为什么袋子要密封?","衣服会发生什么变化?"],
+    "袋子里放进一件蓬松外套，用手动抽气泵或吸尘器抽走空气，袋子迅速变扁。",
+    ["袋子为什么要密封?","圆形接口有什么作用?","抽走空气后会怎样?"],
     "抽走空气，让厚衣服和被子占用更少的空间。",
-    "东西没有减少，但占用的空间变小了。",demo=True)
+    "东西没有减少，但占用的空间变小了。",demo=True,fit="厚外套 · 被子 · 枕头 · 换季衣服")
 tool_card("🔄","旋转收纳盘","Lazy Susan Turntable",C_LAZY,
-    "圆形托盘，先不要转。放上调味料、小瓶子或画笔，再轻轻旋转。",
-    ["它为什么是圆形的?","后面的东西拿不到怎么办?","它可以放在哪里?"],
+    "在托盘上放小瓶子、画笔或调味料，轻轻转动托盘。",
+    ["它为什么是圆形的?","怎样拿到放在后面的物品?","它可以放在哪里?"],
     "一转，后面的东西转到前面，不用把其他东西全搬开。",
-    "让难拿到的东西变得容易拿到。",demo=True,fit="厨房柜 · 冰箱 · 浴室 · 美术区")
+    "让后面的物品转到前面，更容易拿到。",demo=True,fit="厨房柜 · 冰箱 · 浴室 · 美术区")
 tool_card("🧷","洞洞板","Pegboard",C_PEG,
-    "一块上面有很多小洞的板，加上几个不同形状的挂钩，挂上小物品。",
-    ["为什么板上有这么多洞?","挂钩可以移动吗?","什么东西适合挂在墙上?"],
+    "一块有很多小洞的板，加上几个挂钩，挂上小物品。",
+    ["为什么板上有这么多洞?","挂钩可以换位置吗?","什么物品适合挂起来?"],
     "挂钩可以插在不同位置，根据物品大小自由改变。",
-    "收纳的位置可以根据需要改变。",demo=True,fit="剪刀 · 胶带 · 小篮子 · 工具 · 耳机")
-tool_card("🚪","门后透明挂袋","Over-the-Door Organizer",C_DOOR,
-    "先把挂袋折起来，让学生看到很多透明小口袋，再挂到门后。",
-    ["为什么有这么多口袋?","为什么口袋是透明的?","铺桌上、放地上、还是挂起来?"],
-    "挂在门后，利用垂直空间来收纳。",
-    "地面没空间时，可以向上收纳。",fit="小玩具 · 袜子 · 发饰 · 美术材料 · 水瓶")
-tool_card("📏","伸缩抽屉分隔板","Adjustable Drawer Dividers",C_DIV,
-    "两根像短木板或塑料条的分隔板，放进一个大盒子里，把盒子分成几个区域。",
-    ["它为什么可以变长、变短?","它是单独装东西的吗?","它可以怎样改变大抽屉?"],
-    "把一个大空间分成几个小空间，物品各归各位。",
-    "大空间不分类，也很容易变乱。",fit="袜子 · 内衣 · 文具 · 厨房工具")
+    "利用墙面空间，位置可以根据需要改变。",fit="剪刀 · 胶带 · 小工具 · 耳机 · 美术用品")
 tool_card("🧺","玩具收纳垫","Toy Storage Mat",C_MAT,
-    "平铺在地上像圆形游戏垫，周围有一根绳子。放上积木，再拉起绳子，整张垫子变成收纳袋。",
-    ["为什么垫子周围有绳子?","玩完玩具怎样快速整理?","拉动绳子会发生什么?"],
+    "把积木放在垫子上，游戏结束后拉起周围的绳子，收纳垫变成收纳袋。",
+    ["为什么周围有绳子?","玩完以后怎样快速整理?","拉动绳子会发生什么?"],
     "在垫子上玩，玩完拉起绳子，玩具就装进袋子里。",
-    "好的收纳工具，能让整理变得更快更容易。",demo=True,fit="积木 · 拼图 · 小汽车 · 乐高")
-tool_card("🚰","水槽伸缩置物架","Expandable Sink Organizer",C_SINK,
-    "一个可以拉长、缩短的架子，架在水槽两边，底部有很多小孔。",
-    ["它为什么可以改变长度?","它应该架在哪里?","为什么底部有很多小孔?"],
-    "架在水槽两边放海绵、抹布、刷子；小孔让水流出去，不积水。",
-    "收纳工具还要考虑物品是否潮湿。",fit="海绵 · 抹布 · 洗碗刷")
+    "好的收纳工具，让整理变得更快更容易。",demo=True,fit="积木 · 拼图 · 小汽车")
 
 # ============================================================
-# 21 哪个工具最适合 — matching game
+# 20 收纳工具配对游戏
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🧩 哪个工具最适合?  Which Tool Fits?",CORAL)
-tb(s,0.4,0.85,9.2,0.32,"老师说一个家里的问题，学生举起对应工具的图片卡!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-matches=[("🧊 冬天的厚被子占太多空间","🛍️ 真空压缩袋"),
-         ("🍶 冰箱最里面的小瓶子拿不到","🔄 旋转收纳盘"),
-         ("🧱 积木玩完要一块块捡起来","🧺 玩具收纳垫"),
-         ("🔌 书桌旁边有很多充电线","📦 电线收纳盒"),
-         ("🧺 洗衣机旁边有很窄的缝隙","🛒 缝隙推车"),
-         ("📺 遥控器总在沙发上找不到","🛋️ 沙发扶手收纳袋")]
+s=ns();n+=1;bg(s,CREAM);hb(s,"🧩 收纳工具配对游戏  Which Tool Fits?",CORAL)
+tb(s,0.4,0.85,9.2,0.32,"老师说一个问题，学生选出最合适的收纳工具!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+matches=[("🧊 厚外套和被子占太多空间","🛍️ 真空压缩袋"),
+         ("🍶 柜子后面的小瓶子很难拿到","🔄 旋转收纳盘"),
+         ("🧱 墙面有空间，但桌面很乱","🧷 洞洞板"),
+         ("🧸 积木玩完要一块块捡起来","🧺 玩具收纳垫")]
 for i,(prob,tool) in enumerate(matches):
-    y=1.3+i*0.66
-    pb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(5.1),Inches(0.56))
+    y=1.25+i*0.62
+    pb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(5.1),Inches(0.52))
     pb.fill.solid();pb.fill.fore_color.rgb=WHITE;pb.line.color.rgb=CORAL;pb.line.width=Pt(1.5)
-    tb(s,0.55,y+0.10,4.9,0.4,prob,sz=13,b=True,c=DARK)
-    ar=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.6),Inches(y),Inches(4.1),Inches(0.56))
+    tb(s,0.55,y+0.09,4.9,0.4,prob,sz=13,b=True,c=DARK)
+    ar=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.6),Inches(y),Inches(4.1),Inches(0.52))
     ar.fill.solid();ar.fill.fore_color.rgb=TEAL;ar.line.fill.background()
-    tb(s,5.75,y+0.10,3.9,0.4,tool,sz=13,b=True,c=WHITE)
-tb(s,0.4,5.28,9.2,0.28,"💡 不是所有工具都适合所有东西 — 要按问题选工具!",sz=11,b=True,c=CORAL,a=PP_ALIGN.CENTER)
-notes(s,"升级玩法：老师念家庭问题，学生举对应工具图片卡。左=问题，右=最适合的工具(答案)。")
-pn(s,n)
-
-# ============================================================
-# 22 教师总结 — choosing a tool
-# ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🧠 怎样选收纳工具?  Choosing a Tool",TEAL)
-tb(s,0.4,0.88,9.2,0.32,"选工具前，先问自己这几个问题:",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-crit=["📐 物品有多大?","🔁 经常使用吗?","📍 应该放在哪里?",
-      "💧 需要防水/通风/标签吗?","🙋 孩子能自己拿到并放回吗?","🪄 是否真的节省空间?"]
-for i,ct in enumerate(crit):
-    col=i%2;row=i//2
-    x=0.4+col*4.75;y=1.35+row*0.72
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(0.6))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=TEAL;sh.line.width=Pt(1.5)
-    tb(s,x+0.15,y+0.12,4.3,0.4,ct,sz=14,b=True,c=DARK)
-gold=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.9),Inches(9.4),Inches(1.3))
-gold.fill.solid();gold.fill.fore_color.rgb=WARM;gold.line.color.rgb=CORAL;gold.line.width=Pt(2.5)
-tb(s,0.5,4.0,9.0,0.4,"✨ 记住这句话  Remember:",sz=14,b=True,c=CORAL)
-tb(s,0.5,4.42,9.2,0.7,"最酷的收纳工具，不一定最贵 — 而是能巧妙利用空间、解决真实问题，\n还让人愿意把东西放回去。",sz=14,b=True,c=DARK)
-pn(s,n)
-
-# ============================================================
-# 23 小组收纳设计挑战 — Project (materials + task)
-# ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🛠️ 小组收纳设计挑战  Group Design Challenge",NAVY)
-sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.92),Inches(4.4),Inches(0.4))
-sh.fill.solid();sh.fill.fore_color.rgb=TEAL;sh.line.fill.background()
-tb(s,0.4,0.95,4.2,0.35,"🧺 每组材料  Materials",sz=14,b=True,c=WHITE)
-tf=tb(s,0.4,1.4,4.4,2.5,"📚 3–5 本书",sz=12,c=DARK)
-for m in ["✏️ 铅笔、彩笔、橡皮、剪刀","📄 练习纸和废纸","🧸 小玩具","🧥 小外套或布袋 · 🥤 水杯",
-          "📦 2–4 个空盒子/篮子/文件夹","🏷️ 标签纸和马克笔"]:
-    ap(tf,m,sz=12,c=DARK)
-sh2=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(0.92),Inches(4.8),Inches(0.4))
-sh2.fill.solid();sh2.fill.fore_color.rgb=CORAL;sh2.line.fill.background()
-tb(s,5.0,0.95,4.6,0.35,"🎯 任务  The Task",sz=14,b=True,c=WHITE)
-task=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.4),Inches(4.8),Inches(0.9))
-task.fill.solid();task.fill.fore_color.rgb=WARM;task.line.color.rgb=CORAL;task.line.width=Pt(2)
-tb(s,5.05,1.48,4.55,0.8,"把桌上的物品整理好，让别人能在 ⏱️ 10 秒内找到指定物品!",sz=13,b=True,c=DARK)
-tf2=tb(s,5.0,2.45,4.7,1.5,"🤔 讨论:",sz=13,b=True,c=NAVY)
-for q in ["· 哪些可以放一起?哪些必须分开?","· 每一类放在哪里?需要标签吗?","· 常用的放哪?不常用的放哪?"]:
-    ap(tf2,q,sz=12,c=DARK)
-sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(4.15),Inches(9.4),Inches(1.0))
+    tb(s,5.75,y+0.09,3.9,0.4,tool,sz=13,b=True,c=WHITE)
+sf=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.85),Inches(9.4),Inches(1.0))
 sf.fill.solid();sf.fill.fore_color.rgb=WARM;sf.line.color.rgb=TEAL;sf.line.width=Pt(2.5)
-tb(s,0.5,4.24,9.0,0.4,"⏱️ 成功标准  Success:",sz=14,b=True,c=TEAL)
-tb(s,0.5,4.64,9.2,0.5,"整理好以后，请「别的组」来找指定物品 — 10 秒内找到就算成功! 🎉",sz=15,b=True,c=DARK)
-notes(s,"给每组一个「混乱桌面」+ 收纳容器和标签。任务：整理到别人10秒内能找到指定物品。")
+tb(s,0.5,3.92,9.0,0.35,"🧠 选工具时想一想  Choosing a tool:",sz=13,b=True,c=TEAL)
+tb(s,0.5,4.28,9.2,0.5,"收纳什么?物品多大?常用吗?放哪最方便?孩子能自己拿放吗?是否真的解决了问题?",sz=12,b=True,c=DARK)
+notes(s,"配对游戏(5分钟)：老师念问题，学生选工具。答案：厚外套被子→真空袋；柜后小瓶→旋转盘；墙面空桌面乱→洞洞板；积木→玩具垫。教师总结选工具的6个思考。")
 pn(s,n)
 
 # ============================================================
-# 24 小组挑战 — sentence frames
+# 21 行李箱装不下了 (情境导入)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"💬 收纳设计句型  Say These",TEAL)
-tb(s,0.4,0.9,9.2,0.35,"一边整理，一边用这些句型说出你的想法:",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-frames=["我们把 ______ 和 ______ 放在一起，因为 ______ 。",
-        "______ 应该单独放，因为 ______ 。",
-        "我们给这个盒子贴上「______」标签。",
-        "经常使用的 ______ 应该放在 ______ 。",
-        "这样整理以后，我们可以更快地 ______ 。"]
-for i,fr in enumerate(frames):
-    y=1.4+i*0.72
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.6))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=TEAL if i%2==0 else CORAL;sh.line.width=Pt(2)
-    tb(s,0.6,y+0.12,0.5,0.4,"💬",sz=18)
-    tb(s,1.15,y+0.13,8.4,0.4,fr,sz=15,b=True,c=DARK)
-tb(s,0.4,5.28,9.2,0.28,"💡 把这张打印出来，贴在每组桌上当参考。",sz=11,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+s=ns();n+=1;bg(s,CREAM);hb(s,"🧳 行李箱装不下了!  The Suitcase Won't Close!",NAVY)
+tb(s,0.4,0.85,9.2,0.32,"老师把衣服随便塞进行李箱 — 一下就满了!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+ib(s,0.3,1.25,4.4,3.05,"📷 塞得乱糟糟的行李箱")
+panel=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.25),Inches(4.8),Inches(3.05))
+panel.fill.solid();panel.fill.fore_color.rgb=WHITE;panel.line.color.rgb=NAVY;panel.line.width=Pt(2.5)
+hd=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.25),Inches(4.8),Inches(0.5))
+hd.fill.solid();hd.fill.fore_color.rgb=NAVY;hd.line.fill.background()
+tb(s,5.05,1.32,4.6,0.4,"🕵️ 一起想一想  Discuss",sz=14,b=True,c=WHITE)
+tf=tb(s,5.05,1.9,4.5,2.3,"· 为什么行李箱很快就满了?",sz=13,c=DARK)
+for q in ["· 什么东西占的空间最大?","· 哪些物品可以放在一起?","· 哪些物品需要分开?","· 怎样更整齐、更省空间?"]:
+    ap(tf,"",sz=6);ap(tf,q,sz=13,c=DARK)
+tb(s,0.4,4.45,9.2,0.5,"🧳 里面有：T恤 · 裤子 · 外套 · 袜子 · 鞋 · 洗漱用品 · 玩具 · 水杯 · 书",sz=12,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+notes(s,"第四部分情境导入(5分钟)：展示打开的行李箱和一堆物品，老师故意随便塞。提问5个引出省空间的需要。")
 pn(s,n)
 
 # ============================================================
-# 25 收纳方案测试
+# 22 整理行李箱基本步骤 (4 steps)
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"🔍 收纳方案测试  Test the Solution",CORAL)
-tb(s,0.4,0.85,9.2,0.32,"每组完成后 — 让「别的组」来找东西，才算真的整理好!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.3),Inches(4.6),Inches(3.5))
+s=ns();n+=1;bg(s,CREAM);hb(s,"🧳 整理行李箱 4 步  4 Steps to Pack",NAVY)
+tb(s,0.4,0.85,9.2,0.32,"跟着视频学 — 重点是省空间叠衣法!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+steps=[("1️⃣","先列清单","带真正需要的，不是喜欢的都带",TEAL),
+       ("2️⃣","把物品分类","上衣·裤子·内衣袜子·鞋子·洗漱·学习·娱乐",CORAL),
+       ("3️⃣","决定摆放位置","重的靠轮子·衣服折或卷·鞋子装袋·洗漱防水袋·常用易拿",BLUE),
+       ("4️⃣","最后检查","漏带?带太多?液体密封?关得上?会滚动?",GREEN_OK)]
+for i,(num,cn,d,cl) in enumerate(steps):
+    y=1.25+i*0.9
+    card=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.4),Inches(y),Inches(9.2),Inches(0.78))
+    card.fill.solid();card.fill.fore_color.rgb=WHITE;card.line.color.rgb=cl;card.line.width=Pt(2.5)
+    circ=s.shapes.add_shape(MSO_SHAPE.OVAL,Inches(0.6),Inches(y+0.13),Inches(0.52),Inches(0.52))
+    circ.fill.solid();circ.fill.fore_color.rgb=cl;circ.line.fill.background()
+    tb(s,0.6,y+0.16,0.52,0.44,num,sz=17,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+    tb(s,1.35,y+0.09,2.6,0.4,cn,sz=16,b=True,c=cl)
+    tb(s,3.95,y+0.22,5.6,0.4,d,sz=12,c=DARK)
+notes(s,"整理行李箱基本步骤(5分钟，根据视频)：1先列清单(带需要的)；2分类(上衣/裤子/内衣袜子/鞋/洗漱/学习/娱乐)；3摆放位置(重的靠轮子、衣服折或卷、鞋装袋、洗漱防水袋、小物小袋、常用易拿)；4最后检查(漏带/带太多/液体密封/关得上/会滚动)。")
+pn(s,n)
+
+# ============================================================
+# 23 省空间叠T恤 (卷衣法 + 比较实验)
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"👕 省空间叠 T 恤：卷衣法  Roll a T-shirt",CORAL)
+tb(s,0.4,0.85,9.2,0.32,"卷起来更省空间、不容易皱 — 跟着做!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.6),Inches(3.5))
+lp.fill.solid();lp.fill.fore_color.rgb=WHITE;lp.line.color.rgb=CORAL;lp.line.width=Pt(2.5)
+lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.6),Inches(0.5))
+lh.fill.solid();lh.fill.fore_color.rgb=CORAL;lh.line.fill.background()
+tb(s,0.45,1.32,4.4,0.4,"🌯 卷衣法五步  5 Steps",sz=14,b=True,c=WHITE)
+rsteps=["1️⃣ T恤正面朝下铺平","2️⃣ 两边向中间折","3️⃣ 把袖子整理好","4️⃣ 从下往上卷紧","5️⃣ 卷好的衣服整齐排列"]
+tf=tb(s,0.5,1.9,4.3,2.7,rsteps[0],sz=14,b=True,c=DARK)
+for r in rsteps[1:]:ap(tf,"",sz=5);ap(tf,r,sz=14,b=True,c=DARK)
+rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.25),Inches(4.6),Inches(3.5))
+rp.fill.solid();rp.fill.fore_color.rgb=WARM;rp.line.color.rgb=TEAL;rp.line.width=Pt(2.5)
+rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.25),Inches(4.6),Inches(0.5))
+rh.fill.solid();rh.fill.fore_color.rgb=TEAL;rh.line.fill.background()
+tb(s,5.25,1.32,4.4,0.4,"🔬 比较实验  Compare",sz=14,b=True,c=WHITE)
+tb(s,5.25,1.9,4.35,0.6,"两件一样的 T 恤：一件随便塞，一件用卷衣法。",sz=13,b=True,c=DARK)
+tf2=tb(s,5.25,2.6,4.35,1.9,"哪种占的空间更小?",sz=13,c=DARK)
+for q in ["哪种更容易找到?","拿出来会不会弄乱其他衣服?"]:
+    ap(tf2,"",sz=6);ap(tf2,q,sz=13,c=DARK)
+tb(s,5.25,4.25,4.4,0.4,"💡 强调：先铺平再折·两边对齐·别太松·大小相近",sz=10,b=True,c=TEAL)
+notes(s,"省空间叠T恤(8分钟)：卷衣法5步。教师强调先铺平再折、两边对齐、不要太松、每件卷成相近大小。比较实验：一件随便塞、一件卷，让学生比空间/好找/不弄乱。")
+pn(s,n)
+
+# ============================================================
+# 24 省空间叠裤子
+# ============================================================
+s=ns();n+=1;bg(s,CREAM);hb(s,"👖 省空间叠裤子  Fold the Pants",TEAL)
+tb(s,0.4,0.85,9.2,0.32,"裤子也能卷得又小又整齐!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.6),Inches(3.5))
 lp.fill.solid();lp.fill.fore_color.rgb=WHITE;lp.line.color.rgb=TEAL;lp.line.width=Pt(2.5)
-lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.3),Inches(4.6),Inches(0.5))
+lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.6),Inches(0.5))
 lh.fill.solid();lh.fill.fore_color.rgb=TEAL;lh.line.fill.background()
-tb(s,0.45,1.37,4.4,0.4,"⏱️ 老师随机任务  Find it in 10s!",sz=14,b=True,c=WHITE)
-tf=tb(s,0.5,1.95,4.3,2.7,"🔵 找到一本蓝色的书",sz=14,c=DARK)
-for t in ["🩹 找到一块橡皮","✂️ 找到剪刀","📄 找到一张空白纸","🥤 找到水杯"]:
-    ap(tf,"",sz=6);ap(tf,t,sz=14,c=DARK)
-rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.3),Inches(4.6),Inches(3.5))
-rp.fill.solid();rp.fill.fore_color.rgb=WHITE;rp.line.color.rgb=CORAL;rp.line.width=Pt(2.5)
-rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.3),Inches(4.6),Inches(0.5))
+tb(s,0.45,1.32,4.4,0.4,"📏 方法五步  Method",sz=14,b=True,c=WHITE)
+psteps=["1️⃣ 把裤子平铺","2️⃣ 两条裤腿对齐","3️⃣ 从裤脚向上折或卷","4️⃣ 调整成整齐小长方形","5️⃣ 和其他裤子放同一区"]
+tf=tb(s,0.5,1.9,4.3,2.7,psteps[0],sz=14,b=True,c=DARK)
+for p in psteps[1:]:ap(tf,"",sz=5);ap(tf,p,sz=14,b=True,c=DARK)
+rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.25),Inches(4.6),Inches(3.5))
+rp.fill.solid();rp.fill.fore_color.rgb=WARM;rp.line.color.rgb=CORAL;rp.line.width=Pt(2.5)
+rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.25),Inches(4.6),Inches(0.5))
 rh.fill.solid();rh.fill.fore_color.rgb=CORAL;rh.line.fill.background()
-tb(s,5.25,1.37,4.4,0.4,"🗣️ 参观组反馈  Feedback",sz=14,b=True,c=WHITE)
-tf2=tb(s,5.3,1.95,4.3,2.7,"· 什么地方很清楚?",sz=14,c=DARK)
-for t in ["· 什么东西不容易找到?","· 标签有没有帮助?","· 哪些物品还可以换位置?"]:
-    ap(tf2,"",sz=6);ap(tf2,t,sz=14,c=DARK)
-tb(s,0.4,4.9,9.2,0.4,"📌 整理不是自己觉得整齐就行 — 别人也要看懂、能找到!",sz=13,b=True,c=CORAL,a=PP_ALIGN.CENTER)
-notes(s,"不让本组自测，让别组来找东西并计时。参观组给反馈。强调:整理要让别人也能找到。")
+tb(s,5.25,1.32,4.4,0.4,"⚠️ 小提醒  Reminders",sz=14,b=True,c=WHITE)
+rem=["👖 先把口袋里的东西拿出来","🔗 拉链和扣子先整理好","📐 裤腿要对齐","🧥 厚裤子不要卷得太大"]
+tf2=tb(s,5.3,1.95,4.3,2.5,rem[0],sz=14,b=True,c=DARK)
+for r in rem[1:]:ap(tf2,"",sz=7);ap(tf2,r,sz=14,b=True,c=DARK)
+notes(s,"省空间叠裤子(6分钟)：平铺→裤腿对齐→从裤脚向上折或卷→整齐小长方形→同区。提醒：掏口袋、整理拉链扣子、裤腿对齐、厚裤别卷太大。")
 pn(s,n)
 
 # ============================================================
-# 26 整理规则 + 全班口令
+# 25 行李箱摆放挑战
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"📜 整理不是一次完成  Make It a Habit",NAVY)
-tb(s,0.4,0.88,9.2,0.32,"今天整理好，三天后会不会又变乱?我们一起定规则!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-rules=["✅ 用完马上放回原位","✅ 每个盒子只放一种物品","✅ 找不到「家」的先放待整理箱",
-       "✅ 每天下课前用 2 分钟检查","✅ 标签朝外，大家都看得见","✅ 新东西进来，先决定放哪"]
-for i,r in enumerate(rules):
-    col=i%2;row=i//2
-    x=0.4+col*4.75;y=1.32+row*0.62
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(0.52))
-    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=TEAL;sh.line.width=Pt(1.5)
-    tb(s,x+0.15,y+0.09,4.3,0.35,r,sz=13,b=True,c=DARK)
-chant=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.5),Inches(9.4),Inches(1.05))
-chant.fill.solid();chant.fill.fore_color.rgb=CORAL;chant.line.fill.background()
-tb(s,0.5,3.58,9.0,0.4,"📣 全班口令  Class Chant",sz=15,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,0.5,4.02,9.0,0.4,"老师:「用完东西——」   全班:「送它回家!」",sz=18,b=True,c=WHITE,a=PP_ALIGN.CENTER)
-tb(s,0.4,4.68,9.2,0.4,"🔑 三个核心:  分类  ·  固定位置  ·  方便使用",sz=14,b=True,c=NAVY,a=PP_ALIGN.CENTER)
-notes(s,"让学生一起定简单规则，设一个全班口令。强调三个核心概念:分类、固定位置、方便使用。")
+s=ns();n+=1;bg(s,CREAM);hb(s,"🧳 行李箱摆放挑战  Pack It Right!",NAVY)
+tb(s,0.4,0.85,9.2,0.32,"东西都叠好了 — 怎样放进去最聪明?",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.7),Inches(3.5))
+lp.fill.solid();lp.fill.fore_color.rgb=WHITE;lp.line.color.rgb=NAVY;lp.line.width=Pt(2.5)
+lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.7),Inches(0.5))
+lh.fill.solid();lh.fill.fore_color.rgb=NAVY;lh.line.fill.background()
+tb(s,0.45,1.32,4.5,0.4,"📥 摆放顺序  Order",sz=14,b=True,c=WHITE)
+order=["1️⃣ 鞋子放底部或侧边","2️⃣ 卷好的衣服整齐排列","3️⃣ 袜子塞进鞋里或小袋","4️⃣ 洗漱用品放防水袋","5️⃣ 小物品放进收纳袋","6️⃣ 常用的放最上面·填满边角"]
+tf=tb(s,0.5,1.88,4.4,2.8,order[0],sz=13,b=True,c=DARK)
+for o in order[1:]:ap(tf,"",sz=4);ap(tf,o,sz=13,b=True,c=DARK)
+rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.2),Inches(1.25),Inches(4.5),Inches(3.5))
+rp.fill.solid();rp.fill.fore_color.rgb=WARM;rp.line.color.rgb=CORAL;rp.line.width=Pt(2.5)
+rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.2),Inches(1.25),Inches(4.5),Inches(0.5))
+rh.fill.solid();rh.fill.fore_color.rgb=CORAL;rh.line.fill.background()
+tb(s,5.35,1.32,4.2,0.4,"🤔 想一想  Think",sz=14,b=True,c=WHITE)
+tf2=tb(s,5.35,1.9,4.25,2.7,"· 哪些东西能填进小空隙?",sz=13,c=DARK)
+for q in ["· 为什么洗漱用品要放防水袋?","· 为什么鞋子不能压干净衣服?","· 回家怎样快速找到衣服?"]:
+    ap(tf2,"",sz=6);ap(tf2,q,sz=13,c=DARK)
+notes(s,"行李箱摆放挑战(5分钟)：老师示范摆放顺序——鞋子底部/侧边、卷好衣服排列、袜子塞鞋内、洗漱防水袋、小物收纳袋、常用最上、填边角。提问4个。")
 pn(s,n)
 
 # ============================================================
-# 27 SESSION 2 DIVIDER
+# 26 下午任务预告 (第六部分)
 # ============================================================
-div("Session 2  下午","复习 + 语言目标 (认字 + 写字)\n我会认 5 词 · 我会写 3 词",CORAL,"📖")
+s=ns();n+=1;bg(s,NAVY)
+tb(s,0.5,0.55,9,0.7,"📣 下午任务预告  This Afternoon",sz=30,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.6,1.35,8.8,0.7,"「上午我们学了整理书包、选收纳工具、整理行李箱。\n下午，你们将成为真正的收纳设计师!」",sz=16,b=True,c=SUNNY,a=PP_ALIGN.CENTER)
+box=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.0),Inches(2.75),Inches(8.0),Inches(1.2))
+box.fill.solid();box.fill.fore_color.rgb=WHITE;box.line.color.rgb=CORAL;box.line.width=Pt(2.5)
+tb(s,1.2,2.85,7.6,0.4,"👀 上午请特别观察:",sz=14,b=True,c=CORAL)
+tb(s,1.2,3.24,7.6,0.65,"哪种整理方法最方便?哪种工具最有用?常用的放哪?\n怎样让别人也看懂你的整理?",sz=13,b=True,c=DARK)
+tb(s,0.5,4.2,9,0.35,"📣 老师:「整理不仅要——」 学生:「看起来整齐!」",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.5,4.58,9,0.35,"老师:「还要——」 学生:「容易找到、容易放回!」",sz=14,b=True,c=WHITE,a=PP_ALIGN.CENTER)
+tb(s,0.5,4.96,9,0.3,"老师:「下午我们要——」 学生:「挑战收纳设计!」",sz=13,b=True,c=SUNNY,a=PP_ALIGN.CENTER)
+notes(s,"第六部分(5分钟)：预告下午小组收纳设计挑战，给学生上午观察任务，带结束口号。")
+pn(s,n)
+
+# ============================================================
+# 27 SESSION 2 DIVIDER — language
+# ============================================================
+div("Part 6 · 下午","语言目标 + 小组收纳设计挑战\n👀 我会认 5 词  ✍️ 我会写 3 词  🛠️ 收纳挑战",CORAL,"📖")
 n+=1
 
 # ============================================================
-# 28 QUICK REVIEW — 四步整理法 order
+# 28 QUICK REVIEW — 五步整理法
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"🔄 快速复习  Quick Review",CORAL)
-tb(s,0.4,0.85,9,0.3,"四步整理法，你还记得顺序吗?(口头排一排)  Put the 4 steps in order!",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
-review=[("🙌","全部拿出来",TEAL),("👐","分类",CORAL),("🤔","做决定",C_PEG),("🏠","放回家",GREEN_OK)]
+tb(s,0.4,0.85,9,0.3,"整理书包五步，你还记得吗?(口头排一排)",sz=12,c=GRAY,a=PP_ALIGN.CENTER)
+review=[("🙌","拿出来",TEAL),("🤔","做决定",GOLD),("🗂️","分类",BLUE),("🎒","认识区域",PURPLE),("📥","放回去",GREEN_OK)]
 for i,(em,cn,cl) in enumerate(review):
-    x=0.3+i*2.4
-    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.5),Inches(2.15),Inches(2.4))
+    x=0.35+i*1.9
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(1.5),Inches(1.7),Inches(2.4))
     sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=cl;sh.line.width=Pt(2.5)
-    tb(s,x+0.1,1.7,1.95,0.8,em,sz=40,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,2.7,2.05,0.5,cn,sz=15,b=True,c=cl,a=PP_ALIGN.CENTER)
-    tb(s,x+0.05,3.25,2.05,0.4,"?",sz=26,b=True,c=GRAY,a=PP_ALIGN.CENTER)
-    if i<3:tb(s,x+2.02,1.95,0.5,0.5,"➡️",sz=22,c=CORAL)
-tb(s,0.4,4.3,9.2,0.4,"💬 先 ____ ，再 ____ ，然后 ____ ，最后 ____ 。",sz=15,b=True,c=DARK,a=PP_ALIGN.CENTER)
+    tb(s,x+0.05,1.72,1.6,0.8,em,sz=34,a=PP_ALIGN.CENTER)
+    tb(s,x,2.62,1.7,0.5,f"{i+1}. {cn}",sz=14,b=True,c=cl,a=PP_ALIGN.CENTER)
+    tb(s,x,3.2,1.7,0.4,"?",sz=24,b=True,c=GRAY,a=PP_ALIGN.CENTER)
+    if i<4:tb(s,x+1.6,1.95,0.4,0.5,"→",sz=22,b=True,c=CORAL)
+tb(s,0.4,4.3,9.2,0.4,"💬 先 ___ ，再 ___ ，然后 ___ ，接着 ___ ，最后 ___ 。",sz=15,b=True,c=DARK,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
-# 29-33  我会认 word cards
+# 29-33 我会认 word cards
 # ============================================================
 def word_card_read(w,py,en,sent,img):
     global n
@@ -615,8 +632,8 @@ for w,py,en,sent,img in read_words:
 s=ns();n+=1;bg(s,CREAM);hb(s,"🎮 练一练  Word Games (选一个玩！)",CORAL)
 games=[
     ("1️⃣","拍苍蝇\nFly Swatter","把字卡贴在\n白板上，老师\n说词语，学生拍！",WARM),
-    ("2️⃣","举牌游戏\nShow Me","每人 5 张字卡\n老师说词语\n举正确的卡",RGBColor(0xFD,0xEF,0xE6)),
-    ("3️⃣","抢椅子\nMusical Chairs","椅子上放字卡\n音乐停，读出词",RGBColor(0xE2,0xF2,0xF1)),
+    ("2️⃣","举牌游戏\nShow Me","每人 5 张字卡\n老师说词语\n举正确的卡",WARM),
+    ("3️⃣","抢椅子\nMusical Chairs","椅子上放字卡\n音乐停，读出词",MINT),
     ("4️⃣","传话筒\nPass the Mic","传球，停下的人\n读字卡并造句",RGBColor(0xE3,0xF2,0xFD)),
 ]
 for i,(num,nm,desc,bgc) in enumerate(games):
@@ -634,7 +651,7 @@ for i,(num,nm,desc,bgc) in enumerate(games):
 pn(s,n)
 
 # ============================================================
-# 35-37  我会写 cards
+# 35-37 我会写 cards
 # ============================================================
 def word_card_write(w,py,en,img):
     global n
@@ -662,7 +679,7 @@ for w,py,en,img in write_words:
     word_card_write(w,py,en,img)
 
 # ============================================================
-# 38 SENTENCE FRAMES — 我会说
+# 38 我会说 sentence frames
 # ============================================================
 s=ns();n+=1;bg(s,CREAM);hb(s,"💬 我会说  Sentence Frames (K · G1–3)",CORAL)
 sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(0.95),Inches(4.55),Inches(4.0))
@@ -692,42 +709,53 @@ for i,(cn,en) in enumerate(g_frames):
     y=1.65+i*0.78
     tb(s,5.25,y,4.4,0.45,f"·  {cn}",sz=14,b=True,c=TEAL)
     tb(s,5.25,y+0.42,4.4,0.25,en,sz=9,c=GRAY)
-tb(s,0.4,5.1,9.2,0.3,"💡 把这张 PPT 截屏打印，贴在每张桌子上 — 学生整堂课参考。",sz=11,b=True,c=NAVY,a=PP_ALIGN.CENTER)
+tb(s,0.4,5.1,9.2,0.3,"💡 把这张截屏打印，贴在每张桌上 — 学生整堂课参考。",sz=11,b=True,c=NAVY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
-# 39 SESSION 3 DIVIDER
+# 39 小组收纳设计挑战 — task + materials + steps
 # ============================================================
-div("Session 3  下午","动手 + 给建议\n🛠️ 小组收纳挑战  🔍 方案测试  💡 给建议",NAVY,"🧑‍🔧")
-n+=1
+s=ns();n+=1;bg(s,CREAM);hb(s,"🛠️ 小组收纳设计挑战  Group Design Challenge",NAVY)
+tb(s,0.4,0.85,9.2,0.3,"每组一堆混乱物品 — 你们是收纳设计师!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.4),Inches(3.6))
+lp.fill.solid();lp.fill.fore_color.rgb=WHITE;lp.line.color.rgb=TEAL;lp.line.width=Pt(2.5)
+lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.25),Inches(4.4),Inches(0.5))
+lh.fill.solid();lh.fill.fore_color.rgb=TEAL;lh.line.fill.background()
+tb(s,0.45,1.32,4.2,0.4,"🧺 每组材料  Materials",sz=14,b=True,c=WHITE)
+tf=tb(s,0.5,1.9,4.1,2.8,"📚 书 · ✏️ 文具 · 📄 纸张",sz=13,c=DARK)
+for m in ["🥤 水杯 · 🧸 小玩具 · 🧥 衣服","📦 空盒子 · 🧺 篮子","📁 文件夹 · 🏷️ 标签纸"]:
+    ap(tf,"",sz=6);ap(tf,m,sz=13,c=DARK)
+rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.25),Inches(4.8),Inches(3.6))
+rp.fill.solid();rp.fill.fore_color.rgb=WHITE;rp.line.color.rgb=CORAL;rp.line.width=Pt(2.5)
+rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(4.9),Inches(1.25),Inches(4.8),Inches(0.5))
+rh.fill.solid();rh.fill.fore_color.rgb=CORAL;rh.line.fill.background()
+tb(s,5.05,1.32,4.6,0.4,"🎯 小组任务  The Steps",sz=14,b=True,c=WHITE)
+tf2=tb(s,5.05,1.9,4.5,2.8,"1. 全部拿出来 → 分类",sz=12,b=True,c=DARK)
+for t in ["2. 决定：保留 / 回收 / 移走","3. 选合适的收纳工具","4. 每类安排固定位置 + 做标签","5. 让别组 10 秒内找到指定物品","6. 根据测试结果修改方案"]:
+    ap(tf2,"",sz=4);ap(tf2,t,sz=12,b=True,c=DARK)
+notes(s,"下午小组收纳设计挑战：每组一堆混乱物品(书/文具/纸/水杯/玩具/衣服/空盒/篮子/文件夹/标签)。步骤：拿出来→分类→决定保留回收移走→选工具→固定位置+标签→别组10秒找到→修改。")
+pn(s,n)
 
 # ============================================================
-# 40 给建议 — tiered advice activity
+# 40 评价标准 + 思考
 # ============================================================
-s=ns();n+=1;bg(s,CREAM);hb(s,"💡 整理小顾问  Give Advice!",NAVY)
-tb(s,0.4,0.88,9.2,0.32,"看情景，给整理建议 — 按年龄有两种任务!",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
-# Low level
-lp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.3),Inches(4.6),Inches(3.5))
-lp.fill.solid();lp.fill.fore_color.rgb=WHITE;lp.line.color.rgb=GOLD;lp.line.width=Pt(2.5)
-lh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(1.3),Inches(4.6),Inches(0.5))
-lh.fill.solid();lh.fill.fore_color.rgb=GOLD;lh.line.fill.background()
-tb(s,0.45,1.37,4.4,0.4,"🐣 低龄  4–6 岁",sz=14,b=True,c=WHITE)
-ib(s,0.5,1.95,4.2,1.35,"📷 玩具到处都是 / Toys everywhere")
-tf=tb(s,0.5,3.4,4.3,0.4,"🗣️ 简单建议:",sz=13,b=True,c=GOLD)
-ap(tf,"把 ____ 放回 ____ 。",sz=15,b=True,c=DARK)
-ap(tf,"用玩具垫，一拉就收好!",sz=12,c=DARK)
-# High level
-rp=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.3),Inches(4.6),Inches(3.5))
-rp.fill.solid();rp.fill.fore_color.rgb=WHITE;rp.line.color.rgb=TEAL;rp.line.width=Pt(2.5)
-rh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(5.1),Inches(1.3),Inches(4.6),Inches(0.5))
-rh.fill.solid();rh.fill.fore_color.rgb=TEAL;rh.line.fill.background()
-tb(s,5.25,1.37,4.4,0.4,"🐔 高龄  7 岁以上",sz=14,b=True,c=WHITE)
-ib(s,5.3,1.95,4.2,1.35,"📷 书桌又乱又满 / A messy desk")
-tf2=tb(s,5.3,3.4,4.3,0.4,"🗣️ 说清楚 + 说理由:",sz=13,b=True,c=TEAL)
-ap(tf2,"先把 ___ 分类，再 ___ ，",sz=14,b=True,c=DARK)
-ap(tf2,"因为 ___ 。常用的放手边，贴标签。",sz=12,c=DARK)
-tb(s,0.4,4.95,9.2,0.35,"💬 用四步整理法 + 三个核心概念，给出你的建议!",sz=13,b=True,c=NAVY,a=PP_ALIGN.CENTER)
-notes(s,"给建议活动，2个层次:低龄(4-6)给简单建议+简单句;高龄(7+)分类+说理由+标签。可换不同情景卡。")
+s=ns();n+=1;bg(s,CREAM);hb(s,"🏆 评价标准  How We Judge",TEAL)
+tb(s,0.4,0.85,9.2,0.3,"下午不只看「整不整齐」，还要看这些:",sz=13,c=GRAY,a=PP_ALIGN.CENTER)
+crit=["🗂️ 分类是否清楚","📍 位置是否合理","🔎 是否容易找到","✋ 是否方便拿取",
+      "🏠 是否容易放回","🏷️ 标签是否有帮助","💧 水杯等是否摆放安全"]
+for i,ct in enumerate(crit):
+    col=i%2;row=i//2
+    x=0.4+col*4.75;y=1.25+row*0.62
+    w=4.55 if not(i==6) else 4.55
+    sh=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(x),Inches(y),Inches(4.55),Inches(0.52))
+    sh.fill.solid();sh.fill.fore_color.rgb=WHITE;sh.line.color.rgb=TEAL;sh.line.width=Pt(1.5)
+    tb(s,x+0.15,y+0.08,4.3,0.35,ct,sz=14,b=True,c=DARK)
+gold=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(0.3),Inches(3.75),Inches(9.4),Inches(1.1))
+gold.fill.solid();gold.fill.fore_color.rgb=WARM;gold.line.color.rgb=CORAL;gold.line.width=Pt(2.5)
+tb(s,0.5,3.83,9.0,0.35,"💬 结束口号  Chant:",sz=13,b=True,c=CORAL)
+tb(s,0.5,4.18,9.2,0.35,"老师:「整理不仅要——」学生:「看起来整齐!」",sz=13,b=True,c=DARK)
+tb(s,0.5,4.5,9.2,0.35,"老师:「还要——」学生:「容易找到、容易放回!」",sz=13,b=True,c=DARK)
+notes(s,"评价标准7项：分类清楚/位置合理/容易找到/方便拿取/容易放回/标签有帮助/水杯安全。用结束口号收尾。")
 pn(s,n)
 
 # ============================================================
@@ -741,12 +769,12 @@ tf=tb(s,3.6,1.28,2.8,0.4,"DAY 2",sz=18,b=True,c=CORAL,a=PP_ALIGN.CENTER)
 ap(tf,"📦",sz=40,a=PP_ALIGN.CENTER)
 ap(tf,"整理和收纳",sz=19,b=True,c=TEAL,a=PP_ALIGN.CENTER)
 ap(tf,"✓ COMPLETED",sz=13,b=True,c=GREEN_OK,a=PP_ALIGN.CENTER)
-ap(tf,"🗂️🏠✅🧰",sz=16,a=PP_ALIGN.CENTER)
-sb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.3),Inches(4.20),Inches(7.4),Inches(0.65))
+ap(tf,"🎒🧰🧳✅",sz=16,a=PP_ALIGN.CENTER)
+sb=s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,Inches(1.3),Inches(4.12),Inches(7.4),Inches(0.6))
 sb.fill.solid();sb.fill.fore_color.rgb=SUNNY;sb.line.color.rgb=CORAL;sb.line.width=Pt(2.5)
-tb(s,1.3,4.25,7.4,0.55,"⭐  ⭐  ⭐  ⭐  ⭐  ⭐",sz=32,b=True,c=CORAL,a=PP_ALIGN.CENTER)
-tb(s,1,4.90,8,0.4,"今天学会了整理和收纳! 🎉",sz=16,b=True,c=TEAL,a=PP_ALIGN.CENTER)
-tb(s,1,5.24,8,0.3,"四步整理法 · 三个核心 · 7 种收纳工具 · 5 个词",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
+tb(s,1.3,4.15,7.4,0.55,"⭐  ⭐  ⭐  ⭐  ⭐  ⭐",sz=30,b=True,c=CORAL,a=PP_ALIGN.CENTER)
+tb(s,1,4.8,8,0.4,"📣 老师:「用完东西——」 学生:「送它回家!」🎉",sz=15,b=True,c=TEAL,a=PP_ALIGN.CENTER)
+tb(s,1,5.15,8,0.3,"五步整理书包 · 收纳工具 · 行李箱叠衣法 · 5 个词",sz=11,c=GRAY,a=PP_ALIGN.CENTER)
 pn(s,n)
 
 # ============================================================
