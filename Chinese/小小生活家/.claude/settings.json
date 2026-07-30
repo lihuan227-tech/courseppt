@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(soffice --headless --convert-to pdf *)",
+      "Bash(mdls *)",
+      "Bash(pdftotext *)",
+      "Bash(pdfimages *)",
+      "Bash(pdftoppm *)"
+    ]
+  }
+}
